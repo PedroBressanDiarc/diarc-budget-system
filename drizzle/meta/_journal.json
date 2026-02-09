@@ -1,5 +1,27 @@
 {
   "version": "7",
   "dialect": "mysql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1770657725172,
+      "tag": "0000_giant_celestials",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1770657914020,
+      "tag": "0001_lowly_meltdown",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1770658105048,
+      "tag": "0002_huge_manta",
+      "breakpoints": true
+    }
+  ]
 }

@@ -1,28 +1,610 @@
+import { z } from "zod";
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, adminProcedure, router } from "./_core/trpc";
+import { getDb } from "./db";
+import * as db from "./db";
+import { 
+  suppliers, 
+  purchaseRequisitions, 
+  requisitionItems,
+  quotes,
+  quoteItems,
+  purchaseOrders,
+  budgets,
+  budgetItems,
+  budgetTemplates,
+  equipment,
+  maintenanceSchedules,
+  maintenanceRecords,
+  companySettings
+} from "../drizzle/schema";
+import { eq } from "drizzle-orm";
 
 export const appRouter = router({
-    // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
+  
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-      return {
-        success: true,
-      } as const;
+      return { success: true } as const;
     }),
   }),
 
-  // TODO: add feature routers here, e.g.
-  // todo: router({
-  //   list: protectedProcedure.query(({ ctx }) =>
-  //     db.getUserTodos(ctx.user.id)
-  //   ),
-  // }),
+  // ============= SUPPLIERS =============
+  suppliers: router({
+    list: protectedProcedure.query(async () => {
+      return await db.getAllSuppliers();
+    }),
+
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getSupplierById(input.id);
+      }),
+
+    create: protectedProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        cnpj: z.string().optional(),
+        contact: z.string().optional(),
+        phone: z.string().optional(),
+        email: z.string().email().optional(),
+        address: z.string().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const result = await database.insert(suppliers).values({
+          ...input,
+          createdBy: ctx.user.id,
+        });
+
+        return { success: true, id: Number(result[0].insertId) };
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().min(1).optional(),
+        cnpj: z.string().optional(),
+        contact: z.string().optional(),
+        phone: z.string().optional(),
+        email: z.string().email().optional(),
+        address: z.string().optional(),
+        notes: z.string().optional(),
+        active: z.boolean().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const { id, ...updateData } = input;
+        await database.update(suppliers).set(updateData).where(eq(suppliers.id, id));
+
+        return { success: true };
+      }),
+  }),
+
+  // ============= PURCHASE REQUISITIONS =============
+  requisitions: router({
+    list: protectedProcedure.query(async () => {
+      return await db.getAllRequisitions();
+    }),
+
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const requisition = await db.getRequisitionById(input.id);
+        const items = await db.getRequisitionItems(input.id);
+        return { requisition, items };
+      }),
+
+    create: protectedProcedure
+      .input(z.object({
+        title: z.string().min(1),
+        description: z.string().optional(),
+        items: z.array(z.object({
+          itemName: z.string().min(1),
+          quantity: z.number().positive(),
+          unit: z.string().optional(),
+          brand: z.string().optional(),
+          notes: z.string().optional(),
+        })),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        // Generate requisition number
+        const requisitionNumber = `REQ-${Date.now()}`;
+
+        const result = await database.insert(purchaseRequisitions).values({
+          requisitionNumber,
+          title: input.title,
+          description: input.description,
+          requestedBy: ctx.user.id,
+          status: 'draft',
+        });
+
+        const requisitionId = Number(result[0].insertId);
+
+        // Insert items
+        for (const item of input.items) {
+          await database.insert(requisitionItems).values({
+            requisitionId,
+            itemName: item.itemName,
+            quantity: item.quantity.toString(),
+            unit: item.unit,
+            brand: item.brand,
+            notes: item.notes,
+          });
+        }
+
+        return { success: true, id: requisitionId, requisitionNumber };
+      }),
+
+    updateStatus: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        status: z.enum(['draft', 'pending_quotes', 'comparing', 'approved', 'ordered', 'received', 'cancelled']),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const updateData: any = { status: input.status };
+        
+        if (input.status === 'approved') {
+          updateData.approvedBy = ctx.user.id;
+          updateData.approvedAt = new Date();
+        }
+
+        await database.update(purchaseRequisitions).set(updateData).where(eq(purchaseRequisitions.id, input.id));
+
+        return { success: true };
+      }),
+  }),
+
+  // ============= QUOTES =============
+  quotes: router({
+    listByRequisition: protectedProcedure
+      .input(z.object({ requisitionId: z.number() }))
+      .query(async ({ input }) => {
+        const quotesList = await db.getQuotesByRequisition(input.requisitionId);
+        
+        const quotesWithDetails = await Promise.all(
+          quotesList.map(async (quote) => {
+            const items = await db.getQuoteItems(quote.id);
+            const supplier = await db.getSupplierById(quote.supplierId);
+            return { ...quote, items, supplier };
+          })
+        );
+
+        return quotesWithDetails;
+      }),
+
+    create: protectedProcedure
+      .input(z.object({
+        requisitionId: z.number(),
+        supplierId: z.number(),
+        quoteNumber: z.string().optional(),
+        deliveryTime: z.number().optional(),
+        paymentTerms: z.string().optional(),
+        notes: z.string().optional(),
+        items: z.array(z.object({
+          requisitionItemId: z.number(),
+          unitPrice: z.number(),
+          quantity: z.number(),
+          brand: z.string().optional(),
+          notes: z.string().optional(),
+        })),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const totalAmount = input.items.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+
+        const result = await database.insert(quotes).values({
+          requisitionId: input.requisitionId,
+          supplierId: input.supplierId,
+          quoteNumber: input.quoteNumber,
+          totalAmount: totalAmount.toString(),
+          deliveryTime: input.deliveryTime,
+          paymentTerms: input.paymentTerms,
+          notes: input.notes,
+          createdBy: ctx.user.id,
+        });
+
+        const quoteId = Number(result[0].insertId);
+
+        for (const item of input.items) {
+          const totalPrice = item.unitPrice * item.quantity;
+          await database.insert(quoteItems).values({
+            quoteId,
+            requisitionItemId: item.requisitionItemId,
+            unitPrice: item.unitPrice.toString(),
+            quantity: item.quantity.toString(),
+            totalPrice: totalPrice.toString(),
+            brand: item.brand,
+            notes: item.notes,
+          });
+        }
+
+        return { success: true, id: quoteId };
+      }),
+  }),
+
+  // ============= PURCHASE ORDERS =============
+  orders: router({
+    list: protectedProcedure.query(async () => {
+      return await db.getAllPurchaseOrders();
+    }),
+
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getPurchaseOrderById(input.id);
+      }),
+
+    create: adminProcedure
+      .input(z.object({
+        requisitionId: z.number(),
+        quoteId: z.number(),
+        supplierId: z.number(),
+        totalAmount: z.number(),
+        orderDate: z.string(),
+        expectedDelivery: z.string().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const orderNumber = `PO-${Date.now()}`;
+
+        const result = await database.insert(purchaseOrders).values({
+          orderNumber,
+          requisitionId: input.requisitionId,
+          quoteId: input.quoteId,
+          supplierId: input.supplierId,
+          totalAmount: input.totalAmount.toString(),
+          orderDate: input.orderDate,
+          expectedDelivery: input.expectedDelivery,
+          notes: input.notes,
+          createdBy: ctx.user.id,
+        });
+
+        return { success: true, id: Number(result[0].insertId), orderNumber };
+      }),
+
+    updateStatus: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        status: z.enum(['pending', 'confirmed', 'received', 'cancelled']),
+        actualDelivery: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const updateData: any = { status: input.status };
+        
+        if (input.status === 'received') {
+          updateData.receivedBy = ctx.user.id;
+          updateData.actualDelivery = input.actualDelivery || new Date().toISOString().split('T')[0];
+        }
+
+        await database.update(purchaseOrders).set(updateData).where(eq(purchaseOrders.id, input.id));
+
+        return { success: true };
+      }),
+  }),
+
+  // ============= BUDGETS =============
+  budgets: router({
+    list: protectedProcedure.query(async () => {
+      return await db.getAllBudgets();
+    }),
+
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const budget = await db.getBudgetById(input.id);
+        const items = await db.getBudgetItems(input.id);
+        return { budget, items };
+      }),
+
+    create: protectedProcedure
+      .input(z.object({
+        title: z.string().min(1),
+        description: z.string().optional(),
+        templateId: z.number().optional(),
+        items: z.array(z.object({
+          itemName: z.string().min(1),
+          quantity: z.number().positive(),
+          unit: z.string().optional(),
+          brand: z.string().optional(),
+          notes: z.string().optional(),
+        })),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const budgetNumber = `BUD-${Date.now()}`;
+
+        const result = await database.insert(budgets).values({
+          budgetNumber,
+          title: input.title,
+          description: input.description,
+          templateId: input.templateId,
+          createdBy: ctx.user.id,
+        });
+
+        const budgetId = Number(result[0].insertId);
+
+        for (const item of input.items) {
+          await database.insert(budgetItems).values({
+            budgetId,
+            itemName: item.itemName,
+            quantity: item.quantity.toString(),
+            unit: item.unit,
+            brand: item.brand,
+            notes: item.notes,
+          });
+        }
+
+        return { success: true, id: budgetId, budgetNumber };
+      }),
+
+    templates: router({
+      list: protectedProcedure.query(async () => {
+        return await db.getAllBudgetTemplates();
+      }),
+
+      create: protectedProcedure
+        .input(z.object({
+          name: z.string().min(1),
+          description: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+
+          const result = await database.insert(budgetTemplates).values({
+            name: input.name,
+            description: input.description,
+            createdBy: ctx.user.id,
+          });
+
+          return { success: true, id: Number(result[0].insertId) };
+        }),
+    }),
+  }),
+
+  // ============= EQUIPMENT =============
+  equipment: router({
+    list: protectedProcedure.query(async () => {
+      return await db.getAllEquipment();
+    }),
+
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const equipmentData = await db.getEquipmentById(input.id);
+        const maintenanceHistory = await db.getMaintenanceRecordsByEquipment(input.id);
+        return { equipment: equipmentData, maintenanceHistory };
+      }),
+
+    create: protectedProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        code: z.string().optional(),
+        type: z.string().optional(),
+        manufacturer: z.string().optional(),
+        model: z.string().optional(),
+        serialNumber: z.string().optional(),
+        location: z.string().optional(),
+        purchaseDate: z.string().optional(),
+        warrantyExpiry: z.string().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const result = await database.insert(equipment).values({
+          name: input.name,
+          code: input.code,
+          type: input.type,
+          manufacturer: input.manufacturer,
+          model: input.model,
+          serialNumber: input.serialNumber,
+          location: input.location,
+          purchaseDate: input.purchaseDate,
+          warrantyExpiry: input.warrantyExpiry,
+          notes: input.notes,
+          createdBy: ctx.user.id,
+        });
+
+        return { success: true, id: Number(result[0].insertId) };
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().optional(),
+        code: z.string().optional(),
+        type: z.string().optional(),
+        manufacturer: z.string().optional(),
+        model: z.string().optional(),
+        serialNumber: z.string().optional(),
+        location: z.string().optional(),
+        purchaseDate: z.string().optional(),
+        warrantyExpiry: z.string().optional(),
+        status: z.enum(['active', 'maintenance', 'inactive', 'retired']).optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const { id, ...updateData } = input;
+        await database.update(equipment).set(updateData).where(eq(equipment.id, id));
+
+        return { success: true };
+      }),
+  }),
+
+  // ============= MAINTENANCE =============
+  maintenance: router({
+    schedules: router({
+      list: protectedProcedure.query(async () => {
+        return await db.getMaintenanceSchedules();
+      }),
+
+      upcoming: protectedProcedure
+        .input(z.object({ days: z.number().default(30) }))
+        .query(async ({ input }) => {
+          return await db.getUpcomingMaintenance(input.days);
+        }),
+
+      create: protectedProcedure
+        .input(z.object({
+          equipmentId: z.number(),
+          maintenanceType: z.enum(['preventive', 'corrective']),
+          scheduledDate: z.string(),
+          description: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+
+          const result = await database.insert(maintenanceSchedules).values({
+            equipmentId: input.equipmentId,
+            maintenanceType: input.maintenanceType,
+            scheduledDate: input.scheduledDate,
+            description: input.description,
+            createdBy: ctx.user.id,
+          });
+
+          return { success: true, id: Number(result[0].insertId) };
+        }),
+
+      updateStatus: protectedProcedure
+        .input(z.object({
+          id: z.number(),
+          status: z.enum(['scheduled', 'completed', 'cancelled']),
+        }))
+        .mutation(async ({ input }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+
+          await database.update(maintenanceSchedules).set({ status: input.status }).where(eq(maintenanceSchedules.id, input.id));
+
+          return { success: true };
+        }),
+    }),
+
+    records: router({
+      listByEquipment: protectedProcedure
+        .input(z.object({ equipmentId: z.number() }))
+        .query(async ({ input }) => {
+          return await db.getMaintenanceRecordsByEquipment(input.equipmentId);
+        }),
+
+      create: protectedProcedure
+        .input(z.object({
+          equipmentId: z.number(),
+          scheduleId: z.number().optional(),
+          maintenanceType: z.enum(['preventive', 'corrective']),
+          performedDate: z.string(),
+          description: z.string().optional(),
+          technician: z.string().optional(),
+          cost: z.number().optional(),
+          partsReplaced: z.string().optional(),
+          notes: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+
+          const costValue = input.cost !== undefined ? input.cost.toString() : undefined;
+          const result = await database.insert(maintenanceRecords).values({
+            equipmentId: input.equipmentId,
+            scheduleId: input.scheduleId,
+            maintenanceType: input.maintenanceType,
+            performedDate: input.performedDate,
+            description: input.description,
+            technician: input.technician,
+            cost: costValue,
+            partsReplaced: input.partsReplaced,
+            notes: input.notes,
+            createdBy: ctx.user.id,
+          });
+
+          // If linked to a schedule, mark it as completed
+          if (input.scheduleId) {
+            await database.update(maintenanceSchedules)
+              .set({ status: 'completed' })
+              .where(eq(maintenanceSchedules.id, input.scheduleId));
+          }
+
+          return { success: true, id: Number(result[0].insertId) };
+        }),
+    }),
+  }),
+
+  // ============= DASHBOARD =============
+  dashboard: router({
+    metrics: protectedProcedure.query(async () => {
+      return await db.getDashboardMetrics();
+    }),
+  }),
+
+  // ============= COMPANY SETTINGS =============
+  settings: router({
+    get: protectedProcedure.query(async () => {
+      return await db.getCompanySettings();
+    }),
+
+    update: adminProcedure
+      .input(z.object({
+        companyName: z.string().min(1),
+        cnpj: z.string().optional(),
+        address: z.string().optional(),
+        phone: z.string().optional(),
+        email: z.string().email().optional(),
+        logoUrl: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const existing = await db.getCompanySettings();
+
+        if (existing) {
+          await database.update(companySettings).set({
+            ...input,
+            updatedBy: ctx.user.id,
+          }).where(eq(companySettings.id, existing.id));
+        } else {
+          await database.insert(companySettings).values({
+            ...input,
+            updatedBy: ctx.user.id,
+          });
+        }
+
+        return { success: true };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

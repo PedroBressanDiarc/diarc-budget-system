@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE `equipment` MODIFY COLUMN `purchaseDate` varchar(10);\nALTER TABLE `equipment` MODIFY COLUMN `warrantyExpiry` varchar(10);\nALTER TABLE `maintenance_records` MODIFY COLUMN `performedDate` varchar(10) NOT NULL;\nALTER TABLE `maintenance_schedules` MODIFY COLUMN `scheduledDate` varchar(10) NOT NULL;\nALTER TABLE `purchase_orders` MODIFY COLUMN `orderDate` varchar(10) NOT NULL;\nALTER TABLE `purchase_orders` MODIFY COLUMN `expectedDelivery` varchar(10);\nALTER TABLE `purchase_orders` MODIFY COLUMN `actualDelivery` varchar(10);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute ALTER TABLE `equipment` MODIFY COLUMN `purchaseDate` varchar(10);\nALTER TABLE `equipment` MODIFY COLUMN `warrantyExpiry` varchar(10);\nALTER TABLE `maintenance_records` MODIFY COLUMN `performedDate` varchar(10) NOT NULL;\nALTER TABLE `maintenance_schedules` MODIFY COLUMN `scheduledDate` varchar(10) NOT NULL;\nALTER TABLE `purchase_orders` MODIFY COLUMN `orderDate` varchar(10) NOT NULL;\nALTER TABLE `purchase_orders` MODIFY COLUMN `expectedDelivery` varchar(10);\nALTER TABLE `purchase_orders` MODIFY COLUMN `actualDelivery` varchar(10);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 5649
+}

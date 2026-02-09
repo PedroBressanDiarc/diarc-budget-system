@@ -1,11 +1,35 @@
-import { eq } from "drizzle-orm";
+import { eq, desc, and, gte, lte, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { 
+  InsertUser, 
+  users, 
+  suppliers,
+  purchaseRequisitions,
+  requisitionItems,
+  quotes,
+  quoteItems,
+  purchaseOrders,
+  budgets,
+  budgetItems,
+  budgetTemplates,
+  equipment,
+  maintenanceSchedules,
+  maintenanceRecords,
+  companySettings,
+  type Supplier,
+  type PurchaseRequisition,
+  type Quote,
+  type PurchaseOrder,
+  type Budget,
+  type Equipment,
+  type MaintenanceSchedule,
+  type MaintenanceRecord,
+  type CompanySettings
+} from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
-// Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
@@ -56,8 +80,8 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       values.role = user.role;
       updateSet.role = user.role;
     } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
+      values.role = 'director';
+      updateSet.role = 'director';
     }
 
     if (!values.lastSignedIn) {
@@ -89,4 +113,181 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// ============= SUPPLIERS =============
+
+export async function getAllSuppliers() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(suppliers).orderBy(desc(suppliers.createdAt));
+}
+
+export async function getSupplierById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(suppliers).where(eq(suppliers.id, id)).limit(1);
+  return result[0];
+}
+
+// ============= PURCHASE REQUISITIONS =============
+
+export async function getAllRequisitions() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(purchaseRequisitions).orderBy(desc(purchaseRequisitions.createdAt));
+}
+
+export async function getRequisitionById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(purchaseRequisitions).where(eq(purchaseRequisitions.id, id)).limit(1);
+  return result[0];
+}
+
+export async function getRequisitionItems(requisitionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(requisitionItems).where(eq(requisitionItems.requisitionId, requisitionId));
+}
+
+// ============= QUOTES =============
+
+export async function getQuotesByRequisition(requisitionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(quotes).where(eq(quotes.requisitionId, requisitionId));
+}
+
+export async function getQuoteItems(quoteId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(quoteItems).where(eq(quoteItems.quoteId, quoteId));
+}
+
+// ============= PURCHASE ORDERS =============
+
+export async function getAllPurchaseOrders() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(purchaseOrders).orderBy(desc(purchaseOrders.createdAt));
+}
+
+export async function getPurchaseOrderById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(purchaseOrders).where(eq(purchaseOrders.id, id)).limit(1);
+  return result[0];
+}
+
+// ============= BUDGETS =============
+
+export async function getAllBudgets() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(budgets).orderBy(desc(budgets.createdAt));
+}
+
+export async function getBudgetById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(budgets).where(eq(budgets.id, id)).limit(1);
+  return result[0];
+}
+
+export async function getBudgetItems(budgetId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(budgetItems).where(eq(budgetItems.budgetId, budgetId));
+}
+
+export async function getAllBudgetTemplates() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(budgetTemplates).orderBy(desc(budgetTemplates.createdAt));
+}
+
+// ============= EQUIPMENT =============
+
+export async function getAllEquipment() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(equipment).orderBy(desc(equipment.createdAt));
+}
+
+export async function getEquipmentById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(equipment).where(eq(equipment.id, id)).limit(1);
+  return result[0];
+}
+
+// ============= MAINTENANCE =============
+
+export async function getMaintenanceSchedules() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(maintenanceSchedules).orderBy(maintenanceSchedules.scheduledDate);
+}
+
+export async function getMaintenanceRecordsByEquipment(equipmentId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(maintenanceRecords)
+    .where(eq(maintenanceRecords.equipmentId, equipmentId))
+    .orderBy(desc(maintenanceRecords.performedDate));
+}
+
+export async function getUpcomingMaintenance(days: number = 30) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const today = new Date();
+  const futureDate = new Date();
+  futureDate.setDate(today.getDate() + days);
+  
+  return await db.select().from(maintenanceSchedules)
+    .where(
+      sql`${maintenanceSchedules.status} = 'scheduled' AND ${maintenanceSchedules.scheduledDate} >= ${today.toISOString().split('T')[0]} AND ${maintenanceSchedules.scheduledDate} <= ${futureDate.toISOString().split('T')[0]}`
+    )
+    .orderBy(maintenanceSchedules.scheduledDate);
+}
+
+// ============= COMPANY SETTINGS =============
+
+export async function getCompanySettings() {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(companySettings).limit(1);
+  return result[0];
+}
+
+// ============= DASHBOARD METRICS =============
+
+export async function getDashboardMetrics() {
+  const db = await getDb();
+  if (!db) return null;
+
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+  // Monthly purchase volume
+  const monthlyOrders = await db.select().from(purchaseOrders)
+    .where(
+      sql`${purchaseOrders.orderDate} >= ${firstDayOfMonth.toISOString().split('T')[0]} AND ${purchaseOrders.orderDate} <= ${lastDayOfMonth.toISOString().split('T')[0]}`
+    );
+
+  const monthlyVolume = monthlyOrders.reduce((sum, order) => sum + Number(order.totalAmount), 0);
+
+  // Pending requisitions
+  const pendingReqs = await db.select().from(purchaseRequisitions)
+    .where(eq(purchaseRequisitions.status, 'pending_quotes'));
+
+  // Upcoming maintenance
+  const upcomingMaint = await getUpcomingMaintenance(7);
+
+  return {
+    monthlyVolume,
+    pendingRequisitions: pendingReqs.length,
+    upcomingMaintenance: upcomingMaint.length,
+  };
+}
