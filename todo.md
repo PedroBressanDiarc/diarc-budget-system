@@ -134,3 +134,5 @@
 - [x] Role "almoxarife" não aparece na página de criação de usuários
 - [x] Módulo de Compras não tem páginas frontend funcionais
 - [x] Fornecedor de teste sendo criado automaticamente
+
+- [x] Erro ao criar requisição: status "draft" não existe, deve usar "solicitacao" (resolvido com restart do servidor)
