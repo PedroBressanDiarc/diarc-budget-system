@@ -1,8 +1,103 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, ShoppingCart } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { trpc } from "@/lib/trpc";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Plus, Eye, Trash2 } from "lucide-react";
+import { useLocation } from "wouter";
+
+const statusLabels: Record<string, string> = {
+  solicitacao: "Solicitação",
+  cotacao_em_progresso: "Cotação em Progresso",
+  cotacoes_em_analise: "Cotações em Análise",
+  aguardando_autorizacao: "Aguardando Autorização",
+  ordem_compra_enviada: "Ordem de Compra Enviada",
+  aguardando_recebimento: "Aguardando Recebimento",
+  recebido: "Recebido",
+  cancelado: "Cancelado",
+};
+
+const statusColors: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+  solicitacao: "secondary",
+  cotacao_em_progresso: "default",
+  cotacoes_em_analise: "default",
+  aguardando_autorizacao: "outline",
+  ordem_compra_enviada: "default",
+  aguardando_recebimento: "secondary",
+  recebido: "default",
+  cancelado: "destructive",
+};
 
 export default function Requisitions() {
+  const [, setLocation] = useLocation();
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [items, setItems] = useState<Array<{ name: string; quantity: string; brand: string; notes: string }>>([
+    { name: "", quantity: "", brand: "", notes: "" }
+  ]);
+
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+  });
+
+  const { data: requisitions, refetch } = trpc.requisitions.list.useQuery();
+
+  const createMutation = trpc.requisitions.create.useMutation({
+    onSuccess: () => {
+      toast.success("Requisição criada com sucesso!");
+      setIsCreateOpen(false);
+      setFormData({ title: "", description: "" });
+      setItems([{ name: "", quantity: "", brand: "", notes: "" }]);
+      refetch();
+    },
+    onError: (error) => {
+      toast.error("Erro ao criar requisição: " + error.message);
+    },
+  });
+
+  const handleCreate = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const validItems = items.filter(item => item.name && item.quantity);
+    
+    if (validItems.length === 0) {
+      toast.error("Adicione pelo menos um item à requisição");
+      return;
+    }
+
+    createMutation.mutate({
+      title: formData.title,
+      description: formData.description,
+      items: validItems.map(item => ({
+        itemName: item.name,
+        quantity: Number(item.quantity),
+        brand: item.brand || undefined,
+        notes: item.notes || undefined,
+      })),
+    });
+  };
+
+  const addItem = () => {
+    setItems([...items, { name: "", quantity: "", brand: "", notes: "" }]);
+  };
+
+  const removeItem = (index: number) => {
+    setItems(items.filter((_, i) => i !== index));
+  };
+
+  const updateItem = (index: number, field: string, value: string) => {
+    const newItems = [...items];
+    newItems[index] = { ...newItems[index], [field]: value };
+    setItems(newItems);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -10,16 +105,165 @@ export default function Requisitions() {
           <h1 className="text-3xl font-bold tracking-tight">Compras</h1>
           <p className="text-muted-foreground">Gerencie requisições e pedidos de compra</p>
         </div>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Nova Requisição
-        </Button>
+        <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <Plus className="mr-2 h-4 w-4" />
+              Nova Requisição
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+            <form onSubmit={handleCreate}>
+              <DialogHeader>
+                <DialogTitle>Nova Requisição de Compra</DialogTitle>
+                <DialogDescription>
+                  Preencha os dados da requisição e adicione os itens necessários
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="title">Título da Requisição *</Label>
+                  <Input
+                    id="title"
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="description">Descrição</Label>
+                  <Textarea
+                    id="description"
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    rows={3}
+                  />
+                </div>
+
+                <div className="border-t pt-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <Label className="text-base">Itens da Requisição</Label>
+                    <Button type="button" variant="outline" size="sm" onClick={addItem}>
+                      <Plus className="mr-2 h-4 w-4" />
+                      Adicionar Item
+                    </Button>
+                  </div>
+
+                  <div className="space-y-4">
+                    {items.map((item, index) => (
+                      <Card key={index}>
+                        <CardContent className="pt-6">
+                          <div className="flex justify-between items-start mb-4">
+                            <h4 className="font-medium">Item {index + 1}</h4>
+                            {items.length > 1 && (
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => removeItem(index)}
+                              >
+                                <Trash2 className="h-4 w-4 text-destructive" />
+                              </Button>
+                            )}
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <Label>Nome do Item *</Label>
+                              <Input
+                                value={item.name}
+                                onChange={(e) => updateItem(index, "name", e.target.value)}
+                                required
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label>Quantidade *</Label>
+                              <Input
+                                value={item.quantity}
+                                onChange={(e) => updateItem(index, "quantity", e.target.value)}
+                                required
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label>Marca/Modelo</Label>
+                              <Input
+                                value={item.brand}
+                                onChange={(e) => updateItem(index, "brand", e.target.value)}
+                              />
+                            </div>
+                            <div className="space-y-2 col-span-2">
+                              <Label>Observações</Label>
+                              <Textarea
+                                value={item.notes}
+                                onChange={(e) => updateItem(index, "notes", e.target.value)}
+                                rows={2}
+                              />
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit" disabled={createMutation.isPending}>
+                  {createMutation.isPending ? "Criando..." : "Criar Requisição"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
+
       <Card>
-        <CardContent className="flex flex-col items-center justify-center py-12">
-          <ShoppingCart className="h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-lg font-semibold mb-2">Módulo em desenvolvimento</h3>
-          <p className="text-sm text-muted-foreground">Fluxo completo: Requisição → Cotação → Aprovação → Pedido → Recebimento</p>
+        <CardHeader>
+          <CardTitle>Requisições de Compra</CardTitle>
+          <CardDescription>Lista de todas as requisições cadastradas</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {requisitions && requisitions.length > 0 ? (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Número</TableHead>
+                  <TableHead>Título</TableHead>
+                  <TableHead>Solicitante</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Data</TableHead>
+                  <TableHead className="text-right">Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {requisitions.map((req: any) => (
+                  <TableRow key={req.id}>
+                    <TableCell className="font-medium">{req.requisitionNumber}</TableCell>
+                    <TableCell>{req.title}</TableCell>
+                    <TableCell>{req.requestedBy}</TableCell>
+                    <TableCell>
+                      <Badge variant={statusColors[req.status] || "secondary"}>
+                        {statusLabels[req.status] || req.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{new Date(req.createdAt).toLocaleDateString('pt-BR')}</TableCell>
+                    <TableCell className="text-right">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setLocation(`/compras/${req.id}`)}
+                      >
+                        <Eye className="h-4 w-4 mr-2" />
+                        Ver Detalhes
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Nenhuma requisição cadastrada</p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

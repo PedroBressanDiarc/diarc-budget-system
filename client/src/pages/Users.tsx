@@ -21,7 +21,7 @@ export default function Users() {
     email: "",
     password: "",
     name: "",
-    role: "buyer" as "buyer" | "director",
+    role: "buyer" as "buyer" | "director" | "storekeeper",
     username: "",
   });
 
@@ -144,6 +144,7 @@ export default function Users() {
                     <SelectContent>
                       <SelectItem value="buyer">Comprador</SelectItem>
                       <SelectItem value="director">Diretor</SelectItem>
+                      <SelectItem value="storekeeper">Almoxarife</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -181,7 +182,7 @@ export default function Users() {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
                     <Badge variant={user.role === "director" ? "default" : "secondary"}>
-                      {user.role === "director" ? "Diretor" : "Comprador"}
+                      {user.role === "director" ? "Diretor" : user.role === "storekeeper" ? "Almoxarife" : "Comprador"}
                     </Badge>
                   </TableCell>
                   <TableCell>

@@ -129,3 +129,8 @@
 - [x] Verificar se o cookie auth_token está sendo setado corretamente
 - [x] Login bem-sucedido mas não redireciona - auth.me não atualiza antes do redirect
 - [x] Cookie não persistia entre requisições - corrigido com sameSite: none e secure: true
+
+## Bugs Reportados (Novos)
+- [x] Role "almoxarife" não aparece na página de criação de usuários
+- [x] Módulo de Compras não tem páginas frontend funcionais
+- [x] Fornecedor de teste sendo criado automaticamente

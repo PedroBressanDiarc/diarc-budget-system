@@ -71,7 +71,7 @@ export const appRouter = router({
         email: z.string().email(),
         password: z.string().min(6),
         name: z.string().min(1),
-        role: z.enum(["buyer", "director"]),
+        role: z.enum(["buyer", "director", "storekeeper"]),
         username: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
@@ -92,7 +92,7 @@ export const appRouter = router({
         id: z.number(),
         email: z.string().email().optional(),
         name: z.string().min(1).optional(),
-        role: z.enum(["buyer", "director"]).optional(),
+        role: z.enum(["buyer", "director", "storekeeper"]).optional(),
         isActive: z.number().optional(),
       }))
       .mutation(async ({ input }) => {
