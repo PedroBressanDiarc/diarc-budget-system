@@ -22,7 +22,7 @@ import {
   maintenanceRecords,
   companySettings
 } from "../drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export const appRouter = router({
   system: systemRouter,
@@ -181,6 +181,17 @@ export const appRouter = router({
       return await db.getAllRequisitions();
     }),
 
+    countPendingAuth: protectedProcedure.query(async () => {
+      const database = await getDb();
+      if (!database) return 0;
+      
+      const result = await database.select({ count: sql<number>`count(*)` })
+        .from(purchaseRequisitions)
+        .where(eq(purchaseRequisitions.status, 'aguardando_autorizacao'));
+      
+      return result[0]?.count || 0;
+    }),
+
     getById: protectedProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
@@ -294,6 +305,42 @@ export const appRouter = router({
             notes: item.notes,
           });
         }
+
+        return { success: true };
+      }),
+
+    approve: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.update(purchaseRequisitions)
+          .set({
+            status: 'autorizado',
+            approvedBy: ctx.user.id,
+            approvedAt: new Date(),
+          })
+          .where(eq(purchaseRequisitions.id, input.id));
+
+        return { success: true };
+      }),
+
+    reject: protectedProcedure
+      .input(z.object({ 
+        id: z.number(),
+        reason: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.update(purchaseRequisitions)
+          .set({
+            status: 'cancelado',
+            notes: input.reason ? `Rejeitado: ${input.reason}` : 'Rejeitado',
+          })
+          .where(eq(purchaseRequisitions.id, input.id));
 
         return { success: true };
       }),

@@ -56,6 +56,7 @@ export const purchaseRequisitions = mysqlTable("purchase_requisitions", {
     "cotacao_em_progresso",     // Comprador adicionando cotações
     "cotacoes_em_analise",      // Comprador fez comparação inicial
     "aguardando_autorizacao",   // Diretor vai aprovar
+    "autorizado",               // Diretor aprovou
     "ordem_compra_enviada",     // Pedido gerado e enviado
     "aguardando_recebimento",   // Aguardando entrega
     "recebido",                 // Concluído

@@ -189,3 +189,13 @@
 - [x] Adicionar menu dropdown (chevron) em cada cotação com opções de editar e excluir
 - [x] Implementar funcionalidade de editar cotação existente
 - [x] Implementar funcionalidade de excluir cotação com confirmação
+
+## Novas Funcionalidades - Autorizações (10/02/2026)
+- [x] Atualizar schema de status: adicionar "aguardando_autorizacao" e renomear "autorizacao" para "autorizado"
+- [x] Atualizar timeline de fluxo com novo status e ícone de pendência
+- [x] Adicionar menu "Autorizações" na sidebar (visível apenas para admins)
+- [x] Mostrar badge com contador de autorizações pendentes no menu
+- [x] Criar página de Autorizações com listagem similar à de Compras
+- [x] Adicionar botões de Aprovar (verde) e Rejeitar (vermelho) em cada requisição
+- [x] Implementar dialog para motivo de rejeição (opcional)
+- [x] Criar endpoints backend para aprovar e rejeitar requisições

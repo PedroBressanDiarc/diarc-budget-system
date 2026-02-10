@@ -1,0 +1,1 @@
+ALTER TABLE `purchase_requisitions` MODIFY COLUMN `status` enum('solicitacao','cotacao_em_progresso','cotacoes_em_analise','aguardando_autorizacao','autorizado','ordem_compra_enviada','aguardando_recebimento','recebido','cancelado') NOT NULL DEFAULT 'solicitacao';

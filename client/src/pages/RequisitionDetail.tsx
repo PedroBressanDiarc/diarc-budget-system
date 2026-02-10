@@ -17,10 +17,11 @@ import { toast } from "sonner";
 import { formatCurrency } from "@/lib/currency";
 
 const statusLabels: Record<string, string> = {
-  solicitacao: "Solicita\u00e7\u00e3o",
-  cotacao_em_progresso: "Cota\u00e7\u00e3o em Progresso",
-  cotacoes_em_analise: "Cota\u00e7\u00f5es em An\u00e1lise",
-  aguardando_autorizacao: "Aguardando Autoriza\u00e7\u00e3o",
+  solicitacao: "Solicitação",
+  cotacao_em_progresso: "Cotação em Progresso",
+  cotacoes_em_analise: "Cotações em Análise",
+  aguardando_autorizacao: "Aguardando Autorização",
+  autorizado: "Autorizado",
   ordem_compra_enviada: "Ordem de Compra Enviada",
   aguardando_recebimento: "Aguardando Recebimento",
   recebido: "Recebido",
@@ -464,7 +465,8 @@ export default function RequisitionDetail() {
                 { key: "solicitacao", label: "Solicitação", icon: "📋" },
                 { key: "cotacao_em_progresso", label: "Cotação", icon: "💰" },
                 { key: "cotacoes_em_analise", label: "Análise", icon: "🔍" },
-                { key: "aguardando_autorizacao", label: "Autorização", icon: "✅" },
+                { key: "aguardando_autorizacao", label: "Aguardando Autorização", icon: "⏳" },
+                { key: "autorizado", label: "Autorizado", icon: "✅" },
                 { key: "ordem_compra_enviada", label: "Ordem Enviada", icon: "📤" },
                 { key: "aguardando_recebimento", label: "Aguardando", icon: "🚚" },
                 { key: "recebido", label: "Recebido", icon: "✔️" },
@@ -474,6 +476,7 @@ export default function RequisitionDetail() {
                   "cotacao_em_progresso",
                   "cotacoes_em_analise",
                   "aguardando_autorizacao",
+                  "autorizado",
                   "ordem_compra_enviada",
                   "aguardando_recebimento",
                   "recebido",
