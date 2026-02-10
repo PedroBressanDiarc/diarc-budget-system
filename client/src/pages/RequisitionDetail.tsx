@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, FileText, Upload, Plus, X } from "lucide-react";
+import { ArrowLeft, FileText, Upload, Plus, X, Edit, Trash2 } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -72,8 +72,32 @@ export default function RequisitionDetail() {
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [uploadFileType, setUploadFileType] = useState<"cotacao" | "ordem_compra" | "adicional">("cotacao");
   const [isUploading, setIsUploading] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
+
+  const updateStatusMutation = trpc.requisitions.updateStatus.useMutation({
+    onSuccess: () => {
+      toast.success("Status atualizado com sucesso!");
+      setIsStatusDialogOpen(false);
+      setSelectedStatus(null);
+      refetch();
+    },
+    onError: (error: any) => {
+      toast.error(`Erro ao atualizar status: ${error.message}`);
+    },
+  });
+
+  const deleteRequisitionMutation = trpc.requisitions.delete.useMutation({
+    onSuccess: () => {
+      toast.success("Requisição excluída com sucesso!");
+      setLocation("/compras");
+    },
+    onError: (error: any) => {
+      toast.error(`Erro ao excluir: ${error.message}`);
+    },
+  });
   
-  const { data, isLoading } = trpc.requisitions.getById.useQuery({ 
+  const { data, isLoading, refetch } = trpc.requisitions.getById.useQuery({ 
     id: Number(id) 
   });
 
@@ -101,7 +125,7 @@ export default function RequisitionDetail() {
     },
   });
 
-  const deleteMutation = trpc.attachments.delete.useMutation({
+  const deleteAttachmentMutation = trpc.attachments.delete.useMutation({
     onSuccess: () => {
       toast.success("Arquivo removido com sucesso!");
       refetchAttachments();
@@ -277,9 +301,32 @@ export default function RequisitionDetail() {
             </p>
           </div>
         </div>
-        <Badge variant={statusColors[requisition.status]}>
-          {statusLabels[requisition.status]}
-        </Badge>
+        <div className="flex items-center gap-2">
+          <Badge variant={statusColors[requisition.status]}>
+            {statusLabels[requisition.status]}
+          </Badge>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => toast.info("Função de edição em desenvolvimento")}
+          >
+            <Edit className="h-4 w-4 mr-2" />
+            Editar
+          </Button>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => {
+              if (confirm("Tem certeza que deseja excluir esta requisição?")) {
+                deleteRequisitionMutation.mutate({ id: requisition.id });
+              }
+            }}
+            disabled={deleteRequisitionMutation.isPending}
+          >
+            <Trash2 className="h-4 w-4 mr-2" />
+            Excluir
+          </Button>
+        </div>
       </div>
 
       {/* Timeline do Fluxo de Compras */}
@@ -320,19 +367,23 @@ export default function RequisitionDetail() {
 
                 return (
                   <div key={step.key} className="flex flex-col items-center" style={{ flex: 1 }}>
-                    <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center text-lg z-10 ${
+                    <button
+                      onClick={() => {
+                        setSelectedStatus(step.key);
+                        setIsStatusDialogOpen(true);
+                      }}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center text-lg z-10 cursor-pointer transition-all hover:scale-110 ${
                         isCanceled
                           ? "bg-destructive/20 text-destructive"
                           : isCompleted
                           ? "bg-primary text-primary-foreground"
                           : isActive
                           ? "bg-primary text-primary-foreground ring-4 ring-primary/20"
-                          : "bg-muted text-muted-foreground"
+                          : "bg-muted text-muted-foreground hover:bg-muted/80"
                       }`}
                     >
                       {step.icon}
-                    </div>
+                    </button>
                     <p className={`text-xs mt-2 text-center ${
                       isActive ? "font-semibold" : "text-muted-foreground"
                     }`}>
@@ -350,6 +401,42 @@ export default function RequisitionDetail() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Dialog de Confirmação de Mudança de Status */}
+      <Dialog open={isStatusDialogOpen} onOpenChange={setIsStatusDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirmar Mudança de Status</DialogTitle>
+            <DialogDescription>
+              Tem certeza que deseja alterar o status desta requisição para <strong>{selectedStatus && statusLabels[selectedStatus]}</strong>?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setIsStatusDialogOpen(false);
+                setSelectedStatus(null);
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button
+              onClick={() => {
+                if (selectedStatus) {
+                  updateStatusMutation.mutate({
+                    id: requisition.id,
+                    status: selectedStatus as any,
+                  });
+                }
+              }}
+              disabled={updateStatusMutation.isPending}
+            >
+              {updateStatusMutation.isPending ? "Atualizando..." : "Confirmar"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Informações Básicas */}
       <Card>
@@ -858,7 +945,7 @@ export default function RequisitionDetail() {
                       <Button
                         size="sm"
                         variant="destructive"
-                        onClick={() => deleteMutation.mutate({ id: attachment.id })}
+                        onClick={() => deleteAttachmentMutation.mutate({ id: attachment.id })}
                       >
                         <X className="h-4 w-4" />
                       </Button>

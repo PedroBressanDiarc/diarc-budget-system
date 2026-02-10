@@ -167,3 +167,9 @@
 - [x] Implementar formatação monetária brasileira (R$ 1.250,43) em todos os valores
 - [x] Melhorar comparação de preços item a item entre fornecedores (incluindo prazo pagamento e entrega)
 - [x] Verificar e implementar visualização do fluxo de compras (status e transições)
+
+## Features de Qualidade de Vida (10/02/2026)
+- [x] Adicionar checkboxes de seleção múltipla na listagem de requisições
+- [x] Adicionar botões de ação em lote (excluir/editar) quando requisições estiverem selecionadas
+- [x] Adicionar botões de editar e excluir na página de detalhes da requisição
+- [x] Tornar timeline de fluxo clicável para atualizar status com confirmação

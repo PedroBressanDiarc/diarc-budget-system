@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Plus, Eye, Trash2 } from "lucide-react";
+import { Plus, Eye, Trash2, Edit, CheckSquare, Square } from "lucide-react";
 import { useLocation } from "wouter";
 
 const statusLabels: Record<string, string> = {
@@ -38,6 +38,7 @@ const statusColors: Record<string, "default" | "secondary" | "destructive" | "ou
 export default function Requisitions() {
   const [, setLocation] = useLocation();
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [items, setItems] = useState<Array<{ name: string; quantity: string; unit: string; brand: string; notes: string }>>([
     { name: "", quantity: "", unit: "un", brand: "", notes: "" }
   ]);
@@ -102,6 +103,26 @@ export default function Requisitions() {
     setItems(newItems);
   };
 
+  const deleteMutation = trpc.requisitions.delete.useMutation({
+    onSuccess: () => {
+      toast.success("Requisições excluídas com sucesso!");
+      setSelectedIds([]);
+      refetch();
+    },
+    onError: (error: any) => {
+      toast.error(`Erro ao excluir: ${error.message}`);
+    },
+  });
+
+  const handleBulkDelete = () => {
+    if (selectedIds.length === 0) return;
+    if (confirm(`Tem certeza que deseja excluir ${selectedIds.length} requisição(s)?`)) {
+      selectedIds.forEach(id => {
+        deleteMutation.mutate({ id });
+      });
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -109,11 +130,28 @@ export default function Requisitions() {
           <h1 className="text-3xl font-bold tracking-tight">Compras</h1>
           <p className="text-muted-foreground">Gerencie requisições e pedidos de compra</p>
         </div>
-        <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Nova Requisição
+        <div className="flex gap-2">
+          {selectedIds.length > 0 && (
+            <>
+              <Badge variant="secondary" className="px-3 py-2">
+                {selectedIds.length} selecionada(s)
+              </Badge>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleBulkDelete}
+                disabled={deleteMutation.isPending}
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Excluir Selecionadas
+              </Button>
+            </>
+          )}
+          <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Nova Requisição
             </Button>
           </DialogTrigger>
           <DialogContent className="!max-w-none !w-[90vw] !h-[90vh] overflow-y-auto p-0">
@@ -244,6 +282,7 @@ export default function Requisitions() {
             </form>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       <Card>
@@ -256,6 +295,25 @@ export default function Requisitions() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-[50px]">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        if (selectedIds.length === requisitions.length) {
+                          setSelectedIds([]);
+                        } else {
+                          setSelectedIds(requisitions.map((r: any) => r.id));
+                        }
+                      }}
+                    >
+                      {selectedIds.length === requisitions.length ? (
+                        <CheckSquare className="h-4 w-4" />
+                      ) : (
+                        <Square className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </TableHead>
                   <TableHead>Número</TableHead>
                   <TableHead>Título</TableHead>
                   <TableHead>Solicitante</TableHead>
@@ -267,6 +325,25 @@ export default function Requisitions() {
               <TableBody>
                 {requisitions.map((req: any) => (
                   <TableRow key={req.id}>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          if (selectedIds.includes(req.id)) {
+                            setSelectedIds(selectedIds.filter(id => id !== req.id));
+                          } else {
+                            setSelectedIds([...selectedIds, req.id]);
+                          }
+                        }}
+                      >
+                        {selectedIds.includes(req.id) ? (
+                          <CheckSquare className="h-4 w-4" />
+                        ) : (
+                          <Square className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </TableCell>
                     <TableCell className="font-medium">{req.requisitionNumber}</TableCell>
                     <TableCell>{req.title}</TableCell>
                     <TableCell>{req.requestedBy}</TableCell>

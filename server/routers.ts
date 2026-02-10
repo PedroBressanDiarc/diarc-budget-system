@@ -253,6 +253,21 @@ export const appRouter = router({
 
         return { success: true };
       }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        // Delete items first (foreign key constraint)
+        await database.delete(requisitionItems).where(eq(requisitionItems.requisitionId, input.id));
+        
+        // Delete requisition
+        await database.delete(purchaseRequisitions).where(eq(purchaseRequisitions.id, input.id));
+
+        return { success: true };
+      }),
   }),
 
   // ============= QUOTES =============
