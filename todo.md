@@ -153,3 +153,6 @@
 - [x] Implementar upload de arquivos (cotação, ordem_compra, adicional) com S3
 - [ ] Implementar ações de aprovação/rejeição para diretores
 - [ ] Implementar solicitação de alteração para almoxarifes
+
+## Bug Reportado (10/02/2026)
+- [x] Formulário de nova requisição ainda não está preenchendo toda a tela apesar das classes w-screen h-screen (resolvido com !important para sobrescrever classes padrão do Dialog)
