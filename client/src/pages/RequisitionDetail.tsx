@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 import { toast } from "sonner";
+import { formatCurrency } from "@/lib/currency";
 
 const statusLabels: Record<string, string> = {
   solicitacao: "Solicita\u00e7\u00e3o",
@@ -281,6 +282,75 @@ export default function RequisitionDetail() {
         </Badge>
       </div>
 
+      {/* Timeline do Fluxo de Compras */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Fluxo da Requisição</CardTitle>
+          <CardDescription>Acompanhe o progresso da requisição de compra</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="relative">
+            {/* Linha de progresso */}
+            <div className="absolute top-5 left-0 right-0 h-0.5 bg-border" />
+            <div className="relative flex justify-between">
+              {[
+                { key: "solicitacao", label: "Solicitação", icon: "📋" },
+                { key: "cotacao_em_progresso", label: "Cotação", icon: "💰" },
+                { key: "cotacoes_em_analise", label: "Análise", icon: "🔍" },
+                { key: "aguardando_autorizacao", label: "Autorização", icon: "✅" },
+                { key: "ordem_compra_enviada", label: "Ordem Enviada", icon: "📤" },
+                { key: "aguardando_recebimento", label: "Aguardando", icon: "🚚" },
+                { key: "recebido", label: "Recebido", icon: "✔️" },
+              ].map((step) => {
+                const statusOrder = [
+                  "solicitacao",
+                  "cotacao_em_progresso",
+                  "cotacoes_em_analise",
+                  "aguardando_autorizacao",
+                  "ordem_compra_enviada",
+                  "aguardando_recebimento",
+                  "recebido",
+                  "cancelado"
+                ];
+                const currentIndex = statusOrder.indexOf(requisition.status);
+                const stepIndex = statusOrder.indexOf(step.key);
+                const isActive = stepIndex === currentIndex;
+                const isCompleted = stepIndex < currentIndex;
+                const isCanceled = requisition.status === "cancelado";
+
+                return (
+                  <div key={step.key} className="flex flex-col items-center" style={{ flex: 1 }}>
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center text-lg z-10 ${
+                        isCanceled
+                          ? "bg-destructive/20 text-destructive"
+                          : isCompleted
+                          ? "bg-primary text-primary-foreground"
+                          : isActive
+                          ? "bg-primary text-primary-foreground ring-4 ring-primary/20"
+                          : "bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      {step.icon}
+                    </div>
+                    <p className={`text-xs mt-2 text-center ${
+                      isActive ? "font-semibold" : "text-muted-foreground"
+                    }`}>
+                      {step.label}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+            {requisition.status === "cancelado" && (
+              <div className="mt-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-center">
+                <p className="text-sm font-medium text-destructive">❌ Requisição Cancelada</p>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Informações Básicas */}
       <Card>
         <CardHeader>
@@ -456,7 +526,7 @@ export default function RequisitionDetail() {
                                 </div>
                                 {quoteItem.unitPrice && (
                                   <p className="text-sm font-medium text-right">
-                                    Total: R$ {(Number(quoteItem.unitPrice) * Number(reqItem?.quantity || 0)).toFixed(2)}
+                                     Total: {formatCurrency(Number(quoteItem.unitPrice) * Number(reqItem?.quantity || 0))}
                                   </p>
                                 )}
                               </div>
@@ -493,7 +563,7 @@ export default function RequisitionDetail() {
                           </CardDescription>
                         </div>
                         <div className="text-right">
-                          <p className="text-2xl font-bold">R$ {Number(quote.totalAmount).toFixed(2)}</p>
+                          <p className="text-2xl font-bold">{formatCurrency(quote.totalAmount)}</p>
                           <Badge variant={quote.status === "approved" ? "default" : "secondary"}>
                             {quote.status === "approved" ? "Aprovada" : quote.status === "rejected" ? "Rejeitada" : "Pendente"}
                           </Badge>
@@ -514,9 +584,9 @@ export default function RequisitionDetail() {
                           {quote.items?.map((item: any) => (
                             <TableRow key={item.id}>
                               <TableCell>{items.find((i: any) => i.id === item.requisitionItemId)?.itemName}</TableCell>
-                              <TableCell>R$ {Number(item.unitPrice).toFixed(2)}</TableCell>
+                              <TableCell>{formatCurrency(item.unitPrice)}</TableCell>
                               <TableCell>{item.quantity}</TableCell>
-                              <TableCell>R$ {Number(item.totalPrice).toFixed(2)}</TableCell>
+                              <TableCell>{formatCurrency(item.totalPrice)}</TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
@@ -597,12 +667,12 @@ export default function RequisitionDetail() {
                           <TableCell key={index} className="text-center">
                             {qp.unitPrice !== null ? (
                               <div className={qp.totalPrice === minPrice ? "bg-green-50 dark:bg-green-950 p-2 rounded" : "p-2"}>
-                                <p className="font-semibold">
-                                  R$ {qp.unitPrice.toFixed(2)}
-                                </p>
-                                <p className="text-xs text-muted-foreground">
-                                  Total: R$ {qp.totalPrice?.toFixed(2)}
-                                </p>
+                                 <p className="font-semibold">
+                                   {formatCurrency(qp.unitPrice)}
+                                 </p>
+                                 <p className="text-xs text-muted-foreground">
+                                   Total: {formatCurrency(qp.totalPrice)}
+                                 </p>
                                 {qp.brand && (
                                   <p className="text-xs text-muted-foreground mt-1">
                                     {qp.brand}
@@ -626,7 +696,23 @@ export default function RequisitionDetail() {
                     <TableCell>Total Geral</TableCell>
                     {quotes.map((quote: any) => (
                       <TableCell key={quote.id} className="text-center">
-                        <p className="text-lg">R$ {Number(quote.totalAmount).toFixed(2)}</p>
+                        <p className="text-lg">{formatCurrency(quote.totalAmount)}</p>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                  <TableRow className="bg-muted/30">
+                    <TableCell className="font-medium">Prazo de Entrega</TableCell>
+                    {quotes.map((quote: any) => (
+                      <TableCell key={quote.id} className="text-center">
+                        <p className="font-medium">{quote.deliveryTime ? `${quote.deliveryTime} dias` : "N\u00e3o informado"}</p>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                  <TableRow className="bg-muted/30">
+                    <TableCell className="font-medium">Prazo de Pagamento</TableCell>
+                    {quotes.map((quote: any) => (
+                      <TableCell key={quote.id} className="text-center">
+                        <p className="font-medium">{quote.paymentTerms || "N\u00e3o informado"}</p>
                       </TableCell>
                     ))}
                   </TableRow>
@@ -634,18 +720,51 @@ export default function RequisitionDetail() {
               </Table>
             </div>
             <div className="mt-4 p-4 bg-muted rounded-lg">
-              <p className="text-sm font-medium mb-2">Resumo da Comparação:</p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-                {quotes.map((quote: any) => (
-                  <div key={quote.id}>
-                    <p className="font-medium">{quote.supplier?.name}</p>
-                    <p className="text-muted-foreground">Total: R$ {Number(quote.totalAmount).toFixed(2)}</p>
-                    <p className="text-muted-foreground">Prazo: {quote.deliveryTime || "N/A"} dias</p>
-                    {quote.paymentTerms && (
-                      <p className="text-muted-foreground">Pag: {quote.paymentTerms}</p>
-                    )}
-                  </div>
-                ))}
+              <p className="text-sm font-medium mb-3">An\u00e1lise Comparativa:</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {(() => {
+                  const minTotal = Math.min(...quotes.map((q: any) => Number(q.totalAmount)));
+                  const minDelivery = Math.min(...quotes.filter((q: any) => q.deliveryTime).map((q: any) => q.deliveryTime));
+                  
+                  return quotes.map((quote: any) => {
+                    const isBestPrice = Number(quote.totalAmount) === minTotal;
+                    const isBestDelivery = quote.deliveryTime && quote.deliveryTime === minDelivery;
+                    const badges = [];
+                    if (isBestPrice) badges.push("Melhor Pre\u00e7o");
+                    if (isBestDelivery) badges.push("Entrega Mais R\u00e1pida");
+                    
+                    return (
+                      <div key={quote.id} className={`p-3 rounded-lg border-2 ${
+                        isBestPrice ? "border-green-500 bg-green-50 dark:bg-green-950" : "border-border"
+                      }`}>
+                        <p className="font-semibold text-base mb-2">{quote.supplier?.name}</p>
+                        <div className="space-y-1 text-sm">
+                          <p className="flex justify-between">
+                            <span className="text-muted-foreground">Total:</span>
+                            <span className="font-medium">{formatCurrency(quote.totalAmount)}</span>
+                          </p>
+                          <p className="flex justify-between">
+                            <span className="text-muted-foreground">Entrega:</span>
+                            <span className="font-medium">{quote.deliveryTime ? `${quote.deliveryTime} dias` : "N/A"}</span>
+                          </p>
+                          <p className="flex justify-between">
+                            <span className="text-muted-foreground">Pagamento:</span>
+                            <span className="font-medium">{quote.paymentTerms || "N/A"}</span>
+                          </p>
+                        </div>
+                        {badges.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-2">
+                            {badges.map((badge, idx) => (
+                              <Badge key={idx} variant="default" className="text-xs">
+                                {badge}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  });
+                })()}
               </div>
             </div>
           </CardContent>

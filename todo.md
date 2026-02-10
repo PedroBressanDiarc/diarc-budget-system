@@ -162,3 +162,8 @@
 
 ## Novas Funcionalidades (10/02/2026)
 - [x] Adicionar dropdown de unidades no formulário de requisição (un, caixa, pacote, kg, m, L, etc)
+
+## Melhorias Solicitadas (10/02/2026 - Parte 2)
+- [x] Implementar formatação monetária brasileira (R$ 1.250,43) em todos os valores
+- [x] Melhorar comparação de preços item a item entre fornecedores (incluindo prazo pagamento e entrega)
+- [x] Verificar e implementar visualização do fluxo de compras (status e transições)
