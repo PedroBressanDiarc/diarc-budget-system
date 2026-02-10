@@ -382,6 +382,75 @@ export const appRouter = router({
 
         return { success: true, id: quoteId };
       }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        supplierId: z.number(),
+        quoteNumber: z.string().optional(),
+        deliveryTime: z.number().optional(),
+        paymentTerms: z.string().optional(),
+        notes: z.string().optional(),
+        items: z.array(z.object({
+          requisitionItemId: z.number(),
+          unitPrice: z.number(),
+          quantity: z.number(),
+          brand: z.string().optional(),
+          notes: z.string().optional(),
+        })),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const totalAmount = input.items.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+
+        // Update quote
+        await database.update(quotes)
+          .set({
+            supplierId: input.supplierId,
+            quoteNumber: input.quoteNumber,
+            totalAmount: totalAmount.toString(),
+            deliveryTime: input.deliveryTime,
+            paymentTerms: input.paymentTerms,
+            notes: input.notes,
+          })
+          .where(eq(quotes.id, input.id));
+
+        // Delete existing items
+        await database.delete(quoteItems).where(eq(quoteItems.quoteId, input.id));
+
+        // Insert updated items
+        for (const item of input.items) {
+          const totalPrice = item.unitPrice * item.quantity;
+          await database.insert(quoteItems).values({
+            quoteId: input.id,
+            requisitionItemId: item.requisitionItemId,
+            unitPrice: item.unitPrice.toString(),
+            quantity: item.quantity.toString(),
+            totalPrice: totalPrice.toString(),
+            brand: item.brand,
+            notes: item.notes,
+          });
+        }
+
+        return { success: true };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        // Delete items first (foreign key)
+        await database.delete(quoteItems).where(eq(quoteItems.quoteId, input.id));
+        
+        // Delete quote
+        await database.delete(quotes).where(eq(quotes.id, input.id));
+
+        return { success: true };
+      }),
   }),
 
   // ============= PURCHASE ORDERS =============

@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, FileText, Upload, Plus, X, Edit, Trash2 } from "lucide-react";
+import { ArrowLeft, FileText, Upload, Plus, X, Edit, Trash2, MoreVertical, ChevronDown } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/currency";
@@ -56,6 +57,8 @@ export default function RequisitionDetail() {
   const [, setLocation] = useLocation();
   const { user } = useAuth();
   const [isQuoteDialogOpen, setIsQuoteDialogOpen] = useState(false);
+  const [isEditQuoteDialogOpen, setIsEditQuoteDialogOpen] = useState(false);
+  const [editingQuoteId, setEditingQuoteId] = useState<number | null>(null);
   const [selectedSupplierId, setSelectedSupplierId] = useState<string>("");
   const [quoteFormData, setQuoteFormData] = useState({
     quoteNumber: "",
@@ -66,6 +69,7 @@ export default function RequisitionDetail() {
   const [quoteItems, setQuoteItems] = useState<Array<{
     requisitionItemId: number;
     unitPrice: string;
+    quantity: number;
     brand: string;
     notes: string;
   }>>([]);
@@ -164,7 +168,29 @@ export default function RequisitionDetail() {
       refetchQuotes();
     },
     onError: (error) => {
-      toast.error("Erro ao adicionar cotação: " + error.message);
+      toast.error(`Erro ao adicionar cotação: ${error.message}`);
+    },
+  });
+
+  const deleteQuoteMutation = trpc.quotes.delete.useMutation({
+    onSuccess: () => {
+      toast.success("Cotação excluída com sucesso!");
+      refetchQuotes();
+    },
+    onError: (error) => {
+      toast.error(`Erro ao excluir cotação: ${error.message}`);
+    },
+  });
+
+  const updateQuoteMutation = trpc.quotes.update.useMutation({
+    onSuccess: () => {
+      toast.success("Cotação atualizada com sucesso!");
+      setIsEditQuoteDialogOpen(false);
+      resetQuoteForm();
+      refetchQuotes();
+    },
+    onError: (error) => {
+      toast.error(`Erro ao atualizar cotação: ${error.message}`);
     },
   });
 
@@ -180,15 +206,74 @@ export default function RequisitionDetail() {
   };
 
   const handleOpenQuoteDialog = () => {
-    // Inicializar quoteItems com os itens da requisição
     const initialQuoteItems = items.map((item: any) => ({
       requisitionItemId: item.id,
       unitPrice: "",
-      brand: item.brand || "",
+      quantity: item.quantity,
+      brand: "",
       notes: "",
     }));
     setQuoteItems(initialQuoteItems);
     setIsQuoteDialogOpen(true);
+  };
+
+  const handleOpenEditQuote = (quote: any) => {
+    setEditingQuoteId(quote.id);
+    setSelectedSupplierId(quote.supplierId.toString());
+    setQuoteFormData({
+      quoteNumber: quote.quoteNumber || "",
+      deliveryTime: quote.deliveryTime?.toString() || "",
+      paymentTerms: quote.paymentTerms || "",
+      notes: quote.notes || "",
+    });
+    
+    const editQuoteItems = items.map((item: any) => {
+      const existingItem = quote.items?.find((qi: any) => qi.requisitionItemId === item.id);
+      return {
+        requisitionItemId: item.id,
+        unitPrice: existingItem?.unitPrice || "",
+        quantity: item.quantity,
+        brand: existingItem?.brand || "",
+        notes: existingItem?.notes || "",
+      };
+    });
+    setQuoteItems(editQuoteItems);
+    setIsEditQuoteDialogOpen(true);
+  };
+
+  const handleUpdateQuote = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!selectedSupplierId || !editingQuoteId) {
+      toast.error("Dados inválidos");
+      return;
+    }
+
+    const validItems = quoteItems.filter(item => {
+      const price = Number(item.unitPrice);
+      return item.unitPrice && !isNaN(price) && price > 0;
+    });
+
+    if (validItems.length === 0) {
+      toast.error("Adicione preços para pelo menos um item");
+      return;
+    }
+
+    updateQuoteMutation.mutate({
+      id: editingQuoteId,
+      supplierId: Number(selectedSupplierId),
+      quoteNumber: quoteFormData.quoteNumber || undefined,
+      deliveryTime: quoteFormData.deliveryTime ? Number(quoteFormData.deliveryTime) : undefined,
+      paymentTerms: quoteFormData.paymentTerms || undefined,
+      notes: quoteFormData.notes || undefined,
+      items: validItems.map((quoteItem) => ({
+        requisitionItemId: quoteItem.requisitionItemId,
+        unitPrice: Number(quoteItem.unitPrice),
+        quantity: Number(quoteItem.quantity),
+        brand: quoteItem.brand || undefined,
+        notes: quoteItem.notes || undefined,
+      })),
+    });
   };
 
   const handleCreateQuote = (e: React.FormEvent) => {
@@ -848,6 +933,137 @@ export default function RequisitionDetail() {
                   </form>
                 </DialogContent>
               </Dialog>
+
+              {/* Dialog de Editar Cotação */}
+              <Dialog open={isEditQuoteDialogOpen} onOpenChange={setIsEditQuoteDialogOpen}>
+                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                  <form onSubmit={handleUpdateQuote}>
+                    <DialogHeader>
+                      <DialogTitle>Editar Cotação</DialogTitle>
+                      <DialogDescription>
+                        Atualize as informações da cotação
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="edit-supplier">Fornecedor *</Label>
+                        <Select value={selectedSupplierId} onValueChange={setSelectedSupplierId}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione um fornecedor" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {suppliers?.map((supplier: any) => (
+                              <SelectItem key={supplier.id} value={supplier.id.toString()}>
+                                {supplier.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="edit-quoteNumber">Número da Cotação</Label>
+                          <Input
+                            id="edit-quoteNumber"
+                            value={quoteFormData.quoteNumber}
+                            onChange={(e) => setQuoteFormData({ ...quoteFormData, quoteNumber: e.target.value })}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="edit-deliveryTime">Prazo de Entrega (dias)</Label>
+                          <Input
+                            id="edit-deliveryTime"
+                            type="number"
+                            value={quoteFormData.deliveryTime}
+                            onChange={(e) => setQuoteFormData({ ...quoteFormData, deliveryTime: e.target.value })}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="edit-paymentTerms">Condições de Pagamento</Label>
+                        <Input
+                          id="edit-paymentTerms"
+                          value={quoteFormData.paymentTerms}
+                          onChange={(e) => setQuoteFormData({ ...quoteFormData, paymentTerms: e.target.value })}
+                          placeholder="Ex: 30 dias, à vista, etc."
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="edit-notes">Observações</Label>
+                        <Textarea
+                          id="edit-notes"
+                          value={quoteFormData.notes}
+                          onChange={(e) => setQuoteFormData({ ...quoteFormData, notes: e.target.value })}
+                          rows={2}
+                        />
+                      </div>
+
+                      <div className="border-t pt-4">
+                        <Label className="text-base mb-4 block">Preços dos Itens *</Label>
+                        <div className="space-y-3">
+                          {quoteItems.map((quoteItem, index) => {
+                            const reqItem = items.find((item: any) => item.id === quoteItem.requisitionItemId);
+                            return (
+                              <div key={index} className="border rounded-lg p-4 space-y-3">
+                                <div className="flex justify-between items-start">
+                                  <div>
+                                    <p className="font-medium">{reqItem?.itemName}</p>
+                                    <p className="text-sm text-muted-foreground">
+                                      Quantidade: {reqItem?.quantity} {reqItem?.unit || ""}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                  <div className="space-y-2">
+                                    <Label>Preço Unitário (R$) *</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.01"
+                                      value={quoteItem.unitPrice}
+                                      onChange={(e) => updateQuoteItem(index, "unitPrice", e.target.value)}
+                                      required
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label>Marca/Modelo</Label>
+                                    <Input
+                                      value={quoteItem.brand}
+                                      onChange={(e) => updateQuoteItem(index, "brand", e.target.value)}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="space-y-2">
+                                  <Label>Observações</Label>
+                                  <Input
+                                    value={quoteItem.notes}
+                                    onChange={(e) => updateQuoteItem(index, "notes", e.target.value)}
+                                  />
+                                </div>
+                                {quoteItem.unitPrice && (
+                                  <p className="text-sm font-medium text-right">
+                                     Total: {formatCurrency(Number(quoteItem.unitPrice) * Number(reqItem?.quantity || 0))}
+                                  </p>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button type="button" variant="outline" onClick={() => setIsEditQuoteDialogOpen(false)}>
+                        Cancelar
+                      </Button>
+                      <Button type="submit" disabled={updateQuoteMutation.isPending}>
+                        {updateQuoteMutation.isPending ? "Atualizando..." : "Atualizar Cotação"}
+                      </Button>
+                    </DialogFooter>
+                  </form>
+                </DialogContent>
+              </Dialog>
             </div>
           </CardHeader>
           <CardContent>
@@ -864,11 +1080,39 @@ export default function RequisitionDetail() {
                             Prazo: {quote.deliveryTime || "Não informado"} dias
                           </CardDescription>
                         </div>
-                        <div className="text-right">
-                          <p className="text-2xl font-bold">{formatCurrency(quote.totalAmount)}</p>
-                          <Badge variant={quote.status === "approved" ? "default" : "secondary"}>
-                            {quote.status === "approved" ? "Aprovada" : quote.status === "rejected" ? "Rejeitada" : "Pendente"}
-                          </Badge>
+                        <div className="flex items-start gap-4">
+                          <div className="text-right">
+                            <p className="text-2xl font-bold">{formatCurrency(quote.totalAmount)}</p>
+                            <Badge variant={quote.status === "approved" ? "default" : "secondary"}>
+                              {quote.status === "approved" ? "Aprovada" : quote.status === "rejected" ? "Rejeitada" : "Pendente"}
+                            </Badge>
+                          </div>
+                          {canAddQuotes && (
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="h-8 w-8">
+                                  <ChevronDown className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => handleOpenEditQuote(quote)}>
+                                  <Edit className="mr-2 h-4 w-4" />
+                                  Editar
+                                </DropdownMenuItem>
+                                <DropdownMenuItem 
+                                  className="text-destructive"
+                                  onClick={() => {
+                                    if (confirm(`Tem certeza que deseja excluir a cotação de ${quote.supplier?.name}?`)) {
+                                      deleteQuoteMutation.mutate({ id: quote.id });
+                                    }
+                                  }}
+                                >
+                                  <Trash2 className="mr-2 h-4 w-4" />
+                                  Excluir
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          )}
                         </div>
                       </div>
                     </CardHeader>

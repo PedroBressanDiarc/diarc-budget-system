@@ -183,3 +183,9 @@
 - [x] Verificar e corrigir visibilidade do botão "Adicionar Cotação"
 - [x] Limpar todas as cotações de teste do banco de dados
 - [x] Limpar todos os fornecedores de teste do banco de dados
+
+## Nova Funcionalidade (10/02/2026)
+- [x] Adicionar endpoints update e delete para cotações no backend
+- [x] Adicionar menu dropdown (chevron) em cada cotação com opções de editar e excluir
+- [x] Implementar funcionalidade de editar cotação existente
+- [x] Implementar funcionalidade de excluir cotação com confirmação
