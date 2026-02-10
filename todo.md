@@ -178,3 +178,8 @@
 - [x] Implementar dialog de edição completo na página de detalhes (título, descrição, itens)
 - [x] Criar endpoint update no backend para requisições
 - [x] Adicionar validações e feedback visual durante edição
+
+## Correções e Limpeza (10/02/2026)
+- [x] Verificar e corrigir visibilidade do botão "Adicionar Cotação"
+- [x] Limpar todas as cotações de teste do banco de dados
+- [x] Limpar todos os fornecedores de teste do banco de dados

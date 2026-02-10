@@ -1,0 +1,9 @@
+{
+  "query": "-- Deletar itens de cotações primeiro (foreign key)\nDELETE FROM quote_items WHERE quoteId IN (SELECT id FROM quotes);\n\n-- Deletar todas as cotações\nDELETE FROM quotes;\n\n-- Deletar fornecedores de teste\nDELETE FROM suppliers WHERE name LIKE '%Teste%' OR name LIKE '%Test%' OR name LIKE '%teste%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute -- Deletar itens de cotações primeiro (foreign key)\nDELETE FROM quote_items WHERE quoteId IN (SELECT id FROM quotes);\n\n-- Deletar todas as cotações\nDELETE FROM quotes;\n\n-- Deletar fornecedores de teste\nDELETE FROM suppliers WHERE name LIKE '%Teste%' OR name LIKE '%Test%' OR name LIKE '%teste%';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 488
+}

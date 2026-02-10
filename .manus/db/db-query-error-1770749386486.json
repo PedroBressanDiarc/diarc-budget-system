@@ -1,0 +1,8 @@
+{
+  "query": "-- Deletar itens de cotações primeiro (foreign key)\nDELETE FROM quote_items WHERE quote_id IN (SELECT id FROM quotes);\n\n-- Deletar todas as cotações\nDELETE FROM quotes;\n\n-- Deletar fornecedores de teste (mantendo apenas os reais se houver)\nDELETE FROM suppliers WHERE name LIKE '%Teste%' OR name LIKE '%Test%' OR name LIKE '%teste%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute -- Deletar itens de cotações primeiro (foreign key)\nDELETE FROM quote_items WHERE quote_id IN (SELECT id FROM quotes);\n\n-- Deletar todas as cotações\nDELETE FROM quotes;\n\n-- Deletar fornecedores de teste (mantendo apenas os reais se houver)\nDELETE FROM suppliers WHERE name LIKE '%Teste%' OR name LIKE '%Test%' OR name LIKE '%teste%';",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 2: Unknown column 'quote_id' in 'where clause'"
+  ]
+}

@@ -705,7 +705,7 @@ export default function RequisitionDetail() {
       </Card>
 
       {/* Seção de Cotações */}
-      {canAddQuotes && requisition?.status !== "solicitacao" && (
+      {canAddQuotes && (
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
