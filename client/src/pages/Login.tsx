@@ -11,13 +11,17 @@ export default function Login() {
   const [, setLocation] = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const utils = trpc.useUtils();
 
   const loginMutation = trpc.auth.login.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Login realizado com sucesso!");
-      setLocation("/");
-      // Recarregar para atualizar o contexto de autenticação
-      window.location.reload();
+      // Refetch auth.me e aguardar antes de redirecionar
+      await utils.auth.me.refetch();
+      // Pequeno delay para garantir que o React Query atualizou
+      setTimeout(() => {
+        setLocation("/");
+      }, 100);
     },
     onError: (error) => {
       toast.error(error.message || "Erro ao fazer login");

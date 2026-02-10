@@ -43,8 +43,8 @@ export const appRouter = router({
         // Definir cookie com token
         ctx.res.cookie("auth_token", result.token, {
           httpOnly: true,
-          secure: ctx.req.protocol === "https",
-          sameSite: "lax",
+          secure: true, // Forçar secure pois Manus usa HTTPS
+          sameSite: "none", // Necessário para cookies em ambiente com proxy
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 dias
           path: "/",
         });

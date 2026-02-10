@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import DashboardLayout from "./components/DashboardLayout";
@@ -50,8 +50,9 @@ function PublicRouter() {
 }
 
 function App() {
+  const [location] = useLocation();
   // Check if user is on login page
-  const isLoginPage = window.location.pathname === "/login";
+  const isLoginPage = location === "/login";
 
   return (
     <ErrorBoundary>
