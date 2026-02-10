@@ -159,3 +159,6 @@
 
 ## Melhorias de UX (10/02/2026)
 - [x] Ajustar formulário de requisição para 90% da tela (popup mais natural) em vez de fullscreen
+
+## Novas Funcionalidades (10/02/2026)
+- [x] Adicionar dropdown de unidades no formulário de requisição (un, caixa, pacote, kg, m, L, etc)

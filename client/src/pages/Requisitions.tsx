@@ -38,8 +38,8 @@ const statusColors: Record<string, "default" | "secondary" | "destructive" | "ou
 export default function Requisitions() {
   const [, setLocation] = useLocation();
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [items, setItems] = useState<Array<{ name: string; quantity: string; brand: string; notes: string }>>([
-    { name: "", quantity: "", brand: "", notes: "" }
+  const [items, setItems] = useState<Array<{ name: string; quantity: string; unit: string; brand: string; notes: string }>>([
+    { name: "", quantity: "", unit: "un", brand: "", notes: "" }
   ]);
 
   const [formData, setFormData] = useState({
@@ -54,7 +54,7 @@ export default function Requisitions() {
       toast.success("Requisição criada com sucesso!");
       setIsCreateOpen(false);
       setFormData({ title: "", description: "" });
-      setItems([{ name: "", quantity: "", brand: "", notes: "" }]);
+      setItems([{ name: "", quantity: "", unit: "un", brand: "", notes: "" }]);
       refetch();
     },
     onError: (error) => {
@@ -81,6 +81,7 @@ export default function Requisitions() {
       items: validItems.map(item => ({
         itemName: item.name,
         quantity: Number(item.quantity),
+        unit: item.unit || undefined,
         brand: item.brand || undefined,
         notes: item.notes || undefined,
       })),
@@ -88,7 +89,7 @@ export default function Requisitions() {
   };
 
   const addItem = () => {
-    setItems([...items, { name: "", quantity: "", brand: "", notes: "" }]);
+    setItems([...items, { name: "", quantity: "", unit: "un", brand: "", notes: "" }]);
   };
 
   const removeItem = (index: number) => {
@@ -188,6 +189,30 @@ export default function Requisitions() {
                                 onChange={(e) => updateItem(index, "quantity", e.target.value)}
                                 required
                               />
+                            </div>
+                            <div className="space-y-2">
+                              <Label>Unidade *</Label>
+                              <Select
+                                value={item.unit}
+                                onValueChange={(value) => updateItem(index, "unit", value)}
+                              >
+                                <SelectTrigger>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="un">Unidade (un)</SelectItem>
+                                  <SelectItem value="caixa">Caixa</SelectItem>
+                                  <SelectItem value="pacote">Pacote</SelectItem>
+                                  <SelectItem value="kg">Quilograma (kg)</SelectItem>
+                                  <SelectItem value="g">Grama (g)</SelectItem>
+                                  <SelectItem value="m">Metro (m)</SelectItem>
+                                  <SelectItem value="cm">Centímetro (cm)</SelectItem>
+                                  <SelectItem value="l">Litro (L)</SelectItem>
+                                  <SelectItem value="ml">Mililitro (mL)</SelectItem>
+                                  <SelectItem value="m2">Metro Quadrado (m²)</SelectItem>
+                                  <SelectItem value="m3">Metro Cúbico (m³)</SelectItem>
+                                </SelectContent>
+                              </Select>
                             </div>
                             <div className="space-y-2">
                               <Label>Marca/Modelo</Label>

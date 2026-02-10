@@ -15,14 +15,28 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const statusLabels: Record<string, string> = {
-  solicitacao: "Solicitação",
-  cotacao_em_progresso: "Cotação em Progresso",
-  cotacoes_em_analise: "Cotações em Análise",
-  aguardando_autorizacao: "Aguardando Autorização",
+  solicitacao: "Solicita\u00e7\u00e3o",
+  cotacao_em_progresso: "Cota\u00e7\u00e3o em Progresso",
+  cotacoes_em_analise: "Cota\u00e7\u00f5es em An\u00e1lise",
+  aguardando_autorizacao: "Aguardando Autoriza\u00e7\u00e3o",
   ordem_compra_enviada: "Ordem de Compra Enviada",
   aguardando_recebimento: "Aguardando Recebimento",
   recebido: "Recebido",
   cancelado: "Cancelado",
+};
+
+const unitLabels: Record<string, string> = {
+  un: "Unidade",
+  caixa: "Caixa",
+  pacote: "Pacote",
+  kg: "Quilograma",
+  g: "Grama",
+  m: "Metro",
+  cm: "Cent\u00edmetro",
+  l: "Litro",
+  ml: "Mililitro",
+  m2: "Metro Quadrado",
+  m3: "Metro C\u00fabico",
 };
 
 const statusColors: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
@@ -308,7 +322,7 @@ export default function RequisitionDetail() {
                 <TableRow key={item.id}>
                   <TableCell className="font-medium">{item.itemName}</TableCell>
                   <TableCell>{item.quantity}</TableCell>
-                  <TableCell>{item.unit || "-"}</TableCell>
+                  <TableCell>{item.unit ? unitLabels[item.unit] || item.unit : "-"}</TableCell>
                   <TableCell>{item.brand || "-"}</TableCell>
                   <TableCell>{item.notes || "-"}</TableCell>
                 </TableRow>
