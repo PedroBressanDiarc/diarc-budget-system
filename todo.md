@@ -136,3 +136,4 @@
 - [x] Fornecedor de teste sendo criado automaticamente
 
 - [x] Erro ao criar requisição: status "draft" não existe, deve usar "solicitacao" (resolvido com restart do servidor)
+- [x] Validar quantidade como número antes de enviar requisição (erro NaN)

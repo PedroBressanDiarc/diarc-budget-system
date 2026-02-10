@@ -65,7 +65,10 @@ export default function Requisitions() {
   const handleCreate = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const validItems = items.filter(item => item.name && item.quantity);
+    const validItems = items.filter(item => {
+      const qty = Number(item.quantity);
+      return item.name && item.quantity && !isNaN(qty) && qty > 0;
+    });
     
     if (validItems.length === 0) {
       toast.error("Adicione pelo menos um item à requisição");
@@ -178,6 +181,9 @@ export default function Requisitions() {
                             <div className="space-y-2">
                               <Label>Quantidade *</Label>
                               <Input
+                                type="number"
+                                min="0.01"
+                                step="any"
                                 value={item.quantity}
                                 onChange={(e) => updateItem(index, "quantity", e.target.value)}
                                 required
