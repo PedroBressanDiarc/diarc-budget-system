@@ -216,6 +216,34 @@ export async function getMaintenanceSchedules() {
   return await db.select().from(maintenanceSchedules).orderBy(maintenanceSchedules.scheduledDate);
 }
 
+export async function getMaintenanceScheduleById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(maintenanceSchedules).where(eq(maintenanceSchedules.id, id)).limit(1);
+  return result[0];
+}
+
+export async function getMaintenanceSchedulesByEquipment(equipmentId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(maintenanceSchedules)
+    .where(eq(maintenanceSchedules.equipmentId, equipmentId))
+    .orderBy(maintenanceSchedules.scheduledDate);
+}
+
+export async function getAllMaintenanceRecords() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(maintenanceRecords).orderBy(desc(maintenanceRecords.performedDate));
+}
+
+export async function getMaintenanceRecordById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(maintenanceRecords).where(eq(maintenanceRecords.id, id)).limit(1);
+  return result[0];
+}
+
 export async function getMaintenanceRecordsByEquipment(equipmentId: number) {
   const db = await getDb();
   if (!db) return [];

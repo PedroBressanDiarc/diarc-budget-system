@@ -28,8 +28,8 @@ function Router() {
       <Route path="/compras/:id" component={RequisitionDetail} />
       <Route path="/orcamentos" component={Budgets} />
       <Route path="/orcamentos/:id" component={BudgetDetail} />
-      <Route path="/equipamentos" component={Equipment} />
-      <Route path="/equipamentos/:id" component={EquipmentDetail} />
+      <Route path="/equipment" component={Equipment} />
+      <Route path="/equipment/:id" component={EquipmentDetail} />
       <Route path="/manutencoes" component={Maintenance} />
       <Route path="/relatorios" component={Reports} />
       <Route path="/configuracoes" component={Settings} />

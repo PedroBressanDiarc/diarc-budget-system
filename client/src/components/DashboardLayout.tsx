@@ -32,7 +32,7 @@ const menuItems = [
   { icon: Users, label: "Fornecedores", path: "/fornecedores" },
   { icon: ShoppingCart, label: "Compras", path: "/compras" },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
-  { icon: Package, label: "Equipamentos", path: "/equipamentos" },
+  { icon: Package, label: "Equipamentos", path: "/equipment" },
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
   { icon: BarChart3, label: "Relatórios", path: "/relatorios" },
   { icon: SettingsIcon, label: "Configurações", path: "/configuracoes" },

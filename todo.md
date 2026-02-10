@@ -28,12 +28,12 @@
 - [ ] Listar e gerenciar orçamentos criados
 
 ## Módulo de Manutenções
-- [ ] Cadastrar equipamentos e máquinas
-- [ ] Agendar manutenção preventiva
-- [ ] Agendar manutenção corretiva
-- [ ] Registrar manutenção realizada manualmente
-- [ ] Visualizar histórico completo por equipamento
-- [ ] Listar próximas manutenções agendadas
+- [x] Cadastrar equipamentos e máquinas
+- [x] Agendar manutenção preventiva
+- [x] Agendar manutenção corretiva
+- [x] Registrar manutenção realizada manualmente
+- [x] Visualizar histórico completo por equipamento
+- [x] Listar próximas manutenções agendadas
 
 ## Dashboard Principal
 - [x] Exibir volume mensal de compras

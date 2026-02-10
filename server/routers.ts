@@ -544,6 +544,22 @@ export const appRouter = router({
 
         return { success: true };
       }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        // Delete related maintenance schedules and records first
+        await database.delete(maintenanceSchedules).where(eq(maintenanceSchedules.equipmentId, input.id));
+        await database.delete(maintenanceRecords).where(eq(maintenanceRecords.equipmentId, input.id));
+        
+        // Then delete the equipment
+        await database.delete(equipment).where(eq(equipment.id, input.id));
+
+        return { success: true };
+      }),
   }),
 
   // ============= MAINTENANCE =============
@@ -553,10 +569,22 @@ export const appRouter = router({
         return await db.getMaintenanceSchedules();
       }),
 
+      listByEquipment: protectedProcedure
+        .input(z.object({ equipmentId: z.number() }))
+        .query(async ({ input }) => {
+          return await db.getMaintenanceSchedulesByEquipment(input.equipmentId);
+        }),
+
       upcoming: protectedProcedure
         .input(z.object({ days: z.number().default(30) }))
         .query(async ({ input }) => {
           return await db.getUpcomingMaintenance(input.days);
+        }),
+
+      getById: protectedProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          return await db.getMaintenanceScheduleById(input.id);
         }),
 
       create: protectedProcedure
@@ -581,6 +609,25 @@ export const appRouter = router({
           return { success: true, id: Number(result[0].insertId) };
         }),
 
+      update: protectedProcedure
+        .input(z.object({
+          id: z.number(),
+          equipmentId: z.number().optional(),
+          maintenanceType: z.enum(['preventive', 'corrective']).optional(),
+          scheduledDate: z.string().optional(),
+          description: z.string().optional(),
+          status: z.enum(['scheduled', 'completed', 'cancelled']).optional(),
+        }))
+        .mutation(async ({ input }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+
+          const { id, ...updateData } = input;
+          await database.update(maintenanceSchedules).set(updateData).where(eq(maintenanceSchedules.id, id));
+
+          return { success: true };
+        }),
+
       updateStatus: protectedProcedure
         .input(z.object({
           id: z.number(),
@@ -594,13 +641,34 @@ export const appRouter = router({
 
           return { success: true };
         }),
+
+      delete: protectedProcedure
+        .input(z.object({ id: z.number() }))
+        .mutation(async ({ input }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+
+          await database.delete(maintenanceSchedules).where(eq(maintenanceSchedules.id, input.id));
+
+          return { success: true };
+        }),
     }),
 
     records: router({
+      list: protectedProcedure.query(async () => {
+        return await db.getAllMaintenanceRecords();
+      }),
+
       listByEquipment: protectedProcedure
         .input(z.object({ equipmentId: z.number() }))
         .query(async ({ input }) => {
           return await db.getMaintenanceRecordsByEquipment(input.equipmentId);
+        }),
+
+      getById: protectedProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          return await db.getMaintenanceRecordById(input.id);
         }),
 
       create: protectedProcedure
@@ -641,6 +709,44 @@ export const appRouter = router({
           }
 
           return { success: true, id: Number(result[0].insertId) };
+        }),
+
+      update: protectedProcedure
+        .input(z.object({
+          id: z.number(),
+          equipmentId: z.number().optional(),
+          maintenanceType: z.enum(['preventive', 'corrective']).optional(),
+          performedDate: z.string().optional(),
+          description: z.string().optional(),
+          technician: z.string().optional(),
+          cost: z.number().optional(),
+          partsReplaced: z.string().optional(),
+          notes: z.string().optional(),
+        }))
+        .mutation(async ({ input }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+
+          const { id, cost, ...otherData } = input;
+          const updateData: any = { ...otherData };
+          if (cost !== undefined) {
+            updateData.cost = cost.toString();
+          }
+
+          await database.update(maintenanceRecords).set(updateData).where(eq(maintenanceRecords.id, id));
+
+          return { success: true };
+        }),
+
+      delete: protectedProcedure
+        .input(z.object({ id: z.number() }))
+        .mutation(async ({ input }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+
+          await database.delete(maintenanceRecords).where(eq(maintenanceRecords.id, input.id));
+
+          return { success: true };
         }),
     }),
   }),
