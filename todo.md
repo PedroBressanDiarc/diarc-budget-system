@@ -137,3 +137,11 @@
 
 - [x] Erro ao criar requisição: status "draft" não existe, deve usar "solicitacao" (resolvido com restart do servidor)
 - [x] Validar quantidade como número antes de enviar requisição (erro NaN)
+
+## Melhorias Solicitadas
+- [x] Expandir dialog de criação de requisição para tela cheia
+- [x] Criar página de detalhes da requisição completa
+- [ ] Implementar seção de cotações na página de detalhes
+- [ ] Implementar comparação de preços lado a lado
+- [ ] Adicionar botões de ação conforme permissão (almoxarife/comprador/diretor)
+- [ ] Adicionar botões de ação conforme status da requisição
