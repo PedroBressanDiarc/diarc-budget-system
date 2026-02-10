@@ -115,7 +115,7 @@ export default function Requisitions() {
               Nova Requisição
             </Button>
           </DialogTrigger>
-          <DialogContent className="!max-w-none !w-screen !h-screen !top-0 !left-0 !translate-x-0 !translate-y-0 !rounded-none overflow-y-auto p-0 m-0">
+          <DialogContent className="!max-w-none !w-[90vw] !h-[90vh] overflow-y-auto p-0">
             <form onSubmit={handleCreate} className="p-6 h-full flex flex-col">
               <DialogHeader>
                 <DialogTitle>Nova Requisição de Compra</DialogTitle>

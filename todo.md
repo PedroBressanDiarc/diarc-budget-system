@@ -156,3 +156,6 @@
 
 ## Bug Reportado (10/02/2026)
 - [x] Formulário de nova requisição ainda não está preenchendo toda a tela apesar das classes w-screen h-screen (resolvido com !important para sobrescrever classes padrão do Dialog)
+
+## Melhorias de UX (10/02/2026)
+- [x] Ajustar formulário de requisição para 90% da tela (popup mais natural) em vez de fullscreen
