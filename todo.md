@@ -173,3 +173,8 @@
 - [x] Adicionar botões de ação em lote (excluir/editar) quando requisições estiverem selecionadas
 - [x] Adicionar botões de editar e excluir na página de detalhes da requisição
 - [x] Tornar timeline de fluxo clicável para atualizar status com confirmação
+
+## Nova Funcionalidade (10/02/2026)
+- [x] Implementar dialog de edição completo na página de detalhes (título, descrição, itens)
+- [x] Criar endpoint update no backend para requisições
+- [x] Adicionar validações e feedback visual durante edição

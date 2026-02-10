@@ -254,6 +254,50 @@ export const appRouter = router({
         return { success: true };
       }),
 
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().min(1),
+        description: z.string().optional(),
+        items: z.array(z.object({
+          id: z.number().optional(), // existing item id
+          itemName: z.string().min(1),
+          quantity: z.number().positive(),
+          unit: z.string().optional(),
+          brand: z.string().optional(),
+          notes: z.string().optional(),
+        })),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        // Update requisition
+        await database.update(purchaseRequisitions)
+          .set({
+            title: input.title,
+            description: input.description,
+          })
+          .where(eq(purchaseRequisitions.id, input.id));
+
+        // Delete all existing items
+        await database.delete(requisitionItems).where(eq(requisitionItems.requisitionId, input.id));
+
+        // Insert updated items
+        for (const item of input.items) {
+          await database.insert(requisitionItems).values({
+            requisitionId: input.id,
+            itemName: item.itemName,
+            quantity: item.quantity.toString(),
+            unit: item.unit,
+            brand: item.brand,
+            notes: item.notes,
+          });
+        }
+
+        return { success: true };
+      }),
+
     delete: protectedProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {

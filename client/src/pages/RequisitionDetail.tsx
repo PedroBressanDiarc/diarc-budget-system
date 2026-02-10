@@ -74,6 +74,27 @@ export default function RequisitionDetail() {
   const [isUploading, setIsUploading] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editFormData, setEditFormData] = useState({ title: "", description: "" });
+  const [editItems, setEditItems] = useState<Array<{
+    id?: number;
+    name: string;
+    quantity: string;
+    unit: string;
+    brand: string;
+    notes: string;
+  }>>([]);
+
+  const updateRequisitionMutation = trpc.requisitions.update.useMutation({
+    onSuccess: () => {
+      toast.success("Requisição atualizada com sucesso!");
+      setIsEditDialogOpen(false);
+      refetch();
+    },
+    onError: (error: any) => {
+      toast.error(`Erro ao atualizar: ${error.message}`);
+    },
+  });
 
   const updateStatusMutation = trpc.requisitions.updateStatus.useMutation({
     onSuccess: () => {
@@ -308,7 +329,21 @@ export default function RequisitionDetail() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => toast.info("Função de edição em desenvolvimento")}
+            onClick={() => {
+              setEditFormData({
+                title: requisition.title,
+                description: requisition.description || "",
+              });
+              setEditItems(items.map(item => ({
+                id: item.id,
+                name: item.itemName,
+                quantity: item.quantity,
+                unit: item.unit || "un",
+                brand: item.brand || "",
+                notes: item.notes || "",
+              })));
+              setIsEditDialogOpen(true);
+            }}
           >
             <Edit className="h-4 w-4 mr-2" />
             Editar
@@ -435,6 +470,186 @@ export default function RequisitionDetail() {
               {updateStatusMutation.isPending ? "Atualizando..." : "Confirmar"}
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog de Edição */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="!max-w-none !w-[90vw] !h-[90vh] overflow-y-auto p-0">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              updateRequisitionMutation.mutate({
+                id: requisition.id,
+                title: editFormData.title,
+                description: editFormData.description,
+                items: editItems.map(item => ({
+                  id: item.id,
+                  itemName: item.name,
+                  quantity: parseFloat(item.quantity),
+                  unit: item.unit,
+                  brand: item.brand,
+                  notes: item.notes,
+                })),
+              });
+            }}
+            className="p-6 h-full flex flex-col"
+          >
+            <DialogHeader>
+              <DialogTitle>Editar Requisição de Compra</DialogTitle>
+              <DialogDescription>
+                Atualize as informações da requisição e seus itens
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="flex-1 overflow-y-auto space-y-6 py-4">
+              {/* Título e Descrição */}
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="edit-title">Título da Requisição *</Label>
+                  <Input
+                    id="edit-title"
+                    value={editFormData.title}
+                    onChange={(e) => setEditFormData({ ...editFormData, title: e.target.value })}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="edit-description">Descrição</Label>
+                  <Textarea
+                    id="edit-description"
+                    value={editFormData.description}
+                    onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}
+                    rows={3}
+                  />
+                </div>
+              </div>
+
+              {/* Itens */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Label>Itens da Requisição</Label>
+                  <Button
+                    type="button"
+                    size="sm"
+                    onClick={() => setEditItems([...editItems, { name: "", quantity: "", unit: "un", brand: "", notes: "" }])}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Adicionar Item
+                  </Button>
+                </div>
+
+                {editItems.map((item, index) => (
+                  <Card key={index}>
+                    <CardContent className="pt-6">
+                      <div className="flex gap-4 items-start">
+                        <div className="flex-1 grid grid-cols-2 gap-4">
+                          <div>
+                            <Label>Nome do Item *</Label>
+                            <Input
+                              value={item.name}
+                              onChange={(e) => {
+                                const newItems = [...editItems];
+                                newItems[index].name = e.target.value;
+                                setEditItems(newItems);
+                              }}
+                              required
+                            />
+                          </div>
+                          <div>
+                            <Label>Quantidade *</Label>
+                            <Input
+                              type="number"
+                              step="0.01"
+                              value={item.quantity}
+                              onChange={(e) => {
+                                const newItems = [...editItems];
+                                newItems[index].quantity = e.target.value;
+                                setEditItems(newItems);
+                              }}
+                              required
+                            />
+                          </div>
+                          <div>
+                            <Label>Unidade</Label>
+                            <Select
+                              value={item.unit}
+                              onValueChange={(value) => {
+                                const newItems = [...editItems];
+                                newItems[index].unit = value;
+                                setEditItems(newItems);
+                              }}
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="un">Unidade (un)</SelectItem>
+                                <SelectItem value="caixa">Caixa</SelectItem>
+                                <SelectItem value="pacote">Pacote</SelectItem>
+                                <SelectItem value="kg">Quilograma (kg)</SelectItem>
+                                <SelectItem value="g">Grama (g)</SelectItem>
+                                <SelectItem value="m">Metro (m)</SelectItem>
+                                <SelectItem value="cm">Centímetro (cm)</SelectItem>
+                                <SelectItem value="l">Litro (L)</SelectItem>
+                                <SelectItem value="ml">Mililitro (mL)</SelectItem>
+                                <SelectItem value="m2">Metro Quadrado (m²)</SelectItem>
+                                <SelectItem value="m3">Metro Cúbico (m³)</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div>
+                            <Label>Marca</Label>
+                            <Input
+                              value={item.brand}
+                              onChange={(e) => {
+                                const newItems = [...editItems];
+                                newItems[index].brand = e.target.value;
+                                setEditItems(newItems);
+                              }}
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <Label>Observações</Label>
+                            <Textarea
+                              value={item.notes}
+                              onChange={(e) => {
+                                const newItems = [...editItems];
+                                newItems[index].notes = e.target.value;
+                                setEditItems(newItems);
+                              }}
+                              rows={2}
+                            />
+                          </div>
+                        </div>
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          onClick={() => setEditItems(editItems.filter((_, i) => i !== index))}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            <DialogFooter className="mt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsEditDialogOpen(false)}
+              >
+                Cancelar
+              </Button>
+              <Button type="submit" disabled={updateRequisitionMutation.isPending}>
+                {updateRequisitionMutation.isPending ? "Salvando..." : "Salvar Alterações"}
+              </Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
 
