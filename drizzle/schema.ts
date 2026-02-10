@@ -10,7 +10,7 @@ export const users = mysqlTable("users", {
   email: varchar("email", { length: 320 }).notNull().unique(),
   passwordHash: varchar("passwordHash", { length: 255 }).notNull(),
   name: text("name").notNull(),
-  role: mysqlEnum("role", ["buyer", "director"]).default("buyer").notNull(),
+  role: mysqlEnum("role", ["storekeeper", "buyer", "director"]).default("buyer").notNull(),
   isActive: int("isActive").default(1).notNull(),
   openId: varchar("openId", { length: 64 }),
   loginMethod: varchar("loginMethod", { length: 64 }).default("local"),
@@ -51,11 +51,24 @@ export const purchaseRequisitions = mysqlTable("purchase_requisitions", {
   requisitionNumber: varchar("requisitionNumber", { length: 50 }).notNull().unique(),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
-  status: mysqlEnum("status", ["draft", "pending_quotes", "comparing", "approved", "ordered", "received", "cancelled"]).default("draft").notNull(),
+  status: mysqlEnum("status", [
+    "solicitacao",              // Almoxarife criou
+    "cotacao_em_progresso",     // Comprador adicionando cotações
+    "cotacoes_em_analise",      // Comprador fez comparação inicial
+    "aguardando_autorizacao",   // Diretor vai aprovar
+    "ordem_compra_enviada",     // Pedido gerado e enviado
+    "aguardando_recebimento",   // Aguardando entrega
+    "recebido",                 // Concluído
+    "cancelado"                 // Cancelado
+  ]).default("solicitacao").notNull(),
   requestedBy: int("requestedBy").notNull(),
   approvedBy: int("approvedBy"),
   approvedAt: timestamp("approvedAt"),
   notes: text("notes"),
+  changeRequested: boolean("changeRequested").default(false).notNull(),
+  changeRequestReason: text("changeRequestReason"),
+  changeRequestedAt: timestamp("changeRequestedAt"),
+  changeApprovedBy: int("changeApprovedBy"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
@@ -274,3 +287,21 @@ export const companySettings = mysqlTable("company_settings", {
 
 export type CompanySettings = typeof companySettings.$inferSelect;
 export type InsertCompanySettings = typeof companySettings.$inferInsert;
+
+/**
+ * Requisition Attachments (Anexos de Requisições)
+ */
+export const requisitionAttachments = mysqlTable("requisition_attachments", {
+  id: int("id").autoincrement().primaryKey(),
+  requisitionId: int("requisitionId").notNull(),
+  fileType: mysqlEnum("fileType", ["cotacao", "ordem_compra", "adicional"]).notNull(),
+  fileName: varchar("fileName", { length: 255 }).notNull(),
+  fileUrl: text("fileUrl").notNull(),
+  fileSize: int("fileSize"), // em bytes
+  mimeType: varchar("mimeType", { length: 100 }),
+  uploadedBy: int("uploadedBy").notNull(),
+  uploadedAt: timestamp("uploadedAt").defaultNow().notNull(),
+});
+
+export type RequisitionAttachment = typeof requisitionAttachments.$inferSelect;
+export type InsertRequisitionAttachment = typeof requisitionAttachments.$inferInsert;

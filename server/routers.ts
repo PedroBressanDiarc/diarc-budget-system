@@ -10,6 +10,7 @@ import {
   suppliers, 
   purchaseRequisitions, 
   requisitionItems,
+  requisitionAttachments,
   quotes,
   quoteItems,
   purchaseOrders,
@@ -212,7 +213,7 @@ export const appRouter = router({
           title: input.title,
           description: input.description,
           requestedBy: ctx.user.id,
-          status: 'draft',
+          status: 'solicitacao',
         });
 
         const requisitionId = Number(result[0].insertId);
@@ -235,7 +236,7 @@ export const appRouter = router({
     updateStatus: adminProcedure
       .input(z.object({
         id: z.number(),
-        status: z.enum(['draft', 'pending_quotes', 'comparing', 'approved', 'ordered', 'received', 'cancelled']),
+        status: z.enum(['solicitacao', 'cotacao_em_progresso', 'cotacoes_em_analise', 'aguardando_autorizacao', 'ordem_compra_enviada', 'aguardando_recebimento', 'recebido', 'cancelado']),
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
@@ -243,7 +244,7 @@ export const appRouter = router({
 
         const updateData: any = { status: input.status };
         
-        if (input.status === 'approved') {
+        if (input.status === 'aguardando_autorizacao' || input.status === 'ordem_compra_enviada') {
           updateData.approvedBy = ctx.user.id;
           updateData.approvedAt = new Date();
         }

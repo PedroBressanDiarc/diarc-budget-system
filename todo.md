@@ -12,14 +12,61 @@
 - [ ] Visualizar histórico de cotações por fornecedor
 - [ ] Visualizar histórico de compras concluídas por fornecedor
 
-## Módulo de Compras
-- [ ] Criar requisição de compra (item, quantidade, marca, observações)
-- [ ] Adicionar múltiplas cotações de fornecedores para uma requisição
-- [ ] Comparar preços lado a lado entre fornecedores
-- [ ] Aprovar/autorizar compra (apenas diretor)
-- [ ] Registrar pedido após aprovação
-- [ ] Confirmar recebimento de pedido
-- [ ] Visualizar status do fluxo completo
+## Módulo de Compras (Fluxo Real Diarc)
+
+### Permissões (3 níveis)
+- [x] Adicionar role "almoxarife" ao schema
+- [x] Atualizar sistema de permissões para 3 níveis: almoxarife, comprador (buyer), diretor
+
+### Status de Requisições (6 etapas)
+- [x] Atualizar schema com novos status:
+  - solicitação (almoxarife cria)
+  - cotação_em_progresso (comprador adicionando cotações)
+  - cotações_em_analise (comprador fez comparação inicial)
+  - aguardando_autorização (diretor vai aprovar)
+  - ordem_compra_enviada (aprovado, pedido gerado)
+  - aguardando_recebimento (pedido enviado, aguardando entrega)
+
+### Funcionalidades por Papel
+
+**Almoxarife:**
+- [ ] Criar requisição de compra (itens, quantidade, marca, observações)
+- [ ] Visualizar suas requisições (somente leitura após criar)
+- [ ] Solicitar alteração em requisição existente
+- [ ] Comprador/Diretor pode autorizar ou negar solicitação de alteração
+
+**Comprador (Suprimentos):**
+- [ ] Visualizar todas as requisições
+- [ ] Adicionar múltiplas cotações de fornecedores
+- [ ] Fazer upload de arquivos de cotação (PDF, imagens, etc)
+- [ ] Fazer comparação inicial de preços
+- [ ] Mudar status para "cotações_em_analise"
+- [ ] Gerar e fazer upload da ordem de compra após aprovação do diretor
+- [ ] Confirmar recebimento de pedidos
+- [ ] Autorizar/negar solicitações de alteração
+
+**Diretor (Gerente):**
+- [ ] Visualizar todas as requisições
+- [ ] Fazer comparação detalhada de preços
+- [ ] Aprovar ou rejeitar requisição
+- [ ] Autorizar/negar solicitações de alteração
+
+### Sistema de Arquivos
+- [x] Criar tabela de anexos (requisition_attachments)
+- [ ] Upload de arquivos de cotação (PDF, imagens, Excel)
+- [ ] Upload de ordem de compra (PDF)
+- [ ] Upload de arquivos adicionais (qualquer tipo)
+- [ ] Visualização e download de arquivos anexados
+- [ ] Organização por tipo: "cotação", "ordem_compra", "adicional"
+
+### Interface
+- [ ] Página de listagem com filtros por status
+- [ ] Página de detalhes da requisição
+- [ ] Comparação de preços lado a lado
+- [ ] Botão "Requisitar Alteração" para almoxarife
+- [ ] Botões de upload de arquivos (cotação, ordem de compra, adicionais)
+- [ ] Lista de arquivos anexados com opção de download
+- [ ] Fluxo visual do status atual
 
 ## Módulo de Orçamentos
 - [ ] Criar orçamento com itens (nome, quantidade, marca, observações)

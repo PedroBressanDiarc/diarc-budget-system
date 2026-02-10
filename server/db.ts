@@ -296,7 +296,7 @@ export async function getDashboardMetrics() {
 
   // Pending requisitions
   const pendingReqs = await db.select().from(purchaseRequisitions)
-    .where(eq(purchaseRequisitions.status, 'pending_quotes'));
+    .where(eq(purchaseRequisitions.status, 'cotacao_em_progresso'));
 
   // Upcoming maintenance
   const upcomingMaint = await getUpcomingMaintenance(7);
