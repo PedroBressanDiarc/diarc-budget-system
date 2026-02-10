@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, requisitionAttachments } from "../drizzle/schema";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -306,4 +306,13 @@ export async function getDashboardMetrics() {
     pendingRequisitions: pendingReqs.length,
     upcomingMaintenance: upcomingMaint.length,
   };
+}
+
+
+// ============= ATTACHMENTS =============
+export async function getAttachmentsByRequisition(requisitionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db.select().from(requisitionAttachments).where(eq(requisitionAttachments.requisitionId, requisitionId));
 }

@@ -145,3 +145,11 @@
 - [ ] Implementar comparação de preços lado a lado
 - [ ] Adicionar botões de ação conforme permissão (almoxarife/comprador/diretor)
 - [ ] Adicionar botões de ação conforme status da requisição
+
+## Novas Melhorias Solicitadas (10/02/2026)
+- [x] Corrigir formulário de nova requisição para ocupar toda a tela (fullscreen)
+- [x] Implementar dialog de adicionar cotações para compradores
+- [x] Criar tabela de comparação de preços lado a lado
+- [x] Implementar upload de arquivos (cotação, ordem_compra, adicional) com S3
+- [ ] Implementar ações de aprovação/rejeição para diretores
+- [ ] Implementar solicitação de alteração para almoxarifes

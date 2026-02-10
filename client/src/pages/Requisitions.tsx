@@ -115,15 +115,15 @@ export default function Requisitions() {
               Nova Requisição
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-[95vw] w-full max-h-[95vh] overflow-y-auto">
-            <form onSubmit={handleCreate}>
+          <DialogContent className="max-w-full w-screen h-screen max-h-screen overflow-y-auto p-0 m-0">
+            <form onSubmit={handleCreate} className="p-6 h-full flex flex-col">
               <DialogHeader>
                 <DialogTitle>Nova Requisição de Compra</DialogTitle>
                 <DialogDescription>
                   Preencha os dados da requisição e adicione os itens necessários
                 </DialogDescription>
               </DialogHeader>
-              <div className="space-y-4 py-4">
+              <div className="flex-1 overflow-y-auto space-y-4 py-4">
                 <div className="space-y-2">
                   <Label htmlFor="title">Título da Requisição *</Label>
                   <Input
@@ -211,7 +211,7 @@ export default function Requisitions() {
                   </div>
                 </div>
               </div>
-              <DialogFooter>
+              <DialogFooter className="mt-auto pt-4 border-t">
                 <Button type="submit" disabled={createMutation.isPending}>
                   {createMutation.isPending ? "Criando..." : "Criar Requisição"}
                 </Button>

@@ -795,6 +795,52 @@ export const appRouter = router({
         return { success: true };
       }),
   }),
+
+  // ============= ATTACHMENTS =============
+  attachments: router({
+    list: protectedProcedure
+      .input(z.object({ requisitionId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getAttachmentsByRequisition(input.requisitionId);
+      }),
+
+    upload: protectedProcedure
+      .input(z.object({
+        requisitionId: z.number(),
+        fileType: z.enum(["cotacao", "ordem_compra", "adicional"]),
+        fileName: z.string(),
+        fileUrl: z.string(),
+        fileSize: z.number(),
+        mimeType: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const result = await database.insert(requisitionAttachments).values({
+          requisitionId: input.requisitionId,
+          fileType: input.fileType,
+          fileName: input.fileName,
+          fileUrl: input.fileUrl,
+          fileSize: input.fileSize,
+          mimeType: input.mimeType,
+          uploadedBy: ctx.user.id,
+        });
+
+        return { success: true, id: Number(result[0].insertId) };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.delete(requisitionAttachments).where(eq(requisitionAttachments.id, input.id));
+
+        return { success: true };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
