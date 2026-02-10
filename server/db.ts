@@ -1,35 +1,10 @@
-import { eq, desc, and, gte, lte, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { 
-  InsertUser, 
-  users, 
-  suppliers,
-  purchaseRequisitions,
-  requisitionItems,
-  quotes,
-  quoteItems,
-  purchaseOrders,
-  budgets,
-  budgetItems,
-  budgetTemplates,
-  equipment,
-  maintenanceSchedules,
-  maintenanceRecords,
-  companySettings,
-  type Supplier,
-  type PurchaseRequisition,
-  type Quote,
-  type PurchaseOrder,
-  type Budget,
-  type Equipment,
-  type MaintenanceSchedule,
-  type MaintenanceRecord,
-  type CompanySettings
-} from "../drizzle/schema";
-import { ENV } from './_core/env';
+import { InsertUser, users } from "../drizzle/schema";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
+// Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
@@ -42,78 +17,91 @@ export async function getDb() {
   return _db;
 }
 
-export async function upsertUser(user: InsertUser): Promise<void> {
-  if (!user.openId) {
-    throw new Error("User openId is required for upsert");
-  }
-
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot upsert user: database not available");
-    return;
-  }
-
-  try {
-    const values: InsertUser = {
-      openId: user.openId,
-    };
-    const updateSet: Record<string, unknown> = {};
-
-    const textFields = ["name", "email", "loginMethod"] as const;
-    type TextField = (typeof textFields)[number];
-
-    const assignNullable = (field: TextField) => {
-      const value = user[field];
-      if (value === undefined) return;
-      const normalized = value ?? null;
-      values[field] = normalized;
-      updateSet[field] = normalized;
-    };
-
-    textFields.forEach(assignNullable);
-
-    if (user.lastSignedIn !== undefined) {
-      values.lastSignedIn = user.lastSignedIn;
-      updateSet.lastSignedIn = user.lastSignedIn;
-    }
-    if (user.role !== undefined) {
-      values.role = user.role;
-      updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'director';
-      updateSet.role = 'director';
-    }
-
-    if (!values.lastSignedIn) {
-      values.lastSignedIn = new Date();
-    }
-
-    if (Object.keys(updateSet).length === 0) {
-      updateSet.lastSignedIn = new Date();
-    }
-
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet,
-    });
-  } catch (error) {
-    console.error("[Database] Failed to upsert user:", error);
-    throw error;
-  }
-}
-
-export async function getUserByOpenId(openId: string) {
+export async function getUserByEmail(email: string) {
   const db = await getDb();
   if (!db) {
     console.warn("[Database] Cannot get user: database not available");
     return undefined;
   }
 
-  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
-
+  const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 
+export async function getUserById(id: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user: database not available");
+    return undefined;
+  }
+
+  const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createUser(user: InsertUser) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("[Database] Cannot create user: database not available");
+  }
+
+  const result = await db.insert(users).values(user);
+  return result[0].insertId;
+}
+
+export async function updateUserPassword(userId: number, passwordHash: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("[Database] Cannot update password: database not available");
+  }
+
+  await db.update(users).set({ passwordHash }).where(eq(users.id, userId));
+}
+
+export async function updateUserLastSignIn(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    return;
+  }
+
+  await db.update(users).set({ lastSignedIn: new Date() }).where(eq(users.id, userId));
+}
+
+export async function listUsers() {
+  const db = await getDb();
+  if (!db) {
+    return [];
+  }
+
+  return await db.select().from(users);
+}
+
+export async function updateUser(userId: number, data: Partial<InsertUser>) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("[Database] Cannot update user: database not available");
+  }
+
+  await db.update(users).set(data).where(eq(users.id, userId));
+}
+
+export async function deleteUser(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("[Database] Cannot delete user: database not available");
+  }
+
+  await db.delete(users).where(eq(users.id, userId));
+}
+
 // ============= SUPPLIERS =============
+
+import { 
+  suppliers, purchaseRequisitions, requisitionItems, quotes, quoteItems,
+  purchaseOrders, budgets, budgetItems, budgetTemplates, equipment,
+  maintenanceSchedules, maintenanceRecords, companySettings
+} from "../drizzle/schema";
+import { desc, sql } from "drizzle-orm";
 
 export async function getAllSuppliers() {
   const db = await getDb();

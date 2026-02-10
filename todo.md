@@ -61,3 +61,15 @@
 - [ ] Testar geração de PDFs
 - [ ] Criar checkpoint final
 - [ ] Documentar processo de deploy para Hostinger
+
+## Sistema de Autenticação Independente
+- [x] Atualizar schema do banco com campos de senha
+- [x] Aplicar migração para adicionar password_hash e username
+- [x] Instalar bcrypt para hash de senhas
+- [x] Criar endpoints de autenticação (login, logout)
+- [x] Criar página de login customizada
+- [x] Criar página de gerenciamento de usuários
+- [x] Permitir cadastro de novos usuários (admin)
+- [x] Permitir edição de usuários existentes
+- [x] Permitir reset de senha manual
+- [x] Documentar como criar primeiro usuário admin no banco

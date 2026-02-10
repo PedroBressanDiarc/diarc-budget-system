@@ -5,6 +5,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, adminProcedure, router } from "./_core/trpc";
 import { getDb } from "./db";
 import * as db from "./db";
+import { authenticateUser, hashPassword } from "./auth";
 import { 
   suppliers, 
   purchaseRequisitions, 
@@ -27,11 +28,93 @@ export const appRouter = router({
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
+    login: publicProcedure
+      .input(z.object({
+        email: z.string().email(),
+        password: z.string().min(1),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const result = await authenticateUser(input.email, input.password);
+        
+        if (!result.success) {
+          throw new Error(result.error || "Falha na autenticação");
+        }
+
+        // Definir cookie com token
+        ctx.res.cookie("auth_token", result.token, {
+          httpOnly: true,
+          secure: ctx.req.protocol === "https",
+          sameSite: "lax",
+          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 dias
+          path: "/",
+        });
+
+        return {
+          success: true,
+          user: result.user,
+        };
+      }),
     logout: publicProcedure.mutation(({ ctx }) => {
-      const cookieOptions = getSessionCookieOptions(ctx.req);
-      ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-      return { success: true } as const;
+      ctx.res.clearCookie("auth_token", { path: "/" });
+      return { success: true };
     }),
+  }),
+
+  // ============= USER MANAGEMENT =============
+  users: router({
+    list: adminProcedure.query(async () => {
+      return await db.listUsers();
+    }),
+    create: adminProcedure
+      .input(z.object({
+        email: z.string().email(),
+        password: z.string().min(6),
+        name: z.string().min(1),
+        role: z.enum(["buyer", "director"]),
+        username: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const passwordHash = await hashPassword(input.password);
+        const userId = await db.createUser({
+          email: input.email,
+          passwordHash,
+          name: input.name,
+          role: input.role,
+          username: input.username || null,
+          isActive: 1,
+          loginMethod: "local",
+        });
+        return { success: true, id: userId };
+      }),
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        email: z.string().email().optional(),
+        name: z.string().min(1).optional(),
+        role: z.enum(["buyer", "director"]).optional(),
+        isActive: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updateUser(id, data);
+        return { success: true };
+      }),
+    resetPassword: adminProcedure
+      .input(z.object({
+        userId: z.number(),
+        newPassword: z.string().min(6),
+      }))
+      .mutation(async ({ input }) => {
+        const passwordHash = await hashPassword(input.newPassword);
+        await db.updateUserPassword(input.userId, passwordHash);
+        return { success: true };
+      }),
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteUser(input.id);
+        return { success: true };
+      }),
   }),
 
   // ============= SUPPLIERS =============

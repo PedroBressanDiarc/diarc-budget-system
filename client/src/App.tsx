@@ -16,6 +16,8 @@ import EquipmentDetail from "./pages/EquipmentDetail";
 import Maintenance from "./pages/Maintenance";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
+import Users from "./pages/Users";
 
 function Router() {
   return (
@@ -31,21 +33,38 @@ function Router() {
       <Route path="/manutencoes" component={Maintenance} />
       <Route path="/relatorios" component={Reports} />
       <Route path="/configuracoes" component={Settings} />
+      <Route path="/usuarios" component={Users} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
+function PublicRouter() {
+  return (
+    <Switch>
+      <Route path="/login" component={Login} />
+      <Route component={Login} />
+    </Switch>
+  );
+}
+
 function App() {
+  // Check if user is on login page
+  const isLoginPage = window.location.pathname === "/login";
+
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
-          <DashboardLayout>
-            <Router />
-          </DashboardLayout>
+          {isLoginPage ? (
+            <PublicRouter />
+          ) : (
+            <DashboardLayout>
+              <Router />
+            </DashboardLayout>
+          )}
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

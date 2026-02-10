@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO users (\n  email,\n  passwordHash,\n  name,\n  role,\n  isActive,\n  loginMethod,\n  username\n) VALUES (\n  'admin@diarc.com.br',\n  '$2b$10$Qolem5WnYVCRkeFctArtFuSPrw6vh7qNQzwI41xEOgE20MHOaTTkC',\n  'Administrador Diarc',\n  'director',\n  1,\n  'local',\n  'admin'\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute INSERT INTO users (\n  email,\n  passwordHash,\n  name,\n  role,\n  isActive,\n  loginMethod,\n  username\n) VALUES (\n  'admin@diarc.com.br',\n  '$2b$10$Qolem5WnYVCRkeFctArtFuSPrw6vh7qNQzwI41xEOgE20MHOaTTkC',\n  'Administrador Diarc',\n  'director',\n  1,\n  'local',\n  'admin'\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 463
+}

@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -36,6 +36,7 @@ const menuItems = [
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
   { icon: BarChart3, label: "Relatórios", path: "/relatorios" },
   { icon: SettingsIcon, label: "Configurações", path: "/configuracoes" },
+  { icon: UserCog, label: "Usuários", path: "/usuarios" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -63,29 +64,9 @@ export default function DashboardLayout({
   }
 
   if (!user) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
-          <div className="flex flex-col items-center gap-6">
-            <h1 className="text-2xl font-semibold tracking-tight text-center">
-              Sign in to continue
-            </h1>
-            <p className="text-sm text-muted-foreground text-center max-w-sm">
-              Access to this dashboard requires authentication. Continue to launch the login flow.
-            </p>
-          </div>
-          <Button
-            onClick={() => {
-              window.location.href = getLoginUrl();
-            }}
-            size="lg"
-            className="w-full shadow-lg hover:shadow-xl transition-all"
-          >
-            Sign in
-          </Button>
-        </div>
-      </div>
-    );
+    // Redirecionar para login se não autenticado
+    window.location.href = "/login";
+    return null;
   }
 
   return (

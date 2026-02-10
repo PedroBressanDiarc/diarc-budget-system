@@ -2,14 +2,18 @@ import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean,
 
 /**
  * Core user table backing auth flow.
+ * Updated to support independent authentication with email + password.
  */
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
-  openId: varchar("openId", { length: 64 }).notNull().unique(),
-  name: text("name"),
-  email: varchar("email", { length: 320 }),
-  loginMethod: varchar("loginMethod", { length: 64 }),
+  username: varchar("username", { length: 100 }).unique(),
+  email: varchar("email", { length: 320 }).notNull().unique(),
+  passwordHash: varchar("passwordHash", { length: 255 }).notNull(),
+  name: text("name").notNull(),
   role: mysqlEnum("role", ["buyer", "director"]).default("buyer").notNull(),
+  isActive: int("isActive").default(1).notNull(),
+  openId: varchar("openId", { length: 64 }),
+  loginMethod: varchar("loginMethod", { length: 64 }).default("local"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),

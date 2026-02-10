@@ -22,6 +22,13 @@
       "when": 1770658105048,
       "tag": "0002_huge_manta",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1770660221458,
+      "tag": "0003_cultured_namora",
+      "breakpoints": true
     }
   ]
 }
