@@ -1,0 +1,9 @@
+{
+  "query": "\nUPDATE users \nSET passwordHash = '$2b$10$xiDToanvwo17v1w0vHvwveowNjtoTUj5ghZtXVjN4NijeSeuOpgVq'\nWHERE email = 'admin@diarc.com.br';\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute \nUPDATE users \nSET passwordHash = '$2b$10$xiDToanvwo17v1w0vHvwveowNjtoTUj5ghZtXVjN4NijeSeuOpgVq'\nWHERE email = 'admin@diarc.com.br';\n",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 351
+}

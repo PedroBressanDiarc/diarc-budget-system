@@ -75,6 +75,9 @@
 - [x] Documentar como criar primeiro usuário admin no banco
 
 ## Bugs Reportados
+- [x] Corrigir erros TypeScript no módulo de Manutenções (navigate e tipo de status)
+
+## Bugs Reportados Anteriores
 - [x] Corrigir loop de redirecionamento após login (tela fica preta e volta para login)
 - [x] Verificar se o cookie auth_token está sendo setado corretamente
 - [x] Login bem-sucedido mas não redireciona - auth.me não atualiza antes do redirect

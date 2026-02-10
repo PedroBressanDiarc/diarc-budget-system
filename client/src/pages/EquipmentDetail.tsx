@@ -40,7 +40,7 @@ import {
 
 export default function EquipmentDetail() {
   const { id } = useParams();
-  const [, setLocation] = useLocation();
+  const [, navigate] = useLocation();
   const equipmentId = parseInt(id || "0");
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -57,7 +57,7 @@ export default function EquipmentDetail() {
     location: "",
     purchaseDate: "",
     warrantyExpiry: "",
-    status: "active",
+    status: "active" as "active" | "maintenance" | "inactive" | "retired",
     notes: "",
   });
 
@@ -94,7 +94,7 @@ export default function EquipmentDetail() {
   const deleteMutation = trpc.equipment.delete.useMutation({
     onSuccess: () => {
       toast.success("Equipamento excluído com sucesso!");
-      setLocation("/equipment");
+      navigate("/equipment");
     },
     onError: (error) => {
       toast.error("Erro ao excluir equipamento: " + error.message);
@@ -745,7 +745,7 @@ export default function EquipmentDetail() {
 
               <div className="grid gap-2">
                 <Label htmlFor="editStatus">Status</Label>
-                <Select value={editFormData.status} onValueChange={(value) => setEditFormData({ ...editFormData, status: value })}>
+                <Select value={editFormData.status} onValueChange={(value) => setEditFormData({ ...editFormData, status: value as "active" | "maintenance" | "inactive" | "retired" })}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
