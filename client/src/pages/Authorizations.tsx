@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { trpc } from "@/lib/trpc";
 import { CheckCircle, XCircle, Eye } from "lucide-react";
 import { useState } from "react";
@@ -16,6 +17,7 @@ export default function Authorizations() {
   const [rejectDialogOpen, setRejectDialogOpen] = useState(false);
   const [selectedReqId, setSelectedReqId] = useState<number | null>(null);
   const [rejectReason, setRejectReason] = useState("");
+  const [activeTab, setActiveTab] = useState("pendentes");
 
   const approveMutation = trpc.requisitions.approve.useMutation({
     onSuccess: () => {
@@ -41,6 +43,8 @@ export default function Authorizations() {
   });
 
   const pendingRequisitions = requisitions.filter(r => r.status === "aguardando_autorizacao");
+  const authorizedRequisitions = requisitions.filter(r => r.status === "autorizado");
+  const rejectedRequisitions = requisitions.filter(r => r.status === "cancelado");
 
   const handleApprove = (id: number) => {
     approveMutation.mutate({ id });
@@ -63,13 +67,27 @@ export default function Authorizations() {
   return (
     <div className="container py-8">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">Autorizações Pendentes</h1>
+        <h1 className="text-3xl font-bold">Autorizações</h1>
         <p className="text-muted-foreground mt-2">
-          Requisições aguardando sua autorização
+          Gerencie requisições pendentes, autorizadas e rejeitadas
         </p>
       </div>
 
-      <Card>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-3 mb-6">
+          <TabsTrigger value="pendentes">
+            Pendentes ({pendingRequisitions.length})
+          </TabsTrigger>
+          <TabsTrigger value="autorizadas">
+            Autorizadas ({authorizedRequisitions.length})
+          </TabsTrigger>
+          <TabsTrigger value="rejeitadas">
+            Rejeitadas ({rejectedRequisitions.length})
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="pendentes">
+          <Card>
         <CardHeader>
           <CardTitle>Requisições para Autorizar</CardTitle>
           <CardDescription>
@@ -150,6 +168,130 @@ export default function Authorizations() {
           )}
         </CardContent>
       </Card>
+        </TabsContent>
+
+        <TabsContent value="autorizadas">
+          <Card>
+            <CardHeader>
+              <CardTitle>Requisições Autorizadas</CardTitle>
+              <CardDescription>
+                {authorizedRequisitions.length === 0 
+                  ? "Nenhuma requisição autorizada" 
+                  : `${authorizedRequisitions.length} requisição(ões) autorizada(s)`}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {authorizedRequisitions.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">
+                  <CheckCircle className="mx-auto h-12 w-12 mb-4 opacity-50" />
+                  <p>Nenhuma requisição autorizada ainda.</p>
+                </div>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Número</TableHead>
+                      <TableHead>Título</TableHead>
+                      <TableHead>Solicitante</TableHead>
+                      <TableHead>Data</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="text-right">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {authorizedRequisitions.map((req) => (
+                      <TableRow key={req.id}>
+                        <TableCell className="font-medium">{req.requisitionNumber}</TableCell>
+                        <TableCell>{req.title}</TableCell>
+                        <TableCell>{req.requestedBy}</TableCell>
+                        <TableCell>
+                          {new Date(req.createdAt).toLocaleDateString('pt-BR')}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="default" className="bg-green-600">
+                            ✓ Autorizado
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setLocation(`/compras/${req.id}`)}
+                          >
+                            <Eye className="h-4 w-4 mr-1" />
+                            Ver Detalhes
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="rejeitadas">
+          <Card>
+            <CardHeader>
+              <CardTitle>Requisições Rejeitadas</CardTitle>
+              <CardDescription>
+                {rejectedRequisitions.length === 0 
+                  ? "Nenhuma requisição rejeitada" 
+                  : `${rejectedRequisitions.length} requisição(ões) rejeitada(s)`}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {rejectedRequisitions.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">
+                  <XCircle className="mx-auto h-12 w-12 mb-4 opacity-50" />
+                  <p>Nenhuma requisição rejeitada.</p>
+                </div>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Número</TableHead>
+                      <TableHead>Título</TableHead>
+                      <TableHead>Solicitante</TableHead>
+                      <TableHead>Data</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="text-right">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {rejectedRequisitions.map((req) => (
+                      <TableRow key={req.id}>
+                        <TableCell className="font-medium">{req.requisitionNumber}</TableCell>
+                        <TableCell>{req.title}</TableCell>
+                        <TableCell>{req.requestedBy}</TableCell>
+                        <TableCell>
+                          {new Date(req.createdAt).toLocaleDateString('pt-BR')}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="destructive">
+                            ✗ Rejeitado
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setLocation(`/compras/${req.id}`)}
+                          >
+                            <Eye className="h-4 w-4 mr-1" />
+                            Ver Detalhes
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
 
       {/* Dialog de Rejeição */}
       <Dialog open={rejectDialogOpen} onOpenChange={setRejectDialogOpen}>

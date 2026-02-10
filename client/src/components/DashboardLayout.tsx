@@ -89,11 +89,14 @@ export default function DashboardLayout({
 function PendingAuthBadge() {
   const { data: count } = trpc.requisitions.countPendingAuth.useQuery();
   
-  if (!count || count === 0) return null;
+  // Garantir que count é um número e maior que zero
+  const pendingCount = Number(count) || 0;
+  
+  if (pendingCount === 0) return null;
   
   return (
     <span className="ml-auto bg-primary text-primary-foreground text-xs font-semibold px-2 py-0.5 rounded-full">
-      {count}
+      {pendingCount}
     </span>
   );
 }

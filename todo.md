@@ -199,3 +199,7 @@
 - [x] Adicionar botões de Aprovar (verde) e Rejeitar (vermelho) em cada requisição
 - [x] Implementar dialog para motivo de rejeição (opcional)
 - [x] Criar endpoints backend para aprovar e rejeitar requisições
+
+## Correções e Melhorias - Autorizações (10/02/2026)
+- [x] Corrigir contador de badge mostrando número incorreto quando não há pendências
+- [x] Adicionar filtros/tabs na página de Autorizações (Pendentes, Autorizadas, Rejeitadas)
