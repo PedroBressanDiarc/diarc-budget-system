@@ -279,3 +279,9 @@
 - [x] Atualizar importação para definir stockType ('finished_pieces' ou 'internal_stock')
 - [x] Adicionar filtro por stockType nas queries de listagem
 - [x] Limpar dados duplicados do banco após correção
+
+## Nova Funcionalidade - Dialog de Progresso (11/02/2026)
+- [x] Criar dialog de progresso com barra de carregamento
+- [x] Adicionar contador de itens processados/total
+- [x] Implementar botão de cancelar importação
+- [x] Integrar dialog nas páginas de Peças Finalizadas e Estoque Interno

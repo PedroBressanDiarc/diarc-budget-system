@@ -17,6 +17,9 @@ export default function FinishedPieces() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
+  const [isImporting, setIsImporting] = useState(false);
+  const [importProgress, setImportProgress] = useState({ current: 0, total: 0 });
+  const [cancelImport, setCancelImport] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     secondaryName: "",
@@ -150,7 +153,9 @@ export default function FinishedPieces() {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    toast.info("Processando planilha...");
+    setCancelImport(false);
+    setIsImporting(true);
+    setImportProgress({ current: 0, total: 0 });
 
     try {
       const XLSX = await import('xlsx');
@@ -192,15 +197,38 @@ export default function FinishedPieces() {
 
       if (itemsToImport.length === 0) {
         toast.error("Nenhuma peça encontrada nas abas especificadas");
+        setIsImporting(false);
         return;
       }
 
-      await importMutation.mutateAsync({ items: itemsToImport });
-      toast.success(`${itemsToImport.length} peças importadas com sucesso!`);
+      setImportProgress({ current: 0, total: itemsToImport.length });
+
+      // Importar em lotes para permitir cancelamento
+      const batchSize = 10;
+      let imported = 0;
+
+      for (let i = 0; i < itemsToImport.length; i += batchSize) {
+        if (cancelImport) {
+          toast.info(`Importação cancelada. ${imported} itens foram importados.`);
+          break;
+        }
+
+        const batch = itemsToImport.slice(i, i + batchSize);
+        await importMutation.mutateAsync({ items: batch });
+        imported += batch.length;
+        setImportProgress({ current: imported, total: itemsToImport.length });
+      }
+
+      if (!cancelImport) {
+        toast.success(`${itemsToImport.length} peças importadas com sucesso!`);
+      }
       refetch();
     } catch (error: any) {
       console.error('Erro ao importar:', error);
       toast.error(`Erro ao importar: ${error.message}`);
+    } finally {
+      setIsImporting(false);
+      setImportProgress({ current: 0, total: 0 });
     }
 
     // Limpar input
@@ -687,6 +715,51 @@ export default function FinishedPieces() {
               </Button>
             </DialogFooter>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog de Progresso de Importação */}
+      <Dialog open={isImporting} onOpenChange={() => {}}>
+        <DialogContent className="sm:max-w-md" onInteractOutside={(e) => e.preventDefault()}>
+          <DialogHeader>
+            <DialogTitle>Importando Peças</DialogTitle>
+            <DialogDescription>
+              Processando planilha... Por favor, aguarde.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Progresso</span>
+                <span className="font-medium">
+                  {importProgress.current} / {importProgress.total}
+                </span>
+              </div>
+              <div className="w-full bg-secondary rounded-full h-2.5">
+                <div
+                  className="bg-primary h-2.5 rounded-full transition-all duration-300"
+                  style={{
+                    width: `${importProgress.total > 0 ? (importProgress.current / importProgress.total) * 100 : 0}%`,
+                  }}
+                />
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              {importProgress.current === 0 && importProgress.total === 0
+                ? "Lendo planilha..."
+                : `Importando itens em lotes de 10...`}
+            </p>
+          </div>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => setCancelImport(true)}
+              disabled={cancelImport}
+            >
+              {cancelImport ? "Cancelando..." : "Cancelar Importação"}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
