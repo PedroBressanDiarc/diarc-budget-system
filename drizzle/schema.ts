@@ -51,6 +51,7 @@ export const purchaseRequisitions = mysqlTable("purchase_requisitions", {
   requisitionNumber: varchar("requisitionNumber", { length: 50 }).notNull().unique(),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
+  usageLocation: varchar("usageLocation", { length: 100 }),
   status: mysqlEnum("status", [
     "solicitacao",              // Almoxarife criou
     "cotacao_em_progresso",     // Comprador adicionando cotações
@@ -65,6 +66,7 @@ export const purchaseRequisitions = mysqlTable("purchase_requisitions", {
   requestedBy: int("requestedBy").notNull(),
   approvedBy: int("approvedBy"),
   approvedAt: timestamp("approvedAt"),
+  observations: text("observations"),
   notes: text("notes"),
   changeRequested: boolean("changeRequested").default(false).notNull(),
   changeRequestReason: text("changeRequestReason"),

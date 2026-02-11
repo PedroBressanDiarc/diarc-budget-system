@@ -203,3 +203,13 @@
 ## Correções e Melhorias - Autorizações (10/02/2026)
 - [x] Corrigir contador de badge mostrando número incorreto quando não há pendências
 - [x] Adicionar filtros/tabs na página de Autorizações (Pendentes, Autorizadas, Rejeitadas)
+
+## Novas Funcionalidades (10/02/2026)
+- [x] Adicionar campo de observações ao aprovar requisições
+- [x] Implementar busca por número/título nas tabs de autorizações
+- [x] Adicionar ordenação por data nas tabs de autorizações
+- [x] Adicionar campo "Local de Uso" no formulário de requisição (dropdown: Obra Comil, Fabrica, Administrativo)
+- [x] Criar menu dropdown "Base de Dados" na sidebar (apenas admins)
+- [x] Mover "Fornecedores" e "Equipamentos" para dentro do dropdown "Base de Dados"
+- [ ] Criar página "Itens" para cadastro de itens
+- [ ] Criar página "Obras" para cadastro de obras

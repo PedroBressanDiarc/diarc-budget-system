@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -30,15 +30,20 @@ import { Button } from "./ui/button";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
-  { icon: Users, label: "Fornecedores", path: "/fornecedores" },
   { icon: ShoppingCart, label: "Compras", path: "/compras" },
   { icon: CheckCircle, label: "Autorizações", path: "/autorizacoes", adminOnly: true },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
-  { icon: Package, label: "Equipamentos", path: "/equipment" },
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
   { icon: BarChart3, label: "Relatórios", path: "/relatorios" },
   { icon: SettingsIcon, label: "Configurações", path: "/configuracoes" },
   { icon: UserCog, label: "Usuários", path: "/usuarios" },
+];
+
+const databaseMenuItems = [
+  { icon: Users, label: "Fornecedores", path: "/fornecedores" },
+  { icon: Package, label: "Equipamentos", path: "/equipment" },
+  { icon: Package, label: "Itens", path: "/itens" },
+  { icon: Package, label: "Obras", path: "/obras" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -115,6 +120,7 @@ function DashboardLayoutContent({
   const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === "collapsed";
   const [isResizing, setIsResizing] = useState(false);
+  const [isDatabaseOpen, setIsDatabaseOpen] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const activeMenuItem = menuItems.find(item => item.path === location);
   const isMobile = useIsMobile();
@@ -203,6 +209,37 @@ function DashboardLayoutContent({
                   </SidebarMenuItem>
                 );
               })}
+              {user?.role === 'director' && (
+                <>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      onClick={() => setIsDatabaseOpen(!isDatabaseOpen)}
+                      tooltip="Base de Dados"
+                      className="h-10 transition-all font-normal"
+                    >
+                      <Database className="h-4 w-4" />
+                      <span>Base de Dados</span>
+                      <ChevronDown className={`ml-auto h-4 w-4 transition-transform ${isDatabaseOpen ? 'rotate-180' : ''}`} />
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  {isDatabaseOpen && databaseMenuItems.map(item => {
+                    const isActive = location === item.path;
+                    return (
+                      <SidebarMenuItem key={item.path}>
+                        <SidebarMenuButton
+                          isActive={isActive}
+                          onClick={() => setLocation(item.path)}
+                          tooltip={item.label}
+                          className="h-10 transition-all font-normal pl-8"
+                        >
+                          <item.icon className={`h-4 w-4 ${isActive ? "text-primary" : ""}`} />
+                          <span>{item.label}</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    );
+                  })}
+                </>
+              )}
             </SidebarMenu>
           </SidebarContent>
 

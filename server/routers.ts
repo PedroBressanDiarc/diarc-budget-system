@@ -204,6 +204,7 @@ export const appRouter = router({
       .input(z.object({
         title: z.string().min(1),
         description: z.string().optional(),
+        usageLocation: z.string().optional(),
         items: z.array(z.object({
           itemName: z.string().min(1),
           quantity: z.number().positive(),
@@ -223,6 +224,7 @@ export const appRouter = router({
           requisitionNumber,
           title: input.title,
           description: input.description,
+          usageLocation: input.usageLocation,
           requestedBy: ctx.user.id,
           status: 'solicitacao',
         });
@@ -310,7 +312,10 @@ export const appRouter = router({
       }),
 
     approve: protectedProcedure
-      .input(z.object({ id: z.number() }))
+      .input(z.object({ 
+        id: z.number(),
+        observations: z.string().optional(),
+      }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
         if (!database) throw new Error("Database not available");
@@ -320,6 +325,7 @@ export const appRouter = router({
             status: 'autorizado',
             approvedBy: ctx.user.id,
             approvedAt: new Date(),
+            observations: input.observations || null,
           })
           .where(eq(purchaseRequisitions.id, input.id));
 

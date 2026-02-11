@@ -46,6 +46,7 @@ export default function Requisitions() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    usageLocation: "",
   });
 
   const { data: requisitions, refetch } = trpc.requisitions.list.useQuery();
@@ -54,7 +55,7 @@ export default function Requisitions() {
     onSuccess: () => {
       toast.success("Requisição criada com sucesso!");
       setIsCreateOpen(false);
-      setFormData({ title: "", description: "" });
+      setFormData({ title: "", description: "", usageLocation: "" });
       setItems([{ name: "", quantity: "", unit: "un", brand: "", notes: "" }]);
       refetch();
     },
@@ -79,6 +80,7 @@ export default function Requisitions() {
     createMutation.mutate({
       title: formData.title,
       description: formData.description,
+      usageLocation: formData.usageLocation || undefined,
       items: validItems.map(item => ({
         itemName: item.name,
         quantity: Number(item.quantity),
@@ -180,6 +182,22 @@ export default function Requisitions() {
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     rows={3}
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="usageLocation">Local de Uso</Label>
+                  <Select
+                    value={formData.usageLocation}
+                    onValueChange={(value) => setFormData({ ...formData, usageLocation: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione o local" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Obra: Comil">Obra: Comil</SelectItem>
+                      <SelectItem value="Fabrica">Fábrica</SelectItem>
+                      <SelectItem value="Administrativo">Administrativo</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div className="border-t pt-4">
