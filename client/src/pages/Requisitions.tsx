@@ -12,6 +12,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Plus, Eye, Trash2, Edit, CheckSquare, Square } from "lucide-react";
 import { useLocation } from "wouter";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 const statusLabels: Record<string, string> = {
   solicitacao: "Solicitação",
@@ -36,10 +37,11 @@ const statusColors: Record<string, "default" | "secondary" | "destructive" | "ou
 };
 
 export default function Requisitions() {
+  const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [items, setItems] = useState<Array<{ name: string; quantity: string; unit: string; brand: string; notes: string }>>([
+  const [items, setItems] = useState<Array<{ name: string; quantity: string; unit: string; brand: string; notes: string; maxPrice?: string }>>([
     { name: "", quantity: "", unit: "un", brand: "", notes: "" }
   ]);
 
@@ -87,12 +89,13 @@ export default function Requisitions() {
         unit: item.unit || undefined,
         brand: item.brand || undefined,
         notes: item.notes || undefined,
+        maxPrice: item.maxPrice ? Number(item.maxPrice) : undefined,
       })),
     });
   };
 
   const addItem = () => {
-    setItems([...items, { name: "", quantity: "", unit: "un", brand: "", notes: "" }]);
+    setItems([...items, { name: "", quantity: "", unit: "un", brand: "", notes: "", maxPrice: "" }]);
   };
 
   const removeItem = (index: number) => {
@@ -285,6 +288,24 @@ export default function Requisitions() {
                                 rows={2}
                               />
                             </div>
+                            {user?.role === "director" && (
+                              <div className="space-y-2 col-span-2">
+                                <Label className="flex items-center gap-2">
+                                  Valor Máximo (R$)
+                                  <span className="text-xs text-muted-foreground font-normal">
+                                    (Opcional - Define limite de orçamento para este item)
+                                  </span>
+                                </Label>
+                                <Input
+                                  type="number"
+                                  min="0.01"
+                                  step="0.01"
+                                  value={item.maxPrice || ""}
+                                  onChange={(e) => updateItem(index, "maxPrice", e.target.value)}
+                                  placeholder="Ex: 1500.00"
+                                />
+                              </div>
+                            )}
                           </div>
                         </CardContent>
                       </Card>

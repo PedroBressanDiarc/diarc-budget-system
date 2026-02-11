@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `savings` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`requisitionId` int NOT NULL,\n\t`requisitionItemId` int NOT NULL,\n\t`quoteId` int NOT NULL,\n\t`maxPrice` decimal(12,2) NOT NULL,\n\t`actualPrice` decimal(12,2) NOT NULL,\n\t`savedAmount` decimal(12,2) NOT NULL,\n\t`savedBy` int NOT NULL,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\tCONSTRAINT `savings_id` PRIMARY KEY(`id`)\n);\n\nALTER TABLE `requisition_items` ADD `maxPrice` decimal(12,2);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute CREATE TABLE `savings` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`requisitionId` int NOT NULL,\n\t`requisitionItemId` int NOT NULL,\n\t`quoteId` int NOT NULL,\n\t`maxPrice` decimal(12,2) NOT NULL,\n\t`actualPrice` decimal(12,2) NOT NULL,\n\t`savedAmount` decimal(12,2) NOT NULL,\n\t`savedBy` int NOT NULL,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\tCONSTRAINT `savings_id` PRIMARY KEY(`id`)\n);\n\nALTER TABLE `requisition_items` ADD `maxPrice` decimal(12,2);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1347
+}

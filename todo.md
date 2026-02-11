@@ -219,3 +219,11 @@
 - [x] Remover toda lógica de criação automática de cotações de teste
 - [x] Remover toda lógica de criação automática de arquivos de teste
 - [x] Limpar banco de dados de todos os dados de teste existentes
+
+## Nova Funcionalidade - Controle de Orçamento (11/02/2026)
+- [x] Adicionar campo "valor máximo" por item nas requisições (apenas admins podem definir)
+- [x] Exibir valor máximo para compradores ao adicionar cotações
+- [x] Calcular automaticamente "valor economizado" quando cotação for menor que máximo
+- [x] Armazenar economia por usuário (comprador que conseguiu o melhor preço)
+- [x] Criar tabela de economias no banco de dados
+- [x] Preparar dados de economia para exibição futura no módulo de relatórios

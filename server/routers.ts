@@ -22,7 +22,8 @@ import {
   maintenanceRecords,
   companySettings,
   items,
-  projects
+  projects,
+  savings
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
 
@@ -213,6 +214,7 @@ export const appRouter = router({
           unit: z.string().optional(),
           brand: z.string().optional(),
           notes: z.string().optional(),
+          maxPrice: z.number().optional(), // Valor máximo permitido (apenas admins)
         })),
       }))
       .mutation(async ({ input, ctx }) => {
@@ -236,12 +238,13 @@ export const appRouter = router({
         // Insert items
         for (const item of input.items) {
           await database.insert(requisitionItems).values({
-            requisitionId,
+            requisitionId: requisitionId,
             itemName: item.itemName,
             quantity: item.quantity.toString(),
             unit: item.unit,
             brand: item.brand,
             notes: item.notes,
+            maxPrice: item.maxPrice ? item.maxPrice.toString() : null,
           });
         }
 
@@ -281,6 +284,7 @@ export const appRouter = router({
           unit: z.string().optional(),
           brand: z.string().optional(),
           notes: z.string().optional(),
+          maxPrice: z.number().optional(),
         })),
       }))
       .mutation(async ({ input, ctx }) => {
@@ -307,6 +311,7 @@ export const appRouter = router({
             unit: item.unit,
             brand: item.brand,
             notes: item.notes,
+            maxPrice: item.maxPrice ? item.maxPrice.toString() : null,
           });
         }
 
@@ -422,6 +427,7 @@ export const appRouter = router({
 
         const quoteId = Number(result[0].insertId);
 
+        // Inserir itens da cotação e calcular economia
         for (const item of input.items) {
           const totalPrice = item.unitPrice * item.quantity;
           await database.insert(quoteItems).values({
@@ -433,6 +439,32 @@ export const appRouter = router({
             brand: item.brand,
             notes: item.notes,
           });
+
+          // Verificar se há valor máximo definido e calcular economia
+          const requisitionItem = await database
+            .select()
+            .from(requisitionItems)
+            .where(eq(requisitionItems.id, item.requisitionItemId))
+            .limit(1);
+
+          if (requisitionItem[0]?.maxPrice) {
+            const maxPrice = parseFloat(requisitionItem[0].maxPrice);
+            const actualPrice = item.unitPrice;
+
+            // Se o preço da cotação for menor que o máximo, registrar economia
+            if (actualPrice < maxPrice) {
+              const savedAmount = maxPrice - actualPrice;
+              await database.insert(savings).values({
+                requisitionId: input.requisitionId,
+                requisitionItemId: item.requisitionItemId,
+                quoteId,
+                maxPrice: maxPrice.toString(),
+                actualPrice: actualPrice.toString(),
+                savedAmount: savedAmount.toString(),
+                savedBy: ctx.user.id,
+              });
+            }
+          }
         }
 
         return { success: true, id: quoteId };
@@ -599,6 +631,7 @@ export const appRouter = router({
           unit: z.string().optional(),
           brand: z.string().optional(),
           notes: z.string().optional(),
+          maxPrice: z.number().optional(), // Valor máximo permitido (apenas admins)
         })),
       }))
       .mutation(async ({ input, ctx }) => {
@@ -1057,10 +1090,17 @@ export const appRouter = router({
         const database = await getDb();
         if (!database) throw new Error("Database not available");
 
-        const result = await database.insert(items).values({
-          ...input,
+        const { quantity, unitPrice, minStock, maxStock, ...otherInput } = input;
+        const insertData: any = {
+          ...otherInput,
           createdBy: ctx.user.id,
-        });
+        };
+        if (quantity !== undefined) insertData.quantity = quantity.toString();
+        if (unitPrice !== undefined) insertData.unitPrice = unitPrice.toString();
+        if (minStock !== undefined) insertData.minStock = minStock.toString();
+        if (maxStock !== undefined) insertData.maxStock = maxStock.toString();
+        
+        const result = await database.insert(items).values(insertData);
 
         return { success: true, id: Number(result[0].insertId) };
       }),
@@ -1088,8 +1128,14 @@ export const appRouter = router({
         const database = await getDb();
         if (!database) throw new Error("Database not available");
 
-        const { id, ...data } = input;
-        await database.update(items).set(data).where(eq(items.id, id));
+        const { id, quantity, unitPrice, minStock, maxStock, ...otherData } = input;
+        const updateData: any = { ...otherData };
+        if (quantity !== undefined) updateData.quantity = quantity.toString();
+        if (unitPrice !== undefined) updateData.unitPrice = unitPrice.toString();
+        if (minStock !== undefined) updateData.minStock = minStock.toString();
+        if (maxStock !== undefined) updateData.maxStock = maxStock.toString();
+        
+        await database.update(items).set(updateData).where(eq(items.id, id));
 
         return { success: true };
       }),
@@ -1170,6 +1216,55 @@ export const appRouter = router({
         await database.delete(projects).where(eq(projects.id, input.id));
 
         return { success: true };
+      }),
+  }),
+
+  // ============= SAVINGS (ECONOMIAS) =============
+  savings: router({
+    // Listar economias por usuário
+    listByUser: protectedProcedure
+      .input(z.object({ userId: z.number().optional() }))
+      .query(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const userId = input.userId || ctx.user.id;
+        const result = await database
+          .select()
+          .from(savings)
+          .where(eq(savings.savedBy, userId))
+          .orderBy(desc(savings.createdAt));
+
+        return result;
+      }),
+
+    // Listar todas as economias (para relatórios)
+    listAll: protectedProcedure.query(async () => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+
+      const result = await database
+        .select()
+        .from(savings)
+        .orderBy(desc(savings.createdAt));
+
+      return result;
+    }),
+
+    // Calcular economia total por usuário
+    getTotalByUser: protectedProcedure
+      .input(z.object({ userId: z.number().optional() }))
+      .query(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const userId = input.userId || ctx.user.id;
+        const result = await database
+          .select({ total: sql<number>`SUM(${savings.savedAmount})` })
+          .from(savings)
+          .where(eq(savings.savedBy, userId));
+
+        return result[0]?.total || 0;
       }),
   }),
 });

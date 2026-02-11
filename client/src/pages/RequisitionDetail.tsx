@@ -775,6 +775,7 @@ export default function RequisitionDetail() {
                 <TableHead>Unidade</TableHead>
                 <TableHead>Marca/Modelo</TableHead>
                 <TableHead>Observações</TableHead>
+                <TableHead>Valor Máximo</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -785,6 +786,15 @@ export default function RequisitionDetail() {
                   <TableCell>{item.unit ? unitLabels[item.unit] || item.unit : "-"}</TableCell>
                   <TableCell>{item.brand || "-"}</TableCell>
                   <TableCell>{item.notes || "-"}</TableCell>
+                  <TableCell>
+                    {item.maxPrice ? (
+                      <span className="font-medium text-orange-600">
+                        {formatCurrency(item.maxPrice)}
+                      </span>
+                    ) : (
+                      <span className="text-muted-foreground">-</span>
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

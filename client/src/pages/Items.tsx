@@ -116,8 +116,8 @@ export default function Items() {
   };
 
   const getStockStatus = (item: any) => {
-    const qty = parseFloat(item.quantity || 0);
-    const min = parseFloat(item.minStock || 0);
+    const qty = parseFloat(item.quantity || "0");
+    const min = parseFloat(item.minStock || "0");
     
     if (qty === 0) return { label: "Sem estoque", variant: "destructive" as const };
     if (min > 0 && qty <= min) return { label: "Estoque baixo", variant: "secondary" as const };
@@ -131,18 +131,18 @@ export default function Items() {
   };
 
   const totalInventoryValue = items?.reduce((sum, item) => {
-    const qty = parseFloat(item.quantity || 0);
-    const price = parseFloat(item.unitPrice || 0);
+    const qty = parseFloat(item.quantity || "0");
+    const price = parseFloat(item.unitPrice || "0");
     return sum + (qty * price);
   }, 0) || 0;
 
   const lowStockItems = items?.filter(item => {
-    const qty = parseFloat(item.quantity || 0);
-    const min = parseFloat(item.minStock || 0);
+    const qty = parseFloat(item.quantity || "0");
+    const min = parseFloat(item.minStock || "0");
     return min > 0 && qty <= min && qty > 0;
   }) || [];
 
-  const outOfStockItems = items?.filter(item => parseFloat(item.quantity || 0) === 0) || [];
+  const outOfStockItems = items?.filter(item => parseFloat(item.quantity || "0") === 0) || [];
 
   return (
     <div className="space-y-6">
@@ -405,7 +405,7 @@ export default function Items() {
                       <TableCell>{item.category || "-"}</TableCell>
                       <TableCell>{item.defaultUnit?.toUpperCase()}</TableCell>
                       <TableCell className="text-right">
-                        {parseFloat(item.quantity || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                        {parseFloat(item.quantity || "0").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                       </TableCell>
                       <TableCell className="text-right">
                         {item.unitPrice ? `R$ ${parseFloat(item.unitPrice).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : "-"}

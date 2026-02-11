@@ -90,6 +90,7 @@ export const requisitionItems = mysqlTable("requisition_items", {
   unit: varchar("unit", { length: 50 }),
   brand: varchar("brand", { length: 255 }),
   notes: text("notes"),
+  maxPrice: decimal("maxPrice", { precision: 12, scale: 2 }), // Valor máximo permitido (definido por admin)
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
@@ -354,3 +355,21 @@ export const projects = mysqlTable("projects", {
 
 export type Project = typeof projects.$inferSelect;
 export type InsertProject = typeof projects.$inferInsert;
+
+/**
+ * Savings (Economias) - Rastreamento de economia por item
+ */
+export const savings = mysqlTable("savings", {
+  id: int("id").autoincrement().primaryKey(),
+  requisitionId: int("requisitionId").notNull(),
+  requisitionItemId: int("requisitionItemId").notNull(),
+  quoteId: int("quoteId").notNull(),
+  maxPrice: decimal("maxPrice", { precision: 12, scale: 2 }).notNull(), // Valor máximo definido
+  actualPrice: decimal("actualPrice", { precision: 12, scale: 2 }).notNull(), // Valor real da cotação
+  savedAmount: decimal("savedAmount", { precision: 12, scale: 2 }).notNull(), // Economia = maxPrice - actualPrice
+  savedBy: int("savedBy").notNull(), // ID do comprador que conseguiu a economia
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Saving = typeof savings.$inferSelect;
+export type InsertSaving = typeof savings.$inferInsert;

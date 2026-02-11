@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE `items` ADD COLUMN `quantity` decimal(10,2) NOT NULL DEFAULT '0';\nALTER TABLE `items` ADD COLUMN `unitPrice` decimal(10,2);\nALTER TABLE `items` ADD COLUMN `totalValue` decimal(10,2);\nALTER TABLE `items` ADD COLUMN `category` varchar(100);\nALTER TABLE `items` ADD COLUMN `brand` varchar(255);\nALTER TABLE `items` ADD COLUMN `location` varchar(255);\nALTER TABLE `items` ADD COLUMN `minStock` decimal(10,2);\nALTER TABLE `items` ADD COLUMN `maxStock` decimal(10,2);\nALTER TABLE `items` ADD COLUMN `notes` text;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute ALTER TABLE `items` ADD COLUMN `quantity` decimal(10,2) NOT NULL DEFAULT '0';\nALTER TABLE `items` ADD COLUMN `unitPrice` decimal(10,2);\nALTER TABLE `items` ADD COLUMN `totalValue` decimal(10,2);\nALTER TABLE `items` ADD COLUMN `category` varchar(100);\nALTER TABLE `items` ADD COLUMN `brand` varchar(255);\nALTER TABLE `items` ADD COLUMN `location` varchar(255);\nALTER TABLE `items` ADD COLUMN `minStock` decimal(10,2);\nALTER TABLE `items` ADD COLUMN `maxStock` decimal(10,2);\nALTER TABLE `items` ADD COLUMN `notes` text;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 4226
+}
