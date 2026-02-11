@@ -1,0 +1,6682 @@
+[
+  {
+    "name": "AÇO  CA60 - Ø5.0",
+    "category": "ESTOQUE 2025",
+    "quantity": 15471.536,
+    "unitPrice": 7.045,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "AÇO  CA60 - Ø6.0",
+    "category": "ESTOQUE 2025",
+    "quantity": 11416.746,
+    "unitPrice": 6.32,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "AÇO  CA60 - Ø8.0",
+    "category": "ESTOQUE 2025",
+    "quantity": 30831.167,
+    "unitPrice": 6.32,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "AÇO  CA50 - Ø10.0",
+    "category": "ESTOQUE 2025",
+    "quantity": 6941.638,
+    "unitPrice": 6.02,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "AÇO  CA50 - Ø12.5",
+    "category": "ESTOQUE 2025",
+    "quantity": 5349.906,
+    "unitPrice": 5.85,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "AÇO  CA50 - Ø16.0",
+    "category": "ESTOQUE 2025",
+    "quantity": 16985.244,
+    "unitPrice": 5.85,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "AÇO  CA50 - Ø20.0",
+    "category": "ESTOQUE 2025",
+    "quantity": 20919.034,
+    "unitPrice": 5.85,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "AÇO  CA50 - Ø25.0",
+    "category": "ESTOQUE 2025",
+    "quantity": 13603.079,
+    "unitPrice": 5.85,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "CORDOALHA CP175RB - Ø5.0",
+    "category": "ESTOQUE 2025",
+    "quantity": 5867.684,
+    "unitPrice": 7.64,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "CORDOALHA CP190RB - Ø12.7",
+    "category": "ESTOQUE 2025",
+    "quantity": 35043.7,
+    "unitPrice": 7.74,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "CORDOALHA CP190RB - Ø15.2",
+    "category": "ESTOQUE 2025",
+    "quantity": 8518.871,
+    "unitPrice": 7.74,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "CORDOALHA CP190RB - Ø9.5",
+    "category": "ESTOQUE 2025",
+    "quantity": 33612.944,
+    "unitPrice": 8.32,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "TELA  Q113 - Ø10x10_3.8",
+    "category": "ESTOQUE 2025",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "TELA  Q138 - Ø10x10_4.2",
+    "category": "ESTOQUE 2025",
+    "quantity": 0,
+    "unitPrice": 7.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "TELA  Q196 - Ø10x10_5.0",
+    "category": "ESTOQUE 2025",
+    "quantity": 166.08,
+    "unitPrice": 7.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "TELA  Q75 - Ø15x15_3.8",
+    "category": "ESTOQUE 2025",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "TELA  Q92 - Ø15x15_4.2",
+    "category": "ESTOQUE 2025",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "TELA  T335 - Ø30x15_6.0",
+    "category": "ESTOQUE 2025",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "AREIA MÉDIA",
+    "category": "ESTOQUE 2025",
+    "quantity": 80421.55,
+    "unitPrice": 0.074,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "CIMENTO CPV-ARI",
+    "category": "ESTOQUE 2025",
+    "quantity": 25000.0,
+    "unitPrice": 0.882,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "FILLER CALCÁRIO",
+    "category": "ESTOQUE 2025",
+    "quantity": 2073.68,
+    "unitPrice": 0.3,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "PEDRISCO VSI",
+    "category": "ESTOQUE 2025",
+    "quantity": 85000.0,
+    "unitPrice": 0.059,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "PÓ DE PEDRA VSI",
+    "category": "ESTOQUE 2025",
+    "quantity": 21000.0,
+    "unitPrice": 0.056,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "PEDRA BRITA ",
+    "category": "ESTOQUE 2025",
+    "quantity": 0,
+    "unitPrice": 0.05,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "MASTER GLENIUM 51",
+    "category": "ESTOQUE 2025",
+    "quantity": 34.99,
+    "unitPrice": 11.91092,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "MASTER RHEOBUILD",
+    "category": "ESTOQUE 2025",
+    "quantity": 482.0,
+    "unitPrice": 9.6478452,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "MASTER AIR ",
+    "category": "ESTOQUE 2025",
+    "quantity": 100.0,
+    "unitPrice": 4.442773160000001,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "LIGA FLOW 39",
+    "category": "ESTOQUE 2025",
+    "quantity": 58.31,
+    "unitPrice": 11.61,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "DESMOLDANTE ORTOLAN",
+    "category": "ESTOQUE 2025",
+    "quantity": 600.0,
+    "unitPrice": 24.72,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "TOTAL",
+    "category": "ESTOQUE 2025",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "PU sache cor cinza (Sika)",
+    "category": "ESTOQUE 2025",
+    "quantity": 360.0,
+    "unitPrice": 28.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Super RX 2200 ",
+    "category": "ESTOQUE 2025",
+    "quantity": 140.0,
+    "unitPrice": 17.67,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Granilha ",
+    "category": "ESTOQUE 2025",
+    "quantity": 8000.0,
+    "unitPrice": 0.51,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Decora BR80 - Aditivo",
+    "category": "ESTOQUE 2025",
+    "quantity": 50.0,
+    "unitPrice": 112.62,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Pigmento Preto",
+    "category": "ESTOQUE 2025",
+    "quantity": 40.0,
+    "unitPrice": 20.36,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Pigmento Amarelo",
+    "category": "ESTOQUE 2025",
+    "quantity": 30.0,
+    "unitPrice": 28.38,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Pigmento Vermelho",
+    "category": "ESTOQUE 2025",
+    "quantity": 25.0,
+    "unitPrice": 19.38,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Bainha Ø35",
+    "category": "ESTOQUE 2025",
+    "quantity": 105.0,
+    "unitPrice": 8.75,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Bainha Ø40",
+    "category": "ESTOQUE 2025",
+    "quantity": 113.0,
+    "unitPrice": 9.52,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Bainha Ø50",
+    "category": "ESTOQUE 2025",
+    "quantity": 107.0,
+    "unitPrice": 11.2,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Bainha Ø75",
+    "category": "ESTOQUE 2025",
+    "quantity": 70.0,
+    "unitPrice": 14.85,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Maderite",
+    "category": "ESTOQUE 2025",
+    "quantity": 150.0,
+    "unitPrice": 252.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "IHM (Reserva)",
+    "category": "ESTOQUE 2025",
+    "quantity": 1.0,
+    "unitPrice": 4216.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Grout",
+    "category": "ESTOQUE 2025",
+    "quantity": 15.0,
+    "unitPrice": 42.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "Disco de Corte 900mm",
+    "category": "ESTOQUE 2025",
+    "quantity": 1.0,
+    "unitPrice": 2708.53,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "TOTAL",
+    "category": "ESTOQUE 2025",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE 2025"
+  },
+  {
+    "name": "ABRASADEIRA NYLON ",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 100.0,
+    "unitPrice": 0.1054,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ADESIVO PLASTICO DE PVC",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 9.76,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ANTI FERRUGEM",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 5.8,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ANTIRRESPINGO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 7.0,
+    "unitPrice": 16.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ARAME MIG",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 60.0,
+    "unitPrice": 10.53,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BICO CONTATO LONGO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 20.0,
+    "unitPrice": 9.61,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BOCAL ROSCA GROSSA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 5.0,
+    "unitPrice": 36.75,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA AÇO RAPIDO  1/2",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 30.45,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA AÇO RAPIDO 10",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 9.2,
+    "unitPrice": 23.57,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA AÇO RAPIDO 20",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 2.0,
+    "unitPrice": 214.46,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA AÇO RAPIDO 4,5",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 4.77,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA AÇO RAPIDO 5,0",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 28.0,
+    "unitPrice": 8.87,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA AÇO RAPIDO 6,0",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 12.0,
+    "unitPrice": 7.4,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA AÇO RAPIDO 15",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 34.99,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA AÇO RAPIDO 8,0",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 6.0,
+    "unitPrice": 7.97,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA AÇO RAPIDO HASTE SEXTAVADA 10",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 13.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA AÇO RAPIDO HASTE SEXTAVADA 5",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 2.0,
+    "unitPrice": 8.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA MULTIMATERIAIS",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 36.695,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA PARA CONCRETO 10mm",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 10.74,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA PARA CONCRETO 12 mm",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 30.46,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA PARA CONCRETO 5 mm",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 22.53,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "BROCA PARA CONCRETO 6mm",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 14.35,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "CADEADO 35MM",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "CADEADO 40mm",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 3.0,
+    "unitPrice": 18.6,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "CADEADO 45MM",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "CAMARA DE AR",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 7.0,
+    "unitPrice": 18.223,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "CANTONEIRA PLASTICA - P/ CHANFRO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 100.0,
+    "unitPrice": 13.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "COLHER DE PEDREIRO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 22.26,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "COMPOUND",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 6.0,
+    "unitPrice": 57.71,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DESEMPENADEIRA QUADRADA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 24.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DESEMPENADEIRA REDONDA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 50.15,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DESINGRIPANTE",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 68.0,
+    "unitPrice": 8.65,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DIFUSOR",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 9.0,
+    "unitPrice": 19.3,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DE CORTE DE  FERRO 4\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 1.6,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DE CORTE DE AÇO 9\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 10.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DE CORTE DE FERRO  12\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 16.0,
+    "unitPrice": 19.22,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DE CORTE DE FERRO 16\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 14.0,
+    "unitPrice": 65.03,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DE CORTE DE FERRO/INOX  9\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 52.0,
+    "unitPrice": 13.75,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DE CORTE FERRO 7\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 5.0,
+    "unitPrice": 7.19,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DE INOX 4.1/2",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 1.8,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DE CORTE METAL 7\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 7.19,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DE DESBASTE 4\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 31.0,
+    "unitPrice": 2.76,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DE DESBASTE 7\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 10.8,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO DIAMANTADO 9\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 55.85,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO FLAP 4\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 4.99,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO FLAP 4.1/2",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 4.8,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO FLAP 7\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 75.0,
+    "unitPrice": 12.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO REFRÁTARIO 7\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 7.0,
+    "unitPrice": 8.08,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO REFRÁTARIO 9\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 12.0,
+    "unitPrice": 12.52,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "DISCO REMOVEDOR EM NYLON",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 39.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ELETRODO 6013",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 9.14,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ELETRODO 7018",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 6.0,
+    "unitPrice": 21.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "EMBORRACHAMENTO PRETO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 68.3,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESCOVA COPO TRANÇADA 100mm",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 5.0,
+    "unitPrice": 19.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESCOVA COPO TRANÇADA 150 mm",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 44.53,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESCOVA DE AÇO BASE MADEIRA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 5.0,
+    "unitPrice": 8.74,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESCOVA DE AÇO BASE PLASTICA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 9.34,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPATULA AÇO INOX",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 11.7,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPAÇADOR TIPO CADEIRINHA  40",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 17.0,
+    "unitPrice": 247.8,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPAÇADOR TIPO CADEIRINHA 15",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 7.0,
+    "unitPrice": 175.52,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPAÇADOR TIPO CADEIRINHA 20",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 15.0,
+    "unitPrice": 185.85,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPAÇADOR TIPO CADEIRINHA 25",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 25.0,
+    "unitPrice": 216.82,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPAÇADOR TIPO CADEIRINHA 30",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 11.0,
+    "unitPrice": 216.82,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPAÇADOR TIPO ROSETA 20",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 15.0,
+    "unitPrice": 185.85,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPAÇADOR TIPO ROSETA 25",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 19.0,
+    "unitPrice": 120.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPAÇADOR TIPO ROSETA 35",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 286.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPAÇADOR TIPO ROSETA 40",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 17.0,
+    "unitPrice": 252.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ESPAÇADOR TIPO ROLETE 50",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1500.0,
+    "unitPrice": 1.35,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "FILME STRECH",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 23.0,
+    "unitPrice": 28.2,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "FITA AUTO FUSÃO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 3.0,
+    "unitPrice": 20.54,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "FITA CREPE",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 6.0,
+    "unitPrice": 7.74,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "FITA ISOLANTE",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 16.0,
+    "unitPrice": 5.18,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "FITA VEDA ROSCA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 32.0,
+    "unitPrice": 3.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "FITA ZEBRADA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 10.55,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "GARRA NEGATIVA 500AP",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 2.0,
+    "unitPrice": 30.2,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ISOPOR",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 211.0,
+    "unitPrice": 1.6,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "KIT LAMINA TICO-TICO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 5.0,
+    "unitPrice": 6.55,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "LAPIS CARPINTEIRO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 24.0,
+    "unitPrice": 1.24,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "LIMA CHATA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 8.0,
+    "unitPrice": 17.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "LIMPA CONTATO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 2.0,
+    "unitPrice": 10.3,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "LIXA DE FERRO GRÃO 100",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 55.0,
+    "unitPrice": 2.48,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "LIXA DE FERRO GRÃO 120",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 37.0,
+    "unitPrice": 2.48,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "LIXA DE FERRO GRÃO 1200",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 5.97,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "LIXA DE FERRO GRÃO 320",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 2.62,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "LIXA DE FERRO GRÃO 36",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 34.0,
+    "unitPrice": 3.24,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "LIXA DE FERRO GRÃO 80",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 68.0,
+    "unitPrice": 2.7,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "MASSA PLASTICA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 28.0,
+    "unitPrice": 22.54,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "NIVEL DE ALUMINIO BASE MAGNETICA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 2.0,
+    "unitPrice": 87.84,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PINCEL 1\"1/2",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 4.32,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PINCEL 4\"",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 9.89,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PINCEL LETREIRO N°12",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 9.0,
+    "unitPrice": 2.72,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PINCEL LETREIRO N°8",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 2.18,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PLUG FEMEA 10 AM",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 8.0,
+    "unitPrice": 4.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PLUG FEMEA 20 AM",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 7.7,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PLUG MACHO 10 AM",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 6.1,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PLUG MACHO 20 AM",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 6.05,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PNEU PARA CARRINHO DE MÃO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 33.18,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PORTA ELETRODO",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 55.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 10X10",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 15.0,
+    "unitPrice": 24.6,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 12X12",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 7.0,
+    "unitPrice": 14.08,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 14X21",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 5.0,
+    "unitPrice": 13.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 15X15",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 8.0,
+    "unitPrice": 12.46,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 15X21",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 13.0,
+    "unitPrice": 12.46,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 16X21",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 19.0,
+    "unitPrice": 16.59,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 17X27 CABEÇA DUPLA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 9.0,
+    "unitPrice": 17.37,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 17X27 CABEÇA SIMPLES",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 13.0,
+    "unitPrice": 13.61,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 18X24",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 4.0,
+    "unitPrice": 16.54,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 18X27",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 19.0,
+    "unitPrice": 10.77,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "PREGO 18X36",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 5.0,
+    "unitPrice": 16.35,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "SELA TRINCA",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "SERRA COPO 32MM",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 57.7,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "SERRA COPO 38MM",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 68.2,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "SERRA COPO 60mm",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 91.65,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "SERRINHA MANUAL",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 9.69,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "SUPORTE DE SERRA COPO A10",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 102.72,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "SUPORTE DE SERRA COPO A4",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 1.0,
+    "unitPrice": 60.85,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "TRENA 8MTS",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 6.0,
+    "unitPrice": 30.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "TRENA 5 MTS ",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 3.0,
+    "unitPrice": 14.37,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "TRENA 10 MTS",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 15.0,
+    "unitPrice": 45.56,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "TOTAL ",
+    "category": "ESTOQUE ABRASIVOS",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE ABRASIVOS"
+  },
+  {
+    "name": "ABAFADOR DE RUIDOS",
+    "category": "ESTOQUE EPI",
+    "quantity": 2.0,
+    "unitPrice": 46.98,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "AVENTAL DE RASPA",
+    "category": "ESTOQUE EPI",
+    "quantity": 9.0,
+    "unitPrice": 45.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "BOTINA SEM BICO E AÇO 38",
+    "category": "ESTOQUE EPI",
+    "quantity": 9.0,
+    "unitPrice": 51.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "BOTINA SEM BICO E AÇO 39",
+    "category": "ESTOQUE EPI",
+    "quantity": 5.0,
+    "unitPrice": 51.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "BOTINA SEM BICO E AÇO 40",
+    "category": "ESTOQUE EPI",
+    "quantity": 2.0,
+    "unitPrice": 51.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "BOTINA SEM BICO E AÇO 41",
+    "category": "ESTOQUE EPI",
+    "quantity": 3.0,
+    "unitPrice": 51.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "BOTINA SEM BICO E AÇO 42",
+    "category": "ESTOQUE EPI",
+    "quantity": 6.0,
+    "unitPrice": 51.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "BOTINA SEM BICO E AÇO 43",
+    "category": "ESTOQUE EPI",
+    "quantity": 11.0,
+    "unitPrice": 51.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "BOTINA SEM BICO E AÇO 44",
+    "category": "ESTOQUE EPI",
+    "quantity": 7.0,
+    "unitPrice": 51.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "BOTINA SEM BICO E AÇO 45",
+    "category": "ESTOQUE EPI",
+    "quantity": 12.0,
+    "unitPrice": 51.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "CAPA DE CHUVA AMARELA",
+    "category": "ESTOQUE EPI",
+    "quantity": 2.0,
+    "unitPrice": 33.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "CAPA DE CHUVA TRANSPARENTE",
+    "category": "ESTOQUE EPI",
+    "quantity": 2.0,
+    "unitPrice": 9.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "CAPACETE AZULC/ SUSPENSÃO",
+    "category": "ESTOQUE EPI",
+    "quantity": 8.0,
+    "unitPrice": 11.35,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "FILTRO PARA MASCARA DE PINTURA",
+    "category": "ESTOQUE EPI",
+    "quantity": 35.0,
+    "unitPrice": 9.99,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "JOELHEIRA DE PVC",
+    "category": "ESTOQUE EPI",
+    "quantity": 2.0,
+    "unitPrice": 32.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "JUGULAR PARA CAPACETE",
+    "category": "ESTOQUE EPI",
+    "quantity": 10.0,
+    "unitPrice": 5.07,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "LUVA DE PVC VERDE",
+    "category": "ESTOQUE EPI",
+    "quantity": 15.0,
+    "unitPrice": 16.3,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "LUVA DE RASPA",
+    "category": "ESTOQUE EPI",
+    "quantity": 8.0,
+    "unitPrice": 15.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "LUVA DE VAQUETA",
+    "category": "ESTOQUE EPI",
+    "quantity": 84.0,
+    "unitPrice": 14.5,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "LUVA LATEX 8 (M)",
+    "category": "ESTOQUE EPI",
+    "quantity": 7.0,
+    "unitPrice": 7.3,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "LUVA LATEX 9(G)",
+    "category": "ESTOQUE EPI",
+    "quantity": 0,
+    "unitPrice": 7.3,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "LUVA NITRILCA CINZA 7 (P)",
+    "category": "ESTOQUE EPI",
+    "quantity": 13.0,
+    "unitPrice": 4.77,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "LUVA NITRILICA CINZA 9 (G)",
+    "category": "ESTOQUE EPI",
+    "quantity": 30.0,
+    "unitPrice": 4.77,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "LUVA NITRILICA PRETA",
+    "category": "ESTOQUE EPI",
+    "quantity": 0,
+    "unitPrice": 9.7,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "MACACÃO PARA PINTURA (M)",
+    "category": "ESTOQUE EPI",
+    "quantity": 35.0,
+    "unitPrice": 9.41,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "MACACÃO PARA PINTURA(G)",
+    "category": "ESTOQUE EPI",
+    "quantity": 0,
+    "unitPrice": 9.41,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "MANGOTE DE RASPA",
+    "category": "ESTOQUE EPI",
+    "quantity": 8.0,
+    "unitPrice": 28.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "ÓCULOS DE PROTEÇÃO FUME",
+    "category": "ESTOQUE EPI",
+    "quantity": 13.0,
+    "unitPrice": 4.63,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "ÓCULOS DE PROTEÇÃO INCOLOR",
+    "category": "ESTOQUE EPI",
+    "quantity": 24.0,
+    "unitPrice": 4.63,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "PERNEIRA DE RASPA",
+    "category": "ESTOQUE EPI",
+    "quantity": 7.0,
+    "unitPrice": 26.92,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "PROTETOR  AURICULAR DE SILICONE",
+    "category": "ESTOQUE EPI",
+    "quantity": 15.0,
+    "unitPrice": 3.99,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "PROTETOR FACIAL INCOLOR",
+    "category": "ESTOQUE EPI",
+    "quantity": 7.0,
+    "unitPrice": 33.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "PROTETOR SOLAR 1 LITRO",
+    "category": "ESTOQUE EPI",
+    "quantity": 5.0,
+    "unitPrice": 111.83,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "PROTETOR SOLAR 120 gr",
+    "category": "ESTOQUE EPI",
+    "quantity": 5.0,
+    "unitPrice": 15.53,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "RESPIRADOR PFF2",
+    "category": "ESTOQUE EPI",
+    "quantity": 212.0,
+    "unitPrice": 2.15,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE EPI"
+  },
+  {
+    "name": "PERFIL U - 2.65X40X100X6000",
+    "category": "Metalúrgica",
+    "quantity": 10.0,
+    "unitPrice": 3.53,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U - 3.00X50X127X6000",
+    "category": "Metalúrgica",
+    "quantity": 2.0,
+    "unitPrice": 5.13,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U - 3.35X50X150X6000",
+    "category": "Metalúrgica",
+    "quantity": 7.0,
+    "unitPrice": 6.23,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U - 2.25X50X127X6000",
+    "category": "Metalúrgica",
+    "quantity": 50.0,
+    "unitPrice": 2.9,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U - 2.65X50X200X6000",
+    "category": "Metalúrgica",
+    "quantity": 17.0,
+    "unitPrice": 6.04,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U - 4.75X50X45X6000",
+    "category": "Metalúrgica",
+    "quantity": 17.0,
+    "unitPrice": 6.061,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U ENRIJECIDO - 2.65X20X60X150X6000",
+    "category": "Metalúrgica",
+    "quantity": 14.0,
+    "unitPrice": 6.013,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U ENRIJECIDO - 3.00X20X60X200X6000",
+    "category": "Metalúrgica",
+    "quantity": 22.0,
+    "unitPrice": 7.25,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U ENRIJECIDO - 2.65X20X60X200X6000",
+    "category": "Metalúrgica",
+    "quantity": 2.0,
+    "unitPrice": 6.44,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U ENRIJECIDO - 3.00X75X200X6000",
+    "category": "Metalúrgica",
+    "quantity": 7.0,
+    "unitPrice": 8.86,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U LAMINADO - 76.2X4.32X6000",
+    "category": "Metalúrgica",
+    "quantity": 248.0,
+    "unitPrice": 6.1,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL U ENRIJECIDO - 2.25X85X300X6000",
+    "category": "Metalúrgica",
+    "quantity": 5.0,
+    "unitPrice": 8.87,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO MECANICO Ø 3/8\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 23.0,
+    "unitPrice": 0.56,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO MECANICO Ø 1/2\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 11.0,
+    "unitPrice": 0.99,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO MECANICO Ø 5/8\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 77.0,
+    "unitPrice": 1.55,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO MECANICO Ø 3/4\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 3.0,
+    "unitPrice": 2.24,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO MECANICO MACIÇO QDADO 1\"X6000",
+    "category": "Metalúrgica",
+    "quantity": 3.0,
+    "unitPrice": 5.06,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO MECANICO MACIÇO QDADO 2\"X6000",
+    "category": "Metalúrgica",
+    "quantity": 5.0,
+    "unitPrice": 20.26,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO CHATO 1/8X2\"X6000",
+    "category": "Metalúrgica",
+    "quantity": 8.0,
+    "unitPrice": 1.27,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO CHATO 4/75X2\"X6000",
+    "category": "Metalúrgica",
+    "quantity": 4.0,
+    "unitPrice": 1.9,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO CHATO 1/4X2.1/2\"X6000",
+    "category": "Metalúrgica",
+    "quantity": 5.0,
+    "unitPrice": 3.17,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO CHATO 1/4X3\"X6000",
+    "category": "Metalúrgica",
+    "quantity": 19.0,
+    "unitPrice": 3.8,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO CHATO 3/8X4\"X6000",
+    "category": "Metalúrgica",
+    "quantity": 19.0,
+    "unitPrice": 7.6,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "FERRO CHATO 1/4X1.1/2\"X6000",
+    "category": "Metalúrgica",
+    "quantity": 10.0,
+    "unitPrice": 1.9,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL L 1/8x1\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 3.0,
+    "unitPrice": 0.317,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL L 1/8x1.1/4\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 11.0,
+    "unitPrice": 0.317,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL L 1/8x1.1/2\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 54.0,
+    "unitPrice": 0.317,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL L 1/8x1.3/4\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 10.0,
+    "unitPrice": 0.317,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL L 1/8x2\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 2.0,
+    "unitPrice": 0.317,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL L 4/75x2\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 7.0,
+    "unitPrice": 0.476,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL L 1/4x2.1/2\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 3.0,
+    "unitPrice": 0.635,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL L 1/4x3\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 7.0,
+    "unitPrice": 0.635,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "TUBO METALICO Ø3.00x2\"x6000",
+    "category": "Metalúrgica",
+    "quantity": 1.0,
+    "unitPrice": 3.5666666666666664,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "TUBO METALICO Ø4.75x130x6000",
+    "category": "Metalúrgica",
+    "quantity": 4.0,
+    "unitPrice": 14.450000000000001,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "CHAPAS PARA FORMA 1/4x1500x6000",
+    "category": "Metalúrgica",
+    "quantity": 2.0,
+    "unitPrice": 49.39,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "CHAPAS PARA FORMA 4/75x1500x6000",
+    "category": "Metalúrgica",
+    "quantity": 12.0,
+    "unitPrice": 41.8,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "CHAPAS PARA FORMA 3/8x1200x3000",
+    "category": "Metalúrgica",
+    "quantity": 3.0,
+    "unitPrice": 74.48,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "CHAPAS PARA FORMA 1/4x1500x5000",
+    "category": "Metalúrgica",
+    "quantity": 5.0,
+    "unitPrice": 49.39,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "CHAPAS PARA FORMA 4.75x1200x3000",
+    "category": "Metalúrgica",
+    "quantity": 4.0,
+    "unitPrice": 41.8,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "CHAPAS PARA FORMA 1/4x1200x3000",
+    "category": "Metalúrgica",
+    "quantity": 1.0,
+    "unitPrice": 49.39,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "CHAPAS PARA FORMA 7/8x2560x3000",
+    "category": "Metalúrgica",
+    "quantity": 1.0,
+    "unitPrice": 175.84,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "CHAPAS PARA FORMA 7/8x1000x2560",
+    "category": "Metalúrgica",
+    "quantity": 1.0,
+    "unitPrice": 175.84,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "TELHAS ALUZINCO 043.1050X12.100",
+    "category": "Metalúrgica",
+    "quantity": 23.0,
+    "unitPrice": 278.3,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "TELHAS ALUZINCO 043.1050X8.230",
+    "category": "Metalúrgica",
+    "quantity": 5.0,
+    "unitPrice": 41.150000000000006,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL W 200x19.3X203x102x12000",
+    "category": "Metalúrgica",
+    "quantity": 4.0,
+    "unitPrice": 19.3,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "PERFIL W 4.10x60.0x407x178x357x381x7.7x12,8x12.000",
+    "category": "Metalúrgica",
+    "quantity": 6.0,
+    "unitPrice": 60.0,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "ARAME RECOZIDO ",
+    "category": "Metalúrgica",
+    "quantity": 400.0,
+    "unitPrice": 10.53,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "TOTAL ",
+    "category": "Metalúrgica",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "kg",
+    "notes": "Importado da planilha - Aba: ESTOQUE METALURGICA"
+  },
+  {
+    "name": "RUBBER RECESS FORMER - BORRACHA TSA 1.3TON",
+    "category": "Importação",
+    "quantity": 100.0,
+    "unitPrice": 6.7,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "RUBBER RECESS FORMER - BORRACHA TSA 2.5TON",
+    "category": "Importação",
+    "quantity": 100.0,
+    "unitPrice": 12.02,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "RUBBER RECESS FORMER - BORRACHA TSA 5TON",
+    "category": "Importação",
+    "quantity": 100.0,
+    "unitPrice": 18.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "RUBBER RECESS FORMER - BORRACHA TSA 7.5TON",
+    "category": "Importação",
+    "quantity": 50.0,
+    "unitPrice": 68.94,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "RUBBER RECESS FORMER - BORRACHA TSA 10TON",
+    "category": "Importação",
+    "quantity": 50.0,
+    "unitPrice": 68.94,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "TWO HOLE ANCHOR - PLACA C/ DOIS FUROS TSA-SZ",
+    "category": "Importação",
+    "quantity": 2000.0,
+    "unitPrice": 1.22,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "TWO HOLE ANCHOR - PLACA C/ DOIS FUROS TSA-SZ",
+    "category": "Importação",
+    "quantity": 2000.0,
+    "unitPrice": 2.0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "TWO HOLE ANCHOR - PLACA C/ DOIS FUROS TSA-SZ",
+    "category": "Importação",
+    "quantity": 500.0,
+    "unitPrice": 5.78,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "TWO HOLE ANCHOR - PLACA C/ DOIS FUROS TSA-SZ",
+    "category": "Importação",
+    "quantity": 500.0,
+    "unitPrice": 11.82,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "TWO HOLE ANCHOR - PLACA C/ DOIS FUROS TSA-SZ",
+    "category": "Importação",
+    "quantity": 500.0,
+    "unitPrice": 15.58,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "ERECTION ANCHOR - PLACA C/ PROEMINENCIA TSA-SA",
+    "category": "Importação",
+    "quantity": 1000.0,
+    "unitPrice": 4.9,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "ERECTION ANCHOR - PLACA C/ PROEMINENCIA TSA-SA",
+    "category": "Importação",
+    "quantity": 5000.0,
+    "unitPrice": 8.46,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "ERECTION ANCHOR - PLACA C/ PROEMINENCIA TSA-SA",
+    "category": "Importação",
+    "quantity": 10000.0,
+    "unitPrice": 21.6,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "MAGNETIC CHAMFER STRIP - CHANFRO TRIANGULAR MAGNETICO, DE IMÃ METAL",
+    "category": "Importação",
+    "quantity": 90.0,
+    "unitPrice": 114.62,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "RING CLUTCH - GANCHO IÇADOR ",
+    "category": "Importação",
+    "quantity": 12.0,
+    "unitPrice": 150.44,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "RING CLUTCH - GANCHO IÇADOR ",
+    "category": "Importação",
+    "quantity": 12.0,
+    "unitPrice": 330.76,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "RING CLUTCH - GANCHO IÇADOR ",
+    "category": "Importação",
+    "quantity": 10.0,
+    "unitPrice": 664.72,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "TOTAL",
+    "category": "Importação",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "un",
+    "notes": "Importado da planilha - Aba: ESTOQUE - IMPORTAÇÃO"
+  },
+  {
+    "name": "Peça",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "EP3A",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.84,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "EP3A",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.84,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "EP3A",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.84,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "EP4A",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.84,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "EP4A",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.84,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "EP4A",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.84,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1001",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1002",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1002",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1002",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1002",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1003",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1004",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1005",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1005",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1005",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1005",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1006",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.69,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1006",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.69,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1006",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.69,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1006",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.69,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF101",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF102",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.17,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF103",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF103",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF103",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF103",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1101",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1102",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1103",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1104",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1105",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1106",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1106",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1106",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1106",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1106",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1107",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1108",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.39,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1109",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.39,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1109",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.39,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1110",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.69,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1110",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.69,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1110",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.69,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF1110",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.69,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF201",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF202",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.17,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF203",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF203",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF203",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF203",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF301",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF302",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.17,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF303",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF303",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF303",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF303",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF401",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF402",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.17,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF403",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF403",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF403",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF403",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF701",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF702",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF703",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF704",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF705",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF706",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF706",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF706",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF706",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF707",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF708",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF708",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF708",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF708",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF709",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF710",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF710",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF710",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF710",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF711",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF712",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF712",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF712",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF712",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF712_RV01",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF713",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.43,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF714",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF714",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF714",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF714",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF714_RV01",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF801",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF801",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF801",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF801",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF802",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF802",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF802",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF802",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF803",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF803",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF803",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF803",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF804",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.17,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF805",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.17,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF806",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.17,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF807",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.17,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF808",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.17,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF809",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF809",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF809",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF809",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF810",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF810",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF810",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "LF810",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.74,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P10B",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P10C",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P11B",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P11C",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P12B",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P12C",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P13B",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P13C",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P14B",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P14C",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P15B",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P15C",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P16B",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P16C",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P17B",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P17C",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P18B",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "P18C",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.78,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.78,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.78,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 3.42,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.33,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 3.42,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 3.42,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 3.42,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 2.11,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.68,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-1",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-15",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-15",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-16",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-17",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-18",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-18",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-19",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-20",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-21",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.62,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-21",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.62,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-22",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.62,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-24",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.52,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-24",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.52,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-25",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.52,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-3",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-3",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS02-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS03-1",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.52,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS03-1",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.52,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS03-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.52,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS03-3",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.62,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS03-3",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.62,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS03-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.62,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-10",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-11",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-11",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-12",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-13",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-16",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-16",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-17",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-18",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-19",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-19",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.42,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-20",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-21",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-22",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.62,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-22",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.62,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-23",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.62,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-7",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-8",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS04-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-1",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-12",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-12",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-13",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-14",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-15",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-3",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-7",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-8",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS06-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-1",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-1",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-1",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-10",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-10",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-10",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-11",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-11",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-11",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-3",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-3",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-3",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.28,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-7",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-7",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-7",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-8",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-8",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-8",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS09-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-1",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-10",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-11",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-12",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-12",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-12",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.4,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-2",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-3",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-4",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-5",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.26,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-6",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-7",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-8",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "PS16-9",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.9,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V201",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V201",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V201",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V201",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V201",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V201",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V201",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V202",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V202",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V202",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V202",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V202",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V202",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V203",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V203",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V203",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V203",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V203",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V204",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V204",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V204",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V204",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V205",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V206",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "V207",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP10",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP11",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP11",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP13",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.55,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP17",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP17",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP17",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP17",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP17",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP18",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP18",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP18",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP18",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP19",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP19",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP19",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP28",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.08,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP28",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.08,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP29",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP29",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP29",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP29",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP29",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.55,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.55,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.55,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP34",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP37",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP37",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP37",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP37",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP37",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP37",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP37-A",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP37-A",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP41",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP41",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP42",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP43",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP47",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.08,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP47",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.08,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP47",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.08,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP47",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.08,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP48",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP48",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP48",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.35,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP50",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP50",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP50",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP50",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP50",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP50",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP50",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP51",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP51",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP51",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP51",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP51",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP51",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP51",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP52",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP52",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP52",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP52",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.63,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP53",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.22,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP55",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP55",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP55",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP55",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP56",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP56",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP56",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP56",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP57",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP57",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP57",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP57",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP57",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP58",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP58",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP58",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP58",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP58",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP58",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP58",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP58",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP58",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP59",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.08,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP59",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.08,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP59",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.08,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP60",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP60",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP60",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP60",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP61",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP61",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP61",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP61",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.12,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP62",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP62",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP62",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP62",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP62",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP62",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP62",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP62",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.75,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP63",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.89,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP64",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.08,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP65",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP66",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "VP66",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.38,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.55,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.55,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.55,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.47,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0.64,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "BONPLAND",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 1.0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "TOTAL",
+    "category": "Peças - Bonpland",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - BONPLAND"
+  },
+  {
+    "name": "Peça",
+    "category": "Peças - Lang",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - LANG"
+  },
+  {
+    "name": "LAP101",
+    "category": "Peças - Lang",
+    "quantity": 0,
+    "unitPrice": 0.37,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - LANG"
+  },
+  {
+    "name": "LAP102",
+    "category": "Peças - Lang",
+    "quantity": 0,
+    "unitPrice": 0.37,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - LANG"
+  },
+  {
+    "name": "LAP102",
+    "category": "Peças - Lang",
+    "quantity": 0,
+    "unitPrice": 0.37,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - LANG"
+  },
+  {
+    "name": "LAP103",
+    "category": "Peças - Lang",
+    "quantity": 0,
+    "unitPrice": 0.37,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - LANG"
+  },
+  {
+    "name": "LAP116",
+    "category": "Peças - Lang",
+    "quantity": 0,
+    "unitPrice": 0.37,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - LANG"
+  },
+  {
+    "name": "LAP116",
+    "category": "Peças - Lang",
+    "quantity": 0,
+    "unitPrice": 0.37,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - LANG"
+  },
+  {
+    "name": "LAP116",
+    "category": "Peças - Lang",
+    "quantity": 0,
+    "unitPrice": 0.37,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - LANG"
+  },
+  {
+    "name": "TOTAL",
+    "category": "Peças - Lang",
+    "quantity": 0,
+    "unitPrice": 0,
+    "defaultUnit": "m3",
+    "notes": "Importado da planilha - Aba: PEÇAS - LANG"
+  }
+]

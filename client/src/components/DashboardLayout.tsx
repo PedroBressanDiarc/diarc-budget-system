@@ -295,7 +295,7 @@ function DashboardLayoutContent({
           <SidebarFooter className="p-3">
             <div className="px-2 py-1 mb-2">
               <p className="text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
-                Versão 1.3.0
+                Versão 1.4.0
               </p>
             </div>
             <DropdownMenu>

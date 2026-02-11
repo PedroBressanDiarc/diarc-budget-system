@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, Pencil, Trash2, Package, AlertTriangle } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, AlertTriangle, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,7 +16,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export default function Items() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isImportOpen, setIsImportOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
+  const [importFile, setImportFile] = useState<File | null>(null);
+  const [isImporting, setIsImporting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     secondaryName: "",
@@ -37,6 +40,7 @@ export default function Items() {
   const createMutation = trpc.items.create.useMutation();
   const updateMutation = trpc.items.update.useMutation();
   const deleteMutation = trpc.items.delete.useMutation();
+  const importMutation = trpc.items.importFromExcel.useMutation();
 
   const resetForm = () => {
     setFormData({
@@ -115,6 +119,84 @@ export default function Items() {
     }
   };
 
+  const handleImport = async () => {
+    if (!importFile) {
+      toast.error("Por favor, selecione um arquivo");
+      return;
+    }
+
+    setIsImporting(true);
+
+    try {
+      // Ler o arquivo Excel
+      const XLSX = await import('xlsx');
+      const data = await importFile.arrayBuffer();
+      const workbook = XLSX.read(data, { type: 'array' });
+
+      const allItems: any[] = [];
+
+      // Processar cada aba
+      workbook.SheetNames.forEach((sheetName) => {
+        if (sheetName === 'TOTAL ESTOQUE') return; // Pular aba de totais
+
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+        // Pular cabeçalho e processar linhas
+        for (let i = 1; i < jsonData.length; i++) {
+          const row: any = jsonData[i];
+          if (!row || row.length === 0) continue;
+
+          // Primeira coluna é o nome do item
+          const name = row[0];
+          if (!name || typeof name !== 'string' || name.length < 3) continue;
+
+          // Segunda coluna é quantidade
+          const quantity = parseFloat(row[1]) || 0;
+
+          // Terceira ou quarta coluna é preço
+          let unitPrice = parseFloat(row[2]) || parseFloat(row[3]) || 0;
+
+          // Determinar unidade baseada na categoria
+          let defaultUnit = 'un';
+          if (sheetName.includes('METALURGICA')) defaultUnit = 'kg';
+          if (sheetName.includes('PEÇAS')) defaultUnit = 'm3';
+
+          allItems.push({
+            name: name,
+            category: sheetName,
+            quantity: quantity,
+            unitPrice: unitPrice,
+            defaultUnit: defaultUnit,
+            notes: `Importado da planilha - Aba: ${sheetName}`,
+          });
+        }
+      });
+
+      if (allItems.length === 0) {
+        toast.error("Nenhum item válido encontrado na planilha");
+        setIsImporting(false);
+        return;
+      }
+
+      // Enviar para o backend
+      const result = await importMutation.mutateAsync({ items: allItems });
+
+      toast.success(`${result.imported} itens importados com sucesso!`);
+      if (result.failed > 0) {
+        toast.warning(`${result.failed} itens falharam na importação`);
+      }
+
+      setIsImportOpen(false);
+      setImportFile(null);
+      refetch();
+    } catch (error: any) {
+      toast.error(error.message || "Erro ao importar planilha");
+    } finally {
+      setIsImporting(false);
+    }
+  };
+
   const getStockStatus = (item: any) => {
     const qty = parseFloat(item.quantity || "0");
     const min = parseFloat(item.minStock || "0");
@@ -151,13 +233,52 @@ export default function Items() {
           <h1 className="text-3xl font-bold tracking-tight">Estoque</h1>
           <p className="text-muted-foreground">Gerenciamento de itens e controle de estoque</p>
         </div>
-        <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Novo Item
-            </Button>
-          </DialogTrigger>
+        <div className="flex gap-2">
+          <Dialog open={isImportOpen} onOpenChange={setIsImportOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline">
+                <Upload className="mr-2 h-4 w-4" />
+                Importar Planilha
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Importar Planilha Excel</DialogTitle>
+                <DialogDescription>
+                  Faça upload de uma planilha Excel (.xlsx) para importar itens automaticamente
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="file">Arquivo Excel</Label>
+                  <Input
+                    id="file"
+                    type="file"
+                    accept=".xlsx,.xls"
+                    onChange={(e) => setImportFile(e.target.files?.[0] || null)}
+                  />
+                  <p className="text-sm text-muted-foreground">
+                    A planilha deve ter as colunas: Nome, Quantidade, Preço Unitário
+                  </p>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => setIsImportOpen(false)}>
+                  Cancelar
+                </Button>
+                <Button onClick={handleImport} disabled={!importFile || isImporting}>
+                  {isImporting ? "Importando..." : "Importar"}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Novo Item
+              </Button>
+            </DialogTrigger>
           <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
             <form onSubmit={handleCreate}>
               <DialogHeader>
@@ -613,6 +734,7 @@ export default function Items() {
           </form>
         </DialogContent>
       </Dialog>
+        </div>
     </div>
   );
 }

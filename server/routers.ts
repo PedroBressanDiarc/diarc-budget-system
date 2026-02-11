@@ -1166,6 +1166,59 @@ export const appRouter = router({
 
         return { success: true };
       }),
+
+    importFromExcel: protectedProcedure
+      .input(
+        z.object({
+          items: z.array(
+            z.object({
+              name: z.string(),
+              category: z.string().optional(),
+              quantity: z.number().optional(),
+              unitPrice: z.number().optional(),
+              defaultUnit: z.string(),
+              notes: z.string().optional(),
+            })
+          ),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        let successCount = 0;
+        let errorCount = 0;
+        const errors: string[] = [];
+
+        for (const item of input.items) {
+          try {
+            const insertData: any = {
+              name: item.name,
+              defaultUnit: item.defaultUnit,
+              active: true,
+              createdBy: ctx.user.id,
+            };
+
+            if (item.category) insertData.category = item.category;
+            if (item.quantity !== undefined) insertData.quantity = item.quantity.toString();
+            if (item.unitPrice !== undefined) insertData.unitPrice = item.unitPrice.toString();
+            if (item.notes) insertData.notes = item.notes;
+
+            await database.insert(items).values(insertData);
+            successCount++;
+          } catch (error: any) {
+            errorCount++;
+            errors.push(`Erro ao importar "${item.name}": ${error.message}`);
+          }
+        }
+
+        return {
+          success: true,
+          imported: successCount,
+          failed: errorCount,
+          errors: errors.slice(0, 10), // Retornar apenas os primeiros 10 erros
+        };
+      }),
   }),
 
   // Projects Router
