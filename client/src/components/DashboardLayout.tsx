@@ -32,6 +32,7 @@ const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
   { icon: ShoppingCart, label: "Compras", path: "/compras" },
   { icon: CheckCircle, label: "Autorizações", path: "/autorizacoes", adminOnly: true },
+  { icon: Warehouse, label: "Estoque", path: "/estoque" },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
   { icon: BarChart3, label: "Relatórios", path: "/relatorios" },
@@ -41,7 +42,6 @@ const menuItems = [
 
 const databaseMenuItems = [
   { icon: Users, label: "Fornecedores", path: "/fornecedores" },
-  { icon: Warehouse, label: "Estoque", path: "/estoque" },
   { icon: Package, label: "Equipamentos", path: "/equipment" },
   { icon: Package, label: "Itens", path: "/itens" },
   { icon: Package, label: "Obras", path: "/obras" },
