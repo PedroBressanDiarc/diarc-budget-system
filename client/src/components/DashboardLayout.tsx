@@ -140,6 +140,7 @@ function DashboardLayoutContent({
   const isCollapsed = state === "collapsed";
   const [isResizing, setIsResizing] = useState(false);
   const [isDatabaseOpen, setIsDatabaseOpen] = useState(false);
+  const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({});
   const sidebarRef = useRef<HTMLDivElement>(null);
   const activeMenuItem = menuItems.find(item => item.path === location);
   const isMobile = useIsMobile();
@@ -211,21 +212,50 @@ function DashboardLayoutContent({
             <SidebarMenu className="px-2 py-1">
               {menuItems.filter(item => !item.adminOnly || user?.role === 'director').map(item => {
                 const isActive = location === item.path;
+                const hasSubmenu = item.submenu && item.submenu.length > 0;
+                const isSubmenuOpen = openSubmenus[item.path] || false;
+                
                 return (
-                  <SidebarMenuItem key={item.path}>
-                    <SidebarMenuButton
-                      isActive={isActive}
-                      onClick={() => setLocation(item.path)}
-                      tooltip={item.label}
-                      className={`h-10 transition-all font-normal relative`}
-                    >
-                      <item.icon
-                        className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
-                      />
-                      <span>{item.label}</span>
-                      {item.path === '/autorizacoes' && <PendingAuthBadge />}
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  <div key={item.path}>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        isActive={isActive}
+                        onClick={() => {
+                          if (hasSubmenu) {
+                            setOpenSubmenus(prev => ({ ...prev, [item.path]: !prev[item.path] }));
+                          } else {
+                            setLocation(item.path);
+                          }
+                        }}
+                        tooltip={item.label}
+                        className={`h-10 transition-all font-normal relative`}
+                      >
+                        <item.icon
+                          className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                        />
+                        <span>{item.label}</span>
+                        {item.path === '/autorizacoes' && <PendingAuthBadge />}
+                        {hasSubmenu && (
+                          <ChevronDown className={`ml-auto h-4 w-4 transition-transform ${isSubmenuOpen ? 'rotate-180' : ''}`} />
+                        )}
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    {hasSubmenu && isSubmenuOpen && item.submenu!.map(subitem => {
+                      const isSubActive = location === subitem.path;
+                      return (
+                        <SidebarMenuItem key={subitem.path}>
+                          <SidebarMenuButton
+                            isActive={isSubActive}
+                            onClick={() => setLocation(subitem.path)}
+                            tooltip={subitem.label}
+                            className="h-10 transition-all font-normal pl-8"
+                          >
+                            <span>{subitem.label}</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      );
+                    })}
+                  </div>
                 );
               })}
               {user?.role === 'director' && (

@@ -262,3 +262,6 @@
 - [x] Adicionar métricas de performance de compras
 - [x] Adicionar indicadores de taxa de conclusão e aprovação
 - [ ] Adicionar exportação para PDF e Excel (futura melhoria)
+
+## Bug Reportado (11/02/2026)
+- [x] Corrigir menu dropdown de Estoque na sidebar que não está funcionando
