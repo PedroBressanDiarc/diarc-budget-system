@@ -1,0 +1,9 @@
+{
+  "query": "DELETE FROM suppliers WHERE name = 'Test Supplier';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute DELETE FROM suppliers WHERE name = 'Test Supplier';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 499
+}

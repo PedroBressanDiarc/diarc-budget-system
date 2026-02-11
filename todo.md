@@ -213,3 +213,9 @@
 - [x] Mover "Fornecedores" e "Equipamentos" para dentro do dropdown "Base de Dados"
 - [x] Criar página "Itens" para cadastro de itens
 - [x] Criar página "Obras" para cadastro de obras
+
+## Correção Urgente (11/02/2026)
+- [x] Remover toda lógica de criação automática de fornecedores de teste
+- [x] Remover toda lógica de criação automática de cotações de teste
+- [x] Remover toda lógica de criação automática de arquivos de teste
+- [x] Limpar banco de dados de todos os dados de teste existentes
