@@ -308,3 +308,39 @@ export const requisitionAttachments = mysqlTable("requisition_attachments", {
 
 export type RequisitionAttachment = typeof requisitionAttachments.$inferSelect;
 export type InsertRequisitionAttachment = typeof requisitionAttachments.$inferInsert;
+
+/**
+ * Items (Itens - Base de dados de produtos/materiais)
+ */
+export const items = mysqlTable("items", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  secondaryName: varchar("secondaryName", { length: 255 }),
+  defaultUnit: varchar("defaultUnit", { length: 50 }).notNull(),
+  ncm: varchar("ncm", { length: 20 }),
+  ncmDefinition: text("ncmDefinition"),
+  active: boolean("active").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type Item = typeof items.$inferSelect;
+export type InsertItem = typeof items.$inferInsert;
+
+/**
+ * Projects (Obras)
+ */
+export const projects = mysqlTable("projects", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  startDate: date("startDate"),
+  endDate: date("endDate"),
+  active: boolean("active").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type Project = typeof projects.$inferSelect;
+export type InsertProject = typeof projects.$inferInsert;

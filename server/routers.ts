@@ -20,9 +20,11 @@ import {
   equipment,
   maintenanceSchedules,
   maintenanceRecords,
-  companySettings
+  companySettings,
+  items,
+  projects
 } from "../drizzle/schema";
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, desc } from "drizzle-orm";
 
 export const appRouter = router({
   system: systemRouter,
@@ -1018,6 +1020,138 @@ export const appRouter = router({
         if (!database) throw new Error("Database not available");
 
         await database.delete(requisitionAttachments).where(eq(requisitionAttachments.id, input.id));
+
+        return { success: true };
+      }),
+  }),
+
+  // Items Router
+  items: router({
+    list: protectedProcedure.query(async () => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+
+      const result = await database.select().from(items).orderBy(desc(items.createdAt));
+      return result;
+    }),
+
+    create: protectedProcedure
+      .input(
+        z.object({
+          name: z.string(),
+          secondaryName: z.string().optional(),
+          defaultUnit: z.string(),
+          ncm: z.string().optional(),
+          ncmDefinition: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const result = await database.insert(items).values({
+          ...input,
+          createdBy: ctx.user.id,
+        });
+
+        return { success: true, id: Number(result[0].insertId) };
+      }),
+
+    update: protectedProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          name: z.string(),
+          secondaryName: z.string().optional(),
+          defaultUnit: z.string(),
+          ncm: z.string().optional(),
+          ncmDefinition: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const { id, ...data } = input;
+        await database.update(items).set(data).where(eq(items.id, id));
+
+        return { success: true };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.delete(items).where(eq(items.id, input.id));
+
+        return { success: true };
+      }),
+  }),
+
+  // Projects Router
+  projects: router({
+    list: protectedProcedure.query(async () => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+
+      const result = await database.select().from(projects).orderBy(desc(projects.createdAt));
+      return result;
+    }),
+
+    create: protectedProcedure
+      .input(
+        z.object({
+          name: z.string(),
+          startDate: z.string().optional(),
+          endDate: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const result = await database.insert(projects).values({
+          name: input.name,
+          startDate: input.startDate ? new Date(input.startDate) : null,
+          endDate: input.endDate ? new Date(input.endDate) : null,
+          createdBy: ctx.user.id,
+        });
+
+        return { success: true, id: Number(result[0].insertId) };
+      }),
+
+    update: protectedProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          name: z.string(),
+          startDate: z.string().optional(),
+          endDate: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const { id, ...data } = input;
+        await database.update(projects).set({
+          name: data.name,
+          startDate: data.startDate ? new Date(data.startDate) : null,
+          endDate: data.endDate ? new Date(data.endDate) : null,
+        }).where(eq(projects.id, id));
+
+        return { success: true };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.delete(projects).where(eq(projects.id, input.id));
 
         return { success: true };
       }),

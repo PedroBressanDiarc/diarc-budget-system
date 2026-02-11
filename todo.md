@@ -211,5 +211,5 @@
 - [x] Adicionar campo "Local de Uso" no formulário de requisição (dropdown: Obra Comil, Fabrica, Administrativo)
 - [x] Criar menu dropdown "Base de Dados" na sidebar (apenas admins)
 - [x] Mover "Fornecedores" e "Equipamentos" para dentro do dropdown "Base de Dados"
-- [ ] Criar página "Itens" para cadastro de itens
-- [ ] Criar página "Obras" para cadastro de obras
+- [x] Criar página "Itens" para cadastro de itens
+- [x] Criar página "Obras" para cadastro de obras
