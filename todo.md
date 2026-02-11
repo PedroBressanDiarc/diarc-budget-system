@@ -265,3 +265,11 @@
 
 ## Bug Reportado (11/02/2026)
 - [x] Corrigir menu dropdown de Estoque na sidebar que não está funcionando
+
+## Nova Funcionalidade - Importação de Estoque (11/02/2026)
+- [x] Analisar estrutura da planilha Excel de estoque
+- [x] Criar script de importação dividindo: abas "peças - bonpland" e "peças - lang" → Peças Finalizadas, demais abas → Estoque Interno
+- [x] Adicionar botão de importação na página de Peças Finalizadas
+- [x] Adicionar botão de importação na página de Estoque Interno
+- [x] Criar endpoint backend para processar upload e importação
+- [x] Implementar processamento automático de Excel com xlsx

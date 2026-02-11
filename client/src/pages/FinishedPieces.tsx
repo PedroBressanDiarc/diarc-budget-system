@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, Pencil, Trash2, Package, AlertTriangle } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, AlertTriangle, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -144,6 +144,68 @@ export default function FinishedPieces() {
 
   const outOfStockItems = items?.filter(item => parseFloat(item.quantity || "0") === 0) || [];
 
+  const importMutation = trpc.items.importFromExcel.useMutation();
+
+  const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    toast.info("Processando planilha...");
+
+    try {
+      const XLSX = await import('xlsx');
+      const data = await file.arrayBuffer();
+      const workbook = XLSX.read(data);
+
+      const itemsToImport: any[] = [];
+
+      // Processar abas "PEÇAS - BONPLAND" e "PEÇAS - LANG"
+      ['PEÇAS - BONPLAND', 'PEÇAS - LANG'].forEach(sheetName => {
+        if (!workbook.SheetNames.includes(sheetName)) return;
+
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+        // Começar da linha 3 (pular cabeçalhos)
+        for (let i = 2; i < jsonData.length; i++) {
+          const row = jsonData[i];
+          if (!row[0]) continue; // Pular linhas vazias
+
+          const peca = row[0];
+          const obra = row[1];
+          const volume = parseFloat(row[2]) || 0;
+          const quantidade = parseFloat(row[3]) || 1;
+          const valorM3 = parseFloat(row[4]) || 0;
+          const valorPeca = typeof row[5] === 'number' ? row[5] : (volume * quantidade * valorM3);
+
+          itemsToImport.push({
+            name: `${peca} - ${obra}`,
+            category: 'Peça Finalizada',
+            quantity: quantidade,
+            unitPrice: valorPeca / quantidade,
+            defaultUnit: 'un',
+            notes: `Volume: ${volume}m³, Valor m³: R$ ${valorM3}`,
+          });
+        }
+      });
+
+      if (itemsToImport.length === 0) {
+        toast.error("Nenhuma peça encontrada nas abas especificadas");
+        return;
+      }
+
+      await importMutation.mutateAsync({ items: itemsToImport });
+      toast.success(`${itemsToImport.length} peças importadas com sucesso!`);
+      refetch();
+    } catch (error: any) {
+      console.error('Erro ao importar:', error);
+      toast.error(`Erro ao importar: ${error.message}`);
+    }
+
+    // Limpar input
+    event.target.value = '';
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -151,14 +213,27 @@ export default function FinishedPieces() {
           <h1 className="text-3xl font-bold tracking-tight">Peças Finalizadas</h1>
           <p className="text-muted-foreground">Controle de peças de concreto prontas para entrega</p>
         </div>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => document.getElementById('import-finished-pieces')?.click()}>
+            <Upload className="mr-2 h-4 w-4" />
+            Importar Excel
+          </Button>
+          <input
+            id="import-finished-pieces"
+            type="file"
+            accept=".xlsx,.xls"
+            className="hidden"
+            onChange={handleImport}
+          />
+        </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Nova Peça
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Nova Peça
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
             <form onSubmit={handleCreate}>
               <DialogHeader>
                 <DialogTitle>Criar Nova Peça</DialogTitle>

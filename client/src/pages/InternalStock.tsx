@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, Pencil, Trash2, Package, AlertTriangle } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, AlertTriangle, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -144,6 +144,68 @@ export default function InternalStock() {
 
   const outOfStockItems = items?.filter(item => parseFloat(item.quantity || "0") === 0) || [];
 
+  const importMutation = trpc.items.importFromExcel.useMutation();
+
+  const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    toast.info("Processando planilha...");
+
+    try {
+      const XLSX = await import('xlsx');
+      const data = await file.arrayBuffer();
+      const workbook = XLSX.read(data);
+
+      const itemsToImport: any[] = [];
+
+      // Processar todas as abas EXCETO "PEÇAS - BONPLAND", "PEÇAS - LANG" e "TOTAL ESTOQUE"
+      const excludeSheets = ['PEÇAS - BONPLAND', 'PEÇAS - LANG', 'TOTAL ESTOQUE'];
+      
+      workbook.SheetNames.forEach(sheetName => {
+        if (excludeSheets.includes(sheetName)) return;
+
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+        // Começar da linha 3 (pular cabeçalhos)
+        for (let i = 2; i < jsonData.length; i++) {
+          const row = jsonData[i];
+          if (!row[0]) continue; // Pular linhas vazias
+
+          const nome = row[0];
+          const quantidade = parseFloat(row[1]) || 0;
+          const unidade = row[2] || 'un';
+          const valorUnitario = parseFloat(row[3]) || 0;
+
+          itemsToImport.push({
+            name: nome,
+            category: sheetName.replace('ESTOQUE', '').trim(),
+            quantity: quantidade,
+            unitPrice: valorUnitario,
+            defaultUnit: unidade,
+            notes: `Importado de: ${sheetName}`,
+          });
+        }
+      });
+
+      if (itemsToImport.length === 0) {
+        toast.error("Nenhum item encontrado nas abas de estoque");
+        return;
+      }
+
+      await importMutation.mutateAsync({ items: itemsToImport });
+      toast.success(`${itemsToImport.length} itens importados com sucesso!`);
+      refetch();
+    } catch (error: any) {
+      console.error('Erro ao importar:', error);
+      toast.error(`Erro ao importar: ${error.message}`);
+    }
+
+    // Limpar input
+    event.target.value = '';
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -151,14 +213,27 @@ export default function InternalStock() {
           <h1 className="text-3xl font-bold tracking-tight">Estoque Interno</h1>
           <p className="text-muted-foreground">Controle de materiais, ferramentas e equipamentos</p>
         </div>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => document.getElementById('import-internal-stock')?.click()}>
+            <Upload className="mr-2 h-4 w-4" />
+            Importar Excel
+          </Button>
+          <input
+            id="import-internal-stock"
+            type="file"
+            accept=".xlsx,.xls"
+            className="hidden"
+            onChange={handleImport}
+          />
+        </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Novo Item
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Novo Item
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
             <form onSubmit={handleCreate}>
               <DialogHeader>
                 <DialogTitle>Criar Novo Item</DialogTitle>
