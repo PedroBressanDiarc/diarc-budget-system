@@ -32,7 +32,15 @@ const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
   { icon: ShoppingCart, label: "Compras", path: "/compras" },
   { icon: CheckCircle, label: "Autorizações", path: "/autorizacoes", adminOnly: true },
-  { icon: Warehouse, label: "Estoque", path: "/estoque" },
+  { 
+    icon: Warehouse, 
+    label: "Estoque", 
+    path: "/estoque",
+    submenu: [
+      { label: "Peças Finalizadas", path: "/estoque/pecas-finalizadas" },
+      { label: "Estoque Interno", path: "/estoque/interno" },
+    ]
+  },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
   { 
@@ -257,7 +265,7 @@ function DashboardLayoutContent({
           <SidebarFooter className="p-3">
             <div className="px-2 py-1 mb-2">
               <p className="text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
-                Versão 1.2.0
+                Versão 1.3.0
               </p>
             </div>
             <DropdownMenu>

@@ -11,6 +11,8 @@ import Requisitions from "./pages/Requisitions";
 import RequisitionDetail from "./pages/RequisitionDetail";
 import Authorizations from "./pages/Authorizations";
 import Items from "./pages/Items";
+import FinishedPieces from "./pages/FinishedPieces";
+import InternalStock from "./pages/InternalStock";
 import Projects from "./pages/Projects";
 import Budgets from "./pages/Budgets";
 import BudgetDetail from "./pages/BudgetDetail";
@@ -33,6 +35,8 @@ function Router() {
       <Route path="/compras" component={Requisitions} />
       <Route path="/compras/:id" component={RequisitionDetail} />
       <Route path="/autorizacoes" component={Authorizations} />
+      <Route path="/estoque/pecas-finalizadas" component={FinishedPieces} />
+      <Route path="/estoque/interno" component={InternalStock} />
       <Route path="/estoque" component={Items} />
       <Route path="/itens" component={Items} />
       <Route path="/obras" component={Projects} />
