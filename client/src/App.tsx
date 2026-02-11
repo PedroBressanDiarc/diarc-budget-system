@@ -18,6 +18,9 @@ import Equipment from "./pages/Equipment";
 import EquipmentDetail from "./pages/EquipmentDetail";
 import Maintenance from "./pages/Maintenance";
 import Reports from "./pages/Reports";
+import SavingsDashboard from "./pages/SavingsDashboard";
+import ProjectReport from "./pages/ProjectReport";
+import BudgetAlerts from "./pages/BudgetAlerts";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import Users from "./pages/Users";
@@ -39,6 +42,9 @@ function Router() {
       <Route path="/equipment/:id" component={EquipmentDetail} />
       <Route path="/manutencoes" component={Maintenance} />
       <Route path="/relatorios" component={Reports} />
+      <Route path="/relatorios/economias" component={SavingsDashboard} />
+      <Route path="/relatorios/obras" component={ProjectReport} />
+      <Route path="/alertas-orcamento" component={BudgetAlerts} />
       <Route path="/configuracoes" component={Settings} />
       <Route path="/usuarios" component={Users} />
       <Route path="/404" component={NotFound} />

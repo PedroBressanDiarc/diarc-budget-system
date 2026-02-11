@@ -227,3 +227,38 @@
 - [x] Armazenar economia por usuário (comprador que conseguiu o melhor preço)
 - [x] Criar tabela de economias no banco de dados
 - [x] Preparar dados de economia para exibição futura no módulo de relatórios
+
+## Módulo de Relatórios (11/02/2026)
+
+### Dashboard de Economias
+- [x] Criar endpoint para ranking de compradores por economia total
+- [x] Criar endpoint para gráfico de evolução mensal de economias
+- [x] Criar endpoint para top 10 itens com maior economia
+- [x] Implementar página Dashboard de Economias com cards de métricas
+- [x] Adicionar gráfico de barras para evolução temporal
+- [x] Adicionar tabela de ranking de compradores
+
+### Sistema de Alertas de Orçamento
+- [x] Criar tabela budget_alerts no schema para registrar alertas
+- [x] Adicionar validação no endpoint de cotações para detectar excesso
+- [x] Criar endpoint para aprovar/rejeitar cotações com orçamento excedido
+- [x] Implementar alertas automáticos quando orçamento for excedido
+- [x] Criar página de Alertas de Orçamento para diretores
+- [x] Criar interface para diretores aprovarem/rejeitarem alertas
+
+### Relatório por Obras
+- [x] Adicionar campo projectId (obra) nas requisições
+- [x] Criar endpoint para listar economias filtradas por obra
+- [x] Criar endpoint para calcular economia total por obra
+- [x] Implementar página de Relatório de Obras
+- [x] Adicionar métricas de economia por obra
+- [x] Adicionar análise de performance por projeto
+
+### Módulo de Relatórios Gerais
+- [x] Criar página principal de Relatórios no menu
+- [x] Adicionar cards de acesso rápido aos relatórios
+- [x] Criar relatório de requisições por status
+- [x] Criar relatório de fornecedores mais utilizados
+- [x] Adicionar métricas de performance de compras
+- [x] Adicionar indicadores de taxa de conclusão e aprovação
+- [ ] Adicionar exportação para PDF e Excel (futura melhoria)

@@ -23,7 +23,8 @@ import {
   companySettings,
   items,
   projects,
-  savings
+  savings,
+  budgetAlerts
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
 
@@ -208,6 +209,7 @@ export const appRouter = router({
         title: z.string().min(1),
         description: z.string().optional(),
         usageLocation: z.string().optional(),
+        projectId: z.number().optional(),
         items: z.array(z.object({
           itemName: z.string().min(1),
           quantity: z.number().positive(),
@@ -229,6 +231,7 @@ export const appRouter = router({
           title: input.title,
           description: input.description,
           usageLocation: input.usageLocation,
+          projectId: input.projectId,
           requestedBy: ctx.user.id,
           status: 'solicitacao',
         });
@@ -462,6 +465,19 @@ export const appRouter = router({
                 actualPrice: actualPrice.toString(),
                 savedAmount: savedAmount.toString(),
                 savedBy: ctx.user.id,
+              });
+            }
+            // Se o preço exceder o máximo, criar alerta para aprovação
+            else if (actualPrice > maxPrice) {
+              const excessAmount = actualPrice - maxPrice;
+              await database.insert(budgetAlerts).values({
+                requisitionId: input.requisitionId,
+                requisitionItemId: item.requisitionItemId,
+                quoteId,
+                maxPrice: maxPrice.toString(),
+                quotedPrice: actualPrice.toString(),
+                excessAmount: excessAmount.toString(),
+                createdBy: ctx.user.id,
               });
             }
           }
@@ -1260,11 +1276,251 @@ export const appRouter = router({
 
         const userId = input.userId || ctx.user.id;
         const result = await database
-          .select({ total: sql<number>`SUM(${savings.savedAmount})` })
+          .select({ total: sql<string>`SUM(${savings.savedAmount})` })
           .from(savings)
           .where(eq(savings.savedBy, userId));
 
-        return result[0]?.total || 0;
+        return Number(result[0]?.total || 0);
+      }),
+  }),
+
+  // ============= REPORTS (RELATÓRIOS) =============
+  reports: router({
+    // Dashboard de Economias - Ranking de compradores
+    savingsRanking: protectedProcedure
+      .input(z.object({ 
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+      }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        let query = database
+          .select({
+            userId: savings.savedBy,
+            totalSavings: sql<number>`SUM(${savings.savedAmount})`,
+            savingsCount: sql<number>`COUNT(*)`,
+          })
+          .from(savings)
+          .groupBy(savings.savedBy)
+          .orderBy(desc(sql`SUM(${savings.savedAmount})`));
+
+        const result = await query;
+
+        // Buscar nomes dos usuários
+        const userIds = result.map(r => r.userId);
+        const users = await database
+          .select({ id: sql<number>`id`, name: sql<string>`name` })
+          .from(sql`users`)
+          .where(sql`id IN (${sql.join(userIds, sql`, `)})`);;
+
+        return result.map(r => ({
+          ...r,
+          userName: users.find(u => u.id === r.userId)?.name || "Desconhecido",
+        }));
+      }),
+
+    // Dashboard - Evolução mensal de economias
+    savingsMonthlyTrend: protectedProcedure
+      .input(z.object({ months: z.number().default(12) }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const result = await database
+          .select({
+            month: sql<string>`DATE_FORMAT(${savings.createdAt}, '%Y-%m')`.as('month'),
+            totalSavings: sql<number>`SUM(${savings.savedAmount})`.as('totalSavings'),
+            count: sql<number>`COUNT(*)`.as('count'),
+          })
+          .from(savings)
+          .groupBy(sql`month`)
+          .orderBy(sql`month`);
+
+        return result;
+      }),
+
+    // Dashboard - Top 10 itens com maior economia
+    topSavingItems: protectedProcedure
+      .input(z.object({ limit: z.number().default(10) }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const result = await database
+          .select({
+            itemId: requisitionItems.id,
+            itemName: requisitionItems.itemName,
+            totalSavings: sql<number>`SUM(${savings.savedAmount})`,
+            timesQuoted: sql<number>`COUNT(*)`,
+            avgSaving: sql<number>`AVG(${savings.savedAmount})`,
+          })
+          .from(savings)
+          .innerJoin(requisitionItems, eq(savings.requisitionItemId, requisitionItems.id))
+          .groupBy(requisitionItems.id, requisitionItems.itemName)
+          .orderBy(desc(sql`SUM(${savings.savedAmount})`))
+          .limit(input.limit);
+
+        return result;
+      }),
+
+    // Relatório por Obras - Economias por projeto
+    savingsByProject: protectedProcedure
+      .input(z.object({ projectId: z.number().optional() }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        let query = database
+          .select({
+            projectId: purchaseRequisitions.projectId,
+            projectName: projects.name,
+            totalSavings: sql<number>`SUM(${savings.savedAmount})`,
+            requisitionsCount: sql<number>`COUNT(DISTINCT ${purchaseRequisitions.id})`,
+          })
+          .from(savings)
+          .innerJoin(purchaseRequisitions, eq(savings.requisitionId, purchaseRequisitions.id))
+          .leftJoin(projects, eq(purchaseRequisitions.projectId, projects.id))
+          .groupBy(purchaseRequisitions.projectId, projects.name);
+
+        if (input.projectId) {
+          query = query.where(eq(purchaseRequisitions.projectId, input.projectId)) as any;
+        }
+
+        const result = await query;
+        return result;
+      }),
+
+    // Métricas gerais do sistema
+    systemMetrics: protectedProcedure.query(async () => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+
+      const totalSavings = await database
+        .select({ total: sql<string>`SUM(${savings.savedAmount})` })
+        .from(savings);
+
+      const totalRequisitions = await database
+        .select({ count: sql<number>`COUNT(*)` })
+        .from(purchaseRequisitions);
+
+      const totalQuotes = await database
+        .select({ count: sql<number>`COUNT(*)` })
+        .from(quotes);
+
+      const avgQuotesPerRequisition = await database
+        .select({ avg: sql<number>`AVG(quote_count)` })
+        .from(
+          database
+            .select({ quote_count: sql<number>`COUNT(*)`.as('quote_count') })
+            .from(quotes)
+            .groupBy(quotes.requisitionId)
+            .as("quote_counts")
+        );
+
+      return {
+        totalSavings: Number(totalSavings[0]?.total || 0),
+        totalRequisitions: Number(totalRequisitions[0]?.count || 0),
+        totalQuotes: Number(totalQuotes[0]?.count || 0),
+        avgQuotesPerRequisition: Number(avgQuotesPerRequisition[0]?.avg || 0),
+      };
+    }),
+
+    // Relatório de requisições por status
+    requisitionsByStatus: protectedProcedure.query(async () => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+
+      const result = await database
+        .select({
+          status: purchaseRequisitions.status,
+          count: sql<number>`COUNT(*)`,
+        })
+        .from(purchaseRequisitions)
+        .groupBy(purchaseRequisitions.status);
+
+      return result;
+    }),
+
+    // Fornecedores mais utilizados
+    topSuppliers: protectedProcedure
+      .input(z.object({ limit: z.number().default(10) }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const result = await database
+          .select({
+            supplierId: quotes.supplierId,
+            supplierName: suppliers.name,
+            quotesCount: sql<number>`COUNT(*)`,
+            totalAmount: sql<number>`SUM(${quotes.totalAmount})`,
+          })
+          .from(quotes)
+          .innerJoin(suppliers, eq(quotes.supplierId, suppliers.id))
+          .groupBy(quotes.supplierId, suppliers.name)
+          .orderBy(desc(sql`COUNT(*)`))
+          .limit(input.limit);
+
+        return result;
+      }),
+  }),
+
+  // ============= BUDGET ALERTS (ALERTAS DE ORÇAMENTO) =============
+  budgetAlerts: router({
+    // Listar alertas pendentes
+    listPending: protectedProcedure.query(async () => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+
+      const result = await database
+        .select()
+        .from(budgetAlerts)
+        .where(eq(budgetAlerts.status, "pending"))
+        .orderBy(desc(budgetAlerts.createdAt));
+
+      return result;
+    }),
+
+    // Aprovar alerta
+    approve: protectedProcedure
+      .input(z.object({ 
+        id: z.number(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.update(budgetAlerts).set({
+          status: "approved",
+          reviewedBy: ctx.user.id,
+          reviewedAt: new Date(),
+          reviewNotes: input.notes,
+        }).where(eq(budgetAlerts.id, input.id));
+
+        return { success: true };
+      }),
+
+    // Rejeitar alerta
+    reject: protectedProcedure
+      .input(z.object({ 
+        id: z.number(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.update(budgetAlerts).set({
+          status: "rejected",
+          reviewedBy: ctx.user.id,
+          reviewedAt: new Date(),
+          reviewNotes: input.notes,
+        }).where(eq(budgetAlerts.id, input.id));
+
+        return { success: true };
       }),
   }),
 });

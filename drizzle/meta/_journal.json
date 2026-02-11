@@ -71,6 +71,13 @@
       "when": 1770816686722,
       "tag": "0009_luxuriant_wonder_man",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1770817664652,
+      "tag": "0010_medical_true_believers",
+      "breakpoints": true
     }
   ]
 }

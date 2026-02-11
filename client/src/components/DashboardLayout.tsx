@@ -35,7 +35,17 @@ const menuItems = [
   { icon: Warehouse, label: "Estoque", path: "/estoque" },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
-  { icon: BarChart3, label: "Relatórios", path: "/relatorios" },
+  { 
+    icon: BarChart3, 
+    label: "Relatórios", 
+    path: "/relatorios",
+    submenu: [
+      { label: "Visão Geral", path: "/relatorios" },
+      { label: "Dashboard de Economias", path: "/relatorios/economias" },
+      { label: "Relatório por Obras", path: "/relatorios/obras" },
+      { label: "Alertas de Orçamento", path: "/alertas-orcamento" },
+    ]
+  },
   { icon: SettingsIcon, label: "Configurações", path: "/configuracoes" },
   { icon: UserCog, label: "Usuários", path: "/usuarios" },
 ];

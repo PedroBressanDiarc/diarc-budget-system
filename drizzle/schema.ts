@@ -63,6 +63,7 @@ export const purchaseRequisitions = mysqlTable("purchase_requisitions", {
     "recebido",                 // Concluído
     "cancelado"                 // Cancelado
   ]).default("solicitacao").notNull(),
+  projectId: int("projectId"),
   requestedBy: int("requestedBy").notNull(),
   approvedBy: int("approvedBy"),
   approvedAt: timestamp("approvedAt"),
@@ -373,3 +374,25 @@ export const savings = mysqlTable("savings", {
 
 export type Saving = typeof savings.$inferSelect;
 export type InsertSaving = typeof savings.$inferInsert;
+
+/**
+ * Budget Alerts (Alertas de Orçamento) - Notificações quando cotação excede valor máximo
+ */
+export const budgetAlerts = mysqlTable("budget_alerts", {
+  id: int("id").autoincrement().primaryKey(),
+  requisitionId: int("requisitionId").notNull(),
+  requisitionItemId: int("requisitionItemId").notNull(),
+  quoteId: int("quoteId").notNull(),
+  maxPrice: decimal("maxPrice", { precision: 12, scale: 2 }).notNull(),
+  quotedPrice: decimal("quotedPrice", { precision: 12, scale: 2 }).notNull(),
+  excessAmount: decimal("excessAmount", { precision: 12, scale: 2 }).notNull(), // quotedPrice - maxPrice
+  status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending").notNull(),
+  createdBy: int("createdBy").notNull(), // Comprador que criou a cotação
+  reviewedBy: int("reviewedBy"), // Diretor que aprovou/rejeitou
+  reviewedAt: timestamp("reviewedAt"),
+  reviewNotes: text("reviewNotes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type BudgetAlert = typeof budgetAlerts.$inferSelect;
+export type InsertBudgetAlert = typeof budgetAlerts.$inferInsert;

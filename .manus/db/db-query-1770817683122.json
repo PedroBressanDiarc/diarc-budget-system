@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `budget_alerts` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`requisitionId` int NOT NULL,\n\t`requisitionItemId` int NOT NULL,\n\t`quoteId` int NOT NULL,\n\t`maxPrice` decimal(12,2) NOT NULL,\n\t`quotedPrice` decimal(12,2) NOT NULL,\n\t`excessAmount` decimal(12,2) NOT NULL,\n\t`status` enum('pending','approved','rejected') NOT NULL DEFAULT 'pending',\n\t`createdBy` int NOT NULL,\n\t`reviewedBy` int,\n\t`reviewedAt` timestamp,\n\t`reviewNotes` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\tCONSTRAINT `budget_alerts_id` PRIMARY KEY(`id`)\n);\nALTER TABLE `purchase_requisitions` ADD `projectId` int;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute CREATE TABLE `budget_alerts` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`requisitionId` int NOT NULL,\n\t`requisitionItemId` int NOT NULL,\n\t`quoteId` int NOT NULL,\n\t`maxPrice` decimal(12,2) NOT NULL,\n\t`quotedPrice` decimal(12,2) NOT NULL,\n\t`excessAmount` decimal(12,2) NOT NULL,\n\t`status` enum('pending','approved','rejected') NOT NULL DEFAULT 'pending',\n\t`createdBy` int NOT NULL,\n\t`reviewedBy` int,\n\t`reviewedAt` timestamp,\n\t`reviewNotes` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\tCONSTRAINT `budget_alerts_id` PRIMARY KEY(`id`)\n);\nALTER TABLE `purchase_requisitions` ADD `projectId` int;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1006
+}
