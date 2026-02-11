@@ -27,7 +27,6 @@ export default function Items() {
     unitPrice: 0,
     category: "",
     brand: "",
-    supplier: "",
     location: "",
     minStock: 0,
     maxStock: 0,
@@ -50,7 +49,6 @@ export default function Items() {
       unitPrice: 0,
       category: "",
       brand: "",
-      supplier: "",
       location: "",
       minStock: 0,
       maxStock: 0,
@@ -83,7 +81,6 @@ export default function Items() {
       unitPrice: parseFloat(item.unitPrice || 0),
       category: item.category || "",
       brand: item.brand || "",
-      supplier: item.supplier || "",
       location: item.location || "",
       minStock: parseFloat(item.minStock || 0),
       maxStock: parseFloat(item.maxStock || 0),
@@ -285,23 +282,13 @@ export default function Items() {
                   </TabsContent>
 
                   <TabsContent value="additional" className="space-y-4 mt-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="grid gap-2">
-                        <Label htmlFor="brand">Marca</Label>
-                        <Input
-                          id="brand"
-                          value={formData.brand}
-                          onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-                        />
-                      </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="supplier">Fornecedor</Label>
-                        <Input
-                          id="supplier"
-                          value={formData.supplier}
-                          onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
-                        />
-                      </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="brand">Marca</Label>
+                      <Input
+                        id="brand"
+                        value={formData.brand}
+                        onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
+                      />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="grid gap-2">
@@ -577,23 +564,13 @@ export default function Items() {
                 </TabsContent>
 
                 <TabsContent value="additional" className="space-y-4 mt-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="grid gap-2">
-                      <Label htmlFor="edit-brand">Marca</Label>
-                      <Input
-                        id="edit-brand"
-                        value={formData.brand}
-                        onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="edit-supplier">Fornecedor</Label>
-                      <Input
-                        id="edit-supplier"
-                        value={formData.supplier}
-                        onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
-                      />
-                    </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="edit-brand">Marca</Label>
+                    <Input
+                      id="edit-brand"
+                      value={formData.brand}
+                      onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
+                    />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="grid gap-2">

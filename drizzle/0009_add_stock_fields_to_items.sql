@@ -4,7 +4,6 @@ ALTER TABLE `items` ADD COLUMN `unitPrice` decimal(10,2);
 ALTER TABLE `items` ADD COLUMN `totalValue` decimal(10,2);
 ALTER TABLE `items` ADD COLUMN `category` varchar(100);
 ALTER TABLE `items` ADD COLUMN `brand` varchar(255);
-ALTER TABLE `items` ADD COLUMN `supplier` varchar(255);
 ALTER TABLE `items` ADD COLUMN `location` varchar(255);
 ALTER TABLE `items` ADD COLUMN `minStock` decimal(10,2);
 ALTER TABLE `items` ADD COLUMN `maxStock` decimal(10,2);

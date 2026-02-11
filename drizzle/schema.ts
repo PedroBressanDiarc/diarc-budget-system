@@ -325,7 +325,6 @@ export const items = mysqlTable("items", {
   totalValue: decimal("totalValue", { precision: 10, scale: 2 }),
   category: varchar("category", { length: 100 }),
   brand: varchar("brand", { length: 255 }),
-  supplier: varchar("supplier", { length: 255 }),
   location: varchar("location", { length: 255 }),
   minStock: decimal("minStock", { precision: 10, scale: 2 }),
   maxStock: decimal("maxStock", { precision: 10, scale: 2 }),
