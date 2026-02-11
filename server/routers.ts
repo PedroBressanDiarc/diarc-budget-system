@@ -1076,13 +1076,21 @@ export const appRouter = router({
 
   // Items Router
   items: router({
-    list: protectedProcedure.query(async () => {
-      const database = await getDb();
-      if (!database) throw new Error("Database not available");
+    list: protectedProcedure
+      .input(z.object({ stockType: z.enum(["finished_pieces", "internal_stock"]).optional() }).optional())
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
 
-      const result = await database.select().from(items).orderBy(desc(items.createdAt));
-      return result;
-    }),
+        let query = database.select().from(items);
+        
+        if (input?.stockType) {
+          query = query.where(eq(items.stockType, input.stockType)) as any;
+        }
+        
+        const result = await query.orderBy(desc(items.createdAt));
+        return result;
+      }),
 
     create: protectedProcedure
       .input(
@@ -1178,6 +1186,7 @@ export const appRouter = router({
               unitPrice: z.number().optional(),
               defaultUnit: z.string(),
               notes: z.string().optional(),
+              stockType: z.enum(["finished_pieces", "internal_stock"]).optional(),
             })
           ),
         })
@@ -1195,6 +1204,7 @@ export const appRouter = router({
             const insertData: any = {
               name: item.name,
               defaultUnit: item.defaultUnit,
+              stockType: item.stockType || "internal_stock",
               active: true,
               createdBy: ctx.user.id,
             };

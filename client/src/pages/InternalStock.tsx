@@ -33,7 +33,7 @@ export default function InternalStock() {
     notes: "",
   });
 
-  const { data: items, refetch } = trpc.items.list.useQuery();
+  const { data: items, refetch } = trpc.items.list.useQuery({ stockType: "internal_stock" } as any);
   const createMutation = trpc.items.create.useMutation();
   const updateMutation = trpc.items.update.useMutation();
   const deleteMutation = trpc.items.delete.useMutation();
@@ -185,6 +185,7 @@ export default function InternalStock() {
             unitPrice: valorUnitario,
             defaultUnit: unidade,
             notes: `Importado de: ${sheetName}`,
+            stockType: 'internal_stock' as const,
           });
         }
       });

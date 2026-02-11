@@ -1,0 +1,1 @@
+ALTER TABLE `items` ADD `stockType` enum('finished_pieces','internal_stock') DEFAULT 'internal_stock' NOT NULL;

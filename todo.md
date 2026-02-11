@@ -273,3 +273,9 @@
 - [x] Adicionar botão de importação na página de Estoque Interno
 - [x] Criar endpoint backend para processar upload e importação
 - [x] Implementar processamento automático de Excel com xlsx
+
+## Bug Crítico - Importação (11/02/2026)
+- [x] Adicionar campo stockType ao schema de items para diferenciar tipos de estoque
+- [x] Atualizar importação para definir stockType ('finished_pieces' ou 'internal_stock')
+- [x] Adicionar filtro por stockType nas queries de listagem
+- [x] Limpar dados duplicados do banco após correção

@@ -78,6 +78,13 @@
       "when": 1770817664652,
       "tag": "0010_medical_true_believers",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1770821331287,
+      "tag": "0011_glossy_impossible_man",
+      "breakpoints": true
     }
   ]
 }

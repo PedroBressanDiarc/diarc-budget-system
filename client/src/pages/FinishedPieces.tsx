@@ -33,7 +33,7 @@ export default function FinishedPieces() {
     notes: "",
   });
 
-  const { data: items, refetch } = trpc.items.list.useQuery();
+  const { data: items, refetch } = trpc.items.list.useQuery({ stockType: "finished_pieces" } as any);
   const createMutation = trpc.items.create.useMutation();
   const updateMutation = trpc.items.update.useMutation();
   const deleteMutation = trpc.items.delete.useMutation();
@@ -185,6 +185,7 @@ export default function FinishedPieces() {
             unitPrice: valorPeca / quantidade,
             defaultUnit: 'un',
             notes: `Volume: ${volume}m³, Valor m³: R$ ${valorM3}`,
+            stockType: 'finished_pieces' as const,
           });
         }
       });

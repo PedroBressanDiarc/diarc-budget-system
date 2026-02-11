@@ -1,0 +1,14 @@
+{
+  "query": "SELECT stockType, COUNT(*) as total FROM items GROUP BY stockType;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT stockType, COUNT(*) as total FROM items GROUP BY stockType;",
+  "rows": [
+    {
+      "stockType": "internal_stock",
+      "total": "564"
+    }
+  ],
+  "messages": [],
+  "stdout": "stockType\ttotal\ninternal_stock\t564\n",
+  "stderr": "",
+  "execution_time_ms": 359
+}

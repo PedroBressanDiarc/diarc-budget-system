@@ -331,6 +331,7 @@ export const items = mysqlTable("items", {
   minStock: decimal("minStock", { precision: 10, scale: 2 }),
   maxStock: decimal("maxStock", { precision: 10, scale: 2 }),
   notes: text("notes"),
+  stockType: mysqlEnum("stockType", ["finished_pieces", "internal_stock"]).default("internal_stock").notNull(),
   active: boolean("active").default(true).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
