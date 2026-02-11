@@ -1043,6 +1043,15 @@ export const appRouter = router({
           defaultUnit: z.string(),
           ncm: z.string().optional(),
           ncmDefinition: z.string().optional(),
+          quantity: z.number().optional(),
+          unitPrice: z.number().optional(),
+          category: z.string().optional(),
+          brand: z.string().optional(),
+          supplier: z.string().optional(),
+          location: z.string().optional(),
+          minStock: z.number().optional(),
+          maxStock: z.number().optional(),
+          notes: z.string().optional(),
         })
       )
       .mutation(async ({ input, ctx }) => {
@@ -1066,6 +1075,15 @@ export const appRouter = router({
           defaultUnit: z.string(),
           ncm: z.string().optional(),
           ncmDefinition: z.string().optional(),
+          quantity: z.number().optional(),
+          unitPrice: z.number().optional(),
+          category: z.string().optional(),
+          brand: z.string().optional(),
+          supplier: z.string().optional(),
+          location: z.string().optional(),
+          minStock: z.number().optional(),
+          maxStock: z.number().optional(),
+          notes: z.string().optional(),
         })
       )
       .mutation(async ({ input }) => {

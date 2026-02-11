@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -41,6 +41,7 @@ const menuItems = [
 
 const databaseMenuItems = [
   { icon: Users, label: "Fornecedores", path: "/fornecedores" },
+  { icon: Warehouse, label: "Estoque", path: "/estoque" },
   { icon: Package, label: "Equipamentos", path: "/equipment" },
   { icon: Package, label: "Itens", path: "/itens" },
   { icon: Package, label: "Obras", path: "/obras" },
@@ -246,7 +247,7 @@ function DashboardLayoutContent({
           <SidebarFooter className="p-3">
             <div className="px-2 py-1 mb-2">
               <p className="text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
-                Versão 1.1.0
+                Versão 1.2.0
               </p>
             </div>
             <DropdownMenu>
