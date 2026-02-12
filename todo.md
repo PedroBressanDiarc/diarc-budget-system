@@ -453,3 +453,10 @@
 - [x] EquipmentDetail já tem botão voltar (ArrowLeft)
 - [x] MaintenanceDetail criado com botão voltar (ArrowLeft)
 - [x] BudgetDetail atualizado com botão voltar (ArrowLeft)
+
+
+## Bug MaintenanceDetail (12/02/2026)
+- [x] Endpoint maintenance.schedules.getById EXISTE no backend (linha 854)
+- [x] Função db.getMaintenanceScheduleById EXISTE no db.ts (linha 219)
+- [x] Reiniciado servidor para garantir endpoint disponível
+- [ ] Testar página MaintenanceDetail após restart
