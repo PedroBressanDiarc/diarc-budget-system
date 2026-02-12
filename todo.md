@@ -379,3 +379,20 @@
 - [x] Corrigir campos incorretos em Maintenances (type → maintenanceType, completedDate → performedDate)
 - [x] Reduzir erros de 59 para 26 (33 erros corrigidos no total)
 - [ ] Erros restantes (26): clientName/code não existem no schema, conversões de tipo CurrencyInput
+
+
+## Novas Features (12/02/2026)
+
+### Validação Visual CNPJ/CPF
+- [x] Ativar showValidation={true} em Fornecedores
+- [x] Ativar showValidation={true} em Configurações
+
+### Sistema de Notificações do Chat
+- [x] Criar badge de notificação no menu Chat (similar a Autorizações)
+- [x] Implementar contador de menções não lidas
+- [x] Sistema de menções @usuário nas mensagens (backend)
+- [x] Sistema de referências #requisição e #manutenção (backend)
+- [x] Parser para detectar menções e referências
+- [x] Componente de renderização com links clicáveis (MessageContent)
+- [x] Notificar usuários mencionados (tabela message_mentions)
+- [x] Integrar MessageContent na página Chat

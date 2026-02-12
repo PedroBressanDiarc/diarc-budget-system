@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MessageCircle, Send, Users, User, Plus, Search } from "lucide-react";
 import { toast } from "sonner";
+import { MessageContent } from "@/components/MessageContent";
 
 export default function Chat() {
   const { data: user } = trpc.auth.me.useQuery();
@@ -327,7 +328,7 @@ export default function Chat() {
                         {!isOwn && selectedChat?.isGroup && (
                           <p className="text-xs font-semibold mb-1">{message.senderName}</p>
                         )}
-                        <p className="text-sm whitespace-pre-wrap break-words">{message.content}</p>
+                        <MessageContent content={message.content} />
                         <p className={`text-xs mt-1 ${isOwn ? "opacity-70" : "text-muted-foreground"}`}>
                           {new Date(message.createdAt).toLocaleTimeString("pt-BR", {
                             hour: "2-digit",

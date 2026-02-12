@@ -1,0 +1,9 @@
+{
+  "query": "-- Tabela de menções em mensagens do chat\nCREATE TABLE `message_mentions` (\n  `id` int AUTO_INCREMENT PRIMARY KEY,\n  `messageId` int NOT NULL,\n  `mentionedUserId` int NOT NULL,\n  `isRead` boolean DEFAULT false NOT NULL,\n  `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL\n);\n\n-- Adicionar campo para armazenar menções e referências parseadas\nALTER TABLE `messages` ADD COLUMN `mentions` text;\nALTER TABLE `messages` ADD COLUMN `references` text;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute -- Tabela de menções em mensagens do chat\nCREATE TABLE `message_mentions` (\n  `id` int AUTO_INCREMENT PRIMARY KEY,\n  `messageId` int NOT NULL,\n  `mentionedUserId` int NOT NULL,\n  `isRead` boolean DEFAULT false NOT NULL,\n  `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL\n);\n\n-- Adicionar campo para armazenar menções e referências parseadas\nALTER TABLE `messages` ADD COLUMN `mentions` text;\nALTER TABLE `messages` ADD COLUMN `references` text;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1377
+}

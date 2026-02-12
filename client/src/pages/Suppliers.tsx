@@ -97,7 +97,7 @@ export default function Suppliers() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="cnpj">CNPJ</Label>
-                    <CNPJInput id="cnpj" value={formData.cnpj} onChange={(value) => setFormData({ ...formData, cnpj: value })} />
+                    <CNPJInput id="cnpj" value={formData.cnpj} onChange={(value) => setFormData({ ...formData, cnpj: value })} showValidation={true} />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="contact">Contato</Label>

@@ -138,6 +138,23 @@ function PendingAuthBadge() {
   );
 }
 
+// Componente para mostrar badge de menções não lidas no Chat
+function UnreadMentionsBadge() {
+  const { data: mentions } = trpc.chats.getUnreadMentions.useQuery(undefined, {
+    refetchInterval: 30000, // Atualizar a cada 30 segundos
+  });
+  
+  const unreadCount = mentions?.length || 0;
+  
+  if (unreadCount === 0) return null;
+  
+  return (
+    <span className="ml-auto bg-primary text-primary-foreground text-xs font-semibold px-2 py-0.5 rounded-full">
+      {unreadCount}
+    </span>
+  );
+}
+
 type DashboardLayoutContentProps = {
   children: React.ReactNode;
   setSidebarWidth: (width: number) => void;
@@ -292,6 +309,7 @@ function DashboardLayoutContent({
                         />
                         <span>{item.label}</span>
                         {item.path === '/autorizacoes' && <PendingAuthBadge />}
+                        {item.path === '/chat' && <UnreadMentionsBadge />}
                         {hasSubmenu && (
                           <ChevronDown className={`ml-auto h-4 w-4 transition-transform ${isSubmenuOpen ? 'rotate-180' : ''}`} />
                         )}

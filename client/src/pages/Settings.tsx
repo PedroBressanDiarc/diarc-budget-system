@@ -98,6 +98,7 @@ export default function Settings() {
                   id="cnpj"
                   value={formData.cnpj}
                   onChange={(value) => setFormData({ ...formData, cnpj: value })}
+                  showValidation={true}
                 />
               </div>
               <div className="grid gap-2">

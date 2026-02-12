@@ -7,6 +7,7 @@ import { getDb } from "./db";
 import * as db from "./db";
 import { authenticateUser, hashPassword } from "./auth";
 import { 
+  users,
   suppliers, 
   purchaseRequisitions, 
   requisitionItems,
@@ -29,7 +30,8 @@ import {
   paymentsMade,
   chats,
   chatParticipants,
-  messages
+  messages,
+  messageMentions
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
 
@@ -2018,15 +2020,98 @@ export const appRouter = router({
           throw new Error("Você não tem permissão para enviar mensagens neste chat");
         }
 
-        // Inserir mensagem
+        // Parser de menções (@usuário) e referências (#requisição/#manutenção)
+        const mentionRegex = /@(\w+)/g;
+        const referenceRegex = /#([\w\s-]+)/g;
+        
+        const mentions: string[] = [];
+        const references: string[] = [];
+        
+        let match;
+        while ((match = mentionRegex.exec(input.content)) !== null) {
+          mentions.push(match[1]);
+        }
+        
+        while ((match = referenceRegex.exec(input.content)) !== null) {
+          references.push(match[1]);
+        }
+
+        // Inserir mensagem com menções e referências
         if (!database) throw new Error("Database not available");
         const [newMessage] = await database.insert(messages).values({
           chatId: input.chatId,
           senderId: userId,
           content: input.content,
+          mentions: mentions.length > 0 ? JSON.stringify(mentions) : null,
+          references: references.length > 0 ? JSON.stringify(references) : null,
         });
 
-        return { id: newMessage.insertId, ...input, senderId: userId };
+        const messageId = newMessage.insertId;
+
+        // Criar registros de menções para notificações
+        if (mentions.length > 0) {
+          // Buscar IDs dos usuários mencionados
+          const mentionedUsers = await database
+            .select({ id: users.id, name: users.name })
+            .from(users)
+            .where(sql`${users.name} IN (${sql.join(mentions.map(m => sql`${m}`), sql`, `)})`);;
+
+          // Inserir menções
+          for (const user of mentionedUsers) {
+            await database.insert(messageMentions).values({
+              messageId,
+              mentionedUserId: user.id,
+              isRead: false,
+            });
+          }
+        }
+
+        return { id: messageId, ...input, senderId: userId, mentions, references };
+      }),
+
+    // Buscar menções não lidas do usuário
+    getUnreadMentions: protectedProcedure.query(async ({ ctx }) => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+      const userId = ctx.user.id;
+
+      const unreadMentions = await database
+        .select({
+          id: messageMentions.id,
+          messageId: messageMentions.messageId,
+          chatId: messages.chatId,
+          content: messages.content,
+          senderName: sql<string>`sender.name`,
+          createdAt: messageMentions.createdAt,
+        })
+        .from(messageMentions)
+        .innerJoin(messages, eq(messageMentions.messageId, messages.id))
+        .innerJoin(sql`users as sender`, eq(messages.senderId, sql`sender.id`))
+        .where(
+          sql`${messageMentions.mentionedUserId} = ${userId} AND ${messageMentions.isRead} = false`
+        )
+        .orderBy(desc(messageMentions.createdAt));
+
+      return unreadMentions;
+    }),
+
+    // Marcar menções como lidas
+    markMentionsAsRead: protectedProcedure
+      .input(z.object({ mentionIds: z.array(z.number()) }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        const userId = ctx.user.id;
+
+        // Atualizar apenas menções do usuário
+        await database
+          .update(messageMentions)
+          .set({ isRead: true })
+          .where(
+            sql`${messageMentions.id} IN (${sql.join(input.mentionIds.map(id => sql`${id}`), sql`, `)}) AND ${messageMentions.mentionedUserId} = ${userId}`
+          );
+
+        return { success: true };
       }),
   }),
 });

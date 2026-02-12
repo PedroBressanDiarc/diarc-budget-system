@@ -479,8 +479,24 @@ export const messages = mysqlTable("messages", {
   chatId: int("chatId").notNull(), // ID do chat
   senderId: int("senderId").notNull(), // ID do usuário que enviou
   content: text("content").notNull(), // Conteúdo da mensagem
+  mentions: text("mentions"), // JSON com menções parseadas
+  references: text("references"), // JSON com referências parseadas
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
 export type Message = typeof messages.$inferSelect;
 export type InsertMessage = typeof messages.$inferInsert;
+
+/**
+ * Message Mentions (Menções em Mensagens)
+ */
+export const messageMentions = mysqlTable("message_mentions", {
+  id: int("id").autoincrement().primaryKey(),
+  messageId: int("messageId").notNull(),
+  mentionedUserId: int("mentionedUserId").notNull(),
+  isRead: boolean("isRead").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type MessageMention = typeof messageMentions.$inferSelect;
+export type InsertMessageMention = typeof messageMentions.$inferInsert;
