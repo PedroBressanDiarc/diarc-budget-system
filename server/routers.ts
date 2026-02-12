@@ -1854,6 +1854,7 @@ export const appRouter = router({
         const userId = ctx.user.id;
 
         // Verificar se usuário participa do chat
+        if (!database) throw new Error("Database not available");
         const participant = await database
           .select()
           .from(chatParticipants)
@@ -1867,6 +1868,7 @@ export const appRouter = router({
         }
 
         // Buscar mensagens
+        if (!database) throw new Error("Database not available");
         const msgs = await database
           .select({
             id: messages.id,
@@ -1882,6 +1884,7 @@ export const appRouter = router({
           .orderBy(messages.createdAt);
 
         // Atualizar lastRead
+        if (!database) throw new Error("Database not available");
         await database
           .update(chatParticipants)
           .set({ lastRead: new Date() })
@@ -1905,6 +1908,7 @@ export const appRouter = router({
         const userId = ctx.user.id;
 
         // Verificar se usuário participa do chat
+        if (!database) throw new Error("Database not available");
         const participant = await database
           .select()
           .from(chatParticipants)
@@ -1918,6 +1922,7 @@ export const appRouter = router({
         }
 
         // Inserir mensagem
+        if (!database) throw new Error("Database not available");
         const [newMessage] = await database.insert(messages).values({
           chatId: input.chatId,
           senderId: userId,
