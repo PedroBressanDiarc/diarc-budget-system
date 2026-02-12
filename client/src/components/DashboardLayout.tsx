@@ -23,7 +23,7 @@ import {
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
 import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse } from "lucide-react";
-import { CSSProperties, useEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState, useMemo } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
@@ -145,28 +145,30 @@ function DashboardLayoutContent({
   const activeMenuItem = menuItems.find(item => item.path === location);
   
   // Filtrar itens do menu baseado no role do usuário
-  const getFilteredMenuItems = () => {
+  const filteredMenuItems = useMemo(() => {
+    console.log('Filtering menu for role:', user?.role);
     if (user?.role === 'manutencao') {
       // Role manutenção: apenas Manutenções
-      return menuItems.filter(item => item.path === '/manutencoes');
+      const filtered = menuItems.filter(item => item.path === '/manutencoes');
+      console.log('Filtered items for manutencao:', filtered);
+      return filtered;
     }
     // Outros roles: todos os itens (exceto adminOnly se não for director)
     return menuItems.filter(item => !item.adminOnly || user?.role === 'director');
-  };
-  
-  const filteredMenuItems = getFilteredMenuItems();
+  }, [user?.role]);
   
   // Filtrar itens da base de dados baseado no role
-  const getFilteredDatabaseItems = () => {
+  const filteredDatabaseItems = useMemo(() => {
+    console.log('Filtering database for role:', user?.role);
     if (user?.role === 'manutencao') {
       // Role manutenção: apenas Equipamentos
-      return databaseMenuItems.filter(item => item.path === '/equipment');
+      const filtered = databaseMenuItems.filter(item => item.path === '/equipment');
+      console.log('Filtered database items for manutencao:', filtered);
+      return filtered;
     }
     // Outros roles: todos os itens
     return databaseMenuItems;
-  };
-  
-  const filteredDatabaseItems = getFilteredDatabaseItems();
+  }, [user?.role]);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -319,7 +321,7 @@ function DashboardLayoutContent({
           <SidebarFooter className="p-3">
             <div className="px-2 py-1 mb-2">
               <p className="text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
-                Versão 1.5.1
+                Versão 1.5.2
               </p>
             </div>
             <DropdownMenu>
