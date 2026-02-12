@@ -160,6 +160,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const result = await database.insert(suppliers).values({
@@ -184,6 +185,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const { id, ...updateData } = input;
@@ -201,6 +203,7 @@ export const appRouter = router({
 
     countPendingAuth: protectedProcedure.query(async () => {
       const database = await getDb();
+      if (!database) throw new Error("Database not available");
       if (!database) return 0;
       
       const result = await database.select({ count: sql<number>`count(*)` })
@@ -235,6 +238,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         // Generate requisition number
@@ -275,6 +279,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const updateData: any = { status: input.status };
@@ -306,6 +311,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         // Update requisition
@@ -342,6 +348,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         await database.update(purchaseRequisitions)
@@ -363,6 +370,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         await database.update(purchaseRequisitions)
@@ -379,6 +387,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         // Delete items first (foreign key constraint)
@@ -427,6 +436,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const totalAmount = input.items.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
@@ -518,6 +528,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const totalAmount = input.items.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
@@ -558,6 +569,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         // Delete items first (foreign key)
@@ -594,6 +606,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const orderNumber = `PO-${Date.now()}`;
@@ -621,6 +634,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const updateData: any = { status: input.status };
@@ -666,6 +680,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const budgetNumber = `BUD-${Date.now()}`;
@@ -706,6 +721,7 @@ export const appRouter = router({
         }))
         .mutation(async ({ input, ctx }) => {
           const database = await getDb();
+      if (!database) throw new Error("Database not available");
           if (!database) throw new Error("Database not available");
 
           const result = await database.insert(budgetTemplates).values({
@@ -748,6 +764,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const result = await database.insert(equipment).values({
@@ -784,6 +801,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const { id, ...updateData } = input;
@@ -796,6 +814,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         // Delete related maintenance schedules and records first
@@ -843,6 +862,7 @@ export const appRouter = router({
         }))
         .mutation(async ({ input, ctx }) => {
           const database = await getDb();
+      if (!database) throw new Error("Database not available");
           if (!database) throw new Error("Database not available");
 
           const result = await database.insert(maintenanceSchedules).values({
@@ -867,6 +887,7 @@ export const appRouter = router({
         }))
         .mutation(async ({ input }) => {
           const database = await getDb();
+      if (!database) throw new Error("Database not available");
           if (!database) throw new Error("Database not available");
 
           const { id, ...updateData } = input;
@@ -882,6 +903,7 @@ export const appRouter = router({
         }))
         .mutation(async ({ input }) => {
           const database = await getDb();
+      if (!database) throw new Error("Database not available");
           if (!database) throw new Error("Database not available");
 
           await database.update(maintenanceSchedules).set({ status: input.status }).where(eq(maintenanceSchedules.id, input.id));
@@ -893,6 +915,7 @@ export const appRouter = router({
         .input(z.object({ id: z.number() }))
         .mutation(async ({ input }) => {
           const database = await getDb();
+      if (!database) throw new Error("Database not available");
           if (!database) throw new Error("Database not available");
 
           await database.delete(maintenanceSchedules).where(eq(maintenanceSchedules.id, input.id));
@@ -932,6 +955,7 @@ export const appRouter = router({
         }))
         .mutation(async ({ input, ctx }) => {
           const database = await getDb();
+      if (!database) throw new Error("Database not available");
           if (!database) throw new Error("Database not available");
 
           const costValue = input.cost !== undefined ? input.cost.toString() : undefined;
@@ -972,6 +996,7 @@ export const appRouter = router({
         }))
         .mutation(async ({ input }) => {
           const database = await getDb();
+      if (!database) throw new Error("Database not available");
           if (!database) throw new Error("Database not available");
 
           const { id, cost, ...otherData } = input;
@@ -989,6 +1014,7 @@ export const appRouter = router({
         .input(z.object({ id: z.number() }))
         .mutation(async ({ input }) => {
           const database = await getDb();
+      if (!database) throw new Error("Database not available");
           if (!database) throw new Error("Database not available");
 
           await database.delete(maintenanceRecords).where(eq(maintenanceRecords.id, input.id));
@@ -1022,6 +1048,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const existing = await db.getCompanySettings();
@@ -1061,6 +1088,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const result = await database.insert(requisitionAttachments).values({
@@ -1080,6 +1108,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         await database.delete(requisitionAttachments).where(eq(requisitionAttachments.id, input.id));
@@ -1094,6 +1123,7 @@ export const appRouter = router({
       .input(z.object({ stockType: z.enum(["finished_pieces", "internal_stock"]).optional() }).optional())
       .query(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         let query = database.select().from(items);
@@ -1126,6 +1156,7 @@ export const appRouter = router({
       )
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const { quantity, unitPrice, minStock, maxStock, ...otherInput } = input;
@@ -1164,6 +1195,7 @@ export const appRouter = router({
       )
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const { id, quantity, unitPrice, minStock, maxStock, ...otherData } = input;
@@ -1182,6 +1214,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         await database.delete(items).where(eq(items.id, input.id));
@@ -1207,6 +1240,7 @@ export const appRouter = router({
       )
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         let successCount = 0;
@@ -1250,6 +1284,7 @@ export const appRouter = router({
     list: protectedProcedure.query(async () => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");
+      if (!database) throw new Error("Database not available");
 
       const result = await database.select().from(projects).orderBy(desc(projects.createdAt));
       return result;
@@ -1265,6 +1300,7 @@ export const appRouter = router({
       )
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const result = await database.insert(projects).values({
@@ -1288,6 +1324,7 @@ export const appRouter = router({
       )
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const { id, ...data } = input;
@@ -1304,6 +1341,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         await database.delete(projects).where(eq(projects.id, input.id));
@@ -1319,6 +1357,7 @@ export const appRouter = router({
       .input(z.object({ userId: z.number().optional() }))
       .query(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const userId = input.userId || ctx.user.id;
@@ -1335,6 +1374,7 @@ export const appRouter = router({
     listAll: protectedProcedure.query(async () => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");
+      if (!database) throw new Error("Database not available");
 
       const result = await database
         .select()
@@ -1349,6 +1389,7 @@ export const appRouter = router({
       .input(z.object({ userId: z.number().optional() }))
       .query(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const userId = input.userId || ctx.user.id;
@@ -1371,6 +1412,7 @@ export const appRouter = router({
       }))
       .query(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         let query = database
@@ -1403,6 +1445,7 @@ export const appRouter = router({
       .input(z.object({ months: z.number().default(12) }))
       .query(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const result = await database
@@ -1423,6 +1466,7 @@ export const appRouter = router({
       .input(z.object({ limit: z.number().default(10) }))
       .query(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const result = await database
@@ -1447,6 +1491,7 @@ export const appRouter = router({
       .input(z.object({ projectId: z.number().optional() }))
       .query(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         let query = database
@@ -1472,6 +1517,7 @@ export const appRouter = router({
     // Métricas gerais do sistema
     systemMetrics: protectedProcedure.query(async () => {
       const database = await getDb();
+      if (!database) throw new Error("Database not available");
       if (!database) throw new Error("Database not available");
 
       const totalSavings = await database
@@ -1508,6 +1554,7 @@ export const appRouter = router({
     requisitionsByStatus: protectedProcedure.query(async () => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");
+      if (!database) throw new Error("Database not available");
 
       const result = await database
         .select({
@@ -1525,6 +1572,7 @@ export const appRouter = router({
       .input(z.object({ limit: z.number().default(10) }))
       .query(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const result = await database
@@ -1550,6 +1598,7 @@ export const appRouter = router({
     listPending: protectedProcedure.query(async () => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");
+      if (!database) throw new Error("Database not available");
 
       const result = await database
         .select()
@@ -1568,6 +1617,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         await database.update(budgetAlerts).set({
@@ -1588,6 +1638,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         await database.update(budgetAlerts).set({
@@ -1610,6 +1661,7 @@ export const appRouter = router({
       }).optional())
       .query(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         let query = database.select().from(paymentsReceived);
@@ -1633,6 +1685,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         await database.insert(paymentsReceived).values({
@@ -1662,6 +1715,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const { id, ...data } = input;
@@ -1675,6 +1729,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         await database.delete(paymentsReceived).where(eq(paymentsReceived.id, input.id));
@@ -1687,6 +1742,7 @@ export const appRouter = router({
       .input(z.object({ projectId: z.number() }))
       .query(async ({ input }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
         const payments = await database.select().from(paymentsReceived)
@@ -1716,6 +1772,7 @@ export const appRouter = router({
     // Listar todos os chats do usuário logado
     list: protectedProcedure.query(async ({ ctx }) => {
       const database = await getDb();
+      if (!database) throw new Error("Database not available");
       const userId = ctx.user.id;
 
       // Buscar todos os chats que o usuário participa
@@ -1794,6 +1851,7 @@ export const appRouter = router({
       )
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         const userId = ctx.user.id;
 
         // Validar: grupo precisa de nome
@@ -1860,6 +1918,7 @@ export const appRouter = router({
       .input(z.object({ chatId: z.number() }))
       .query(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         const userId = ctx.user.id;
 
         // Verificar se usuário participa do chat
@@ -1914,6 +1973,7 @@ export const appRouter = router({
       )
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
+      if (!database) throw new Error("Database not available");
         const userId = ctx.user.id;
 
         // Verificar se usuário participa do chat
