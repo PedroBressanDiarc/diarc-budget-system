@@ -8,6 +8,12 @@
 
 ## 🔴 Prioridade Alta
 
+### Corrigir Erro "equipments is not defined"
+- [x] Investigar erro na página MaintenanceDetail (/manutencoes/:id)
+- [x] Localizar referência incorreta a "equipments" no backend (linha 947)
+- [x] Corrigir nome da tabela/variável (equipments → equipment)
+- [x] Atualizar variável de equipment para equipmentData para evitar conflito
+
 ### Sistema de Filtragem no Painel de Manutenções
 - [x] Adicionar UI de filtros no MaintenanceFlow (selects para equipamento, tipo, status)
 - [x] Implementar lógica de filtragem no frontend

@@ -944,11 +944,11 @@ export const appRouter = router({
             
             if (maintenance) {
               // Buscar dados do equipamento
-              const [equipment] = await database.select().from(equipments).where(eq(equipments.id, maintenance.equipmentId));
+              const [equipmentData] = await database.select().from(equipment).where(eq(equipment.id, maintenance.equipmentId));
               
               // Criar requisição de compra com dados da manutenção
-              const requisitionTitle = `Manutenção ${maintenance.maintenanceType === 'preventive' ? 'Preventiva' : 'Corretiva'} - ${equipment?.name || 'Equipamento'}`;
-              const requisitionDescription = `**Equipamento:** ${equipment?.name || 'N/A'}\n**Tipo:** ${maintenance.maintenanceType === 'preventive' ? 'Preventiva' : 'Corretiva'}\n**Data Agendada:** ${maintenance.scheduledDate}\n**Descrição:** ${maintenance.description || 'N/A'}`;
+              const requisitionTitle = `Manutenção ${maintenance.maintenanceType === 'preventive' ? 'Preventiva' : 'Corretiva'} - ${equipmentData?.name || 'Equipamento'}`;
+              const requisitionDescription = `**Equipamento:** ${equipmentData?.name || 'N/A'}\n**Tipo:** ${maintenance.maintenanceType === 'preventive' ? 'Preventiva' : 'Corretiva'}\n**Data Agendada:** ${maintenance.scheduledDate}\n**Descrição:** ${maintenance.description || 'N/A'}`;
               
               const [requisition] = await database.insert(purchaseRequisitions).values({
                 title: requisitionTitle,
