@@ -21,7 +21,7 @@ export default function Users() {
     email: "",
     password: "",
     name: "",
-    role: "buyer" as "buyer" | "director" | "storekeeper",
+    role: "buyer" as "buyer" | "director" | "storekeeper" | "manutencao",
     username: "",
   });
 
@@ -136,7 +136,7 @@ export default function Users() {
                   <Label htmlFor="role">Função *</Label>
                   <Select 
                     value={formData.role} 
-                    onValueChange={(value: "buyer" | "director") => setFormData({ ...formData, role: value })}
+                    onValueChange={(value: "buyer" | "director" | "storekeeper" | "manutencao") => setFormData({ ...formData, role: value })}
                   >
                     <SelectTrigger>
                       <SelectValue />
@@ -145,6 +145,7 @@ export default function Users() {
                       <SelectItem value="buyer">Comprador</SelectItem>
                       <SelectItem value="director">Diretor</SelectItem>
                       <SelectItem value="storekeeper">Almoxarife</SelectItem>
+                      <SelectItem value="manutencao">Manutenção</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -182,7 +183,7 @@ export default function Users() {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
                     <Badge variant={user.role === "director" ? "default" : "secondary"}>
-                      {user.role === "director" ? "Diretor" : user.role === "storekeeper" ? "Almoxarife" : "Comprador"}
+                      {user.role === "director" ? "Diretor" : user.role === "storekeeper" ? "Almoxarife" : user.role === "manutencao" ? "Manutenção" : "Comprador"}
                     </Badge>
                   </TableCell>
                   <TableCell>
