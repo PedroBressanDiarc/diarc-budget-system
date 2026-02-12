@@ -8,6 +8,14 @@
 
 ## 🔴 Prioridade Alta
 
+### Corrigir Erro de Inserção em purchase_requisitions
+- [x] Verificar schema de purchase_requisitions para identificar campos obrigatórios
+- [x] Adicionar campo requestedBy (obrigatório) na inserção
+- [x] Adicionar requisitionNumber (obrigatório e único)
+- [x] Adicionar usageLocation = "Manutenção" para filtro correto
+- [x] Corrigir status de "pending" para "solicitacao" (valor válido no enum)
+- [x] Remover campos inexistentes (category, maxPrice, createdBy)
+
 ### Corrigir Erro "equipments is not defined"
 - [x] Investigar erro na página MaintenanceDetail (/manutencoes/:id)
 - [x] Localizar referência incorreta a "equipments" no backend (linha 947)

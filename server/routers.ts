@@ -951,12 +951,12 @@ export const appRouter = router({
               const requisitionDescription = `**Equipamento:** ${equipmentData?.name || 'N/A'}\n**Tipo:** ${maintenance.maintenanceType === 'preventive' ? 'Preventiva' : 'Corretiva'}\n**Data Agendada:** ${maintenance.scheduledDate}\n**Descrição:** ${maintenance.description || 'N/A'}`;
               
               const [requisition] = await database.insert(purchaseRequisitions).values({
+                requisitionNumber: `REQ-${Date.now()}`,
                 title: requisitionTitle,
                 description: requisitionDescription,
-                category: 'manutencao',
-                status: 'pending',
-                maxPrice: maintenance.estimatedPrice ? String(maintenance.estimatedPrice) : undefined,
-                createdBy: ctx.user.id,
+                usageLocation: 'Manutenção',
+                status: 'solicitacao',
+                requestedBy: ctx.user.id,
               }).$returningId();
               
               // Atualizar manutenção com ID da requisição
