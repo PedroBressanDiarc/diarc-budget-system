@@ -23,7 +23,7 @@ export default function Chat() {
 
   // Queries
   const { data: chats = [], refetch: refetchChats } = trpc.chats.list.useQuery();
-  const { data: users = [] } = trpc.users.list.useQuery();
+  const { data: users = [] } = trpc.users.listForChat.useQuery();
   const { data: messages = [], refetch: refetchMessages } = trpc.chats.getMessages.useQuery(
     { chatId: selectedChatId! },
     { enabled: selectedChatId !== null }

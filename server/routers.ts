@@ -75,6 +75,15 @@ export const appRouter = router({
     list: adminProcedure.query(async () => {
       return await db.listUsers();
     }),
+    // Endpoint público para chat: lista apenas id, name e email
+    listForChat: protectedProcedure.query(async () => {
+      const users = await db.listUsers();
+      return users.map(u => ({
+        id: u.id,
+        name: u.name,
+        email: u.email,
+      }));
+    }),
     create: adminProcedure
       .input(z.object({
         email: z.string().email(),
