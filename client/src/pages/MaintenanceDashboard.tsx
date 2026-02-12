@@ -31,7 +31,7 @@ export default function MaintenanceDashboard() {
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
   const completedThisMonth = records?.filter(r => {
-    const date = new Date(r.completedDate);
+    const date = new Date(r.performedDate);
     return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
   }) || [];
 
@@ -54,8 +54,8 @@ export default function MaintenanceDashboard() {
     });
 
   // Manutenções por tipo
-  const preventiveCount = schedules?.filter(s => s.type === 'preventive').length || 0;
-  const correctiveCount = schedules?.filter(s => s.type === 'corrective').length || 0;
+  const preventiveCount = schedules?.filter(s => s.maintenanceType === 'preventive').length || 0;
+  const correctiveCount = schedules?.filter(s => s.maintenanceType === 'corrective').length || 0;
 
   return (
     <div className="p-6 space-y-6">
@@ -211,7 +211,7 @@ export default function MaintenanceDashboard() {
                     <div className="flex-1">
                       <p className="font-medium">{eq?.name || 'Equipamento desconhecido'}</p>
                       <p className="text-sm text-muted-foreground">
-                        Tipo: {schedule.type === 'preventive' ? 'Preventiva' : 'Corretiva'}
+                        Tipo: {schedule.maintenanceType === 'preventive' ? 'Preventiva' : 'Corretiva'}
                       </p>
                     </div>
                     <div className="text-right">
@@ -254,7 +254,7 @@ export default function MaintenanceDashboard() {
                     <div className="flex-1">
                       <p className="font-medium">{eq?.name || 'Equipamento desconhecido'}</p>
                       <p className="text-sm text-muted-foreground">
-                        Tipo: {schedule.type === 'preventive' ? 'Preventiva' : 'Corretiva'}
+                        Tipo: {schedule.maintenanceType === 'preventive' ? 'Preventiva' : 'Corretiva'}
                       </p>
                     </div>
                     <div className="text-right">

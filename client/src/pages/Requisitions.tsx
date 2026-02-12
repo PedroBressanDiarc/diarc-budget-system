@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { Plus, Eye, Trash2, Edit, CheckSquare, Square } from "lucide-react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { CurrencyInput } from "@/components/ui/currency-input";
 
 const statusLabels: Record<string, string> = {
   solicitacao: "Solicitação",
@@ -296,13 +297,10 @@ export default function Requisitions() {
                                     (Opcional - Define limite de orçamento para este item)
                                   </span>
                                 </Label>
-                                <Input
-                                  type="number"
-                                  min="0.01"
-                                  step="0.01"
+                                <CurrencyInput
                                   value={item.maxPrice || ""}
-                                  onChange={(e) => updateItem(index, "maxPrice", e.target.value)}
-                                  placeholder="Ex: 1500.00"
+                                  onChange={(value) => updateItem(index, "maxPrice", value)}
+                                  placeholder="Ex: 1.500,00"
                                 />
                               </div>
                             )}

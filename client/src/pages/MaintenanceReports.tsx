@@ -25,13 +25,13 @@ export default function MaintenanceReports() {
     let matches = true;
 
     if (startDate) {
-      const recordDate = new Date(record.completedDate);
+      const recordDate = new Date(record.performedDate);
       const filterStart = new Date(startDate);
       if (recordDate < filterStart) matches = false;
     }
 
     if (endDate) {
-      const recordDate = new Date(record.completedDate);
+      const recordDate = new Date(record.performedDate);
       const filterEnd = new Date(endDate);
       if (recordDate > filterEnd) matches = false;
     }
@@ -52,7 +52,7 @@ export default function MaintenanceReports() {
     }
 
     if (selectedType !== "all") {
-      if (schedule.type !== selectedType) matches = false;
+      if (schedule.maintenanceType !== selectedType) matches = false;
     }
 
     return matches;
@@ -61,8 +61,8 @@ export default function MaintenanceReports() {
   // Calcular estatísticas
   const totalCost = filteredRecords.reduce((sum, r) => sum + (r.cost || 0), 0);
   const avgCost = filteredRecords.length > 0 ? totalCost / filteredRecords.length : 0;
-  const preventiveCount = filteredSchedules.filter(s => s.type === 'preventive').length;
-  const correctiveCount = filteredSchedules.filter(s => s.type === 'corrective').length;
+  const preventiveCount = filteredSchedules.filter(s => s.maintenanceType === 'preventive').length;
+  const correctiveCount = filteredSchedules.filter(s => s.maintenanceType === 'corrective').length;
 
   // Função para exportar para CSV
   const exportToCSV = () => {
@@ -70,7 +70,7 @@ export default function MaintenanceReports() {
     const rows = filteredRecords.map(record => {
       const eq = equipment?.find(e => e.id === record.equipmentId);
       return [
-        new Date(record.completedDate).toLocaleDateString('pt-BR'),
+        new Date(record.performedDate).toLocaleDateString('pt-BR'),
         eq?.name || 'Desconhecido',
         record.description || '',
         record.technician || '',
@@ -253,7 +253,7 @@ export default function MaintenanceReports() {
                       return (
                         <TableRow key={record.id}>
                           <TableCell>
-                            {new Date(record.completedDate).toLocaleDateString('pt-BR')}
+                            {new Date(record.performedDate).toLocaleDateString('pt-BR')}
                           </TableCell>
                           <TableCell className="font-medium">{eq?.name || 'Desconhecido'}</TableCell>
                           <TableCell className="max-w-[200px] truncate">
@@ -313,8 +313,8 @@ export default function MaintenanceReports() {
                           </TableCell>
                           <TableCell className="font-medium">{eq?.name || 'Desconhecido'}</TableCell>
                           <TableCell>
-                            <Badge variant={schedule.type === 'preventive' ? 'default' : 'secondary'}>
-                              {schedule.type === 'preventive' ? 'Preventiva' : 'Corretiva'}
+                            <Badge variant={schedule.maintenanceType === 'preventive' ? 'default' : 'secondary'}>
+                              {schedule.maintenanceType === 'preventive' ? 'Preventiva' : 'Corretiva'}
                             </Badge>
                           </TableCell>
                           <TableCell className="max-w-[200px] truncate">

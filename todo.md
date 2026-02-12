@@ -359,3 +359,23 @@
 - [x] Aplicar CurrencyInput no campo maxPrice em PurchasesMaintenance
 - [x] Aplicar CurrencyInput no campo maxPrice em PurchasesAdministration
 - [x] Aplicar CurrencyInput no campo maxPrice em PurchasesFactory
+
+
+## Melhorias Solicitadas (12/02/2026)
+
+### Passo 1: Aplicar máscaras nas demais páginas
+- [x] Identificar campos monetários em Requisições
+- [x] Identificar campos monetários em Recebimentos (não existe página ainda)
+- [x] Aplicar CurrencyInput no campo maxPrice em Requisitions
+
+### Passo 2: Adicionar validação de CNPJ/CPF
+- [x] Implementar algoritmo de validação de CNPJ no componente CNPJInput
+- [x] Implementar algoritmo de validação de CPF no componente CPFInput
+- [x] Adicionar feedback visual de validação (borda verde=válido, vermelha=inválido)
+- [x] Adicionar prop showValidation para ativar feedback visual
+
+### Passo 3: Corrigir 57 erros TypeScript
+- [x] Corrigir erros 'database possibly null' em server/routers.ts (19 erros corrigidos)
+- [x] Corrigir campos incorretos em Maintenances (type → maintenanceType, completedDate → performedDate)
+- [x] Reduzir erros de 59 para 26 (33 erros corrigidos no total)
+- [ ] Erros restantes (26): clientName/code não existem no schema, conversões de tipo CurrencyInput
