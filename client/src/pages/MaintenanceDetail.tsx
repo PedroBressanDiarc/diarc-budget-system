@@ -68,20 +68,24 @@ export default function MaintenanceDetail() {
 
   const statusLabels: Record<string, string> = {
     scheduled: "Agendada",
-    approved: "Aprovada",
+    quotation: "Cotação",
+    analysis: "Análise",
+    awaiting_authorization: "Aguardando Autorização",
+    authorized: "Autorizado",
     in_progress: "Em Execução",
-    sent_to_purchase: "Enviado ao Compras",
     completed: "Concluída",
-    cancelled: "Cancelada",
+    sent_to_purchase: "Enviado ao Compras",
   };
 
   const statusColors: Record<string, any> = {
     scheduled: "default",
-    approved: "default",
+    quotation: "default",
+    analysis: "secondary",
+    awaiting_authorization: "secondary",
+    authorized: "default",
     in_progress: "secondary",
-    sent_to_purchase: "secondary",
     completed: "default",
-    cancelled: "destructive",
+    sent_to_purchase: "default",
   };
 
   return (
@@ -121,18 +125,23 @@ export default function MaintenanceDetail() {
             <div className="relative flex justify-between">
               {[
                 { key: "scheduled", label: "Agendada", icon: "📅" },
-                { key: "approved", label: "Aprovada", icon: "✅" },
+                { key: "quotation", label: "Cotação", icon: "💰" },
+                { key: "analysis", label: "Análise", icon: "🔍" },
+                { key: "awaiting_authorization", label: "Aguardando Autorização", icon: "⏳" },
+                { key: "authorized", label: "Autorizado", icon: "✅" },
                 { key: "in_progress", label: "Em Execução", icon: "🔧" },
-                { key: "sent_to_purchase", label: "Enviado ao Compras", icon: "📦" },
                 { key: "completed", label: "Concluída", icon: "✔️" },
+                { key: "sent_to_purchase", label: "Enviado ao Compras", icon: "📦" },
               ].map((step) => {
                 const statusOrder = [
                   "scheduled",
-                  "approved",
+                  "quotation",
+                  "analysis",
+                  "awaiting_authorization",
+                  "authorized",
                   "in_progress",
-                  "sent_to_purchase",
                   "completed",
-                  "cancelled"
+                  "sent_to_purchase"
                 ];
                 const currentIndex = statusOrder.indexOf(schedule.status);
                 const stepIndex = statusOrder.indexOf(step.key);

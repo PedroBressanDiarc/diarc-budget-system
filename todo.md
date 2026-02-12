@@ -462,3 +462,12 @@
 - [x] Verificado: 3 manutenções no banco (IDs: 30001, 30002, 30003)
 - [x] PROBLEMA ENCONTRADO: rota no useRoute era /maintenance/:id mas App.tsx usa /manutencoes/:id
 - [x] CORRIGIDO: alterado useRoute para /manutencoes/:id
+
+
+## Ajuste Timeline Manutenções (12/02/2026)
+- [x] Atualizar enum de status no schema para 8 etapas
+- [x] Nova ordem: Agendada → Cotação → Análise → Aguardando Autorização → Autorizado → Em Execução → Concluída → Enviado ao Compras
+- [x] Atualizar timeline visual no MaintenanceDetail com 8 ícones
+- [x] Atualizar lógica de mudança de status no backend (enum updateStatus)
+- [x] Aplicar migração SQL para alterar enum
+- [x] Corrigir erro de sintaxe JSX no MaintenanceDetail (reiniciado servidor)

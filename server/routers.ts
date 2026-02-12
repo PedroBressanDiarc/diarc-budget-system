@@ -903,7 +903,7 @@ export const appRouter = router({
       updateStatus: protectedProcedure
         .input(z.object({
           id: z.number(),
-          status: z.enum(['scheduled', 'approved', 'in_progress', 'sent_to_purchase', 'completed', 'cancelled']),
+          status: z.enum(['scheduled', 'quotation', 'analysis', 'awaiting_authorization', 'authorized', 'in_progress', 'completed', 'sent_to_purchase']),
         }))
         .mutation(async ({ input, ctx }) => {
           const database = await getDb();

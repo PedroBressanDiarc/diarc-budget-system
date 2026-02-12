@@ -244,7 +244,7 @@ export const maintenanceSchedules = mysqlTable("maintenance_schedules", {
   maintenanceType: mysqlEnum("maintenanceType", ["preventive", "corrective"]).notNull(),
   scheduledDate: varchar("scheduledDate", { length: 10 }).notNull(),
   description: text("description"),
-  status: mysqlEnum("status", ["scheduled", "approved", "in_progress", "sent_to_purchase", "completed", "cancelled"]).default("scheduled").notNull(),
+  status: mysqlEnum("status", ["scheduled", "quotation", "analysis", "awaiting_authorization", "authorized", "in_progress", "completed", "sent_to_purchase"]).default("scheduled").notNull(),
   purchaseRequisitionId: int("purchaseRequisitionId"),
   createdBy: int("createdBy").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
