@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search, MessageCircle } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search, MessageCircle, DollarSign } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState, useMemo } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -62,6 +62,15 @@ const menuItems = [
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
   { icon: MessageCircle, label: "Chat", path: "/chat" },
+  { 
+    icon: DollarSign, 
+    label: "Financeiro", 
+    path: "/financeiro",
+    submenu: [
+      { label: "Recebimentos", path: "/financeiro/recebimentos" },
+      { label: "Pagamentos", path: "/financeiro/pagamentos" },
+    ]
+  },
   { 
     icon: BarChart3, 
     label: "Relatórios", 

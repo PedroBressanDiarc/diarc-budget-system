@@ -8,6 +8,11 @@
 
 ## 🔴 Prioridade Alta
 
+### Restaurar Módulo Financeiro no Menu
+- [x] Adicionar item "Financeiro" no menu lateral (DashboardLayout)
+- [x] Criar submenu com "Recebimentos" e "Pagamentos"
+- [x] Rotas /financeiro/recebimentos e /financeiro/pagamentos já existem no App.tsx
+
 ### Sistema de Filtragem de Requisições por Local de Uso
 - [x] Adicionar submenu "Obras" no menu Compras (ao lado de Manutenção, Administrativo, Fábrica)
 - [x] Criar página PurchasesWorks para requisições de obras
