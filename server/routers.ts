@@ -26,7 +26,10 @@ import {
   savings,
   budgetAlerts,
   paymentsReceived,
-  paymentsMade
+  paymentsMade,
+  chats,
+  chatParticipants,
+  messages
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
 
@@ -1696,6 +1699,232 @@ export const appRouter = router({
           parcelasRecebidas: payments.filter(p => p.status === "recebido").length,
           parcelasPendentes: payments.filter(p => p.status === "pendente").length,
         };
+      }),
+  }),
+
+  // Chat routes
+  chats: router({
+    // Listar todos os chats do usuário logado
+    list: protectedProcedure.query(async ({ ctx }) => {
+      const database = await getDb();
+      const userId = ctx.user.id;
+
+      // Buscar todos os chats que o usuário participa
+      const userChats = await database
+        .select()
+        .from(chatParticipants)
+        .where(eq(chatParticipants.userId, userId));
+
+      const chatIds = userChats.map(uc => uc.chatId);
+      if (chatIds.length === 0) return [];
+
+      // Buscar informações dos chats
+      const chatsData = await database
+        .select()
+        .from(chats)
+        .where(sql`${chats.id} IN (${sql.join(chatIds, sql`, `)})`);
+
+      // Para cada chat, buscar participantes e última mensagem
+      const chatsWithDetails = await Promise.all(
+        chatsData.map(async (chat) => {
+          // Buscar participantes
+          const participants = await database
+            .select({
+              userId: chatParticipants.userId,
+              userName: sql<string>`users.name`,
+              userEmail: sql<string>`users.email`,
+            })
+            .from(chatParticipants)
+            .innerJoin(sql`users`, eq(chatParticipants.userId, sql`users.id`))
+            .where(eq(chatParticipants.chatId, chat.id));
+
+          // Buscar última mensagem
+          const lastMessage = await database
+            .select()
+            .from(messages)
+            .where(eq(messages.chatId, chat.id))
+            .orderBy(desc(messages.createdAt))
+            .limit(1);
+
+          // Contar mensagens não lidas
+          const userParticipant = userChats.find(uc => uc.chatId === chat.id);
+          const unreadCount = userParticipant?.lastRead
+            ? await database
+                .select({ count: sql<number>`count(*)` })
+                .from(messages)
+                .where(
+                  sql`${messages.chatId} = ${chat.id} AND ${messages.createdAt} > ${userParticipant.lastRead}`
+                )
+                .then(r => r[0]?.count || 0)
+            : await database
+                .select({ count: sql<number>`count(*)` })
+                .from(messages)
+                .where(eq(messages.chatId, chat.id))
+                .then(r => r[0]?.count || 0);
+
+          return {
+            ...chat,
+            participants,
+            lastMessage: lastMessage[0] || null,
+            unreadCount,
+          };
+        })
+      );
+
+      return chatsWithDetails;
+    }),
+
+    // Criar novo chat privado ou grupo
+    create: protectedProcedure
+      .input(
+        z.object({
+          name: z.string().optional(), // Nome do grupo (obrigatório se isGroup = true)
+          isGroup: z.boolean(),
+          participantIds: z.array(z.number()), // IDs dos participantes
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        const userId = ctx.user.id;
+
+        // Validar: grupo precisa de nome
+        if (input.isGroup && !input.name) {
+          throw new Error("Grupos precisam de um nome");
+        }
+
+        // Validar: chat privado precisa de exatamente 1 participante (além do criador)
+        if (!input.isGroup && input.participantIds.length !== 1) {
+          throw new Error("Chat privado deve ter exatamente 2 participantes");
+        }
+
+        // Verificar se já existe chat privado entre esses usuários
+        if (!input.isGroup) {
+          const otherUserId = input.participantIds[0];
+          const existingChats = await database
+            .select()
+            .from(chats)
+            .where(eq(chats.isGroup, false));
+
+          for (const chat of existingChats) {
+            const participants = await database
+              .select()
+              .from(chatParticipants)
+              .where(eq(chatParticipants.chatId, chat.id));
+
+            const participantIds = participants.map(p => p.userId).sort();
+            const requestedIds = [userId, otherUserId].sort();
+
+            if (JSON.stringify(participantIds) === JSON.stringify(requestedIds)) {
+              return chat; // Retornar chat existente
+            }
+          }
+        }
+
+        // Criar novo chat
+        const [newChat] = await database.insert(chats).values({
+          name: input.name || null,
+          isGroup: input.isGroup,
+          createdBy: userId,
+        });
+
+        const chatId = newChat.insertId;
+
+        // Adicionar criador como participante
+        await database.insert(chatParticipants).values({
+          chatId,
+          userId,
+        });
+
+        // Adicionar outros participantes
+        for (const participantId of input.participantIds) {
+          await database.insert(chatParticipants).values({
+            chatId,
+            userId: participantId,
+          });
+        }
+
+        return { id: chatId, ...input };
+      }),
+
+    // Buscar mensagens de um chat
+    getMessages: protectedProcedure
+      .input(z.object({ chatId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        const database = await getDb();
+        const userId = ctx.user.id;
+
+        // Verificar se usuário participa do chat
+        const participant = await database
+          .select()
+          .from(chatParticipants)
+          .where(
+            sql`${chatParticipants.chatId} = ${input.chatId} AND ${chatParticipants.userId} = ${userId}`
+          )
+          .limit(1);
+
+        if (participant.length === 0) {
+          throw new Error("Você não tem permissão para acessar este chat");
+        }
+
+        // Buscar mensagens
+        const msgs = await database
+          .select({
+            id: messages.id,
+            chatId: messages.chatId,
+            senderId: messages.senderId,
+            senderName: sql<string>`users.name`,
+            content: messages.content,
+            createdAt: messages.createdAt,
+          })
+          .from(messages)
+          .innerJoin(sql`users`, eq(messages.senderId, sql`users.id`))
+          .where(eq(messages.chatId, input.chatId))
+          .orderBy(messages.createdAt);
+
+        // Atualizar lastRead
+        await database
+          .update(chatParticipants)
+          .set({ lastRead: new Date() })
+          .where(
+            sql`${chatParticipants.chatId} = ${input.chatId} AND ${chatParticipants.userId} = ${userId}`
+          );
+
+        return msgs;
+      }),
+
+    // Enviar mensagem
+    sendMessage: protectedProcedure
+      .input(
+        z.object({
+          chatId: z.number(),
+          content: z.string().min(1),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        const userId = ctx.user.id;
+
+        // Verificar se usuário participa do chat
+        const participant = await database
+          .select()
+          .from(chatParticipants)
+          .where(
+            sql`${chatParticipants.chatId} = ${input.chatId} AND ${chatParticipants.userId} = ${userId}`
+          )
+          .limit(1);
+
+        if (participant.length === 0) {
+          throw new Error("Você não tem permissão para enviar mensagens neste chat");
+        }
+
+        // Inserir mensagem
+        const [newMessage] = await database.insert(messages).values({
+          chatId: input.chatId,
+          senderId: userId,
+          content: input.content,
+        });
+
+        return { id: newMessage.insertId, ...input, senderId: userId };
       }),
   }),
 });

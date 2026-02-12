@@ -30,6 +30,7 @@ import Login from "./pages/Login";
 import Users from "./pages/Users";
 import PaymentsReceived from "./pages/PaymentsReceived";
 import PaymentsMade from "./pages/PaymentsMade";
+import Chat from "./pages/Chat";
 
 function Router() {
   return (
@@ -59,6 +60,7 @@ function Router() {
       <Route path="/financeiro/pagamentos" component={PaymentsMade} />
       <Route path="/configuracoes" component={Settings} />
       <Route path="/usuarios" component={Users} />
+      <Route path="/chat" component={Chat} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

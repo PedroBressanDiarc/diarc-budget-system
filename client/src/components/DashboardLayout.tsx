@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search, MessageCircle } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState, useMemo } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -46,6 +46,7 @@ const menuItems = [
   { icon: Gauge, label: "Dashboard Manutenções", path: "/manutencoes/dashboard" },
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
   { icon: FileBarChart, label: "Relatórios Manutenções", path: "/manutencoes/relatorios" },
+  { icon: MessageCircle, label: "Chat", path: "/chat" },
   { 
     icon: BarChart3, 
     label: "Relatórios", 
@@ -342,7 +343,7 @@ function DashboardLayoutContent({
           <SidebarFooter className="p-3">
             <div className="px-2 py-1 mb-2">
               <p className="text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
-                Versão 1.7.0
+                Versão 2.0.0
               </p>
             </div>
             <DropdownMenu>

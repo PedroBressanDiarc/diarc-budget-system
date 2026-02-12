@@ -440,3 +440,46 @@ export const paymentsMade = mysqlTable("payments_made", {
 
 export type PaymentMade = typeof paymentsMade.$inferSelect;
 export type InsertPaymentMade = typeof paymentsMade.$inferInsert;
+
+/**
+ * Chats (Conversas) - Conversas privadas ou em grupo
+ */
+export const chats = mysqlTable("chats", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }), // Nome do grupo (null para chat privado)
+  isGroup: boolean("isGroup").default(false).notNull(), // true = grupo, false = privado
+  createdBy: int("createdBy").notNull(), // Criador do chat/grupo
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Chat = typeof chats.$inferSelect;
+export type InsertChat = typeof chats.$inferInsert;
+
+/**
+ * Chat Participants (Participantes do Chat)
+ */
+export const chatParticipants = mysqlTable("chat_participants", {
+  id: int("id").autoincrement().primaryKey(),
+  chatId: int("chatId").notNull(), // ID do chat
+  userId: int("userId").notNull(), // ID do usuário participante
+  joinedAt: timestamp("joinedAt").defaultNow().notNull(),
+  lastRead: timestamp("lastRead"), // Última vez que leu mensagens
+});
+
+export type ChatParticipant = typeof chatParticipants.$inferSelect;
+export type InsertChatParticipant = typeof chatParticipants.$inferInsert;
+
+/**
+ * Messages (Mensagens)
+ */
+export const messages = mysqlTable("messages", {
+  id: int("id").autoincrement().primaryKey(),
+  chatId: int("chatId").notNull(), // ID do chat
+  senderId: int("senderId").notNull(), // ID do usuário que enviou
+  content: text("content").notNull(), // Conteúdo da mensagem
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Message = typeof messages.$inferSelect;
+export type InsertMessage = typeof messages.$inferInsert;
