@@ -878,11 +878,39 @@ export const appRouter = router({
       updateStatus: protectedProcedure
         .input(z.object({
           id: z.number(),
-          status: z.enum(['scheduled', 'completed', 'cancelled']),
+          status: z.enum(['scheduled', 'approved', 'in_progress', 'sent_to_purchase', 'completed', 'cancelled']),
         }))
-        .mutation(async ({ input }) => {
+        .mutation(async ({ input, ctx }) => {
           const database = await getDb();
           if (!database) throw new Error("Database not available");
+
+          // Se o status for "sent_to_purchase", criar requisição de compra automaticamente
+          if (input.status === 'sent_to_purchase') {
+            // Buscar dados da manutenção
+            const [maintenance] = await database.select().from(maintenanceSchedules).where(eq(maintenanceSchedules.id, input.id));
+            
+            if (maintenance) {
+              // Buscar dados do equipamento
+              const [equipment] = await database.select().from(equipments).where(eq(equipments.id, maintenance.equipmentId));
+              
+              // Criar requisição de compra
+              const [requisition] = await database.insert(purchaseRequisitions).values({
+                title: `Manutenção - ${equipment?.name || 'Equipamento'}`,
+                description: maintenance.description || 'Requisição criada automaticamente a partir de manutenção',
+                category: 'manutencao',
+                status: 'pending',
+                createdBy: ctx.user.id,
+              }).$returningId();
+              
+              // Atualizar manutenção com ID da requisição
+              await database.update(maintenanceSchedules).set({ 
+                status: input.status,
+                purchaseRequisitionId: requisition.id 
+              }).where(eq(maintenanceSchedules.id, input.id));
+              
+              return { success: true, requisitionId: requisition.id };
+            }
+          }
 
           await database.update(maintenanceSchedules).set({ status: input.status }).where(eq(maintenanceSchedules.id, input.id));
 

@@ -71,6 +71,9 @@ export default function Maintenance() {
   const getScheduleStatusBadge = (status: string) => {
     const statusConfig = {
       scheduled: { label: "Agendada", variant: "secondary" as const, icon: Clock },
+      approved: { label: "Aprovada", variant: "default" as const, icon: CheckCircle },
+      in_progress: { label: "Em Execução", variant: "default" as const, icon: Wrench },
+      sent_to_purchase: { label: "Enviado ao Compras", variant: "default" as const, icon: Package },
       completed: { label: "Concluída", variant: "default" as const, icon: CheckCircle },
       cancelled: { label: "Cancelada", variant: "destructive" as const, icon: XCircle },
     };

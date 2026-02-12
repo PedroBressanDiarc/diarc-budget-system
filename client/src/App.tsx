@@ -22,6 +22,7 @@ import BudgetDetail from "./pages/BudgetDetail";
 import Equipment from "./pages/Equipment";
 import EquipmentDetail from "./pages/EquipmentDetail";
 import Maintenance from "./pages/Maintenance";
+import MaintenanceFlow from "./pages/MaintenanceFlow";
 import MaintenanceDashboard from "./pages/MaintenanceDashboard";
 import MaintenanceReports from "./pages/MaintenanceReports";
 import Reports from "./pages/Reports";
@@ -57,7 +58,7 @@ function Router() {
       <Route path="/equipment/:id" component={EquipmentDetail} />
       <Route path="/manutencoes/dashboard" component={MaintenanceDashboard} />
       <Route path="/manutencoes/relatorios" component={MaintenanceReports} />
-      <Route path="/manutencoes" component={Maintenance} />
+      <Route path="/manutencoes" component={MaintenanceFlow} />
       <Route path="/relatorios" component={Reports} />
       <Route path="/relatorios/economias" component={SavingsDashboard} />
       <Route path="/relatorios/obras" component={ProjectReport} />
