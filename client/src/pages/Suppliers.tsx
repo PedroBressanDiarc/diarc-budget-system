@@ -5,6 +5,8 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { CNPJInput } from "@/components/ui/cnpj-input";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { trpc } from "@/lib/trpc";
 import { Plus, Building2, Phone, Mail } from "lucide-react";
 import { toast } from "sonner";
@@ -95,7 +97,7 @@ export default function Suppliers() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="cnpj">CNPJ</Label>
-                    <Input id="cnpj" value={formData.cnpj} onChange={(e) => setFormData({ ...formData, cnpj: e.target.value })} />
+                    <CNPJInput id="cnpj" value={formData.cnpj} onChange={(value) => setFormData({ ...formData, cnpj: value })} />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="contact">Contato</Label>
@@ -105,7 +107,7 @@ export default function Suppliers() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="phone">Telefone</Label>
-                    <Input id="phone" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
+                    <PhoneInput value={formData.phone} onChange={(value) => setFormData({ ...formData, phone: value })} />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
