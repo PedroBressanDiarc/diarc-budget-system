@@ -436,3 +436,20 @@
 - [x] Corrigir validação para aceitar número e converter para string
 - [x] Usar z.union([z.string(), z.number()]).transform(val => String(val))
 - [ ] Testar importação com planilha contendo números em defaultUnit
+
+
+## Melhorias UX (12/02/2026)
+### Timeline de Manutenções
+- [x] Analisar timeline visual de requisições de compra
+- [x] Criar página MaintenanceDetail com timeline visual
+- [x] Implementar status clicáveis na timeline (mudar status ao clicar)
+- [x] Integrar timeline na página de detalhes de manutenção
+- [x] Adicionar rota /manutencoes/:id no App.tsx
+- [x] Atualizar MaintenanceFlow para navegar para detalhes
+
+### Botão Voltar
+- [x] Identificar todas as páginas de detalhe que precisam de botão voltar
+- [x] RequisitionDetail já tem botão voltar (ArrowLeft)
+- [x] EquipmentDetail já tem botão voltar (ArrowLeft)
+- [x] MaintenanceDetail criado com botão voltar (ArrowLeft)
+- [x] BudgetDetail atualizado com botão voltar (ArrowLeft)

@@ -208,10 +208,7 @@ export default function MaintenanceFlow() {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => {
-                                const equipment = equipmentList?.find((e) => e.id === schedule.equipmentId);
-                                if (equipment) setLocation(`/equipment/${equipment.id}`);
-                              }}
+                              onClick={() => setLocation(`/manutencoes/${schedule.id}`)}
                             >
                               Ver Detalhes
                             </Button>
