@@ -396,3 +396,9 @@
 - [x] Componente de renderização com links clicáveis (MessageContent)
 - [x] Notificar usuários mencionados (tabela message_mentions)
 - [x] Integrar MessageContent na página Chat
+
+
+## Bugs Críticos Reportados (12/02/2026)
+- [x] Procedure "chats.getUnreadMentions" não encontrado no router (resolvido com restart)
+- [x] Tabela maintenance_schedules não existe no banco de dados (criada)
+- [x] Queries de manutenções agendadas falhando (resolvido)
