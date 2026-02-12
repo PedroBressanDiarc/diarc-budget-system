@@ -285,3 +285,37 @@
 - [x] Adicionar contador de itens processados/total
 - [x] Implementar botão de cancelar importação
 - [x] Integrar dialog nas páginas de Peças Finalizadas e Estoque Interno
+
+## Módulo Financeiro (12/02/2026)
+
+### Permissões
+- [x] Adicionar role "financeiro" ao schema de usuários
+- [x] Aplicar migração para adicionar role financeiro
+
+### Estrutura de Dados
+- [x] Criar tabela de recebimentos (payments_received)
+  - Campos: id, projectId, valor, parcela, dataPrevista, dataRecebimento, comprovante (S3 URL), observacoes, createdBy, createdAt
+- [x] Criar tabela de pagamentos (payments_made) para futura implementação
+  - Campos: id, fornecedorId, requisitionId, valor, dataPrevista, dataPagamento, comprovante, observacoes
+
+### Backend
+- [x] Criar endpoints CRUD para recebimentos
+- [x] Criar endpoint para resumo de recebimentos por obra
+- [x] Criar endpoint para upload de comprovantes
+- [x] Implementar cálculo de totais (recebido vs previsto)
+
+### Frontend - Recebimentos
+- [x] Criar página de Recebimentos com listagem por obra
+- [x] Implementar dialog de cadastro de recebimento
+- [x] Adicionar campo de upload de comprovante
+- [x] Criar card de resumo por obra (total previsto, recebido, pendente)
+- [x] Implementar filtros por obra e período
+
+### Frontend - Pagamentos
+- [x] Criar página de Pagamentos (placeholder para futura implementação)
+
+### Menu e Navegação
+- [x] Adicionar menu dropdown "Financeiro" na sidebar
+- [x] Adicionar submenu "Recebimentos"
+- [x] Adicionar submenu "Pagamentos"
+- [x] Restringir acesso ao role financeiro e director

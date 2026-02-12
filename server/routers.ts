@@ -24,7 +24,9 @@ import {
   items,
   projects,
   savings,
-  budgetAlerts
+  budgetAlerts,
+  paymentsReceived,
+  paymentsMade
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
 
@@ -75,7 +77,7 @@ export const appRouter = router({
         email: z.string().email(),
         password: z.string().min(6),
         name: z.string().min(1),
-        role: z.enum(["buyer", "director", "storekeeper"]),
+        role: z.enum(["buyer", "director", "storekeeper", "manutencao", "financeiro"]),
         username: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
@@ -96,7 +98,7 @@ export const appRouter = router({
         id: z.number(),
         email: z.string().email().optional(),
         name: z.string().min(1).optional(),
-        role: z.enum(["buyer", "director", "storekeeper"]).optional(),
+        role: z.enum(["buyer", "director", "storekeeper", "manutencao", "financeiro"]).optional(),
         isActive: z.number().optional(),
       }))
       .mutation(async ({ input }) => {
@@ -1584,6 +1586,116 @@ export const appRouter = router({
         }).where(eq(budgetAlerts.id, input.id));
 
         return { success: true };
+      }),
+  }),
+
+  // Router de Recebimentos (Módulo Financeiro)
+  paymentsReceived: router({
+    // Listar todos os recebimentos
+    list: protectedProcedure
+      .input(z.object({
+        projectId: z.number().optional(),
+      }).optional())
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        let query = database.select().from(paymentsReceived);
+        
+        if (input?.projectId) {
+          query = query.where(eq(paymentsReceived.projectId, input.projectId)) as any;
+        }
+
+        const results = await query.orderBy(desc(paymentsReceived.dataPrevista));
+        return results;
+      }),
+
+    // Criar novo recebimento
+    create: protectedProcedure
+      .input(z.object({
+        projectId: z.number(),
+        valor: z.string(),
+        parcela: z.number(),
+        dataPrevista: z.string(),
+        observacoes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.insert(paymentsReceived).values({
+          projectId: input.projectId,
+          valor: input.valor,
+          parcela: input.parcela,
+          dataPrevista: input.dataPrevista,
+          observacoes: input.observacoes,
+          status: "pendente",
+          createdBy: ctx.user.id,
+        });
+
+        return { success: true };
+      }),
+
+    // Atualizar recebimento
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        valor: z.string().optional(),
+        parcela: z.number().optional(),
+        dataPrevista: z.string().optional(),
+        dataRecebimento: z.string().optional(),
+        comprovante: z.string().optional(),
+        observacoes: z.string().optional(),
+        status: z.enum(["pendente", "recebido", "atrasado"]).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const { id, ...data } = input;
+        await database.update(paymentsReceived).set(data).where(eq(paymentsReceived.id, id));
+
+        return { success: true };
+      }),
+
+    // Excluir recebimento
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.delete(paymentsReceived).where(eq(paymentsReceived.id, input.id));
+
+        return { success: true };
+      }),
+
+    // Resumo de recebimentos por obra
+    summaryByProject: protectedProcedure
+      .input(z.object({ projectId: z.number() }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const payments = await database.select().from(paymentsReceived)
+          .where(eq(paymentsReceived.projectId, input.projectId));
+
+        const totalPrevisto = payments.reduce((sum, p) => sum + Number(p.valor), 0);
+        const totalRecebido = payments
+          .filter(p => p.status === "recebido")
+          .reduce((sum, p) => sum + Number(p.valor), 0);
+        const totalPendente = payments
+          .filter(p => p.status === "pendente")
+          .reduce((sum, p) => sum + Number(p.valor), 0);
+
+        return {
+          totalPrevisto: totalPrevisto.toString(),
+          totalRecebido: totalRecebido.toString(),
+          totalPendente: totalPendente.toString(),
+          totalParcelas: payments.length,
+          parcelasRecebidas: payments.filter(p => p.status === "recebido").length,
+          parcelasPendentes: payments.filter(p => p.status === "pendente").length,
+        };
       }),
   }),
 });

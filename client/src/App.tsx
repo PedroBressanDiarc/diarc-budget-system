@@ -26,6 +26,8 @@ import BudgetAlerts from "./pages/BudgetAlerts";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import Users from "./pages/Users";
+import PaymentsReceived from "./pages/PaymentsReceived";
+import PaymentsMade from "./pages/PaymentsMade";
 
 function Router() {
   return (
@@ -49,6 +51,8 @@ function Router() {
       <Route path="/relatorios/economias" component={SavingsDashboard} />
       <Route path="/relatorios/obras" component={ProjectReport} />
       <Route path="/alertas-orcamento" component={BudgetAlerts} />
+      <Route path="/financeiro/recebimentos" component={PaymentsReceived} />
+      <Route path="/financeiro/pagamentos" component={PaymentsMade} />
       <Route path="/configuracoes" component={Settings} />
       <Route path="/usuarios" component={Users} />
       <Route path="/404" component={NotFound} />
