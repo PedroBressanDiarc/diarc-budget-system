@@ -337,3 +337,12 @@
 - [ ] Atualizar campos de CEP se existirem
 - [ ] Garantir formatação monetária consistente (R$ 1.250,43)
 - [ ] Adicionar validação de CNPJ/CPF
+
+
+## Bugs Críticos (12/02/2026)
+- [x] Tabelas de chat não existem no banco de dados (chats, chat_participants, messages)
+- [x] Procedure "system.me" não existe - deve ser "auth.me" na página de chat
+- [x] Menu inteligente de Dashboard/Relatórios foi sobrescrito pelo commit do chat
+- [x] Restaurar lógica: clicar no item navega, clicar na setinha abre dropdown
+- [x] Restaurar submenu de Dashboard com "Dashboard Manutenções" (só diretores)
+- [x] Restaurar submenu de Relatórios com "Relatório Manutenções" (só diretores)

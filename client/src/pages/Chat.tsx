@@ -11,7 +11,7 @@ import { MessageCircle, Send, Users, User, Plus, Search } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Chat() {
-  const { data: user } = trpc.system.me.useQuery();
+  const { data: user } = trpc.auth.me.useQuery();
   const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
   const [messageContent, setMessageContent] = useState("");
   const [newChatOpen, setNewChatOpen] = useState(false);

@@ -30,7 +30,16 @@ import { Button } from "./ui/button";
 import { GlobalSearch } from "./GlobalSearch";
 
 const menuItems = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { 
+    icon: LayoutDashboard, 
+    label: "Dashboard", 
+    path: "/",
+    submenu: [
+      { label: "Dashboard Manutenções", path: "/manutencoes/dashboard" },
+    ],
+    adminOnly: true // submenu só para diretores
+  },
+  { icon: FileText, label: "Requisições", path: "/requisitions" },
   { icon: ShoppingCart, label: "Compras", path: "/compras" },
   { icon: CheckCircle, label: "Autorizações", path: "/autorizacoes", adminOnly: true },
   { 
@@ -43,20 +52,19 @@ const menuItems = [
     ]
   },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
-  { icon: Gauge, label: "Dashboard Manutenções", path: "/manutencoes/dashboard" },
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
-  { icon: FileBarChart, label: "Relatórios Manutenções", path: "/manutencoes/relatorios" },
   { icon: MessageCircle, label: "Chat", path: "/chat" },
   { 
     icon: BarChart3, 
     label: "Relatórios", 
     path: "/relatorios",
     submenu: [
-      { label: "Visão Geral", path: "/relatorios" },
       { label: "Dashboard de Economias", path: "/relatorios/economias" },
       { label: "Relatório por Obras", path: "/relatorios/obras" },
       { label: "Alertas de Orçamento", path: "/alertas-orcamento" },
-    ]
+      { label: "Relatório Manutenções", path: "/manutencoes/relatorios" },
+    ],
+    adminOnly: true // submenu só para diretores
   },
   { icon: SettingsIcon, label: "Configurações", path: "/configuracoes" },
   { icon: UserCog, label: "Usuários", path: "/usuarios" },
@@ -266,27 +274,31 @@ function DashboardLayoutContent({
                 return (
                   <div key={item.path}>
                     <SidebarMenuItem>
-                      <SidebarMenuButton
-                        isActive={isActive}
-                        onClick={() => {
-                          if (hasSubmenu) {
-                            setOpenSubmenus(prev => ({ ...prev, [item.path]: !prev[item.path] }));
-                          } else {
-                            setLocation(item.path);
-                          }
-                        }}
-                        tooltip={item.label}
-                        className={`h-10 transition-all font-normal relative`}
-                      >
-                        <item.icon
-                          className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
-                        />
-                        <span>{item.label}</span>
-                        {item.path === '/autorizacoes' && <PendingAuthBadge />}
-                        {hasSubmenu && (
-                          <ChevronDown className={`ml-auto h-4 w-4 transition-transform ${isSubmenuOpen ? 'rotate-180' : ''}`} />
+                      <div className="flex items-center w-full">
+                        <SidebarMenuButton
+                          isActive={isActive}
+                          onClick={() => setLocation(item.path)}
+                          tooltip={item.label}
+                          className={`h-10 transition-all font-normal relative flex-1`}
+                        >
+                          <item.icon
+                            className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                          />
+                          <span>{item.label}</span>
+                          {item.path === '/autorizacoes' && <PendingAuthBadge />}
+                        </SidebarMenuButton>
+                        {hasSubmenu && user?.role === 'director' && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setOpenSubmenus(prev => ({ ...prev, [item.path]: !prev[item.path] }));
+                            }}
+                            className="h-10 w-8 flex items-center justify-center hover:bg-accent rounded-r-lg transition-colors shrink-0"
+                          >
+                            <ChevronDown className={`h-4 w-4 transition-transform ${isSubmenuOpen ? 'rotate-180' : ''}`} />
+                          </button>
                         )}
-                      </SidebarMenuButton>
+                      </div>
                     </SidebarMenuItem>
                     {hasSubmenu && isSubmenuOpen && item.submenu!.map(subitem => {
                       const isSubActive = location === subitem.path;
