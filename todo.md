@@ -428,3 +428,11 @@
 - [x] Verificar se tabela maintenance_schedules existe e tem dados corretos
 - [x] Adicionar .input(z.object({}).optional()) nos endpoints sem parâmetros
 - [x] Adicionar campo purchaseRequisitionId na tabela maintenance_schedules
+
+
+## Bug Importação de Itens (12/02/2026)
+- [x] Erro ao importar itens: defaultUnit esperava string mas recebeu número
+- [x] Identificar endpoint de importação (items.importFromExcel)
+- [x] Corrigir validação para aceitar número e converter para string
+- [x] Usar z.union([z.string(), z.number()]).transform(val => String(val))
+- [ ] Testar importação com planilha contendo números em defaultUnit

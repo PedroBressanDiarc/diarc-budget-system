@@ -1265,7 +1265,7 @@ export const appRouter = router({
               category: z.string().optional(),
               quantity: z.number().optional(),
               unitPrice: z.number().optional(),
-              defaultUnit: z.string(),
+              defaultUnit: z.union([z.string(), z.number()]).transform(val => String(val)),
               notes: z.string().optional(),
               stockType: z.enum(["finished_pieces", "internal_stock"]).optional(),
             })
