@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function MaintenanceDetail() {
-  const [, params] = useRoute("/maintenance/:id");
+  const [, params] = useRoute("/manutencoes/:id");
   const [, setLocation] = useLocation();
   const maintenanceId = params?.id ? parseInt(params.id) : null;
 

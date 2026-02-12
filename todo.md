@@ -459,4 +459,6 @@
 - [x] Endpoint maintenance.schedules.getById EXISTE no backend (linha 854)
 - [x] Função db.getMaintenanceScheduleById EXISTE no db.ts (linha 219)
 - [x] Reiniciado servidor para garantir endpoint disponível
-- [ ] Testar página MaintenanceDetail após restart
+- [x] Verificado: 3 manutenções no banco (IDs: 30001, 30002, 30003)
+- [x] PROBLEMA ENCONTRADO: rota no useRoute era /maintenance/:id mas App.tsx usa /manutencoes/:id
+- [x] CORRIGIDO: alterado useRoute para /manutencoes/:id
