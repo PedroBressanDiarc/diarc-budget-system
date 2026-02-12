@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState, useMemo } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -42,16 +42,9 @@ const menuItems = [
     ]
   },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
-  { 
-    icon: Wrench, 
-    label: "Manutenções", 
-    path: "/manutencoes",
-    submenu: [
-      { label: "Dashboard", path: "/manutencoes/dashboard" },
-      { label: "Agendamentos", path: "/manutencoes" },
-      { label: "Relatórios", path: "/manutencoes/relatorios" },
-    ]
-  },
+  { icon: Gauge, label: "Dashboard Manutenções", path: "/manutencoes/dashboard" },
+  { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
+  { icon: FileBarChart, label: "Relatórios Manutenções", path: "/manutencoes/relatorios" },
   { 
     icon: BarChart3, 
     label: "Relatórios", 
@@ -157,8 +150,12 @@ function DashboardLayoutContent({
   const filteredMenuItems = useMemo(() => {
     console.log('Filtering menu for role:', user?.role);
     if (user?.role === 'manutencao') {
-      // Role manutenção: apenas Manutenções
-      const filtered = menuItems.filter(item => item.path === '/manutencoes');
+      // Role manutenção: Dashboard, Manutenções e Relatórios de Manutenções
+      const filtered = menuItems.filter(item => 
+        item.path === '/manutencoes/dashboard' ||
+        item.path === '/manutencoes' ||
+        item.path === '/manutencoes/relatorios'
+      );
       console.log('Filtered items for manutencao:', filtered);
       return filtered;
     }
@@ -330,7 +327,7 @@ function DashboardLayoutContent({
           <SidebarFooter className="p-3">
             <div className="px-2 py-1 mb-2">
               <p className="text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
-                Versão 1.6.0
+                Versão 1.6.1
               </p>
             </div>
             <DropdownMenu>
