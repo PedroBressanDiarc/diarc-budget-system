@@ -143,6 +143,30 @@ function DashboardLayoutContent({
   const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({});
   const sidebarRef = useRef<HTMLDivElement>(null);
   const activeMenuItem = menuItems.find(item => item.path === location);
+  
+  // Filtrar itens do menu baseado no role do usuário
+  const getFilteredMenuItems = () => {
+    if (user?.role === 'manutencao') {
+      // Role manutenção: apenas Manutenções
+      return menuItems.filter(item => item.path === '/manutencoes');
+    }
+    // Outros roles: todos os itens (exceto adminOnly se não for director)
+    return menuItems.filter(item => !item.adminOnly || user?.role === 'director');
+  };
+  
+  const filteredMenuItems = getFilteredMenuItems();
+  
+  // Filtrar itens da base de dados baseado no role
+  const getFilteredDatabaseItems = () => {
+    if (user?.role === 'manutencao') {
+      // Role manutenção: apenas Equipamentos
+      return databaseMenuItems.filter(item => item.path === '/equipment');
+    }
+    // Outros roles: todos os itens
+    return databaseMenuItems;
+  };
+  
+  const filteredDatabaseItems = getFilteredDatabaseItems();
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -210,7 +234,7 @@ function DashboardLayoutContent({
 
           <SidebarContent className="gap-0">
             <SidebarMenu className="px-2 py-1">
-              {menuItems.filter(item => !item.adminOnly || user?.role === 'director').map(item => {
+              {filteredMenuItems.map((item) => {
                 const isActive = location === item.path;
                 const hasSubmenu = item.submenu && item.submenu.length > 0;
                 const isSubmenuOpen = openSubmenus[item.path] || false;
@@ -258,7 +282,7 @@ function DashboardLayoutContent({
                   </div>
                 );
               })}
-              {user?.role === 'director' && (
+              {(user?.role === 'director' || user?.role === 'manutencao') && (
                 <>
                   <SidebarMenuItem>
                     <SidebarMenuButton
@@ -271,7 +295,7 @@ function DashboardLayoutContent({
                       <ChevronDown className={`ml-auto h-4 w-4 transition-transform ${isDatabaseOpen ? 'rotate-180' : ''}`} />
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                  {isDatabaseOpen && databaseMenuItems.map(item => {
+                  {isDatabaseOpen && filteredDatabaseItems.map(item => {
                     const isActive = location === item.path;
                     return (
                       <SidebarMenuItem key={item.path}>
@@ -295,7 +319,7 @@ function DashboardLayoutContent({
           <SidebarFooter className="p-3">
             <div className="px-2 py-1 mb-2">
               <p className="text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
-                Versão 1.4.0
+                Versão 1.5.0
               </p>
             </div>
             <DropdownMenu>

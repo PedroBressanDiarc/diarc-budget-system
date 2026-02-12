@@ -10,7 +10,7 @@ export const users = mysqlTable("users", {
   email: varchar("email", { length: 320 }).notNull().unique(),
   passwordHash: varchar("passwordHash", { length: 255 }).notNull(),
   name: text("name").notNull(),
-  role: mysqlEnum("role", ["storekeeper", "buyer", "director"]).default("buyer").notNull(),
+  role: mysqlEnum("role", ["storekeeper", "buyer", "director", "manutencao"]).default("buyer").notNull(),
   isActive: int("isActive").default(1).notNull(),
   openId: varchar("openId", { length: 64 }),
   loginMethod: varchar("loginMethod", { length: 64 }).default("local"),
