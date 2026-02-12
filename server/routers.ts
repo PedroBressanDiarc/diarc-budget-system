@@ -203,6 +203,33 @@ export const appRouter = router({
       return await db.getAllRequisitions();
     }),
 
+    listByCategory: protectedProcedure
+      .input(z.object({ category: z.enum(["maintenance", "administrative", "factory", "works"]) }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        
+        // Buscar todas as requisições
+        const allRequisitions = await db.getAllRequisitions();
+        
+        // Filtrar por categoria
+        return allRequisitions.filter((req: any) => {
+          if (input.category === "maintenance") {
+            // Requisições originadas de manutenções (verificar se existe relacionamento)
+            // TODO: Adicionar campo sourceMaintenanceId ou similar para rastrear origem
+            return req.usageLocation?.toLowerCase().includes("manutenção");
+          } else if (input.category === "administrative") {
+            return req.usageLocation?.toLowerCase() === "administrativo";
+          } else if (input.category === "factory") {
+            return req.usageLocation?.toLowerCase() === "fabrica" || req.usageLocation?.toLowerCase() === "fábrica";
+          } else if (input.category === "works") {
+            // Qualquer usageLocation que comece com "obra:"
+            return req.usageLocation?.toLowerCase().startsWith("obra:");
+          }
+          return false;
+        });
+      }),
+
     countPendingAuth: protectedProcedure.query(async () => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");

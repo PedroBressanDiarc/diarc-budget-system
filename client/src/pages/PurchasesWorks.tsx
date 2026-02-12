@@ -37,7 +37,7 @@ const statusColors: Record<string, "default" | "secondary" | "destructive" | "ou
   cancelado: "destructive",
 };
 
-export default function PurchasesFactory() {
+export default function PurchasesWorks() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -52,7 +52,7 @@ export default function PurchasesFactory() {
     usageLocation: "",
   });
 
-  const { data: requisitions, refetch } = trpc.requisitions.listByCategory.useQuery({ category: "factory" });
+  const { data: requisitions, refetch } = trpc.requisitions.listByCategory.useQuery({ category: "works" });
 
   const createMutation = trpc.requisitions.create.useMutation({
     onSuccess: () => {
@@ -133,8 +133,8 @@ export default function PurchasesFactory() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Compras - Fábrica</h1>
-          <p className="text-muted-foreground">Gerencie requisições de compras para a fábrica</p>
+          <h1 className="text-3xl font-bold tracking-tight">Compras - Obras</h1>
+          <p className="text-muted-foreground">Gerencie requisições de compras para obras</p>
         </div>
         <div className="flex gap-2">
           {selectedIds.length > 0 && (

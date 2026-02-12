@@ -52,7 +52,7 @@ export default function PurchasesAdministration() {
     usageLocation: "",
   });
 
-  const { data: requisitions, refetch } = trpc.requisitions.list.useQuery();
+  const { data: requisitions, refetch } = trpc.requisitions.listByCategory.useQuery({ category: "administrative" });
 
   const createMutation = trpc.requisitions.create.useMutation({
     onSuccess: () => {

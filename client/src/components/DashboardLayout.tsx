@@ -44,8 +44,9 @@ const menuItems = [
     path: "/compras",
     submenu: [
       { label: "Manutenção", path: "/compras/manutencao" },
-      { label: "Administração", path: "/compras/administracao" },
+      { label: "Administrativo", path: "/compras/administracao" },
       { label: "Fábrica", path: "/compras/fabrica" },
+      { label: "Obras", path: "/compras/obras" },
     ]
   },
   { icon: CheckCircle, label: "Autorizações", path: "/autorizacoes", adminOnly: true },

@@ -8,6 +8,20 @@
 
 ## 🔴 Prioridade Alta
 
+### Sistema de Filtragem de Requisições por Local de Uso
+- [x] Adicionar submenu "Obras" no menu Compras (ao lado de Manutenção, Administrativo, Fábrica)
+- [x] Criar página PurchasesWorks para requisições de obras
+- [x] Implementar lógica de filtragem no backend:
+  - Manutenção: requisições com usageLocation contendo "manutenção"
+  - Administrativo: usageLocation = "administrativo"
+  - Fábrica: usageLocation = "fabrica" ou "fábrica"
+  - Obras: usageLocation começa com "obra:" (ex: "obra:1", "obra:2")
+- [x] Atualizar páginas existentes para aplicar filtros corretos
+- [x] Criado endpoint listByCategory no backend
+- [x] Atualizado PurchasesMaintenance, PurchasesAdministration, PurchasesFactory e PurchasesWorks
+- [x] Renomear "Administração" para "Administrativo" no menu (consistência)
+- [x] Testar filtragem: cada submenu deve mostrar apenas requisições da sua categoria
+
 ### Conversão Manutenção → Requisição
 - [x] Adicionar campos estimatedPrice e attachments no schema (migração 0014 aplicada)
 - [x] Implementar conversão automática ao atingir status "Enviado ao Compras"
