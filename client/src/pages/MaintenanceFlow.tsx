@@ -27,6 +27,13 @@ export default function MaintenanceFlow() {
     attachments: [] as string[],
   });
 
+  // Estados de filtros
+  const [filters, setFilters] = useState({
+    equipmentId: "all",
+    maintenanceType: "all",
+    status: "all",
+  });
+
   const { data: equipmentList } = trpc.equipment.list.useQuery();
   const { data: schedules, isLoading: schedulesLoading, refetch: refetchSchedules } = trpc.maintenance.schedules.list.useQuery();
 
@@ -124,8 +131,25 @@ export default function MaintenanceFlow() {
     );
   };
 
-  // Agrupar manutenções por status
-  const groupedSchedules = schedules?.reduce((acc, schedule) => {
+  // Aplicar filtros
+  const filteredSchedules = schedules?.filter((schedule) => {
+    // Filtro por equipamento
+    if (filters.equipmentId !== "all" && schedule.equipmentId.toString() !== filters.equipmentId) {
+      return false;
+    }
+    // Filtro por tipo de manutenção
+    if (filters.maintenanceType !== "all" && schedule.maintenanceType !== filters.maintenanceType) {
+      return false;
+    }
+    // Filtro por status
+    if (filters.status !== "all" && schedule.status !== filters.status) {
+      return false;
+    }
+    return true;
+  });
+
+  // Agrupar manutenções filtradas por status
+  const groupedSchedules = filteredSchedules?.reduce((acc, schedule) => {
     const status = schedule.status;
     if (!acc[status]) acc[status] = [];
     acc[status].push(schedule);
@@ -147,6 +171,74 @@ export default function MaintenanceFlow() {
           Agendar Manutenção
         </Button>
       </div>
+
+      {/* Filtros */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Filtros</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="space-y-2">
+              <Label>Equipamento</Label>
+              <Select value={filters.equipmentId} onValueChange={(value) => setFilters({ ...filters, equipmentId: value })}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Todos" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  {equipmentList?.map((equipment) => (
+                    <SelectItem key={equipment.id} value={equipment.id.toString()}>
+                      {equipment.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Tipo de Manutenção</Label>
+              <Select value={filters.maintenanceType} onValueChange={(value) => setFilters({ ...filters, maintenanceType: value })}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Todos" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  <SelectItem value="preventive">Preventiva</SelectItem>
+                  <SelectItem value="corrective">Corretiva</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Status</Label>
+              <Select value={filters.status} onValueChange={(value) => setFilters({ ...filters, status: value })}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Todos" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  <SelectItem value="scheduled">Agendada</SelectItem>
+                  <SelectItem value="quotation">Cotação</SelectItem>
+                  <SelectItem value="analysis">Análise</SelectItem>
+                  <SelectItem value="awaiting_authorization">Aguardando Autorização</SelectItem>
+                  <SelectItem value="authorized">Autorizado</SelectItem>
+                  <SelectItem value="in_progress">Em Execução</SelectItem>
+                  <SelectItem value="completed">Concluída</SelectItem>
+                  <SelectItem value="sent_to_purchase">Enviado ao Compras</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2 flex items-end">
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => setFilters({ equipmentId: "all", maintenanceType: "all", status: "all" })}
+              >
+                Limpar Filtros
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Fluxo de Status */}
       <div className="grid gap-6">

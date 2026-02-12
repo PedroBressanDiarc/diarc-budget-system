@@ -8,6 +8,15 @@
 
 ## 🔴 Prioridade Alta
 
+### Sistema de Filtragem no Painel de Manutenções
+- [x] Adicionar UI de filtros no MaintenanceFlow (selects para equipamento, tipo, status)
+- [x] Implementar lógica de filtragem no frontend
+- [x] Filtro por equipamento (dropdown com lista de equipamentos)
+- [x] Filtro por tipo de manutenção (preventiva/corretiva)
+- [x] Filtro por status (agendada, cotação, análise, etc.)
+- [x] Adicionar botão "Limpar Filtros"
+
+
 ### Remover Botão Avançar do Painel de Manutenções
 - [x] Localizar botão "Avançar" em MaintenanceFlow.tsx (linha 209)
 - [x] Remover botão e lógica de avançar status
