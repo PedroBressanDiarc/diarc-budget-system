@@ -8,6 +8,12 @@
 
 ## 🔴 Prioridade Alta
 
+### Remover Botão Avançar do Painel de Manutenções
+- [x] Localizar botão "Avançar" em MaintenanceFlow.tsx (linha 209)
+- [x] Remover botão e lógica de avançar status
+- [x] Removida função canAdvanceStatus
+- [x] Garantir que mudança de status só ocorre via timeline clicável em MaintenanceDetail
+
 ### Restaurar Módulo Financeiro no Menu
 - [x] Adicionar item "Financeiro" no menu lateral (DashboardLayout)
 - [x] Criar submenu com "Recebimentos" e "Pagamentos"

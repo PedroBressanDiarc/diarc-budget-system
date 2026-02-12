@@ -109,9 +109,7 @@ export default function MaintenanceFlow() {
     return flow[currentStatus as keyof typeof flow];
   };
 
-  const canAdvanceStatus = (status: string) => {
-    return ["scheduled", "approved", "in_progress", "sent_to_purchase"].includes(status);
-  };
+
 
   const getEquipmentName = (equipmentId: number) => {
     const equipment = equipmentList?.find((e) => e.id === equipmentId);
@@ -196,19 +194,6 @@ export default function MaintenanceFlow() {
                             <p className="text-sm text-muted-foreground line-clamp-2">{schedule.description}</p>
                           )}
                           <div className="flex gap-2">
-                            {canAdvanceStatus(schedule.status) && (
-                              <Button
-                                size="sm"
-                                className="flex-1"
-                                onClick={() => {
-                                  setSelectedSchedule(schedule);
-                                  setStatusDialogOpen(true);
-                                }}
-                              >
-                                <ArrowRight className="mr-1 h-3 w-3" />
-                                Avançar
-                              </Button>
-                            )}
                             <Button
                               size="sm"
                               variant="outline"
