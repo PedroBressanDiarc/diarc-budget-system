@@ -410,3 +410,12 @@
 - [x] Restaurar estrutura: clicar no item navega, setinha abre dropdown
 - [x] Dashboard Manutenções agora está em Dashboard > submenu (só diretores)
 - [x] Relatórios Manutenções agora está em Relatórios > submenu (só diretores)
+
+
+## Restaurar Menu Inteligente (12/02/2026)
+- [x] Implementar lógica: clicar no item principal navega para a página
+- [x] Implementar setinha separada que abre dropdown com submenus
+- [x] Aplicar para Dashboard (navega para / + dropdown com Dashboard Manutenções)
+- [x] Aplicar para Relatórios (navega para /relatorios + dropdown com subitens)
+- [x] Botão principal com flex-1 navega, setinha com w-8 abre dropdown
+- [x] Controle de acesso: submenu só aparece para diretores quando adminOnly=true

@@ -298,28 +298,32 @@ function DashboardLayoutContent({
                 return (
                   <div key={item.path}>
                     <SidebarMenuItem>
-                      <SidebarMenuButton
-                        isActive={isActive}
-                        onClick={() => {
-                          if (hasSubmenu) {
-                            setOpenSubmenus(prev => ({ ...prev, [item.path]: !prev[item.path] }));
-                          } else {
-                            setLocation(item.path);
-                          }
-                        }}
-                        tooltip={item.label}
-                        className={`h-10 transition-all font-normal relative`}
-                      >
-                        <item.icon
-                          className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
-                        />
-                        <span>{item.label}</span>
-                        {item.path === '/autorizacoes' && <PendingAuthBadge />}
-                        {item.path === '/chat' && <UnreadMentionsBadge />}
-                        {hasSubmenu && (
-                          <ChevronDown className={`ml-auto h-4 w-4 transition-transform ${isSubmenuOpen ? 'rotate-180' : ''}`} />
+                      <div className="flex items-center w-full">
+                        <SidebarMenuButton
+                          isActive={isActive}
+                          onClick={() => setLocation(item.path)}
+                          tooltip={item.label}
+                          className={`h-10 transition-all font-normal relative flex-1`}
+                        >
+                          <item.icon
+                            className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                          />
+                          <span>{item.label}</span>
+                          {item.path === '/autorizacoes' && <PendingAuthBadge />}
+                          {item.path === '/chat' && <UnreadMentionsBadge />}
+                        </SidebarMenuButton>
+                        {hasSubmenu && (user?.role === 'director' || !item.adminOnly) && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setOpenSubmenus(prev => ({ ...prev, [item.path]: !prev[item.path] }));
+                            }}
+                            className="h-10 w-8 flex items-center justify-center hover:bg-accent rounded-r-lg transition-colors shrink-0"
+                          >
+                            <ChevronDown className={`h-4 w-4 transition-transform ${isSubmenuOpen ? 'rotate-180' : ''}`} />
+                          </button>
                         )}
-                      </SidebarMenuButton>
+                      </div>
                     </SidebarMenuItem>
                     {hasSubmenu && isSubmenuOpen && item.submenu!.map(subitem => {
                       const isSubActive = location === subitem.path;
