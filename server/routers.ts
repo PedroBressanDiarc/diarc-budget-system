@@ -919,12 +919,16 @@ export const appRouter = router({
               // Buscar dados do equipamento
               const [equipment] = await database.select().from(equipments).where(eq(equipments.id, maintenance.equipmentId));
               
-              // Criar requisição de compra
+              // Criar requisição de compra com dados da manutenção
+              const requisitionTitle = `Manutenção ${maintenance.maintenanceType === 'preventive' ? 'Preventiva' : 'Corretiva'} - ${equipment?.name || 'Equipamento'}`;
+              const requisitionDescription = `**Equipamento:** ${equipment?.name || 'N/A'}\n**Tipo:** ${maintenance.maintenanceType === 'preventive' ? 'Preventiva' : 'Corretiva'}\n**Data Agendada:** ${maintenance.scheduledDate}\n**Descrição:** ${maintenance.description || 'N/A'}`;
+              
               const [requisition] = await database.insert(purchaseRequisitions).values({
-                title: `Manutenção - ${equipment?.name || 'Equipamento'}`,
-                description: maintenance.description || 'Requisição criada automaticamente a partir de manutenção',
+                title: requisitionTitle,
+                description: requisitionDescription,
                 category: 'manutencao',
                 status: 'pending',
+                maxPrice: maintenance.estimatedPrice ? String(maintenance.estimatedPrice) : undefined,
                 createdBy: ctx.user.id,
               }).$returningId();
               

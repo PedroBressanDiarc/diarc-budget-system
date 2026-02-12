@@ -23,6 +23,8 @@ export default function MaintenanceFlow() {
     maintenanceType: "preventive" as "preventive" | "corrective",
     scheduledDate: "",
     description: "",
+    estimatedPrice: "",
+    attachments: [] as string[],
   });
 
   const { data: equipmentList } = trpc.equipment.list.useQuery();
@@ -38,6 +40,8 @@ export default function MaintenanceFlow() {
         maintenanceType: "preventive",
         scheduledDate: "",
         description: "",
+        estimatedPrice: "",
+        attachments: [],
       });
     },
     onError: (error) => {
@@ -287,6 +291,34 @@ export default function MaintenanceFlow() {
                 placeholder="Descreva a manutenção necessária..."
                 rows={3}
               />
+            </div>
+
+            <div>
+              <Label htmlFor="estimatedPrice">Preço Estimado (R\$)</Label>
+              <Input
+                id="estimatedPrice"
+                type="number"
+                step="0.01"
+                value={scheduleFormData.estimatedPrice}
+                onChange={(e) => setScheduleFormData({ ...scheduleFormData, estimatedPrice: e.target.value })}
+                placeholder="0,00"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="attachments">Anexos (Fotos, Cotações)</Label>
+              <Input
+                id="attachments"
+                type="file"
+                multiple
+                accept="image/*,.pdf"
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []);
+                  // TODO: Implementar upload para S3 e armazenar URLs
+                  toast.info("Upload de anexos será implementado em breve");
+                }}
+              />
+              <p className="text-xs text-muted-foreground mt-1">Formatos aceitos: imagens e PDF</p>
             </div>
 
             <DialogFooter>
