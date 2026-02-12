@@ -23,6 +23,7 @@ export function GlobalSearch({ open, onOpenChange }: GlobalSearchProps) {
   const { data: budgets } = trpc.budgets.list.useQuery(undefined, { enabled: open });
   const { data: projects } = trpc.projects.list.useQuery(undefined, { enabled: open });
   const { data: users } = trpc.users.list.useQuery(undefined, { enabled: open });
+  const { data: requisitions } = trpc.requisitions.list.useQuery(undefined, { enabled: open });
 
   // Filtrar resultados baseado na query
   const results = query.trim() === "" ? [] : [
@@ -42,20 +43,54 @@ export function GlobalSearch({ open, onOpenChange }: GlobalSearchProps) {
         icon: Wrench,
       })),
     
-    // Itens de Estoque
+    // Requisições de Compras
+    ...(requisitions || [])
+      .filter(r => 
+        r.title.toLowerCase().includes(query.toLowerCase()) ||
+        (r.description && r.description.toLowerCase().includes(query.toLowerCase()))
+      )
+      .slice(0, 5)
+      .map(r => ({
+        id: r.id,
+        type: 'requisition' as const,
+        title: r.title,
+        subtitle: `Requisição #${r.requisitionNumber || r.id}`,
+        path: `/compras/${r.id}`,
+        icon: ShoppingCart,
+      })),
+    
+    // Itens de Estoque Interno
     ...(items || [])
       .filter(i => 
-        i.name.toLowerCase().includes(query.toLowerCase()) ||
-        (i.secondaryName && i.secondaryName.toLowerCase().includes(query.toLowerCase()))
+        (i.name.toLowerCase().includes(query.toLowerCase()) ||
+        (i.secondaryName && i.secondaryName.toLowerCase().includes(query.toLowerCase()))) &&
+        (!i.category || i.category !== 'PEÇAS FINALIZADAS')
       )
       .slice(0, 5)
       .map(i => ({
         id: i.id,
-        type: 'item' as const,
+        type: 'stock_item' as const,
         title: i.name,
-        subtitle: i.secondaryName || i.category || 'Item de estoque',
-        path: `/estoque`,
+        subtitle: i.secondaryName || i.category || 'Estoque interno',
+        path: `/estoque/interno`,
         icon: Warehouse,
+      })),
+    
+    // Peças Finalizadas
+    ...(items || [])
+      .filter(i => 
+        (i.name.toLowerCase().includes(query.toLowerCase()) ||
+        (i.secondaryName && i.secondaryName.toLowerCase().includes(query.toLowerCase()))) &&
+        i.category === 'PEÇAS FINALIZADAS'
+      )
+      .slice(0, 5)
+      .map(i => ({
+        id: i.id,
+        type: 'finished_piece' as const,
+        title: i.name,
+        subtitle: i.secondaryName || 'Peça finalizada',
+        path: `/estoque/pecas-finalizadas`,
+        icon: Package,
       })),
     
     // Fornecedores
@@ -136,7 +171,9 @@ export function GlobalSearch({ open, onOpenChange }: GlobalSearchProps) {
   // Labels dos tipos
   const typeLabels: Record<string, string> = {
     equipment: 'Equipamentos',
-    item: 'Itens de Estoque',
+    requisition: 'Requisições de Compras',
+    stock_item: 'Estoque Interno',
+    finished_piece: 'Peças Finalizadas',
     supplier: 'Fornecedores',
     budget: 'Orçamentos',
     project: 'Obras',
@@ -188,7 +225,7 @@ export function GlobalSearch({ open, onOpenChange }: GlobalSearchProps) {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Buscar equipamentos, itens, fornecedores, orçamentos..."
+              placeholder="Buscar requisições, equipamentos, peças, estoque..."
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
@@ -205,7 +242,7 @@ export function GlobalSearch({ open, onOpenChange }: GlobalSearchProps) {
             <div className="py-12 text-center text-sm text-muted-foreground">
               <Search className="h-12 w-12 mx-auto mb-4 opacity-20" />
               <p>Digite para buscar em todo o sistema</p>
-              <p className="text-xs mt-2">Equipamentos • Itens • Fornecedores • Orçamentos • Obras</p>
+              <p className="text-xs mt-2">Requisições • Equipamentos • Peças • Estoque • Orçamentos</p>
             </div>
           ) : results.length === 0 ? (
             <div className="py-12 text-center text-sm text-muted-foreground">
