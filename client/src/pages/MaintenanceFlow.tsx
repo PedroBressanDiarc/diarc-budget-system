@@ -294,7 +294,7 @@ export default function MaintenanceFlow() {
             </div>
 
             <div>
-              <Label htmlFor="estimatedPrice">Preço Estimado (R\$)</Label>
+              <Label htmlFor="estimatedPrice">Preço Estimado (R\$) <span className="text-muted-foreground text-xs">(Opcional)</span></Label>
               <Input
                 id="estimatedPrice"
                 type="number"
@@ -303,22 +303,6 @@ export default function MaintenanceFlow() {
                 onChange={(e) => setScheduleFormData({ ...scheduleFormData, estimatedPrice: e.target.value })}
                 placeholder="0,00"
               />
-            </div>
-
-            <div>
-              <Label htmlFor="attachments">Anexos (Fotos, Cotações)</Label>
-              <Input
-                id="attachments"
-                type="file"
-                multiple
-                accept="image/*,.pdf"
-                onChange={(e) => {
-                  const files = Array.from(e.target.files || []);
-                  // TODO: Implementar upload para S3 e armazenar URLs
-                  toast.info("Upload de anexos será implementado em breve");
-                }}
-              />
-              <p className="text-xs text-muted-foreground mt-1">Formatos aceitos: imagens e PDF</p>
             </div>
 
             <DialogFooter>
@@ -333,72 +317,7 @@ export default function MaintenanceFlow() {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog: Avançar Status */}
-      <Dialog open={statusDialogOpen} onOpenChange={setStatusDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Avançar Status</DialogTitle>
-            <DialogDescription>
-              Confirme a mudança de status da manutenção
-            </DialogDescription>
-          </DialogHeader>
-          {selectedSchedule && (
-            <div className="space-y-4">
-              <div className="p-4 bg-muted rounded-lg space-y-2">
-                <p className="font-semibold">{getEquipmentName(selectedSchedule.equipmentId)}</p>
-                <p className="text-sm text-muted-foreground">{selectedSchedule.description}</p>
-              </div>
 
-              <div className="flex items-center justify-center gap-4">
-                <div className="text-center">
-                  <div className={`w-12 h-12 rounded-full ${getStatusConfig(selectedSchedule.status).color} flex items-center justify-center mx-auto mb-2`}>
-                    {(() => {
-                      const Icon = getStatusConfig(selectedSchedule.status).icon;
-                      return <Icon className="h-6 w-6 text-white" />;
-                    })()}
-                  </div>
-                  <p className="text-sm font-medium">{getStatusConfig(selectedSchedule.status).label}</p>
-                </div>
-
-                <ArrowRight className="h-8 w-8 text-muted-foreground" />
-
-                <div className="text-center">
-                  <div className={`w-12 h-12 rounded-full ${getStatusConfig(getNextStatus(selectedSchedule.status) || "").color} flex items-center justify-center mx-auto mb-2`}>
-                    {(() => {
-                      const Icon = getStatusConfig(getNextStatus(selectedSchedule.status) || "").icon;
-                      return <Icon className="h-6 w-6 text-white" />;
-                    })()}
-                  </div>
-                  <p className="text-sm font-medium">{getStatusConfig(getNextStatus(selectedSchedule.status) || "").label}</p>
-                </div>
-              </div>
-
-              {getNextStatus(selectedSchedule.status) === "sent_to_purchase" && (
-                <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg flex items-start gap-2">
-                  <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
-                  <div className="text-sm">
-                    <p className="font-semibold text-yellow-900">Atenção!</p>
-                    <p className="text-yellow-700">
-                      Ao avançar para "Enviado ao Compras", uma requisição será criada automaticamente no módulo Compras → Manutenção.
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setStatusDialogOpen(false)}>
-              Cancelar
-            </Button>
-            <Button
-              onClick={() => handleStatusChange(getNextStatus(selectedSchedule?.status) || "")}
-              disabled={updateStatusMutation.isPending}
-            >
-              {updateStatusMutation.isPending ? "Atualizando..." : "Confirmar"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

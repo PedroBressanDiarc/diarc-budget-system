@@ -55,7 +55,7 @@ export default function MaintenanceDetail() {
         <Card>
           <CardContent className="py-12 text-center">
             <p className="text-muted-foreground">Manutenção não encontrada</p>
-            <Button className="mt-4" onClick={() => setLocation("/manutencoes/fluxo")}>
+            <Button className="mt-4" onClick={() => setLocation("/manutencoes")}>
               Voltar
             </Button>
           </CardContent>
@@ -96,7 +96,7 @@ export default function MaintenanceDetail() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setLocation("/manutencoes/fluxo")}
+            onClick={() => setLocation("/manutencoes")}
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
@@ -270,6 +270,55 @@ export default function MaintenanceDetail() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Anexos (Fotos, Cotações) */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Anexos (Fotos, Cotações)</CardTitle>
+          <CardDescription>Adicione fotos, cotações e outros arquivos relacionados</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <input
+              type="file"
+              multiple
+              accept="image/*,.pdf"
+              className="hidden"
+              id="file-upload"
+              onChange={(e) => {
+                const files = Array.from(e.target.files || []);
+                // TODO: Implementar upload para S3 e armazenar URLs no campo attachments
+                toast.info(`${files.length} arquivo(s) selecionado(s). Upload será implementado em breve.`);
+              }}
+            />
+            <label htmlFor="file-upload">
+              <Button variant="outline" className="w-full" onClick={() => document.getElementById('file-upload')?.click()}>
+                Selecionar Arquivos
+              </Button>
+            </label>
+            <p className="text-xs text-muted-foreground mt-2">Formatos aceitos: imagens e PDF</p>
+          </div>
+
+          {/* Lista de anexos (quando implementado) */}
+          {schedule.attachments && schedule.attachments.length > 0 ? (
+            <div className="space-y-2">
+              <p className="text-sm font-medium">Arquivos anexados:</p>
+              <div className="grid gap-2">
+                {JSON.parse(schedule.attachments).map((url: string, index: number) => (
+                  <div key={index} className="flex items-center justify-between p-2 border rounded">
+                    <span className="text-sm truncate">{url.split('/').pop()}</span>
+                    <Button variant="ghost" size="sm" onClick={() => window.open(url, '_blank')}>
+                      Abrir
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">Nenhum anexo adicionado ainda</p>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Requisição de Compra Vinculada */}
       {schedule.purchaseRequisitionId && (

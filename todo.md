@@ -119,3 +119,15 @@
 3. **Sistema de Anexos Completo:** Upload S3, visualização, download para requisições e manutenções
 4. **Notificações Automáticas:** Alertas quando manutenção muda status ou requisição precisa aprovação
 5. **Histórico de Alterações:** Registrar timestamp e usuário em cada mudança de status
+
+
+## Ajustes de UX Solicitados (12/02/2026)
+- [x] Tornar campo de preço estimado opcional no formulário de manutenção
+- [x] Remover campo de upload de anexos do formulário de criação
+- [x] Adicionar seção de upload de anexos na página MaintenanceDetail (Ver Detalhes)
+- [x] Remover botão "Avançar" do MaintenanceFlow completamente
+- [x] Verificar e corrigir TODAS as flechinhas de voltar (especialmente MaintenanceDetail → MaintenanceFlow)
+- [x] Corrigido: MaintenanceDetail agora navega para /manutencoes (era /manutencoes/fluxo)
+- [x] Verificado: RequisitionDetail navega para /compras (correto)
+- [x] Verificado: BudgetDetail navega para /orcamentos (correto)
+- [ ] Testar navegação: clicar em voltar deve retornar à página de origem correta
