@@ -353,3 +353,9 @@
 - [x] Verificar endpoint de listagem de usuários
 - [x] Corrigir lógica de busca na página de chat
 - [x] Criar endpoint público listForChat (protectedProcedure) que retorna apenas id, name e email
+
+
+## Aplicar Máscaras nas Páginas de Compras (12/02/2026)
+- [x] Aplicar CurrencyInput no campo maxPrice em PurchasesMaintenance
+- [x] Aplicar CurrencyInput no campo maxPrice em PurchasesAdministration
+- [x] Aplicar CurrencyInput no campo maxPrice em PurchasesFactory
