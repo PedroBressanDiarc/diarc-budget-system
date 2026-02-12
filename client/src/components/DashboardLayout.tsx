@@ -30,7 +30,14 @@ import { Button } from "./ui/button";
 import { GlobalSearch } from "./GlobalSearch";
 
 const menuItems = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { 
+    icon: LayoutDashboard, 
+    label: "Dashboard", 
+    path: "/",
+    submenu: [
+      { label: "Dashboard Manutenções", path: "/manutencoes/dashboard", adminOnly: true },
+    ]
+  },
   { 
     icon: ShoppingCart, 
     label: "Compras", 
@@ -52,9 +59,7 @@ const menuItems = [
     ]
   },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
-  { icon: Gauge, label: "Dashboard Manutenções", path: "/manutencoes/dashboard" },
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
-  { icon: FileBarChart, label: "Relatórios Manutenções", path: "/manutencoes/relatorios" },
   { icon: MessageCircle, label: "Chat", path: "/chat" },
   { 
     icon: BarChart3, 
@@ -65,6 +70,7 @@ const menuItems = [
       { label: "Dashboard de Economias", path: "/relatorios/economias" },
       { label: "Relatório por Obras", path: "/relatorios/obras" },
       { label: "Alertas de Orçamento", path: "/alertas-orcamento" },
+      { label: "Relatórios Manutenções", path: "/manutencoes/relatorios", adminOnly: true },
     ]
   },
   { icon: SettingsIcon, label: "Configurações", path: "/configuracoes" },

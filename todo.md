@@ -402,3 +402,11 @@
 - [x] Procedure "chats.getUnreadMentions" não encontrado no router (resolvido com restart)
 - [x] Tabela maintenance_schedules não existe no banco de dados (criada)
 - [x] Queries de manutenções agendadas falhando (resolvido)
+
+
+## Bug Menu (12/02/2026)
+- [x] Dashboard Manutenções e Relatórios Manutenções estão soltos no menu principal
+- [x] Devem estar dentro dos dropdowns de Dashboard e Relatórios respectivamente
+- [x] Restaurar estrutura: clicar no item navega, setinha abre dropdown
+- [x] Dashboard Manutenções agora está em Dashboard > submenu (só diretores)
+- [x] Relatórios Manutenções agora está em Relatórios > submenu (só diretores)
