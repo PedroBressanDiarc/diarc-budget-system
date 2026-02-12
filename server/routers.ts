@@ -833,9 +833,11 @@ export const appRouter = router({
   // ============= MAINTENANCE =============
   maintenance: router({
     schedules: router({
-      list: protectedProcedure.query(async () => {
-        return await db.getMaintenanceSchedules();
-      }),
+      list: protectedProcedure
+        .input(z.object({}).optional())
+        .query(async () => {
+          return await db.getMaintenanceSchedules();
+        }),
 
       listByEquipment: protectedProcedure
         .input(z.object({ equipmentId: z.number() }))
@@ -844,9 +846,9 @@ export const appRouter = router({
         }),
 
       upcoming: protectedProcedure
-        .input(z.object({ days: z.number().default(30) }))
+        .input(z.object({ days: z.number().optional().default(30) }).optional())
         .query(async ({ input }) => {
-          return await db.getUpcomingMaintenance(input.days);
+          return await db.getUpcomingMaintenance(input?.days || 30);
         }),
 
       getById: protectedProcedure
@@ -1056,9 +1058,11 @@ export const appRouter = router({
 
   // ============= DASHBOARD =============
   dashboard: router({
-    metrics: protectedProcedure.query(async () => {
-      return await db.getDashboardMetrics();
-    }),
+    metrics: protectedProcedure
+      .input(z.object({}).optional())
+      .query(async () => {
+        return await db.getDashboardMetrics();
+      }),
   }),
 
   // ============= COMPANY SETTINGS =============

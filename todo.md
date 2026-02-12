@@ -419,3 +419,12 @@
 - [x] Aplicar para Relatórios (navega para /relatorios + dropdown com subitens)
 - [x] Botão principal com flex-1 navega, setinha com w-8 abre dropdown
 - [x] Controle de acesso: submenu só aparece para diretores quando adminOnly=true
+
+
+## Bugs na Página Dashboard (12/02/2026)
+- [x] Erro de validação: expected object, received undefined (input inválido)
+- [x] Queries falhando na tabela maintenance_schedules
+- [x] Identificar qual endpoint está causando erro de validação (dashboard.metrics, maintenance.schedules.list, maintenance.schedules.upcoming)
+- [x] Verificar se tabela maintenance_schedules existe e tem dados corretos
+- [x] Adicionar .input(z.object({}).optional()) nos endpoints sem parâmetros
+- [x] Adicionar campo purchaseRequisitionId na tabela maintenance_schedules
