@@ -10,7 +10,7 @@ export const users = mysqlTable("users", {
   email: varchar("email", { length: 320 }).notNull().unique(),
   passwordHash: varchar("passwordHash", { length: 255 }).notNull(),
   name: text("name").notNull(),
-  role: mysqlEnum("role", ["storekeeper", "buyer", "director", "manutencao"]).default("buyer").notNull(),
+  role: mysqlEnum("role", ["storekeeper", "buyer", "director", "manutencao", "financeiro"]).default("buyer").notNull(),
   isActive: int("isActive").default(1).notNull(),
   openId: varchar("openId", { length: 64 }),
   loginMethod: varchar("loginMethod", { length: 64 }).default("local"),
@@ -397,3 +397,46 @@ export const budgetAlerts = mysqlTable("budget_alerts", {
 
 export type BudgetAlert = typeof budgetAlerts.$inferSelect;
 export type InsertBudgetAlert = typeof budgetAlerts.$inferInsert;
+
+/**
+ * Payments Received (Recebimentos) - Pagamentos recebidos de clientes por obra
+ */
+export const paymentsReceived = mysqlTable("payments_received", {
+  id: int("id").autoincrement().primaryKey(),
+  projectId: int("projectId").notNull(), // Referência à obra (projects table)
+  valor: decimal("valor", { precision: 12, scale: 2 }).notNull(),
+  parcela: int("parcela").notNull(), // Número da parcela (1, 2, 3...)
+  dataPrevista: date("dataPrevista").notNull(), // Data prevista do recebimento
+  dataRecebimento: date("dataRecebimento"), // Data real do recebimento (null se pendente)
+  comprovante: text("comprovante"), // URL do S3 para comprovante de recebimento
+  observacoes: text("observacoes"),
+  status: mysqlEnum("status", ["pendente", "recebido", "atrasado"]).default("pendente").notNull(),
+  createdBy: int("createdBy").notNull(), // Usuário que cadastrou
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PaymentReceived = typeof paymentsReceived.$inferSelect;
+export type InsertPaymentReceived = typeof paymentsReceived.$inferInsert;
+
+/**
+ * Payments Made (Pagamentos) - Pagamentos feitos a fornecedores
+ * Placeholder para futura implementação
+ */
+export const paymentsMade = mysqlTable("payments_made", {
+  id: int("id").autoincrement().primaryKey(),
+  supplierId: int("supplierId"), // Fornecedor
+  requisitionId: int("requisitionId"), // Requisição relacionada
+  valor: decimal("valor", { precision: 12, scale: 2 }).notNull(),
+  dataPrevista: date("dataPrevista").notNull(),
+  dataPagamento: date("dataPagamento"),
+  comprovante: text("comprovante"),
+  observacoes: text("observacoes"),
+  status: mysqlEnum("status", ["pendente", "pago", "atrasado"]).default("pendente").notNull(),
+  createdBy: int("createdBy").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PaymentMade = typeof paymentsMade.$inferSelect;
+export type InsertPaymentMade = typeof paymentsMade.$inferInsert;

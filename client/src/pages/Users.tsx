@@ -21,7 +21,7 @@ export default function Users() {
     email: "",
     password: "",
     name: "",
-    role: "buyer" as "buyer" | "director" | "storekeeper" | "manutencao",
+    role: "buyer" as "buyer" | "director" | "storekeeper" | "manutencao" | "financeiro",
     username: "",
   });
 
@@ -146,6 +146,7 @@ export default function Users() {
                       <SelectItem value="director">Diretor</SelectItem>
                       <SelectItem value="storekeeper">Almoxarife</SelectItem>
                       <SelectItem value="manutencao">Manutenção</SelectItem>
+                      <SelectItem value="financeiro">Financeiro</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
