@@ -285,3 +285,17 @@
 - [x] Adicionar contador de itens processados/total
 - [x] Implementar botão de cancelar importação
 - [x] Integrar dialog nas páginas de Peças Finalizadas e Estoque Interno
+
+## Nova Funcionalidade - Seção de Cotações na Página de Detalhes (11/02/2026)
+- [ ] Analisar estrutura atual da página de detalhes da requisição
+- [ ] Adicionar seção/aba de cotações na página RequisitionDetail
+- [ ] Implementar formulário para adicionar nova cotação
+- [ ] Implementar listagem de cotações existentes por item
+- [ ] Adicionar funcionalidade de editar cotação
+- [ ] Adicionar funcionalidade de excluir cotação
+- [ ] Exibir valor máximo definido pelo diretor (se houver)
+- [ ] Destacar cotações que excedem valor máximo
+- [ ] Calcular e exibir economia quando cotação for menor que máximo
+
+## Bug Crítico - Menu (11/02/2026)
+- [x] Adicionar item "Requisições" no menu de navegação da sidebar

@@ -30,6 +30,7 @@ import { Button } from "./ui/button";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { icon: FileText, label: "Requisições", path: "/requisitions" },
   { icon: ShoppingCart, label: "Compras", path: "/compras" },
   { icon: CheckCircle, label: "Autorizações", path: "/autorizacoes", adminOnly: true },
   { 
