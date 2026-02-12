@@ -319,3 +319,11 @@
 - [x] Adicionar submenu "Recebimentos"
 - [x] Adicionar submenu "Pagamentos"
 - [x] Restringir acesso ao role financeiro e director
+
+
+## Melhoria de UX - Menu Dashboard (12/02/2026)
+- [x] Transformar Dashboard em item clicável com dropdown
+- [x] Mover Dashboard de Manutenções para submenu do Dashboard
+- [x] Mover Relatório Manutenções para submenu de Relatórios
+- [x] Implementar lógica: clicar no item vai para página, clicar na setinha abre dropdown
+- [x] Restringir submenus específicos apenas para diretores
