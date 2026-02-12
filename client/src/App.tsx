@@ -9,6 +9,9 @@ import Dashboard from "./pages/Dashboard";
 import Suppliers from "./pages/Suppliers";
 import Requisitions from "./pages/Requisitions";
 import RequisitionDetail from "./pages/RequisitionDetail";
+import PurchasesMaintenance from "./pages/PurchasesMaintenance";
+import PurchasesAdministration from "./pages/PurchasesAdministration";
+import PurchasesFactory from "./pages/PurchasesFactory";
 import Authorizations from "./pages/Authorizations";
 import Items from "./pages/Items";
 import FinishedPieces from "./pages/FinishedPieces";
@@ -38,6 +41,9 @@ function Router() {
       <Route path="/" component={Dashboard} />
       <Route path="/fornecedores" component={Suppliers} />
       <Route path="/compras" component={Requisitions} />
+      <Route path="/compras/manutencao" component={PurchasesMaintenance} />
+      <Route path="/compras/administracao" component={PurchasesAdministration} />
+      <Route path="/compras/fabrica" component={PurchasesFactory} />
       <Route path="/compras/:id" component={RequisitionDetail} />
       <Route path="/autorizacoes" component={Authorizations} />
       <Route path="/estoque/pecas-finalizadas" component={FinishedPieces} />

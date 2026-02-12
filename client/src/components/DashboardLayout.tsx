@@ -31,7 +31,16 @@ import { GlobalSearch } from "./GlobalSearch";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
-  { icon: ShoppingCart, label: "Compras", path: "/compras" },
+  { 
+    icon: ShoppingCart, 
+    label: "Compras", 
+    path: "/compras",
+    submenu: [
+      { label: "Manutenção", path: "/compras/manutencao" },
+      { label: "Administração", path: "/compras/administracao" },
+      { label: "Fábrica", path: "/compras/fabrica" },
+    ]
+  },
   { icon: CheckCircle, label: "Autorizações", path: "/autorizacoes", adminOnly: true },
   { 
     icon: Warehouse, 
