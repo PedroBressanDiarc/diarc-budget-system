@@ -42,7 +42,16 @@ const menuItems = [
     ]
   },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
-  { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
+  { 
+    icon: Wrench, 
+    label: "Manutenções", 
+    path: "/manutencoes",
+    submenu: [
+      { label: "Dashboard", path: "/manutencoes/dashboard" },
+      { label: "Agendamentos", path: "/manutencoes" },
+      { label: "Relatórios", path: "/manutencoes/relatorios" },
+    ]
+  },
   { 
     icon: BarChart3, 
     label: "Relatórios", 
@@ -321,7 +330,7 @@ function DashboardLayoutContent({
           <SidebarFooter className="p-3">
             <div className="px-2 py-1 mb-2">
               <p className="text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
-                Versão 1.5.2
+                Versão 1.6.0
               </p>
             </div>
             <DropdownMenu>
