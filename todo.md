@@ -346,3 +346,10 @@
 - [x] Restaurar lógica: clicar no item navega, clicar na setinha abre dropdown
 - [x] Restaurar submenu de Dashboard com "Dashboard Manutenções" (só diretores)
 - [x] Restaurar submenu de Relatórios com "Relatório Manutenções" (só diretores)
+
+
+## Bug Chat (12/02/2026)
+- [x] Busca de usuários no chat não funciona (não mostra usuários existentes)
+- [x] Verificar endpoint de listagem de usuários
+- [x] Corrigir lógica de busca na página de chat
+- [x] Criar endpoint público listForChat (protectedProcedure) que retorna apenas id, name e email
