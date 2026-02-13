@@ -283,14 +283,15 @@ export default function Budgets() {
                 Novo Orçamento
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>Criar Novo Orçamento</DialogTitle>
-                <DialogDescription>
-                  Selecione o cliente e preencha os itens da proposta
-                </DialogDescription>
-              </DialogHeader>
-              <form onSubmit={handleBudgetSubmit} className="space-y-6">
+            <DialogContent className="!max-w-none !w-[90vw] !h-[90vh] overflow-y-auto p-0">
+              <form onSubmit={handleBudgetSubmit} className="p-6 h-full flex flex-col">
+                <DialogHeader>
+                  <DialogTitle>Criar Novo Orçamento</DialogTitle>
+                  <DialogDescription>
+                    Selecione o cliente e preencha os itens da proposta
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-6 flex-1 overflow-y-auto">
                 {/* Dados do Orçamento */}
                 <div className="space-y-4">
                   <h3 className="font-semibold text-lg">Dados do Orçamento</h3>
@@ -444,8 +445,9 @@ export default function Budgets() {
                     rows={3}
                   />
                 </div>
+                </div>
 
-                <DialogFooter>
+                <DialogFooter className="mt-6">
                   <Button type="button" variant="outline" onClick={() => setIsBudgetDialogOpen(false)}>
                     Cancelar
                   </Button>
