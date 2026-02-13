@@ -276,3 +276,10 @@
 - [x] Verificado: RequisitionDetail navega para /compras (correto)
 - [x] Verificado: BudgetDetail navega para /orcamentos (correto)
 - [ ] Testar navegação: clicar em voltar deve retornar à página de origem correta
+
+### Correções Sistema de Permissões
+- [x] Corrigir bug de salvamento de permissões (não está salvando alterações)
+- [x] Melhorar organização visual do painel de criar/editar permissões
+- [x] Adicionar itens faltantes no checklist de módulos
+- [x] Reorganizar estrutura de módulos de forma mais clara
+- [x] Adicionar validações e feedback visual ao salvar

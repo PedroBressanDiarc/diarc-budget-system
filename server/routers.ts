@@ -2696,6 +2696,155 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
       };
     }),
   }),
+
+  // ============= CUSTOM ROLES & PERMISSIONS =============
+  customRoles: router({
+    // Listar todos os roles
+    list: protectedProcedure.query(async () => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+      const roles = await database.select().from(customRoles);
+      return roles;
+    }),
+
+    // Obter role por ID com permissões
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        const [role] = await database.select().from(customRoles).where(eq(customRoles.id, input.id));
+        if (!role) throw new Error("Role não encontrado");
+        const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, input.id));
+        return { ...role, permissions };
+      }),
+
+    // Obter role por name com permissões
+    getByName: protectedProcedure
+      .input(z.object({ name: z.string() }))
+      .query(async ({ input }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        const [role] = await database.select().from(customRoles).where(eq(customRoles.name, input.name));
+        if (!role) throw new Error("Role não encontrado");
+        const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, role.id));
+        return { ...role, permissions };
+      }),
+
+    // Criar novo role (apenas admin)
+    create: adminProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        displayName: z.string().min(1),
+        description: z.string().optional(),
+        color: z.string().default("blue"),
+        permissions: z.array(z.object({
+          module: z.string(),
+          submodule: z.string().nullable(),
+          permission: z.enum(["total", "readonly", "none"]),
+        })).optional(),
+      }))
+      .mutation(async ({ input, ctx }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        const [newRole] = await database.insert(customRoles).values({
+          name: input.name,
+          displayName: input.displayName,
+          description: input.description,
+          color: input.color,
+          isSystem: false,
+          createdBy: ctx.user.id,
+        });
+        
+        // Inserir permissões se fornecidas
+        if (input.permissions && input.permissions.length > 0 && newRole.insertId) {
+          const permissionsToInsert = input.permissions
+            .filter((p: any) => p.permission !== "none")
+            .map((p: any) => ({
+              roleId: newRole.insertId,
+              module: p.module,
+              submodule: p.submodule,
+              permission: p.permission,
+            }));
+          if (permissionsToInsert.length > 0) {
+            await database.insert(rolePermissions).values(permissionsToInsert);
+          }
+        }
+        
+        return newRole;
+      }),
+
+    // Atualizar role (apenas admin)
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        displayName: z.string().optional(),
+        description: z.string().optional(),
+        color: z.string().optional(),
+      }))
+      .mutation(async ({ input }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        const updateData: any = {};
+        if (input.displayName) updateData.displayName = input.displayName;
+        if (input.description !== undefined) updateData.description = input.description;
+        if (input.color) updateData.color = input.color;
+        await database.update(customRoles).set(updateData).where(eq(customRoles.id, input.id));
+        return { success: true };
+      }),
+
+    // Deletar role (apenas admin, não pode deletar roles do sistema)
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        const [role] = await database.select().from(customRoles).where(eq(customRoles.id, input.id));
+        if (!role) throw new Error("Role não encontrado");
+        if (role.isSystem) throw new Error("Não é possível deletar roles do sistema");
+        await database.delete(customRoles).where(eq(customRoles.id, input.id));
+        return { success: true };
+      }),
+
+    // Atualizar permissões de um role (apenas admin)
+    updatePermissions: adminProcedure
+      .input(z.object({
+        roleId: z.number(),
+        permissions: z.array(z.object({
+          module: z.string(),
+          submodule: z.string().nullable(),
+          permission: z.enum(["total", "readonly", "none"]),
+        })),
+      }))
+      .mutation(async ({ input }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        await database.delete(rolePermissions).where(eq(rolePermissions.roleId, input.roleId));
+        const permissionsToInsert = input.permissions
+          .filter((p: any) => p.permission !== "none")
+          .map((p: any) => ({
+            roleId: input.roleId,
+            module: p.module,
+            submodule: p.submodule,
+            permission: p.permission,
+          }));
+        if (permissionsToInsert.length > 0) {
+          await database.insert(rolePermissions).values(permissionsToInsert);
+        }
+        return { success: true };
+      }),
+
+    // Obter permissões de um usuário (baseado no role dele)
+    getUserPermissions: protectedProcedure.query(async ({ ctx }: any) => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+      const userRole = ctx.user.role;
+      const [role] = await database.select().from(customRoles).where(eq(customRoles.name, userRole));
+      if (!role) return { role: userRole, permissions: [] };
+      const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, role.id));
+      return { role: userRole, permissions };
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

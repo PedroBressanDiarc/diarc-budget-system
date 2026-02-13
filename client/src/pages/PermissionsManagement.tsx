@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -6,16 +6,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { Plus, Edit, Trash2, Shield } from "lucide-react";
+import { Plus, Trash2, Shield } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Estrutura de módulos e submódulos do sistema
+// Estrutura COMPLETA de módulos e submódulos da sidebar
 const SYSTEM_MODULES = [
   { module: "dashboard", label: "Dashboard", submodules: [] },
-  { module: "chat", label: "Chat", submodules: [] },
-  { module: "orcamentos", label: "Orçamentos", submodules: [] },
   {
     module: "compras",
     label: "Compras",
@@ -26,7 +25,18 @@ const SYSTEM_MODULES = [
       { submodule: "obras", label: "Obras" },
     ],
   },
+  { module: "autorizacoes", label: "Autorizações", submodules: [] },
+  {
+    module: "estoque",
+    label: "Estoque",
+    submodules: [
+      { submodule: "pecas_finalizadas", label: "Peças Finalizadas" },
+      { submodule: "estoque_interno", label: "Estoque Interno" },
+    ],
+  },
+  { module: "orcamentos", label: "Orçamentos", submodules: [] },
   { module: "manutencoes", label: "Manutenções", submodules: [] },
+  { module: "chat", label: "Chat", submodules: [] },
   {
     module: "financeiro",
     label: "Financeiro",
@@ -35,7 +45,20 @@ const SYSTEM_MODULES = [
       { submodule: "pagamentos", label: "Pagamentos" },
     ],
   },
-  { module: "relatorios", label: "Relatórios", submodules: [] },
+  {
+    module: "relatorios",
+    label: "Relatórios",
+    submodules: [
+      { submodule: "visao_geral", label: "Visão Geral" },
+      { submodule: "economias", label: "Dashboard de Economias" },
+      { submodule: "obras", label: "Relatório por Obras" },
+      { submodule: "alertas_orcamento", label: "Alertas de Orçamento" },
+      { submodule: "manutencoes", label: "Relatórios Manutenções" },
+    ],
+  },
+  { module: "configuracoes", label: "Configurações", submodules: [] },
+  { module: "usuarios", label: "Usuários", submodules: [] },
+  { module: "permissoes", label: "Permissões", submodules: [] },
   {
     module: "banco_dados",
     label: "Banco de Dados",
@@ -43,7 +66,7 @@ const SYSTEM_MODULES = [
       { submodule: "fornecedores", label: "Fornecedores" },
       { submodule: "equipamentos", label: "Equipamentos" },
       { submodule: "itens", label: "Itens" },
-      { submodule: "obras", label: "Obras" },
+      { submodule: "obras_bd", label: "Obras" },
       { submodule: "locais", label: "Locais" },
     ],
   },
@@ -115,6 +138,32 @@ export default function PermissionsManagement() {
     },
   });
 
+  // CORREÇÃO: useEffect em vez de useState para carregar permissões
+  useEffect(() => {
+    if (roleDetails && isEditOpen) {
+      const permsMap: Record<string, "total" | "readonly" | "none"> = {};
+      
+      // Inicializar todos com "none"
+      SYSTEM_MODULES.forEach((mod) => {
+        if (mod.submodules.length === 0) {
+          permsMap[mod.module] = "none";
+        } else {
+          mod.submodules.forEach((sub) => {
+            permsMap[`${mod.module}:${sub.submodule}`] = "none";
+          });
+        }
+      });
+
+      // Aplicar permissões existentes
+      roleDetails.permissions.forEach((perm: any) => {
+        const key = perm.submodule ? `${perm.module}:${perm.submodule}` : perm.module;
+        permsMap[key] = perm.permission;
+      });
+
+      setPermissions(permsMap);
+    }
+  }, [roleDetails, isEditOpen]);
+
   const handleCreate = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -178,32 +227,6 @@ export default function PermissionsManagement() {
     }
   };
 
-  // Carregar permissões quando roleDetails mudar
-  useState(() => {
-    if (roleDetails && isEditOpen) {
-      const permsMap: Record<string, "total" | "readonly" | "none"> = {};
-      
-      // Inicializar todos com "none"
-      SYSTEM_MODULES.forEach((mod) => {
-        if (mod.submodules.length === 0) {
-          permsMap[mod.module] = "none";
-        } else {
-          mod.submodules.forEach((sub) => {
-            permsMap[`${mod.module}:${sub.submodule}`] = "none";
-          });
-        }
-      });
-
-      // Aplicar permissões existentes
-      roleDetails.permissions.forEach((perm: any) => {
-        const key = perm.submodule ? `${perm.module}:${perm.submodule}` : perm.module;
-        permsMap[key] = perm.permission;
-      });
-
-      setPermissions(permsMap);
-    }
-  });
-
   const getPermissionKey = (module: string, submodule?: string) => {
     return submodule ? `${module}:${submodule}` : module;
   };
@@ -229,6 +252,59 @@ export default function PermissionsManagement() {
       gray: "bg-gray-500 hover:bg-gray-600",
     };
     return colors[color] || colors.blue;
+  };
+
+  // Renderizar módulo e seus submódulos (se houver e se módulo pai não for "none")
+  const renderModulePermissions = (mod: typeof SYSTEM_MODULES[0]) => {
+    const modulePermission = getPermission(mod.module);
+    const hasSubmodules = mod.submodules.length > 0;
+    const showSubmodules = hasSubmodules && modulePermission !== "none";
+
+    return (
+      <div key={mod.module} className="space-y-2">
+        {/* Módulo Principal */}
+        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+          <span className="font-medium">{mod.label}</span>
+          <Select
+            value={getPermission(mod.module)}
+            onValueChange={(value: any) => setPermission(mod.module, undefined, value)}
+          >
+            <SelectTrigger className="w-40">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">Nenhum</SelectItem>
+              <SelectItem value="readonly">Somente Leitura</SelectItem>
+              <SelectItem value="total">Total</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Submódulos (aparecem apenas se módulo pai não for "none") */}
+        {showSubmodules && (
+          <div className="ml-6 space-y-2">
+            {mod.submodules.map((sub) => (
+              <div key={sub.submodule} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg border-l-2 border-primary/30">
+                <span className="text-sm">{sub.label}</span>
+                <Select
+                  value={getPermission(mod.module, sub.submodule)}
+                  onValueChange={(value: any) => setPermission(mod.module, sub.submodule, value)}
+                >
+                  <SelectTrigger className="w-40">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">Nenhum</SelectItem>
+                    <SelectItem value="readonly">Somente Leitura</SelectItem>
+                    <SelectItem value="total">Total</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -304,15 +380,21 @@ export default function PermissionsManagement() {
         </CardContent>
       </Card>
 
-      {/* Dialog Criar Nível */}
+      {/* Dialog Criar Nível com TABS */}
       <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-          <form onSubmit={handleCreate}>
-            <DialogHeader>
-              <DialogTitle>Criar Novo Nível de Permissão</DialogTitle>
-              <DialogDescription>Defina nome, cor e permissões do novo nível</DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle>Criar Novo Nível de Permissão</DialogTitle>
+            <DialogDescription>Defina nome, cor e permissões do novo nível</DialogDescription>
+          </DialogHeader>
+          
+          <Tabs defaultValue="info" className="flex-1 overflow-hidden flex flex-col">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="info">Informações Básicas</TabsTrigger>
+              <TabsTrigger value="permissions">Permissões</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="info" className="space-y-4 mt-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Nome Interno *</Label>
@@ -323,6 +405,7 @@ export default function PermissionsManagement() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
+                  <p className="text-xs text-muted-foreground">Usado internamente no sistema (sem espaços)</p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="displayName">Nome de Exibição *</Label>
@@ -333,6 +416,7 @@ export default function PermissionsManagement() {
                     value={formData.displayName}
                     onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
                   />
+                  <p className="text-xs text-muted-foreground">Nome mostrado na interface</p>
                 </div>
               </div>
               <div className="space-y-2">
@@ -345,7 +429,7 @@ export default function PermissionsManagement() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="color">Cor</Label>
+                <Label htmlFor="color">Cor do Badge</Label>
                 <Select value={formData.color} onValueChange={(value) => setFormData({ ...formData, color: value })}>
                   <SelectTrigger>
                     <SelectValue />
@@ -361,162 +445,86 @@ export default function PermissionsManagement() {
                   </SelectContent>
                 </Select>
               </div>
-
-              <div className="border-t pt-4">
-                <h3 className="font-semibold mb-4">Permissões por Módulo</h3>
-                <div className="space-y-3">
-                  {SYSTEM_MODULES.map((mod) => (
-                    <div key={mod.module} className="space-y-2">
-                      {mod.submodules.length === 0 ? (
-                        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                          <span className="font-medium">{mod.label}</span>
-                          <Select
-                            value={getPermission(mod.module)}
-                            onValueChange={(value: any) => setPermission(mod.module, undefined, value)}
-                          >
-                            <SelectTrigger className="w-40">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="none">Nenhum</SelectItem>
-                              <SelectItem value="readonly">Somente Leitura</SelectItem>
-                              <SelectItem value="total">Total</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      ) : (
-                        <div className="space-y-2">
-                          <div className="font-medium text-sm text-muted-foreground">{mod.label}</div>
-                          {mod.submodules.map((sub) => (
-                            <div key={sub.submodule} className="flex items-center justify-between p-3 bg-muted rounded-lg ml-4">
-                              <span>{sub.label}</span>
-                              <Select
-                                value={getPermission(mod.module, sub.submodule)}
-                                onValueChange={(value: any) => setPermission(mod.module, sub.submodule, value)}
-                              >
-                                <SelectTrigger className="w-40">
-                                  <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="none">Nenhum</SelectItem>
-                                  <SelectItem value="readonly">Somente Leitura</SelectItem>
-                                  <SelectItem value="total">Total</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
+            </TabsContent>
+            
+            <TabsContent value="permissions" className="flex-1 overflow-y-auto mt-4 space-y-3">
+              <div className="text-sm text-muted-foreground mb-4">
+                Defina as permissões para cada módulo. Submódulos aparecem automaticamente quando o módulo pai tem permissão.
               </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit" disabled={createMutation.isPending}>
-                {createMutation.isPending ? "Criando..." : "Criar Nível"}
-              </Button>
-            </DialogFooter>
-          </form>
+              {SYSTEM_MODULES.map((mod) => renderModulePermissions(mod))}
+            </TabsContent>
+          </Tabs>
+
+          <DialogFooter className="mt-4">
+            <Button onClick={handleCreate} disabled={createMutation.isPending}>
+              {createMutation.isPending ? "Criando..." : "Criar Nível"}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Dialog Editar Permissões */}
+      {/* Dialog Editar Permissões com TABS */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-hidden flex flex-col">
           <DialogHeader>
             <DialogTitle>Editar Nível: {formData.displayName}</DialogTitle>
             <DialogDescription>Altere informações e permissões do nível</DialogDescription>
           </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="grid grid-cols-2 gap-4">
+          
+          <Tabs defaultValue="info" className="flex-1 overflow-hidden flex flex-col">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="info">Informações Básicas</TabsTrigger>
+              <TabsTrigger value="permissions">Permissões</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="info" className="space-y-4 mt-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="editDisplayName">Nome de Exibição *</Label>
+                  <Input
+                    id="editDisplayName"
+                    required
+                    value={formData.displayName}
+                    onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="editColor">Cor do Badge</Label>
+                  <Select value={formData.color} onValueChange={(value) => setFormData({ ...formData, color: value })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="blue">Azul</SelectItem>
+                      <SelectItem value="green">Verde</SelectItem>
+                      <SelectItem value="orange">Laranja</SelectItem>
+                      <SelectItem value="purple">Roxo</SelectItem>
+                      <SelectItem value="yellow">Amarelo</SelectItem>
+                      <SelectItem value="red">Vermelho</SelectItem>
+                      <SelectItem value="gray">Cinza</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
               <div className="space-y-2">
-                <Label htmlFor="editDisplayName">Nome de Exibição *</Label>
+                <Label htmlFor="editDescription">Descrição</Label>
                 <Input
-                  id="editDisplayName"
-                  required
-                  value={formData.displayName}
-                  onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
+                  id="editDescription"
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="editColor">Cor</Label>
-                <Select value={formData.color} onValueChange={(value) => setFormData({ ...formData, color: value })}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="blue">Azul</SelectItem>
-                    <SelectItem value="green">Verde</SelectItem>
-                    <SelectItem value="orange">Laranja</SelectItem>
-                    <SelectItem value="purple">Roxo</SelectItem>
-                    <SelectItem value="yellow">Amarelo</SelectItem>
-                    <SelectItem value="red">Vermelho</SelectItem>
-                    <SelectItem value="gray">Cinza</SelectItem>
-                  </SelectContent>
-                </Select>
+            </TabsContent>
+            
+            <TabsContent value="permissions" className="flex-1 overflow-y-auto mt-4 space-y-3">
+              <div className="text-sm text-muted-foreground mb-4">
+                Defina as permissões para cada módulo. Submódulos aparecem automaticamente quando o módulo pai tem permissão.
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="editDescription">Descrição</Label>
-              <Input
-                id="editDescription"
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              />
-            </div>
+              {SYSTEM_MODULES.map((mod) => renderModulePermissions(mod))}
+            </TabsContent>
+          </Tabs>
 
-            <div className="border-t pt-4">
-              <h3 className="font-semibold mb-4">Permissões por Módulo</h3>
-              <div className="space-y-3">
-                {SYSTEM_MODULES.map((mod) => (
-                  <div key={mod.module} className="space-y-2">
-                    {mod.submodules.length === 0 ? (
-                      <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                        <span className="font-medium">{mod.label}</span>
-                        <Select
-                          value={getPermission(mod.module)}
-                          onValueChange={(value: any) => setPermission(mod.module, undefined, value)}
-                        >
-                          <SelectTrigger className="w-40">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="none">Nenhum</SelectItem>
-                            <SelectItem value="readonly">Somente Leitura</SelectItem>
-                            <SelectItem value="total">Total</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    ) : (
-                      <div className="space-y-2">
-                        <div className="font-medium text-sm text-muted-foreground">{mod.label}</div>
-                        {mod.submodules.map((sub) => (
-                          <div key={sub.submodule} className="flex items-center justify-between p-3 bg-muted rounded-lg ml-4">
-                            <span>{sub.label}</span>
-                            <Select
-                              value={getPermission(mod.module, sub.submodule)}
-                              onValueChange={(value: any) => setPermission(mod.module, sub.submodule, value)}
-                            >
-                              <SelectTrigger className="w-40">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="none">Nenhum</SelectItem>
-                                <SelectItem value="readonly">Somente Leitura</SelectItem>
-                                <SelectItem value="total">Total</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <DialogFooter>
+          <DialogFooter className="mt-4">
             <Button onClick={handleEdit} disabled={updateMutation.isPending || updatePermissionsMutation.isPending}>
               {updateMutation.isPending || updatePermissionsMutation.isPending ? "Salvando..." : "Salvar Alterações"}
             </Button>
