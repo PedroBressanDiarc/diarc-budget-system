@@ -21,7 +21,7 @@ export default function Users() {
     email: "",
     password: "",
     name: "",
-    role: "buyer" as "buyer" | "director" | "storekeeper" | "manutencao" | "financeiro",
+    role: "comprador" as "comprador" | "diretor" | "almoxarife" | "manutencao" | "financeiro",
     username: "",
   });
 
@@ -31,7 +31,7 @@ export default function Users() {
     onSuccess: () => {
       toast.success("Usuário criado com sucesso!");
       setIsCreateOpen(false);
-      setFormData({ email: "", password: "", name: "", role: "buyer", username: "" });
+      setFormData({ email: "", password: "", name: "", role: "comprador", username: "" });
       refetch();
     },
     onError: (error) => {
@@ -136,15 +136,15 @@ export default function Users() {
                   <Label htmlFor="role">Função *</Label>
                   <Select 
                     value={formData.role} 
-                    onValueChange={(value: "buyer" | "director" | "storekeeper" | "manutencao") => setFormData({ ...formData, role: value })}
+                    onValueChange={(value: "comprador" | "diretor" | "almoxarife" | "manutencao" | "financeiro") => setFormData({ ...formData, role: value })}
                   >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="buyer">Comprador</SelectItem>
-                      <SelectItem value="director">Diretor</SelectItem>
-                      <SelectItem value="storekeeper">Almoxarife</SelectItem>
+                      <SelectItem value="diretor">Diretor</SelectItem>
+                      <SelectItem value="comprador">Comprador</SelectItem>
+                      <SelectItem value="almoxarife">Almoxarife</SelectItem>
                       <SelectItem value="manutencao">Manutenção</SelectItem>
                       <SelectItem value="financeiro">Financeiro</SelectItem>
                     </SelectContent>
@@ -183,8 +183,13 @@ export default function Users() {
                   <TableCell className="font-medium">{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    <Badge variant={user.role === "director" ? "default" : "secondary"}>
-                      {user.role === "director" ? "Diretor" : user.role === "storekeeper" ? "Almoxarife" : user.role === "manutencao" ? "Manutenção" : "Comprador"}
+                    <Badge variant={user.role === "diretor" ? "default" : "secondary"}>
+                      {user.role === "diretor" ? "Diretor" : 
+                       user.role === "comprador" ? "Comprador" : 
+                       user.role === "almoxarife" ? "Almoxarife" : 
+                       user.role === "manutencao" ? "Manutenção" : 
+                       user.role === "financeiro" ? "Financeiro" : 
+                       user.role}
                     </Badge>
                   </TableCell>
                   <TableCell>
