@@ -183,7 +183,16 @@ export default function Users() {
                   <TableCell className="font-medium">{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    <Badge variant={user.role === "diretor" ? "default" : "secondary"}>
+                    <Badge 
+                      className={
+                        user.role === "diretor" ? "bg-blue-500 hover:bg-blue-600" :
+                        user.role === "comprador" ? "bg-green-500 hover:bg-green-600" :
+                        user.role === "almoxarife" ? "bg-orange-500 hover:bg-orange-600" :
+                        user.role === "manutencao" ? "bg-purple-500 hover:bg-purple-600" :
+                        user.role === "financeiro" ? "bg-yellow-500 hover:bg-yellow-600 text-gray-900" :
+                        ""
+                      }
+                    >
                       {user.role === "diretor" ? "Diretor" : 
                        user.role === "comprador" ? "Comprador" : 
                        user.role === "almoxarife" ? "Almoxarife" : 
