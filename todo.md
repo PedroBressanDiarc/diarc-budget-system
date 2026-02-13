@@ -276,3 +276,24 @@
 - [x] Verificado: RequisitionDetail navega para /compras (correto)
 - [x] Verificado: BudgetDetail navega para /orcamentos (correto)
 - [ ] Testar navegação: clicar em voltar deve retornar à página de origem correta
+
+### Correções Sistema de Permissões
+- [x] Corrigir bug de salvamento de permissões (não está salvando alterações)
+- [x] Melhorar organização visual do painel de criar/editar permissões
+- [x] Adicionar itens faltantes no checklist de módulos
+- [x] Reorganizar estrutura de módulos de forma mais clara
+- [x] Adicionar validações e feedback visual ao salvar
+
+### Correção Erros CRM
+- [x] Remover código CRM não utilizado (leads, opportunities, crmTasks) do routers.ts
+- [x] Verificar se há rotas /crm/* que precisam ser removidas
+
+### Remover Frontend CRM
+- [x] Encontrar e remover páginas CRM (client/src/pages/crm/*)
+- [x] Remover rotas CRM do App.tsx
+- [x] Remover links CRM do DashboardLayout
+
+### Reorganizar Sidebar - Módulo Gestão
+- [x] Criar item pai "Gestão" na sidebar
+- [x] Mover "Usuários" para dentro de "Gestão"
+- [x] Restaurar "Permissões" dentro de "Gestão"
