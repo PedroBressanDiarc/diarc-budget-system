@@ -549,3 +549,37 @@ export const locations = mysqlTable("locations", {
 
 export type Location = typeof locations.$inferSelect;
 export type InsertLocation = typeof locations.$inferInsert;
+
+/**
+ * Custom Roles (Níveis de Permissão Customizados)
+ */
+export const customRoles = mysqlTable("custom_roles", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull().unique(),
+  displayName: varchar("displayName", { length: 255 }).notNull(),
+  description: text("description"),
+  color: varchar("color", { length: 50 }).default("blue").notNull(),
+  isSystem: boolean("isSystem").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type CustomRole = typeof customRoles.$inferSelect;
+export type InsertCustomRole = typeof customRoles.$inferInsert;
+
+/**
+ * Role Permissions (Permissões por Nível)
+ */
+export const rolePermissions = mysqlTable("role_permissions", {
+  id: int("id").autoincrement().primaryKey(),
+  roleId: int("roleId").notNull(),
+  module: varchar("module", { length: 100 }).notNull(),
+  submodule: varchar("submodule", { length: 100 }),
+  permission: mysqlEnum("permission", ["total", "readonly", "none"]).default("none").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type RolePermission = typeof rolePermissions.$inferSelect;
+export type InsertRolePermission = typeof rolePermissions.$inferInsert;

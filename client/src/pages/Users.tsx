@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Plus, Trash2, KeyRound, Edit, Power } from "lucide-react";
+import { Plus, Trash2, KeyRound, Edit, Power, Mail } from "lucide-react";
 
 export default function Users() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -272,6 +272,18 @@ export default function Users() {
                       }}
                     >
                       <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      title="Editar Email"
+                      onClick={() => {
+                        setSelectedUserId(user.id);
+                        setEditEmail(user.email);
+                        setIsEditEmailOpen(true);
+                      }}
+                    >
+                      <Mail className="h-4 w-4" />
                     </Button>
                     <Button
                       size="sm"

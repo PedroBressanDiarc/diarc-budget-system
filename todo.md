@@ -16,10 +16,14 @@
 - [x] Criar backend para update de nome e email (endpoint `update` já existe)
 - [x] Criar backend para toggle de isActive (endpoint `toggleActive` criado)
 - [x] Corrigir enum de roles no backend (buyer→comprador, director→diretor, storekeeper→almoxarife)
-- [ ] Criar sistema de edição de níveis de permissão customizados
-- [ ] Criar interface com lista de módulos e submódulos
-- [ ] Adicionar seletor de permissão por módulo (Total, Somente Leitura, Nenhum)
-- [ ] Criar tabela de permissões customizadas no banco
+- [x] Adicionar botão de editar email na coluna de ações
+- [x] Criar tabela de permissões customizadas no schema (roles, role_permissions)
+- [x] Criar backend para CRUD de níveis de permissão (list, create, update, delete)
+- [x] Criar backend para gerenciar permissões de cada role
+- [x] Criar página de gerenciamento de níveis de permissão
+- [x] Criar interface com checklist de módulos e submódulos
+- [x] Adicionar seletor de permissão por módulo (Total, Somente Leitura, Nenhum)
+- [ ] Implementar lógica de aplicação de permissões customizadas no sistema
 
 ### Investigar Role do Usuário Anelize
 - [x] Problema identificado: Bug visual no frontend

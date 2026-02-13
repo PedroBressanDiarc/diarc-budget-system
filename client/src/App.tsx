@@ -38,6 +38,7 @@ import PaymentsReceived from "./pages/PaymentsReceived";
 import PaymentsMade from "./pages/PaymentsMade";
 import Chat from "./pages/Chat";
 import Locations from "./pages/Locations";
+import PermissionsManagement from "./pages/PermissionsManagement";
 
 function Router() {
   return (
@@ -73,6 +74,7 @@ function Router() {
       <Route path="/financeiro/pagamentos" component={PaymentsMade} />
       <Route path="/configuracoes" component={Settings} />
       <Route path="/usuarios" component={Users} />
+      <Route path="/permissoes" component={PermissionsManagement} />
       <Route path="/chat" component={Chat} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
