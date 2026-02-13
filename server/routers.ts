@@ -18,6 +18,7 @@ import {
   budgets,
   budgetItems,
   budgetTemplates,
+  clients,
   equipment,
   maintenanceSchedules,
   maintenanceRecords,

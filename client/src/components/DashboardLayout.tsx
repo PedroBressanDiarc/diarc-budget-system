@@ -205,8 +205,8 @@ function DashboardLayoutContent({
       console.log('Filtered items for manutencao:', filtered);
       return filtered;
     }
-    // Outros roles: todos os itens (exceto adminOnly se não for director)
-    return menuItems.filter(item => !item.adminOnly || user?.role === 'director');
+    // Outros roles: todos os itens (exceto adminOnly se não for diretor)
+    return menuItems.filter(item => !item.adminOnly || user?.role === 'diretor');
   }, [user?.role]);
   
   // Filtrar itens da base de dados baseado no role
@@ -354,7 +354,7 @@ function DashboardLayoutContent({
                   </div>
                 );
               })}
-              {(user?.role === 'director' || user?.role === 'manutencao') && (
+              {(user?.role === 'diretor' || user?.role === 'manutencao') && (
                 <>
                   <SidebarMenuItem>
                     <SidebarMenuButton

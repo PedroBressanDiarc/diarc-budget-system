@@ -8,6 +8,18 @@
 
 ## 🔴 Prioridade Alta
 
+### URGENTE: Diretor sem acesso a Banco de Dados
+- [x] Verificar erro específico ao acessar banco de dados (menu não aparecia)
+- [x] Problema identificado: DashboardLayout usava 'director' (inglês) mas role é 'diretor' (português)
+- [x] Corrigido: Atualizado DashboardLayout para usar 'diretor' e 'manutencao' em português
+- [x] Menu "Base de Dados" agora aparece para diretor e manutenção
+
+### Correção de Erros - Módulo Orçamentos
+- [x] Corrigir erro "clients is not defined" no routers.ts
+- [x] Adicionar import de clients no schema
+- [x] Verificar se tabelas clients e budgets existem no banco (existem)
+- [x] Tabelas clients e budgets criadas via migração 0018
+
 ### Correção Urgente: Permissões do Diretor
 - [x] Verificar todos os procedures que estão bloqueando diretor
 - [x] Garantir que diretor tenha acesso TOTAL a todos os módulos
