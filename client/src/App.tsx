@@ -38,11 +38,8 @@ import PaymentsReceived from "./pages/PaymentsReceived";
 import PaymentsMade from "./pages/PaymentsMade";
 import Chat from "./pages/Chat";
 import Locations from "./pages/Locations";
-import CRMDashboard from "./pages/CRMDashboard";
-import CRMLeads from "./pages/CRMLeads";
-import CRMOpportunities from "./pages/CRMOpportunities";
-import CRMTasks from "./pages/CRMTasks";
 import PublicQuotation from "./pages/PublicQuotation";
+import PermissionsManagement from "./pages/PermissionsManagement";
 
 function Router() {
   return (
@@ -79,10 +76,8 @@ function Router() {
       <Route path="/configuracoes" component={Settings} />
       <Route path="/usuarios" component={Users} />
       <Route path="/chat" component={Chat} />
-      <Route path="/crm" component={CRMDashboard} />
-      <Route path="/crm/leads" component={CRMLeads} />
-      <Route path="/crm/oportunidades" component={CRMOpportunities} />
-      <Route path="/crm/tarefas" component={CRMTasks} />
+      <Route path="/permissoes" component={PermissionsManagement} />
+      <Route path="/cotacao/:token" component={PublicQuotation} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

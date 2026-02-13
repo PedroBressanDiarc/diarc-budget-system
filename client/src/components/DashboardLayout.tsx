@@ -88,7 +88,6 @@ const menuItems = [
   {
     icon: UserCog,
     label: "Gestão",
-    path: "/usuarios",
     submenu: [
       { label: "Usuários", path: "/usuarios" },
       { label: "Permissões", path: "/permissoes", adminOnly: true },

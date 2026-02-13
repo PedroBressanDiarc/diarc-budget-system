@@ -297,3 +297,8 @@
 - [x] Criar item pai "Gestão" na sidebar
 - [x] Mover "Usuários" para dentro de "Gestão"
 - [x] Restaurar "Permissões" dentro de "Gestão"
+
+### Correções Módulo Gestão
+- [x] Remover path do item "Gestão" para torná-lo apenas dropdown
+- [x] Adicionar rota /permissoes no App.tsx
+- [x] Importar componente PermissionsManagement no App.tsx
