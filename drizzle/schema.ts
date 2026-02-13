@@ -10,7 +10,7 @@ export const users = mysqlTable("users", {
   email: varchar("email", { length: 320 }).notNull().unique(),
   passwordHash: varchar("passwordHash", { length: 255 }).notNull(),
   name: text("name").notNull(),
-  role: mysqlEnum("role", ["storekeeper", "buyer", "director", "manutencao", "financeiro"]).default("buyer").notNull(),
+  role: mysqlEnum("role", ["diretor", "comprador", "almoxarife", "manutencao", "financeiro"]).default("comprador").notNull(),
   isActive: int("isActive").default(1).notNull(),
   openId: varchar("openId", { length: 64 }),
   loginMethod: varchar("loginMethod", { length: 64 }).default("local"),
@@ -247,7 +247,8 @@ export const equipment = mysqlTable("equipment", {
   manufacturer: varchar("manufacturer", { length: 255 }),
   model: varchar("model", { length: 255 }),
   serialNumber: varchar("serialNumber", { length: 255 }),
-  location: varchar("location", { length: 255 }),
+  location: varchar("location", { length: 255 }), // Deprecated - usar locationId
+  locationId: int("locationId"), // Referência para tabela locations
   purchaseDate: varchar("purchaseDate", { length: 10 }),
   warrantyExpiry: varchar("warrantyExpiry", { length: 10 }),
   status: mysqlEnum("status", ["active", "maintenance", "inactive", "retired"]).default("active").notNull(),
@@ -269,7 +270,7 @@ export const maintenanceSchedules = mysqlTable("maintenance_schedules", {
   maintenanceType: mysqlEnum("maintenanceType", ["preventive", "corrective"]).notNull(),
   scheduledDate: varchar("scheduledDate", { length: 10 }).notNull(),
   description: text("description"),
-  status: mysqlEnum("status", ["scheduled", "quotation", "analysis", "awaiting_authorization", "authorized", "in_progress", "completed", "sent_to_purchase"]).default("scheduled").notNull(),
+  status: mysqlEnum("status", ["scheduled", "quotation", "analysis", "awaiting_authorization", "authorized", "in_progress", "completed", "sent_to_purchase", "cancelled"]).default("scheduled").notNull(),
   estimatedPrice: decimal("estimatedPrice", { precision: 10, scale: 2 }),
   attachments: text("attachments"),
   purchaseRequisitionId: int("purchaseRequisitionId"),
@@ -527,3 +528,19 @@ export const messageMentions = mysqlTable("message_mentions", {
 
 export type MessageMention = typeof messageMentions.$inferSelect;
 export type InsertMessageMention = typeof messageMentions.$inferInsert;
+
+/**
+ * Locations (Locais - onde equipamentos estão localizados)
+ */
+export const locations = mysqlTable("locations", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  active: boolean("active").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type Location = typeof locations.$inferSelect;
+export type InsertLocation = typeof locations.$inferInsert;

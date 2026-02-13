@@ -24,12 +24,14 @@ export default function Equipment() {
     model: "",
     serialNumber: "",
     location: "",
+    locationId: "",
     purchaseDate: "",
     warrantyExpiry: "",
     notes: "",
   });
 
   const { data: equipmentList, isLoading, refetch } = trpc.equipment.list.useQuery();
+  const { data: locations } = trpc.locations.list.useQuery();
   const createMutation = trpc.equipment.create.useMutation({
     onSuccess: () => {
       toast.success("Equipamento cadastrado com sucesso!");
@@ -43,6 +45,7 @@ export default function Equipment() {
         model: "",
         serialNumber: "",
         location: "",
+        locationId: "",
         purchaseDate: "",
         warrantyExpiry: "",
         notes: "",
@@ -55,7 +58,11 @@ export default function Equipment() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    createMutation.mutate(formData);
+    const submitData = {
+      ...formData,
+      locationId: formData.locationId ? Number(formData.locationId) : undefined,
+    };
+    createMutation.mutate(submitData);
   };
 
   const getStatusBadge = (status: string) => {
@@ -181,13 +188,19 @@ export default function Equipment() {
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="location">Localização</Label>
-                    <Input
-                      id="location"
-                      placeholder="Ex: Obra Centro"
-                      value={formData.location}
-                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    />
+                    <Label htmlFor="locationId">Local *</Label>
+                    <Select value={formData.locationId} onValueChange={(value) => setFormData({ ...formData, locationId: value })}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o local" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {locations?.map((location) => (
+                          <SelectItem key={location.id} value={location.id.toString()}>
+                            {location.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
