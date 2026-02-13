@@ -35,7 +35,9 @@ import {
   messageMentions,
   locations,
   quotationTokens,
-  requisitionSuppliers
+  requisitionSuppliers,
+  customRoles,
+  rolePermissions
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
 import { sendQuotationInviteEmail } from "./services/emailService";

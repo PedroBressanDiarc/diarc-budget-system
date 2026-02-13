@@ -1,0 +1,65 @@
+{
+  "query": "SELECT * FROM custom_roles;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT * FROM custom_roles;",
+  "rows": [
+    {
+      "id": "1",
+      "name": "diretor",
+      "displayName": "Diretor",
+      "description": "Acesso total ao sistema",
+      "color": "blue",
+      "isSystem": "1",
+      "createdAt": "2026-02-13 14:04:14",
+      "updatedAt": "2026-02-13 14:04:14",
+      "createdBy": "1"
+    },
+    {
+      "id": "2",
+      "name": "comprador",
+      "displayName": "Comprador",
+      "description": "Gerencia compras e cotações",
+      "color": "green",
+      "isSystem": "1",
+      "createdAt": "2026-02-13 14:04:14",
+      "updatedAt": "2026-02-13 14:04:14",
+      "createdBy": "1"
+    },
+    {
+      "id": "3",
+      "name": "almoxarife",
+      "displayName": "Almoxarife",
+      "description": "Gerencia requisições e estoque",
+      "color": "orange",
+      "isSystem": "1",
+      "createdAt": "2026-02-13 14:04:14",
+      "updatedAt": "2026-02-13 14:04:14",
+      "createdBy": "1"
+    },
+    {
+      "id": "4",
+      "name": "manutencao",
+      "displayName": "Manutenção",
+      "description": "Gerencia manutenções e equipamentos",
+      "color": "purple",
+      "isSystem": "1",
+      "createdAt": "2026-02-13 14:04:14",
+      "updatedAt": "2026-02-13 14:04:14",
+      "createdBy": "1"
+    },
+    {
+      "id": "5",
+      "name": "financeiro",
+      "displayName": "Financeiro",
+      "description": "Gerencia pagamentos e recebimentos",
+      "color": "gray",
+      "isSystem": "1",
+      "createdAt": "2026-02-13 14:04:14",
+      "updatedAt": "2026-02-13 14:11:26",
+      "createdBy": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tdisplayName\tdescription\tcolor\tisSystem\tcreatedAt\tupdatedAt\tcreatedBy\n1\tdiretor\tDiretor\tAcesso total ao sistema\tblue\t1\t2026-02-13 14:04:14\t2026-02-13 14:04:14\t1\n2\tcomprador\tComprador\tGerencia compras e cotações\tgreen\t1\t2026-02-13 14:04:14\t2026-02-13 14:04:14\t1\n3\talmoxarife\tAlmoxarife\tGerencia requisições e estoque\torange\t1\t2026-02-13 14:04:14\t2026-02-13 14:04:14\t1\n4\tmanutencao\tManutenção\tGerencia manutenções e equipamentos\tpurple\t1\t2026-02-13 14:04:14\t2026-02-13 14:04:14\t1\n5\tfinanceiro\tFinanceiro\tGerencia pagamentos e recebimentos\tgray\t1\t2026-02-13 14:04:14\t2026-02-13 14:11:26\t1\n",
+  "stderr": "",
+  "execution_time_ms": 360
+}

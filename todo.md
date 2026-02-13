@@ -311,3 +311,9 @@
 ### Correções Erro onClick Gestão
 - [x] Corrigir onClick para não navegar quando item não tem path (módulo Gestão)
 - [x] Encontrar e corrigir warning React key restante
+
+### Correções Visual Dropdowns e Níveis Permissão
+- [x] Investigar por que níveis de permissão sumiram do banco (faltava import no routers.ts)
+- [x] Restaurar níveis de permissão padrão (diretor, comprador, almoxarife, manutenção, financeiro)
+- [x] Corrigir visual de Gestão para ser apenas dropdown (sem botão clicável)
+- [x] Corrigir visual de Estoque para ser apenas dropdown (sem botão clicável)
