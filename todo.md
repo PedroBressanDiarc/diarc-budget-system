@@ -8,6 +8,12 @@
 
 ## 🔴 Prioridade Alta
 
+### Correção de Erros - Módulo Orçamentos
+- [x] Corrigir erro "clients is not defined" no routers.ts
+- [x] Adicionar import de clients no schema
+- [x] Verificar se tabelas clients e budgets existem no banco (existem)
+- [x] Tabelas clients e budgets criadas via migração 0018
+
 ### Correção Urgente: Permissões do Diretor
 - [x] Verificar todos os procedures que estão bloqueando diretor
 - [x] Garantir que diretor tenha acesso TOTAL a todos os módulos
