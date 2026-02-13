@@ -320,3 +320,7 @@
 
 ### Correção Schema custom_roles
 - [x] Corrigir nomes de colunas no schema.ts (displayName → display_name, isSystem → is_system, etc.)
+
+### Correção Schema budgets
+- [x] Renomear colunas de camelCase para snake_case na tabela budgets
+- [ ] Verificar e corrigir outras tabelas com mesmo problema
