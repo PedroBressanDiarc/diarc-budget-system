@@ -1,0 +1,35 @@
+{
+  "query": "SELECT id, email, role FROM users;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT id, email, role FROM users;",
+  "rows": [
+    {
+      "id": "30001",
+      "email": "admin@diarc.com.br",
+      "role": "director"
+    },
+    {
+      "id": "60001",
+      "email": "carlos@diarc.com.br",
+      "role": "buyer"
+    },
+    {
+      "id": "60002",
+      "email": "Almoxarifado@diarc.com.br",
+      "role": "storekeeper"
+    },
+    {
+      "id": "90001",
+      "email": "manutencao@diarc.com.br",
+      "role": "manutencao"
+    },
+    {
+      "id": "90002",
+      "email": "financeiro@diarc.com.br",
+      "role": "financeiro"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\temail\trole\n30001\tadmin@diarc.com.br\tdirector\n60001\tcarlos@diarc.com.br\tbuyer\n60002\tAlmoxarifado@diarc.com.br\tstorekeeper\n90001\tmanutencao@diarc.com.br\tmanutencao\n90002\tfinanceiro@diarc.com.br\tfinanceiro\n",
+  "stderr": "",
+  "execution_time_ms": 347
+}

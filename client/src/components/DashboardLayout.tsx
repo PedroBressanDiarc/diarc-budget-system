@@ -92,6 +92,7 @@ const databaseMenuItems = [
   { icon: Package, label: "Equipamentos", path: "/equipment" },
   { icon: Package, label: "Itens", path: "/itens" },
   { icon: Package, label: "Obras", path: "/obras" },
+  { icon: Database, label: "Locais", path: "/locais" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";

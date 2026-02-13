@@ -2,7 +2,7 @@ import { z } from "zod";
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, protectedProcedure, adminProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, adminProcedure, buyerProcedure, storekeeperProcedure, maintenanceProcedure, financeProcedure, router } from "./_core/trpc";
 import { getDb } from "./db";
 import * as db from "./db";
 import { authenticateUser, hashPassword } from "./auth";
@@ -31,7 +31,8 @@ import {
   chats,
   chatParticipants,
   messages,
-  messageMentions
+  messageMentions,
+  locations
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
 
@@ -192,6 +193,69 @@ export const appRouter = router({
 
         const { id, ...updateData } = input;
         await database.update(suppliers).set(updateData).where(eq(suppliers.id, id));
+
+        return { success: true };
+      }),
+  }),
+
+  // ============= LOCATIONS =============
+  locations: router({
+    list: protectedProcedure.query(async () => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+      return await database.select().from(locations).orderBy(desc(locations.createdAt));
+    }),
+
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        const [location] = await database.select().from(locations).where(eq(locations.id, input.id));
+        return location;
+      }),
+
+    create: protectedProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        description: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const result = await database.insert(locations).values({
+          ...input,
+          createdBy: ctx.user.id,
+        });
+
+        return { success: true, id: Number(result[0].insertId) };
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().min(1).optional(),
+        description: z.string().optional(),
+        active: z.boolean().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        const { id, ...updateData } = input;
+        await database.update(locations).set(updateData).where(eq(locations.id, id));
+
+        return { success: true };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.delete(locations).where(eq(locations.id, input.id));
 
         return { success: true };
       }),
@@ -916,6 +980,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         model: z.string().optional(),
         serialNumber: z.string().optional(),
         location: z.string().optional(),
+        locationId: z.number().optional(),
         purchaseDate: z.string().optional(),
         warrantyExpiry: z.string().optional(),
         notes: z.string().optional(),
@@ -952,6 +1017,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         model: z.string().optional(),
         serialNumber: z.string().optional(),
         location: z.string().optional(),
+        locationId: z.number().optional(),
         purchaseDate: z.string().optional(),
         warrantyExpiry: z.string().optional(),
         status: z.enum(['active', 'maintenance', 'inactive', 'retired']).optional(),
@@ -1013,7 +1079,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
           return await db.getMaintenanceScheduleById(input.id);
         }),
 
-      create: protectedProcedure
+      create: maintenanceProcedure
         .input(z.object({
           equipmentId: z.number(),
           maintenanceType: z.enum(['preventive', 'corrective']),
@@ -1036,7 +1102,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
           return { success: true, id: Number(result[0].insertId) };
         }),
 
-      update: protectedProcedure
+      update: maintenanceProcedure
         .input(z.object({
           id: z.number(),
           equipmentId: z.number().optional(),
@@ -1056,7 +1122,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
           return { success: true };
         }),
 
-      updateStatus: protectedProcedure
+      updateStatus: maintenanceProcedure
         .input(z.object({
           id: z.number(),
           status: z.enum(['scheduled', 'quotation', 'analysis', 'awaiting_authorization', 'authorized', 'in_progress', 'completed', 'sent_to_purchase']),
@@ -1849,7 +1915,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
   // Router de Recebimentos (Módulo Financeiro)
   paymentsReceived: router({
     // Listar todos os recebimentos
-    list: protectedProcedure
+    list: financeProcedure
       .input(z.object({
         projectId: z.number().optional(),
       }).optional())
@@ -1869,7 +1935,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
       }),
 
     // Criar novo recebimento
-    create: protectedProcedure
+    create: financeProcedure
       .input(z.object({
         projectId: z.number(),
         valor: z.string(),
@@ -1886,7 +1952,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
           projectId: input.projectId,
           valor: input.valor,
           parcela: input.parcela,
-          dataPrevista: input.dataPrevista,
+          dataPrevista: new Date(input.dataPrevista),
           observacoes: input.observacoes,
           status: "pendente",
           createdBy: ctx.user.id,
@@ -1896,7 +1962,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
       }),
 
     // Atualizar recebimento
-    update: protectedProcedure
+    update: financeProcedure
       .input(z.object({
         id: z.number(),
         valor: z.string().optional(),
@@ -1912,14 +1978,17 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
       if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
-        const { id, ...data } = input;
-        await database.update(paymentsReceived).set(data).where(eq(paymentsReceived.id, id));
+        const { id, dataPrevista, dataRecebimento, ...data } = input;
+        const updateData: any = { ...data };
+        if (dataPrevista) updateData.dataPrevista = new Date(dataPrevista);
+        if (dataRecebimento) updateData.dataRecebimento = new Date(dataRecebimento);
+        await database.update(paymentsReceived).set(updateData).where(eq(paymentsReceived.id, id));
 
         return { success: true };
       }),
 
     // Excluir recebimento
-    delete: protectedProcedure
+    delete: financeProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();

@@ -37,12 +37,14 @@ import Users from "./pages/Users";
 import PaymentsReceived from "./pages/PaymentsReceived";
 import PaymentsMade from "./pages/PaymentsMade";
 import Chat from "./pages/Chat";
+import Locations from "./pages/Locations";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Dashboard} />
       <Route path="/fornecedores" component={Suppliers} />
+      <Route path="/locais" component={Locations} />
       <Route path="/compras" component={Requisitions} />
       <Route path="/compras/manutencao" component={PurchasesMaintenance} />
       <Route path="/compras/administracao" component={PurchasesAdministration} />

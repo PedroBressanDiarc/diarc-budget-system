@@ -8,6 +8,55 @@
 
 ## 🔴 Prioridade Alta
 
+### Sistema de Permissões (5 Níveis)
+- [x] Atualizar enum de role no schema (diretor, comprador, almoxarife, manutenção, financeiro)
+- [x] Gerar migração e aplicar no banco
+- [x] Converter roles antigos (director, admin, buyer, storekeeper, user) para novos
+- [x] Criar procedures de permissão no backend (adminProcedure, buyerProcedure, storekeeperProcedure, maintenanceProcedure, financeProcedure)
+- [ ] Aplicar verificações em endpoints de Orçamentos
+- [ ] Aplicar verificações em endpoints de Compras (buyerProcedure)
+- [x] Aplicar verificações em endpoints de Manutenções (maintenanceProcedure em create/update/updateStatus)
+- [x] Aplicar verificações em endpoints de Financeiro (financeProcedure em paymentsReceived)
+- [ ] Aplicar verificações em endpoints de Banco de Dados (suppliers, equipment, locations, items, projects)
+- [ ] Atualizar DashboardLayout para ocultar menus por role
+- [ ] Atualizar páginas para ocultar botões de ação por permissão
+- [ ] Criar helper de permissões no frontend (usePermissions hook)
+- [ ] Testar cada nível de permissão
+
+### Sistema de Locais
+- [x] Criar tabela locations no schema
+- [x] Gerar migração SQL e aplicar via webdev_execute_sql
+- [x] Criar página Locations.tsx com CRUD completo
+- [x] Adicionar submenu "Locais" no menu Banco de Dados
+- [x] Adicionar rota /locais no App.tsx
+- [x] Criar router locations no backend com list, create, update, delete
+
+### Equipamentos - Adicionar Local
+- [x] Adicionar campo locationId na tabela equipment
+- [x] Gerar migração e aplicar
+- [x] Atualizar formulário de equipamento com dropdown de locais
+- [x] Atualizar backend (equipment.create e update) para aceitar locationId
+- [ ] Atualizar listagem de equipamentos para mostrar local (JOIN com locations)
+
+### Melhorias Manutenção → Requisição
+- [ ] Criar campos específicos em purchase_requisitions para dados de manutenção
+- [ ] Migração: maintenanceId, maintenanceType, equipmentName, scheduledDate
+- [ ] Transferir anexos da manutenção para requisition_attachments
+- [ ] Adicionar botão "Manutenção Vinculada" em PurchaseRequisitionDetail
+- [ ] Implementar fluxo diferenciado para requisições de manutenção
+
+### Filtros de Manutenção
+- [ ] Adicionar filtro por Local (baseado em equipment.locationId)
+- [ ] Ocultar manutenções sent_to_purchase por padrão
+- [ ] Adicionar checkbox "Mostrar enviadas ao Compras" no filtro
+- [ ] Atualizar lógica de filtragem
+
+### Correções Críticas
+- [x] Corrigir erros TypeScript de dataPrevista em payments_received (converter string para Date)
+- [x] Adicionar "cancelled" no enum de status de maintenanceSchedules
+- [ ] Corrigir erros de tipo em páginas de Purchases (string vs number)
+- [ ] Corrigir erros em MaintenanceReports (partsUsed, status pending)
+
 ### Corrigir Erro de Inserção em purchase_requisitions
 - [x] Verificar schema de purchase_requisitions para identificar campos obrigatórios
 - [x] Adicionar campo requestedBy (obrigatório) na inserção

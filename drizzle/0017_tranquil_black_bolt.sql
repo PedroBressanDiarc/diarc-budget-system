@@ -1,0 +1,1 @@
+ALTER TABLE `maintenance_schedules` MODIFY COLUMN `status` enum('scheduled','quotation','analysis','awaiting_authorization','authorized','in_progress','completed','sent_to_purchase','cancelled') NOT NULL DEFAULT 'scheduled';
