@@ -315,14 +315,14 @@ function DashboardLayoutContent({
                 const isSubmenuOpen = openSubmenus[item.path] || false;
                 
                 return (
-                  <Fragment key={item.path}>
+                  <Fragment key={item.path || item.label}>
                     <SidebarMenuItem>
                       <div className="flex items-center w-full">
                         <SidebarMenuButton
                           isActive={isActive}
-                          onClick={() => setLocation(item.path)}
+                          onClick={() => item.path && setLocation(item.path)}
                           tooltip={item.label}
-                          className={`h-10 transition-all font-normal relative flex-1`}
+                          className={`h-10 transition-all font-normal relative flex-1 ${!item.path ? 'cursor-default' : ''}`}
                         >
                           <item.icon
                             className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}

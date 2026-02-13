@@ -307,3 +307,7 @@
 - [x] Verificar se customRoles existe no routers.ts
 - [x] Recriar código customRoles no routers.ts se necessário
 - [x] Corrigir warning React key no DashboardLayout
+
+### Correções Erro onClick Gestão
+- [x] Corrigir onClick para não navegar quando item não tem path (módulo Gestão)
+- [x] Encontrar e corrigir warning React key restante
