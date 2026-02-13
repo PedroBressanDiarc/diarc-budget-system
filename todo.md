@@ -317,3 +317,6 @@
 - [x] Restaurar níveis de permissão padrão (diretor, comprador, almoxarife, manutenção, financeiro)
 - [x] Corrigir visual de Gestão para ser apenas dropdown (sem botão clicável)
 - [x] Corrigir visual de Estoque para ser apenas dropdown (sem botão clicável)
+
+### Correção Schema custom_roles
+- [x] Corrigir nomes de colunas no schema.ts (displayName → display_name, isSystem → is_system, etc.)

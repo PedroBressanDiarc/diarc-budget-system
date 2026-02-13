@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE custom_roles ADD COLUMN is_active BOOLEAN DEFAULT TRUE NOT NULL AFTER is_system;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute ALTER TABLE custom_roles ADD COLUMN is_active BOOLEAN DEFAULT TRUE NOT NULL AFTER is_system;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 751
+}
