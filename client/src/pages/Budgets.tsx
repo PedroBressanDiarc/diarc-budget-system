@@ -235,7 +235,7 @@ export default function Budgets() {
                   <CNPJInput
                     id="clientCnpj"
                     value={clientFormData.cnpj}
-                    onChange={(e) => setClientFormData({ ...clientFormData, cnpj: e.target.value })}
+                    onChange={(value) => setClientFormData({ ...clientFormData, cnpj: value })}
                   />
                 </div>
                 <div>
@@ -252,7 +252,7 @@ export default function Budgets() {
                   <PhoneInput
                     id="clientPhone"
                     value={clientFormData.phone}
-                    onChange={(e) => setClientFormData({ ...clientFormData, phone: e.target.value })}
+                    onChange={(value) => setClientFormData({ ...clientFormData, phone: value })}
                   />
                 </div>
                 <div>
