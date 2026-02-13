@@ -283,3 +283,7 @@
 - [x] Adicionar itens faltantes no checklist de módulos
 - [x] Reorganizar estrutura de módulos de forma mais clara
 - [x] Adicionar validações e feedback visual ao salvar
+
+### Correção Erros CRM
+- [x] Remover código CRM não utilizado (leads, opportunities, crmTasks) do routers.ts
+- [x] Verificar se há rotas /crm/* que precisam ser removidas
