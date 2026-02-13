@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search, MessageCircle, DollarSign } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search, MessageCircle, DollarSign, UserPlus } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState, useMemo } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -60,6 +60,17 @@ const menuItems = [
     ]
   },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
+  { 
+    icon: UserPlus, 
+    label: "CRM", 
+    path: "/crm",
+    submenu: [
+      { label: "Dashboard", path: "/crm" },
+      { label: "Leads", path: "/crm/leads" },
+      { label: "Oportunidades", path: "/crm/oportunidades" },
+      { label: "Tarefas", path: "/crm/tarefas" },
+    ]
+  },
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
   { icon: MessageCircle, label: "Chat", path: "/chat" },
   { 

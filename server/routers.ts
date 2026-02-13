@@ -2386,6 +2386,316 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         return { success: true };
       }),
   }),
+
+  // ============= CRM =============
+  crm: router({
+    // ===== LEADS =====
+    leads: router({
+      list: protectedProcedure.query(async ({ ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        
+        const allLeads = await database
+          .select()
+          .from(leads)
+          .orderBy(desc(leads.createdAt));
+        
+        return allLeads;
+      }),
+
+      create: protectedProcedure
+        .input(z.object({
+          name: z.string(),
+          company: z.string().optional(),
+          email: z.string().email().optional(),
+          phone: z.string().optional(),
+          source: z.string().optional(),
+          status: z.enum(["novo", "contatado", "qualificado", "proposta_enviada", "negociacao", "ganho", "perdido"]).optional(),
+          score: z.number().optional(),
+          assignedTo: z.number().optional(),
+          notes: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          await database.insert(leads).values({
+            ...input,
+            createdBy: ctx.user.id,
+          });
+          
+          return { success: true };
+        }),
+
+      update: protectedProcedure
+        .input(z.object({
+          id: z.number(),
+          name: z.string().optional(),
+          company: z.string().optional(),
+          email: z.string().optional(),
+          phone: z.string().optional(),
+          source: z.string().optional(),
+          status: z.enum(["novo", "contatado", "qualificado", "proposta_enviada", "negociacao", "ganho", "perdido"]).optional(),
+          score: z.number().optional(),
+          assignedTo: z.number().optional(),
+          notes: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          const { id, ...updateData } = input;
+          await database.update(leads).set(updateData).where(eq(leads.id, id));
+          
+          return { success: true };
+        }),
+
+      delete: protectedProcedure
+        .input(z.object({ id: z.number() }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          await database.delete(leads).where(eq(leads.id, input.id));
+          
+          return { success: true };
+        }),
+    }),
+
+    // ===== OPPORTUNITIES =====
+    opportunities: router({
+      list: protectedProcedure.query(async ({ ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        
+        const allOpportunities = await database
+          .select()
+          .from(opportunities)
+          .orderBy(desc(opportunities.createdAt));
+        
+        return allOpportunities;
+      }),
+
+      create: protectedProcedure
+        .input(z.object({
+          title: z.string(),
+          clientId: z.number().optional(),
+          leadId: z.number().optional(),
+          value: z.string().optional(),
+          stage: z.enum(["prospeccao", "qualificacao", "proposta", "negociacao", "fechamento", "ganho", "perdido"]).optional(),
+          probability: z.number().optional(),
+          expectedCloseDate: z.string().optional(),
+          assignedTo: z.number(),
+          description: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          await database.insert(opportunities).values({
+            ...input,
+            createdBy: ctx.user.id,
+          });
+          
+          return { success: true };
+        }),
+
+      update: protectedProcedure
+        .input(z.object({
+          id: z.number(),
+          title: z.string().optional(),
+          clientId: z.number().optional(),
+          value: z.string().optional(),
+          stage: z.enum(["prospeccao", "qualificacao", "proposta", "negociacao", "fechamento", "ganho", "perdido"]).optional(),
+          probability: z.number().optional(),
+          expectedCloseDate: z.string().optional(),
+          actualCloseDate: z.string().optional(),
+          assignedTo: z.number().optional(),
+          description: z.string().optional(),
+          lostReason: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          const { id, ...updateData } = input;
+          await database.update(opportunities).set(updateData).where(eq(opportunities.id, id));
+          
+          return { success: true };
+        }),
+
+      delete: protectedProcedure
+        .input(z.object({ id: z.number() }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          await database.delete(opportunities).where(eq(opportunities.id, input.id));
+          
+          return { success: true };
+        }),
+    }),
+
+    // ===== INTERACTIONS =====
+    interactions: router({
+      list: protectedProcedure
+        .input(z.object({
+          clientId: z.number().optional(),
+          leadId: z.number().optional(),
+          opportunityId: z.number().optional(),
+        }))
+        .query(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          let query = database.select().from(interactions);
+          
+          if (input.clientId) {
+            query = query.where(eq(interactions.clientId, input.clientId));
+          } else if (input.leadId) {
+            query = query.where(eq(interactions.leadId, input.leadId));
+          } else if (input.opportunityId) {
+            query = query.where(eq(interactions.opportunityId, input.opportunityId));
+          }
+          
+          const allInteractions = await query.orderBy(desc(interactions.interactionDate));
+          
+          return allInteractions;
+        }),
+
+      create: protectedProcedure
+        .input(z.object({
+          type: z.enum(["ligacao", "email", "reuniao", "whatsapp", "visita", "outro"]),
+          subject: z.string(),
+          description: z.string().optional(),
+          clientId: z.number().optional(),
+          leadId: z.number().optional(),
+          opportunityId: z.number().optional(),
+          interactionDate: z.string().optional(),
+          duration: z.number().optional(),
+          outcome: z.string().optional(),
+          nextSteps: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          await database.insert(interactions).values({
+            ...input,
+            createdBy: ctx.user.id,
+          });
+          
+          return { success: true };
+        }),
+    }),
+
+    // ===== TASKS =====
+    tasks: router({
+      list: protectedProcedure
+        .input(z.object({
+          status: z.enum(["pendente", "em_andamento", "concluida", "cancelada"]).optional(),
+          assignedTo: z.number().optional(),
+        }))
+        .query(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          let query = database.select().from(crmTasks);
+          
+          if (input.status) {
+            query = query.where(eq(crmTasks.status, input.status));
+          }
+          if (input.assignedTo) {
+            query = query.where(eq(crmTasks.assignedTo, input.assignedTo));
+          }
+          
+          const allTasks = await query.orderBy(asc(crmTasks.dueDate));
+          
+          return allTasks;
+        }),
+
+      create: protectedProcedure
+        .input(z.object({
+          title: z.string(),
+          description: z.string().optional(),
+          type: z.enum(["ligacao", "email", "reuniao", "follow_up", "outro"]),
+          priority: z.enum(["baixa", "media", "alta", "urgente"]).optional(),
+          dueDate: z.string().optional(),
+          clientId: z.number().optional(),
+          leadId: z.number().optional(),
+          opportunityId: z.number().optional(),
+          assignedTo: z.number(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          await database.insert(crmTasks).values({
+            ...input,
+            createdBy: ctx.user.id,
+          });
+          
+          return { success: true };
+        }),
+
+      update: protectedProcedure
+        .input(z.object({
+          id: z.number(),
+          title: z.string().optional(),
+          description: z.string().optional(),
+          status: z.enum(["pendente", "em_andamento", "concluida", "cancelada"]).optional(),
+          priority: z.enum(["baixa", "media", "alta", "urgente"]).optional(),
+          dueDate: z.string().optional(),
+          completedAt: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const database = await getDb();
+          if (!database) throw new Error("Database not available");
+          
+          const { id, ...updateData } = input;
+          await database.update(crmTasks).set(updateData).where(eq(crmTasks.id, id));
+          
+          return { success: true };
+        }),
+    }),
+
+    // ===== DASHBOARD =====
+    dashboard: protectedProcedure.query(async ({ ctx }) => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+      
+      // Contar leads por status
+      const leadsByStatus = await database
+        .select({
+          status: leads.status,
+          count: sql<number>`count(*)`
+        })
+        .from(leads)
+        .groupBy(leads.status);
+      
+      // Contar oportunidades por estágio
+      const opportunitiesByStage = await database
+        .select({
+          stage: opportunities.stage,
+          count: sql<number>`count(*)`,
+          totalValue: sql<string>`sum(${opportunities.value})`
+        })
+        .from(opportunities)
+        .groupBy(opportunities.stage);
+      
+      // Tarefas pendentes
+      const pendingTasks = await database
+        .select({ count: sql<number>`count(*)` })
+        .from(crmTasks)
+        .where(eq(crmTasks.status, "pendente"));
+      
+      return {
+        leadsByStatus,
+        opportunitiesByStage,
+        pendingTasksCount: pendingTasks[0]?.count || 0,
+      };
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

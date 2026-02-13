@@ -549,3 +549,112 @@ export const locations = mysqlTable("locations", {
 
 export type Location = typeof locations.$inferSelect;
 export type InsertLocation = typeof locations.$inferInsert;
+
+/**
+ * CRM - Leads (Potenciais Clientes)
+ */
+export const leads = mysqlTable("leads", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  company: varchar("company", { length: 255 }),
+  email: varchar("email", { length: 320 }),
+  phone: varchar("phone", { length: 20 }),
+  source: varchar("source", { length: 100 }), // origem do lead (site, indicação, evento, etc)
+  status: mysqlEnum("status", ["novo", "contatado", "qualificado", "proposta_enviada", "negociacao", "ganho", "perdido"]).default("novo").notNull(),
+  score: int("score").default(0), // pontuação do lead (0-100)
+  assignedTo: int("assignedTo"), // usuário responsável
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type Lead = typeof leads.$inferSelect;
+export type InsertLead = typeof leads.$inferInsert;
+
+/**
+ * CRM - Opportunities (Oportunidades de Venda)
+ */
+export const opportunities = mysqlTable("opportunities", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  clientId: int("clientId"), // referência à tabela clients
+  leadId: int("leadId"), // referência à tabela leads (se veio de um lead)
+  value: decimal("value", { precision: 15, scale: 2 }),
+  stage: mysqlEnum("stage", ["prospeccao", "qualificacao", "proposta", "negociacao", "fechamento", "ganho", "perdido"]).default("prospeccao").notNull(),
+  probability: int("probability").default(0), // probabilidade de fechar (0-100%)
+  expectedCloseDate: date("expectedCloseDate"),
+  actualCloseDate: date("actualCloseDate"),
+  assignedTo: int("assignedTo").notNull(), // usuário responsável
+  description: text("description"),
+  lostReason: text("lostReason"), // motivo da perda (se perdido)
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type Opportunity = typeof opportunities.$inferSelect;
+export type InsertOpportunity = typeof opportunities.$inferInsert;
+
+/**
+ * CRM - Interactions (Interações com Clientes/Leads)
+ */
+export const interactions = mysqlTable("interactions", {
+  id: int("id").autoincrement().primaryKey(),
+  type: mysqlEnum("type", ["ligacao", "email", "reuniao", "whatsapp", "visita", "outro"]).notNull(),
+  subject: varchar("subject", { length: 255 }).notNull(),
+  description: text("description"),
+  clientId: int("clientId"), // referência à tabela clients
+  leadId: int("leadId"), // referência à tabela leads
+  opportunityId: int("opportunityId"), // referência à oportunidade
+  interactionDate: timestamp("interactionDate").defaultNow().notNull(),
+  duration: int("duration"), // duração em minutos
+  outcome: varchar("outcome", { length: 100 }), // resultado (positivo, neutro, negativo)
+  nextSteps: text("nextSteps"), // próximos passos
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type Interaction = typeof interactions.$inferSelect;
+export type InsertInteraction = typeof interactions.$inferInsert;
+
+/**
+ * CRM - Tasks (Tarefas/Follow-ups)
+ */
+export const crmTasks = mysqlTable("crm_tasks", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  type: mysqlEnum("type", ["ligacao", "email", "reuniao", "follow_up", "outro"]).notNull(),
+  priority: mysqlEnum("priority", ["baixa", "media", "alta", "urgente"]).default("media").notNull(),
+  status: mysqlEnum("status", ["pendente", "em_andamento", "concluida", "cancelada"]).default("pendente").notNull(),
+  dueDate: timestamp("dueDate"),
+  completedAt: timestamp("completedAt"),
+  clientId: int("clientId"),
+  leadId: int("leadId"),
+  opportunityId: int("opportunityId"),
+  assignedTo: int("assignedTo").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type CrmTask = typeof crmTasks.$inferSelect;
+export type InsertCrmTask = typeof crmTasks.$inferInsert;
+
+/**
+ * CRM - Pipeline Stages (Estágios do Pipeline - customizáveis)
+ */
+export const pipelineStages = mysqlTable("pipeline_stages", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(),
+  order: int("order").notNull(), // ordem de exibição
+  probability: int("probability").default(0), // probabilidade padrão (0-100%)
+  color: varchar("color", { length: 7 }), // cor em hex (#RRGGBB)
+  active: boolean("active").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type PipelineStage = typeof pipelineStages.$inferSelect;
+export type InsertPipelineStage = typeof pipelineStages.$inferInsert;
