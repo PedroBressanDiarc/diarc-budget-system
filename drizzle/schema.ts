@@ -177,6 +177,26 @@ export type BudgetTemplate = typeof budgetTemplates.$inferSelect;
 export type InsertBudgetTemplate = typeof budgetTemplates.$inferInsert;
 
 /**
+ * Clients (Clientes)
+ */
+export const clients = mysqlTable("clients", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  cnpj: varchar("cnpj", { length: 18 }),
+  email: varchar("email", { length: 320 }),
+  phone: varchar("phone", { length: 20 }),
+  address: text("address"),
+  notes: text("notes"),
+  active: boolean("active").default(true).notNull(),
+  createdBy: int("createdBy").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Client = typeof clients.$inferSelect;
+export type InsertClient = typeof clients.$inferInsert;
+
+/**
  * Budgets (Orçamentos)
  */
 export const budgets = mysqlTable("budgets", {
@@ -184,6 +204,9 @@ export const budgets = mysqlTable("budgets", {
   budgetNumber: varchar("budgetNumber", { length: 50 }).notNull().unique(),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
+  clientId: int("clientId").notNull(),
+  validUntil: varchar("validUntil", { length: 10 }),
+  observations: text("observations"),
   templateId: int("templateId"),
   status: mysqlEnum("status", ["draft", "sent", "approved", "rejected"]).default("draft").notNull(),
   createdBy: int("createdBy").notNull(),
@@ -203,6 +226,8 @@ export const budgetItems = mysqlTable("budget_items", {
   itemName: varchar("itemName", { length: 255 }).notNull(),
   quantity: decimal("quantity", { precision: 10, scale: 2 }).notNull(),
   unit: varchar("unit", { length: 50 }),
+  unitPrice: decimal("unitPrice", { precision: 12, scale: 2 }).notNull(),
+  totalPrice: decimal("totalPrice", { precision: 12, scale: 2 }).notNull(),
   brand: varchar("brand", { length: 255 }),
   notes: text("notes"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
