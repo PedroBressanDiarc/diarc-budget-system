@@ -8,6 +8,17 @@
 
 ## 🔴 Prioridade Alta
 
+### Correção Urgente: Permissões do Diretor
+- [x] Verificar todos os procedures que estão bloqueando diretor
+- [x] Garantir que diretor tenha acesso TOTAL a todos os módulos
+- [x] Revisar lógica: diretor sempre incluido em TODOS os procedures
+- [x] Aplicar permissões em Banco de Dados:
+  - Suppliers: buyerProcedure (diretor+comprador)
+  - Equipment: equipmentProcedure (diretor+comprador+manutenção)
+  - Locations: equipmentProcedure (diretor+comprador+manutenção)
+  - Items: buyerProcedure (diretor+comprador)
+  - Projects: buyerProcedure (diretor+comprador)
+
 ### Sistema de Permissões (5 Níveis)
 - [x] Atualizar enum de role no schema (diretor, comprador, almoxarife, manutenção, financeiro)
 - [x] Gerar migração e aplicar no banco

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, protectedProcedure, adminProcedure, buyerProcedure, storekeeperProcedure, maintenanceProcedure, financeProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, adminProcedure, buyerProcedure, storekeeperProcedure, maintenanceProcedure, financeProcedure, equipmentProcedure, router } from "./_core/trpc";
 import { getDb } from "./db";
 import * as db from "./db";
 import { authenticateUser, hashPassword } from "./auth";
@@ -151,7 +151,7 @@ export const appRouter = router({
         return await db.getSupplierById(input.id);
       }),
 
-    create: protectedProcedure
+    create: buyerProcedure
       .input(z.object({
         name: z.string().min(1),
         cnpj: z.string().optional(),
@@ -174,7 +174,7 @@ export const appRouter = router({
         return { success: true, id: Number(result[0].insertId) };
       }),
 
-    update: protectedProcedure
+    update: buyerProcedure
       .input(z.object({
         id: z.number(),
         name: z.string().min(1).optional(),
@@ -200,13 +200,13 @@ export const appRouter = router({
 
   // ============= LOCATIONS =============
   locations: router({
-    list: protectedProcedure.query(async () => {
+    list: equipmentProcedure.query(async () => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");
       return await database.select().from(locations).orderBy(desc(locations.createdAt));
     }),
 
-    getById: protectedProcedure
+    getById: equipmentProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
         const database = await getDb();
@@ -215,7 +215,7 @@ export const appRouter = router({
         return location;
       }),
 
-    create: protectedProcedure
+    create: equipmentProcedure
       .input(z.object({
         name: z.string().min(1),
         description: z.string().optional(),
@@ -232,7 +232,7 @@ export const appRouter = router({
         return { success: true, id: Number(result[0].insertId) };
       }),
 
-    update: protectedProcedure
+    update: equipmentProcedure
       .input(z.object({
         id: z.number(),
         name: z.string().min(1).optional(),
@@ -249,7 +249,7 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    delete: protectedProcedure
+    delete: equipmentProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();
@@ -971,7 +971,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         return { equipment: equipmentData, maintenanceHistory };
       }),
 
-    create: protectedProcedure
+    create: equipmentProcedure
       .input(z.object({
         name: z.string().min(1),
         code: z.string().optional(),
@@ -1007,7 +1007,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         return { success: true, id: Number(result[0].insertId) };
       }),
 
-    update: protectedProcedure
+    update: equipmentProcedure
       .input(z.object({
         id: z.number(),
         name: z.string().optional(),
@@ -1034,7 +1034,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         return { success: true };
       }),
 
-    delete: protectedProcedure
+    delete: equipmentProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();
@@ -1396,7 +1396,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         return result;
       }),
 
-    create: protectedProcedure
+    create: buyerProcedure
       .input(
         z.object({
           name: z.string(),
@@ -1434,7 +1434,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         return { success: true, id: Number(result[0].insertId) };
       }),
 
-    update: protectedProcedure
+    update: buyerProcedure
       .input(
         z.object({
           id: z.number(),
@@ -1470,7 +1470,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         return { success: true };
       }),
 
-    delete: protectedProcedure
+    delete: buyerProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();
@@ -1550,7 +1550,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
       return result;
     }),
 
-    create: protectedProcedure
+    create: buyerProcedure
       .input(
         z.object({
           name: z.string(),
@@ -1573,7 +1573,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         return { success: true, id: Number(result[0].insertId) };
       }),
 
-    update: protectedProcedure
+    update: buyerProcedure
       .input(
         z.object({
           id: z.number(),
@@ -1597,7 +1597,7 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         return { success: true };
       }),
 
-    delete: protectedProcedure
+    delete: buyerProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         const database = await getDb();
