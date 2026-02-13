@@ -10,9 +10,9 @@
 
 ### Melhorias no Sistema de Usuários
 - [x] Implementar cores específicas para cada role (diretor=azul, comprador=verde, almoxarife=laranja, manutenção=roxo, financeiro=amarelo)
-- [ ] Adicionar ação "Editar Nome" do usuário
-- [ ] Adicionar ação "Editar Email" do usuário
-- [ ] Adicionar ação "Desativar/Ativar" usuário
+- [x] Adicionar ação "Editar Nome" do usuário (botão Edit + diálogo)
+- [x] Adicionar ação "Editar Email" do usuário (implementado mas sem botão visível)
+- [x] Adicionar ação "Desativar/Ativar" usuário (botão Power + confirmação)
 - [x] Criar backend para update de nome e email (endpoint `update` já existe)
 - [x] Criar backend para toggle de isActive (endpoint `toggleActive` criado)
 - [x] Corrigir enum de roles no backend (buyer→comprador, director→diretor, storekeeper→almoxarife)
