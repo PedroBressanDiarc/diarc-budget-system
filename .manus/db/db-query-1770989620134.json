@@ -1,0 +1,40 @@
+{
+  "query": "SELECT id, name, email, role FROM users ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT id, name, email, role FROM users ORDER BY id;",
+  "rows": [
+    {
+      "id": "30001",
+      "name": "Administrador",
+      "email": "admin@diarc.com.br",
+      "role": "diretor"
+    },
+    {
+      "id": "60001",
+      "name": "Carlos Martins",
+      "email": "carlos@diarc.com.br",
+      "role": "comprador"
+    },
+    {
+      "id": "60002",
+      "name": "Almoxarifado",
+      "email": "Almoxarifado@diarc.com.br",
+      "role": "almoxarife"
+    },
+    {
+      "id": "90001",
+      "name": "Carlos Eduardo Correa",
+      "email": "manutencao@diarc.com.br",
+      "role": "manutencao"
+    },
+    {
+      "id": "90002",
+      "name": "Anelize Ketzer",
+      "email": "financeiro@diarc.com.br",
+      "role": "financeiro"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\trole\n30001\tAdministrador\tadmin@diarc.com.br\tdiretor\n60001\tCarlos Martins\tcarlos@diarc.com.br\tcomprador\n60002\tAlmoxarifado\tAlmoxarifado@diarc.com.br\talmoxarife\n90001\tCarlos Eduardo Correa\tmanutencao@diarc.com.br\tmanutencao\n90002\tAnelize Ketzer\tfinanceiro@diarc.com.br\tfinanceiro\n",
+  "stderr": "",
+  "execution_time_ms": 346
+}

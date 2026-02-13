@@ -8,6 +8,14 @@
 
 ## 🔴 Prioridade Alta
 
+### Investigar Role do Usuário Anelize
+- [x] Problema identificado: Bug visual no frontend
+- [x] Banco de dados já tinha role correto (financeiro)
+- [x] Página Users.tsx usava valores em inglês (director, storekeeper, buyer)
+- [x] Página Users.tsx não tratava role "financeiro" (caía em "Comprador" por padrão)
+- [x] Corrigido: Atualizado Users.tsx para usar roles em português
+- [x] Corrigido: Adicionado tratamento para todos os 5 roles (diretor, comprador, almoxarife, manutencao, financeiro)
+
 ### URGENTE: Diretor sem acesso a Banco de Dados
 - [x] Verificar erro específico ao acessar banco de dados (menu não aparecia)
 - [x] Problema identificado: DashboardLayout usava 'director' (inglês) mas role é 'diretor' (português)

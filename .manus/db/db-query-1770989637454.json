@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE users SET role = 'financeiro' WHERE name = 'Anelize' OR email LIKE '%anelize%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute UPDATE users SET role = 'financeiro' WHERE name = 'Anelize' OR email LIKE '%anelize%';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 353
+}
