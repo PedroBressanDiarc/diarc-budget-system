@@ -38,6 +38,7 @@ import {
   requisitionSuppliers
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
+import { sendQuotationInviteEmail } from "./services/emailService";
 
 export const appRouter = router({
   system: systemRouter,
@@ -2600,21 +2601,25 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
             createdBy: ctx.user!.id,
           });
           
-          // Enviar email (simulação - em produção usar serviço de email real)
+          // Enviar email via SendGrid
           const quotationUrl = `${process.env.BASE_URL || 'http://localhost:5000'}/cotacao/${token}`;
           
-          // TODO: Integrar com serviço de email (SendGrid, AWS SES, etc)
-          console.log(`\n=== EMAIL DE COTAÇÃO ===`);
-          console.log(`Para: ${supplier.email}`);
-          console.log(`Assunto: Solicitação de Cotação - Requisição #${requisitionId}`);
-          console.log(`Link: ${quotationUrl}`);
-          console.log(`Expira em: ${expiresAt.toLocaleDateString('pt-BR')}`);
-          console.log(`========================\n`);
+          const emailSent = await sendQuotationInviteEmail({
+            supplierName: supplier.name,
+            supplierEmail: supplier.email!,
+            requisitionId,
+            requisitionDescription: requisition.description,
+            quotationUrl,
+            expiresAt,
+            itemsCount: requisition.items?.length || 0,
+          });
           
-          // Atualizar status de email enviado
-          await database.update(quotationTokens)
-            .set({ emailSent: true, emailSentAt: new Date() })
-            .where(eq(quotationTokens.token, token));
+          // Atualizar status de email enviado (apenas se enviou com sucesso)
+          if (emailSent) {
+            await database.update(quotationTokens)
+              .set({ emailSent: true, emailSentAt: new Date() })
+              .where(eq(quotationTokens.token, token));
+          }
           
           results.push({
             supplierId: supplier.id,
