@@ -33,6 +33,11 @@ export const suppliers = mysqlTable("suppliers", {
   phone: varchar("phone", { length: 20 }),
   email: varchar("email", { length: 320 }),
   address: text("address"),
+  website: varchar("website", { length: 255 }),
+  paymentTerms: text("paymentTerms"), // Condições de pagamento padrão
+  deliveryTime: varchar("deliveryTime", { length: 100 }), // Prazo de entrega médio
+  category: varchar("category", { length: 100 }), // Categoria de produtos/serviços
+  rating: int("rating"), // Avaliação de 1-5
   notes: text("notes"),
   active: boolean("active").default(true).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -328,7 +333,7 @@ export type InsertCompanySettings = typeof companySettings.$inferInsert;
 export const requisitionAttachments = mysqlTable("requisition_attachments", {
   id: int("id").autoincrement().primaryKey(),
   requisitionId: int("requisitionId").notNull(),
-  fileType: mysqlEnum("fileType", ["cotacao", "ordem_compra", "adicional"]).notNull(),
+  fileType: mysqlEnum("fileType", ["cotacao", "ordem_compra", "nota_fiscal", "adicional"]).notNull(),
   fileName: varchar("fileName", { length: 255 }).notNull(),
   fileUrl: text("fileUrl").notNull(),
   fileSize: int("fileSize"), // em bytes

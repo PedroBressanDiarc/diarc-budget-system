@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, FileText, Upload, Plus, X, Edit, Trash2, MoreVertical, ChevronDown } from "lucide-react";
+import { ArrowLeft, FileText, Upload, Plus, X, Edit, Trash2, MoreVertical, ChevronDown, File, FileCheck, Receipt, Paperclip } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -75,7 +75,7 @@ export default function RequisitionDetail() {
     notes: string;
   }>>([]);
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
-  const [uploadFileType, setUploadFileType] = useState<"cotacao" | "ordem_compra" | "adicional">("cotacao");
+  const [uploadFileType, setUploadFileType] = useState<"cotacao" | "ordem_compra" | "nota_fiscal" | "adicional">("cotacao");
   const [isUploading, setIsUploading] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
@@ -89,6 +89,8 @@ export default function RequisitionDetail() {
     brand: string;
     notes: string;
   }>>([]);
+  const [isChangeRequestDialogOpen, setIsChangeRequestDialogOpen] = useState(false);
+  const [changeRequestReason, setChangeRequestReason] = useState("");
 
   const updateRequisitionMutation = trpc.requisitions.update.useMutation({
     onSuccess: () => {
@@ -98,6 +100,18 @@ export default function RequisitionDetail() {
     },
     onError: (error: any) => {
       toast.error(`Erro ao atualizar: ${error.message}`);
+    },
+  });
+
+  const requestChangeMutation = trpc.requisitions.requestChange.useMutation({
+    onSuccess: () => {
+      toast.success("Solicitação de alteração enviada!");
+      setIsChangeRequestDialogOpen(false);
+      setChangeRequestReason("");
+      refetch();
+    },
+    onError: (error: any) => {
+      toast.error(`Erro: ${error.message}`);
     },
   });
 
@@ -1363,6 +1377,7 @@ export default function RequisitionDetail() {
                         <SelectContent>
                           <SelectItem value="cotacao">Cotação</SelectItem>
                           <SelectItem value="ordem_compra">Ordem de Compra</SelectItem>
+                          <SelectItem value="nota_fiscal">Nota Fiscal</SelectItem>
                           <SelectItem value="adicional">Arquivo Adicional</SelectItem>
                         </SelectContent>
                       </Select>
@@ -1391,12 +1406,21 @@ export default function RequisitionDetail() {
               {attachments.map((attachment: any) => (
                 <div key={attachment.id} className="flex items-center justify-between p-3 border rounded-lg">
                   <div className="flex items-center gap-3">
-                    <FileText className="h-5 w-5 text-muted-foreground" />
+                    {attachment.fileType === "cotacao" ? (
+                      <File className="h-5 w-5 text-blue-500" />
+                    ) : attachment.fileType === "ordem_compra" ? (
+                      <FileCheck className="h-5 w-5 text-green-500" />
+                    ) : attachment.fileType === "nota_fiscal" ? (
+                      <Receipt className="h-5 w-5 text-purple-500" />
+                    ) : (
+                      <Paperclip className="h-5 w-5 text-gray-500" />
+                    )}
                     <div>
                       <p className="font-medium">{attachment.fileName}</p>
                       <p className="text-xs text-muted-foreground">
                         {attachment.fileType === "cotacao" ? "Cotação" : 
                          attachment.fileType === "ordem_compra" ? "Ordem de Compra" : 
+                         attachment.fileType === "nota_fiscal" ? "Nota Fiscal" :
                          "Arquivo Adicional"}
                         {" • "}
                         {(attachment.fileSize / 1024).toFixed(2)} KB
@@ -1436,10 +1460,48 @@ export default function RequisitionDetail() {
 
       {/* Botões de Ação */}
       <div className="flex justify-end gap-4">
-        {isStorekeeper && requisition?.status === "solicitacao" && (
-          <Button variant="outline">
-            Requisitar Alteração
-          </Button>
+        {isStorekeeper && (requisition?.status === "autorizado" || requisition?.status === "aguardando_autorizacao") && !requisition?.changeRequested && (
+          <Dialog open={isChangeRequestDialogOpen} onOpenChange={setIsChangeRequestDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline">
+                Solicitar Alteração
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Solicitar Alteração</DialogTitle>
+                <DialogDescription>
+                  Descreva o motivo da solicitação de alteração desta requisição
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="changeReason">Motivo da Alteração *</Label>
+                  <Textarea
+                    id="changeReason"
+                    value={changeRequestReason}
+                    onChange={(e) => setChangeRequestReason(e.target.value)}
+                    placeholder="Descreva o motivo da solicitação..."
+                    rows={4}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsChangeRequestDialogOpen(false)}>
+                  Cancelar
+                </Button>
+                <Button onClick={() => {
+                  if (!changeRequestReason.trim()) {
+                    toast.error("Por favor, descreva o motivo da alteração");
+                    return;
+                  }
+                  requestChangeMutation.mutate({ id: Number(id), reason: changeRequestReason });
+                }}>
+                  Enviar Solicitação
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         )}
         
         {canAddQuotes && requisition?.status === "cotacao_em_progresso" && (

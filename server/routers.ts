@@ -491,6 +491,44 @@ export const appRouter = router({
 
         return { success: true };
       }),
+
+    requestChange: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        reason: z.string().min(1),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.update(purchaseRequisitions)
+          .set({
+            changeRequested: true,
+            changeRequestReason: input.reason,
+            changeRequestedAt: new Date(),
+          })
+          .where(eq(purchaseRequisitions.id, input.id));
+
+        return { success: true };
+      }),
+
+    approveChange: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+
+        await database.update(purchaseRequisitions)
+          .set({
+            changeRequested: false,
+            changeRequestReason: null,
+            changeApprovedBy: ctx.user.id,
+            status: 'solicitacao', // Volta para status inicial para edição
+          })
+          .where(eq(purchaseRequisitions.id, input.id));
+
+        return { success: true };
+      }),
   }),
 
   // ============= QUOTES =============
