@@ -8,6 +8,23 @@
 
 ## 🔴 Prioridade Alta
 
+### Melhorias no Sistema de Usuários
+- [x] Implementar cores específicas para cada role (diretor=azul, comprador=verde, almoxarife=laranja, manutenção=roxo, financeiro=amarelo)
+- [x] Adicionar ação "Editar Nome" do usuário (botão Edit + diálogo)
+- [x] Adicionar ação "Editar Email" do usuário (implementado mas sem botão visível)
+- [x] Adicionar ação "Desativar/Ativar" usuário (botão Power + confirmação)
+- [x] Criar backend para update de nome e email (endpoint `update` já existe)
+- [x] Criar backend para toggle de isActive (endpoint `toggleActive` criado)
+- [x] Corrigir enum de roles no backend (buyer→comprador, director→diretor, storekeeper→almoxarife)
+- [x] Adicionar botão de editar email na coluna de ações
+- [x] Criar tabela de permissões customizadas no schema (roles, role_permissions)
+- [x] Criar backend para CRUD de níveis de permissão (list, create, update, delete)
+- [x] Criar backend para gerenciar permissões de cada role
+- [x] Criar página de gerenciamento de níveis de permissão
+- [x] Criar interface com checklist de módulos e submódulos
+- [x] Adicionar seletor de permissão por módulo (Total, Somente Leitura, Nenhum)
+- [ ] Implementar lógica de aplicação de permissões customizadas no sistema
+
 ### Investigar Role do Usuário Anelize
 - [x] Problema identificado: Bug visual no frontend
 - [x] Banco de dados já tinha role correto (financeiro)

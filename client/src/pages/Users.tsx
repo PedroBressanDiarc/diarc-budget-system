@@ -9,13 +9,17 @@ import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Plus, Trash2, KeyRound } from "lucide-react";
+import { Plus, Trash2, KeyRound, Edit, Power, Mail } from "lucide-react";
 
 export default function Users() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isResetOpen, setIsResetOpen] = useState(false);
+  const [isEditNameOpen, setIsEditNameOpen] = useState(false);
+  const [isEditEmailOpen, setIsEditEmailOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [newPassword, setNewPassword] = useState("");
+  const [editName, setEditName] = useState("");
+  const [editEmail, setEditEmail] = useState("");
 
   const [formData, setFormData] = useState({
     email: "",
@@ -61,6 +65,42 @@ export default function Users() {
     },
   });
 
+  const updateNameMutation = trpc.users.update.useMutation({
+    onSuccess: () => {
+      toast.success("Nome atualizado com sucesso!");
+      setIsEditNameOpen(false);
+      setEditName("");
+      setSelectedUserId(null);
+      refetch();
+    },
+    onError: (error) => {
+      toast.error("Erro ao atualizar nome: " + error.message);
+    },
+  });
+
+  const updateEmailMutation = trpc.users.update.useMutation({
+    onSuccess: () => {
+      toast.success("Email atualizado com sucesso!");
+      setIsEditEmailOpen(false);
+      setEditEmail("");
+      setSelectedUserId(null);
+      refetch();
+    },
+    onError: (error) => {
+      toast.error("Erro ao atualizar email: " + error.message);
+    },
+  });
+
+  const toggleActiveMutation = trpc.users.toggleActive.useMutation({
+    onSuccess: (data) => {
+      toast.success(data.isActive ? "Usuário ativado!" : "Usuário desativado!");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error("Erro ao alterar status: " + error.message);
+    },
+  });
+
   const handleCreate = (e: React.FormEvent) => {
     e.preventDefault();
     createMutation.mutate(formData);
@@ -70,6 +110,20 @@ export default function Users() {
     e.preventDefault();
     if (selectedUserId) {
       resetPasswordMutation.mutate({ userId: selectedUserId, newPassword });
+    }
+  };
+
+  const handleUpdateName = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (selectedUserId && editName.trim()) {
+      updateNameMutation.mutate({ id: selectedUserId, name: editName });
+    }
+  };
+
+  const handleUpdateEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (selectedUserId && editEmail.trim()) {
+      updateEmailMutation.mutate({ id: selectedUserId, email: editEmail });
     }
   };
 
@@ -183,7 +237,16 @@ export default function Users() {
                   <TableCell className="font-medium">{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    <Badge variant={user.role === "diretor" ? "default" : "secondary"}>
+                    <Badge 
+                      className={
+                        user.role === "diretor" ? "bg-blue-500 hover:bg-blue-600" :
+                        user.role === "comprador" ? "bg-green-500 hover:bg-green-600" :
+                        user.role === "almoxarife" ? "bg-orange-500 hover:bg-orange-600" :
+                        user.role === "manutencao" ? "bg-purple-500 hover:bg-purple-600" :
+                        user.role === "financeiro" ? "bg-yellow-500 hover:bg-yellow-600 text-gray-900" :
+                        ""
+                      }
+                    >
                       {user.role === "diretor" ? "Diretor" : 
                        user.role === "comprador" ? "Comprador" : 
                        user.role === "almoxarife" ? "Almoxarife" : 
@@ -201,6 +264,43 @@ export default function Users() {
                     <Button
                       size="sm"
                       variant="outline"
+                      title="Editar Nome"
+                      onClick={() => {
+                        setSelectedUserId(user.id);
+                        setEditName(user.name);
+                        setIsEditNameOpen(true);
+                      }}
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      title="Editar Email"
+                      onClick={() => {
+                        setSelectedUserId(user.id);
+                        setEditEmail(user.email);
+                        setIsEditEmailOpen(true);
+                      }}
+                    >
+                      <Mail className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      title="Alterar Status"
+                      onClick={() => {
+                        if (confirm(`Tem certeza que deseja ${user.isActive ? 'desativar' : 'ativar'} ${user.name}?`)) {
+                          toggleActiveMutation.mutate({ id: user.id });
+                        }
+                      }}
+                    >
+                      <Power className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      title="Resetar Senha"
                       onClick={() => {
                         setSelectedUserId(user.id);
                         setIsResetOpen(true);
@@ -211,6 +311,7 @@ export default function Users() {
                     <Button
                       size="sm"
                       variant="destructive"
+                      title="Excluir Usuário"
                       onClick={() => {
                         if (confirm(`Tem certeza que deseja excluir ${user.name}?`)) {
                           deleteMutation.mutate({ id: user.id });
@@ -251,6 +352,63 @@ export default function Users() {
             <DialogFooter>
               <Button type="submit" disabled={resetPasswordMutation.isPending}>
                 {resetPasswordMutation.isPending ? "Resetando..." : "Resetar Senha"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog Edit Name */}
+      <Dialog open={isEditNameOpen} onOpenChange={setIsEditNameOpen}>
+        <DialogContent>
+          <form onSubmit={handleUpdateName}>
+            <DialogHeader>
+              <DialogTitle>Editar Nome</DialogTitle>
+              <DialogDescription>Altere o nome do usuário</DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="editName">Nome Completo *</Label>
+                <Input
+                  id="editName"
+                  required
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit" disabled={updateNameMutation.isPending}>
+                {updateNameMutation.isPending ? "Salvando..." : "Salvar"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog Edit Email */}
+      <Dialog open={isEditEmailOpen} onOpenChange={setIsEditEmailOpen}>
+        <DialogContent>
+          <form onSubmit={handleUpdateEmail}>
+            <DialogHeader>
+              <DialogTitle>Editar Email</DialogTitle>
+              <DialogDescription>Altere o email do usuário</DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="editEmail">Email *</Label>
+                <Input
+                  id="editEmail"
+                  type="email"
+                  required
+                  value={editEmail}
+                  onChange={(e) => setEditEmail(e.target.value)}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit" disabled={updateEmailMutation.isPending}>
+                {updateEmailMutation.isPending ? "Salvando..." : "Salvar"}
               </Button>
             </DialogFooter>
           </form>
