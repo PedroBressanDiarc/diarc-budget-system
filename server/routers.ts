@@ -33,7 +33,9 @@ import {
   chatParticipants,
   messages,
   messageMentions,
-  locations
+  locations,
+  quotationTokens,
+  requisitionSuppliers
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
 
@@ -2695,6 +2697,277 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         pendingTasksCount: pendingTasks[0]?.count || 0,
       };
     }),
+  }),
+
+  // Router de Cotações (Sistema de Envio de Emails para Fornecedores)
+  quotations: router({
+    // Selecionar fornecedores e enviar emails de cotação
+    inviteSuppliers: buyerProcedure
+      .input(z.object({
+        requisitionId: z.number(),
+        supplierIds: z.array(z.number()),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        const { requisitionId, supplierIds } = input;
+        
+        // Verificar se a requisição existe
+        const requisition = await database.query.purchaseRequisitions.findFirst({
+          where: eq(purchaseRequisitions.id, requisitionId),
+          with: {
+            items: true,
+          },
+        });
+        
+        if (!requisition) {
+          throw new Error("Requisição não encontrada");
+        }
+        
+        // Buscar fornecedores
+        const suppliersData = await database.query.suppliers.findMany({
+          where: sql`${suppliers.id} IN (${sql.join(supplierIds.map(id => sql`${id}`), sql`, `)})`
+        });
+        
+        if (suppliersData.length === 0) {
+          throw new Error("Nenhum fornecedor encontrado");
+        }
+        
+        const results = [];
+        
+        for (const supplier of suppliersData) {
+          // Verificar se já existe convite
+          const existing = await database.query.requisitionSuppliers.findFirst({
+            where: sql`${requisitionSuppliers.requisitionId} = ${requisitionId} AND ${requisitionSuppliers.supplierId} = ${supplier.id}`
+          });
+          
+          if (!existing) {
+            // Criar registro de fornecedor convidado
+            await database.insert(requisitionSuppliers).values({
+              requisitionId,
+              supplierId: supplier.id,
+              createdBy: ctx.user!.id,
+            });
+          }
+          
+          // Gerar token único
+          const token = crypto.randomUUID();
+          const expiresAt = new Date();
+          expiresAt.setDate(expiresAt.getDate() + 7); // Expira em 7 dias
+          
+          // Criar token de cotação
+          await database.insert(quotationTokens).values({
+            token,
+            requisitionId,
+            supplierId: supplier.id,
+            expiresAt,
+            createdBy: ctx.user!.id,
+          });
+          
+          // Enviar email (simulação - em produção usar serviço de email real)
+          const quotationUrl = `${process.env.BASE_URL || 'http://localhost:5000'}/cotacao/${token}`;
+          
+          // TODO: Integrar com serviço de email (SendGrid, AWS SES, etc)
+          console.log(`\n=== EMAIL DE COTAÇÃO ===`);
+          console.log(`Para: ${supplier.email}`);
+          console.log(`Assunto: Solicitação de Cotação - Requisição #${requisitionId}`);
+          console.log(`Link: ${quotationUrl}`);
+          console.log(`Expira em: ${expiresAt.toLocaleDateString('pt-BR')}`);
+          console.log(`========================\n`);
+          
+          // Atualizar status de email enviado
+          await database.update(quotationTokens)
+            .set({ emailSent: true, emailSentAt: new Date() })
+            .where(eq(quotationTokens.token, token));
+          
+          results.push({
+            supplierId: supplier.id,
+            supplierName: supplier.name,
+            email: supplier.email,
+            token,
+            quotationUrl,
+          });
+        }
+        
+        return { success: true, results };
+      }),
+    
+    // Listar fornecedores convidados de uma requisição
+    getInvitedSuppliers: protectedProcedure
+      .input(z.object({ requisitionId: z.number() }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        
+        const invited = await database
+          .select({
+            id: requisitionSuppliers.id,
+            supplierId: suppliers.id,
+            supplierName: suppliers.name,
+            supplierEmail: suppliers.email,
+            invitedAt: requisitionSuppliers.invitedAt,
+            responded: requisitionSuppliers.responded,
+            respondedAt: requisitionSuppliers.respondedAt,
+          })
+          .from(requisitionSuppliers)
+          .leftJoin(suppliers, eq(requisitionSuppliers.supplierId, suppliers.id))
+          .where(eq(requisitionSuppliers.requisitionId, input.requisitionId));
+        
+        return invited;
+      }),
+    
+    // API PÚblica - Obter dados da requisição por token
+    getByToken: publicProcedure
+      .input(z.object({ token: z.string() }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        
+        // Buscar token
+        const tokenData = await database.query.quotationTokens.findFirst({
+          where: eq(quotationTokens.token, input.token),
+        });
+        
+        if (!tokenData) {
+          throw new Error("Token inválido");
+        }
+        
+        // Verificar expiração
+        if (new Date() > new Date(tokenData.expiresAt)) {
+          throw new Error("Token expirado");
+        }
+        
+        // Marcar como acessado
+        if (!tokenData.accessed) {
+          await database.update(quotationTokens)
+            .set({ accessed: true, accessedAt: new Date() })
+            .where(eq(quotationTokens.token, input.token));
+        }
+        
+        // Buscar requisição com itens
+        const requisition = await database.query.purchaseRequisitions.findFirst({
+          where: eq(purchaseRequisitions.id, tokenData.requisitionId),
+          with: {
+            items: true,
+          },
+        });
+        
+        // Buscar fornecedor
+        const supplier = await database.query.suppliers.findFirst({
+          where: eq(suppliers.id, tokenData.supplierId),
+        });
+        
+        // Verificar se já existe cotação submetida
+        const existingQuote = await database.query.quotes.findFirst({
+          where: sql`${quotes.requisitionId} = ${tokenData.requisitionId} AND ${quotes.supplierId} = ${tokenData.supplierId}`,
+          with: {
+            items: true,
+          },
+        });
+        
+        return {
+          requisition,
+          supplier,
+          tokenData,
+          existingQuote,
+        };
+      }),
+    
+    // API PÚblica - Submeter cotação
+    submitQuotation: publicProcedure
+      .input(z.object({
+        token: z.string(),
+        items: z.array(z.object({
+          requisitionItemId: z.number(),
+          unitPrice: z.string(),
+          totalPrice: z.string(),
+          deliveryTime: z.string().optional(),
+          notes: z.string().optional(),
+        })),
+        observations: z.string().optional(),
+        paymentTerms: z.string().optional(),
+        deliveryTime: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        
+        // Buscar token
+        const tokenData = await database.query.quotationTokens.findFirst({
+          where: eq(quotationTokens.token, input.token),
+        });
+        
+        if (!tokenData) {
+          throw new Error("Token inválido");
+        }
+        
+        // Verificar expiração
+        if (new Date() > new Date(tokenData.expiresAt)) {
+          throw new Error("Token expirado");
+        }
+        
+        // Verificar se já foi submetido
+        if (tokenData.submitted) {
+          throw new Error("Cotação já foi submetida");
+        }
+        
+        // Criar ou atualizar cotação
+        const existingQuote = await database.query.quotes.findFirst({
+          where: sql`${quotes.requisitionId} = ${tokenData.requisitionId} AND ${quotes.supplierId} = ${tokenData.supplierId}`,
+        });
+        
+        let quoteId: number;
+        
+        if (existingQuote) {
+          // Atualizar cotação existente
+          await database.update(quotes)
+            .set({
+              observations: input.observations,
+              paymentTerms: input.paymentTerms,
+              deliveryTime: input.deliveryTime,
+              updatedAt: new Date(),
+            })
+            .where(eq(quotes.id, existingQuote.id));
+          
+          quoteId = existingQuote.id;
+          
+          // Deletar itens antigos
+          await database.delete(quoteItems)
+            .where(eq(quoteItems.quoteId, quoteId));
+        } else {
+          // Criar nova cotação
+          const [newQuote] = await database.insert(quotes).values({
+            requisitionId: tokenData.requisitionId,
+            supplierId: tokenData.supplierId,
+            observations: input.observations,
+            paymentTerms: input.paymentTerms,
+            deliveryTime: input.deliveryTime,
+            createdBy: tokenData.supplierId, // Usar supplierId como createdBy
+          });
+          
+          quoteId = newQuote.insertId;
+        }
+        
+        // Inserir itens da cotação
+        for (const item of input.items) {
+          await database.insert(quoteItems).values({
+            quoteId,
+            requisitionItemId: item.requisitionItemId,
+            unitPrice: item.unitPrice,
+            totalPrice: item.totalPrice,
+            deliveryTime: item.deliveryTime,
+            notes: item.notes,
+          });
+        }
+        
+        // Marcar token como submetido
+        await database.update(quotationTokens)
+          .set({ submitted: true, submittedAt: new Date() })
+          .where(eq(quotationTokens.token, input.token));
+        
+        // Marcar fornecedor como respondido
+        await database.update(requisitionSuppliers)
+          .set({ responded: true, respondedAt: new Date() })
+          .where(sql`${requisitionSuppliers.requisitionId} = ${tokenData.requisitionId} AND ${requisitionSuppliers.supplierId} = ${tokenData.supplierId}`);
+        
+        return { success: true, quoteId };
+      }),
   }),
 });
 

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, FileText, Upload, Plus, X, Edit, Trash2, MoreVertical, ChevronDown, File, FileCheck, Receipt, Paperclip } from "lucide-react";
+import { ArrowLeft, FileText, Upload, Plus, X, Edit, Trash2, MoreVertical, ChevronDown, File, FileCheck, Receipt, Paperclip, Mail } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { formatCurrency } from "@/lib/currency";
 
@@ -91,6 +91,8 @@ export default function RequisitionDetail() {
   }>>([]);
   const [isChangeRequestDialogOpen, setIsChangeRequestDialogOpen] = useState(false);
   const [changeRequestReason, setChangeRequestReason] = useState("");
+  const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);
+  const [selectedSupplierIds, setSelectedSupplierIds] = useState<number[]>([]);
 
   const updateRequisitionMutation = trpc.requisitions.update.useMutation({
     onSuccess: () => {
@@ -103,6 +105,20 @@ export default function RequisitionDetail() {
     },
   });
 
+  const inviteMutation = trpc.quotations.inviteSuppliers.useMutation({
+    onSuccess: (data) => {
+      toast.success(`Convites enviados para ${data.results.length} fornecedor(es)!`);
+      setIsInviteDialogOpen(false);
+      setSelectedSupplierIds([]);
+      refetchInvitedSuppliers();
+      // Mostrar links gerados no console (em produção, isso seria enviado por email)
+      console.log('Links de cotação gerados:', data.results);
+    },
+    onError: (error) => {
+      toast.error(`Erro ao enviar convites: ${error.message}`);
+    },
+  });
+  
   const requestChangeMutation = trpc.requisitions.requestChange.useMutation({
     onSuccess: () => {
       toast.success("Solicitação de alteração enviada!");
@@ -149,6 +165,22 @@ export default function RequisitionDetail() {
     { requisitionId: Number(id) },
     { enabled: !!id }
   );
+  const { data: invitedSuppliers, refetch: refetchInvitedSuppliers } = trpc.quotations.getInvitedSuppliers.useQuery(
+    { requisitionId: Number(id) },
+    { enabled: !!id }
+  );
+  
+  const handleInviteSuppliers = () => {
+    if (selectedSupplierIds.length === 0) {
+      toast.error("Selecione pelo menos um fornecedor");
+      return;
+    }
+    
+    inviteMutation.mutate({
+      requisitionId: Number(id),
+      supplierIds: selectedSupplierIds,
+    });
+  };
   const { data: attachments, refetch: refetchAttachments } = trpc.attachments.list.useQuery(
     { requisitionId: Number(id) },
     { enabled: !!id }
@@ -825,13 +857,89 @@ export default function RequisitionDetail() {
                 <CardTitle>Cotações</CardTitle>
                 <CardDescription>Cotações de fornecedores para esta requisição</CardDescription>
               </div>
-              <Dialog open={isQuoteDialogOpen} onOpenChange={setIsQuoteDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button onClick={handleOpenQuoteDialog}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Adicionar Cotação
-                  </Button>
-                </DialogTrigger>
+              <div className="flex gap-2">
+                <Dialog open={isInviteDialogOpen} onOpenChange={setIsInviteDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">
+                      <Mail className="mr-2 h-4 w-4" />
+                      Convidar Fornecedores
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl">
+                    <DialogHeader>
+                      <DialogTitle>Convidar Fornecedores para Cotar</DialogTitle>
+                      <DialogDescription>
+                        Selecione os fornecedores que receberão um email com link para preencher a cotação
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="space-y-2">
+                        <Label>Selecione os Fornecedores</Label>
+                        <div className="border rounded-lg p-4 max-h-96 overflow-y-auto space-y-2">
+                          {suppliers?.map((supplier: any) => (
+                            <div key={supplier.id} className="flex items-center space-x-2">
+                              <input
+                                type="checkbox"
+                                id={`supplier-${supplier.id}`}
+                                checked={selectedSupplierIds.includes(supplier.id)}
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    setSelectedSupplierIds([...selectedSupplierIds, supplier.id]);
+                                  } else {
+                                    setSelectedSupplierIds(selectedSupplierIds.filter(id => id !== supplier.id));
+                                  }
+                                }}
+                                className="h-4 w-4"
+                              />
+                              <label htmlFor={`supplier-${supplier.id}`} className="flex-1 cursor-pointer">
+                                <div className="flex items-center justify-between">
+                                  <span className="font-medium">{supplier.name}</span>
+                                  <span className="text-sm text-muted-foreground">{supplier.email || 'Sem email'}</span>
+                                </div>
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {invitedSuppliers && invitedSuppliers.length > 0 && (
+                        <div className="space-y-2">
+                          <Label>Fornecedores Já Convidados</Label>
+                          <div className="border rounded-lg p-4 space-y-2">
+                            {invitedSuppliers.map((inv: any) => (
+                              <div key={inv.id} className="flex items-center justify-between text-sm">
+                                <span>{inv.supplierName}</span>
+                                <Badge variant={inv.responded ? "default" : "secondary"}>
+                                  {inv.responded ? 'Respondeu' : 'Aguardando'}
+                                </Badge>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <DialogFooter>
+                      <Button type="button" variant="outline" onClick={() => setIsInviteDialogOpen(false)}>
+                        Cancelar
+                      </Button>
+                      <Button 
+                        type="button" 
+                        onClick={handleInviteSuppliers}
+                        disabled={selectedSupplierIds.length === 0 || inviteMutation.isPending}
+                      >
+                        {inviteMutation.isPending ? 'Enviando...' : `Enviar Convites (${selectedSupplierIds.length})`}
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+                
+                <Dialog open={isQuoteDialogOpen} onOpenChange={setIsQuoteDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button onClick={handleOpenQuoteDialog}>
+                      <Plus className="mr-2 h-4 w-4" />
+                      Adicionar Cotação Manual
+                    </Button>
+                  </DialogTrigger>
                 <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
                   <form onSubmit={handleCreateQuote}>
                     <DialogHeader>

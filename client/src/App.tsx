@@ -42,6 +42,7 @@ import CRMDashboard from "./pages/CRMDashboard";
 import CRMLeads from "./pages/CRMLeads";
 import CRMOpportunities from "./pages/CRMOpportunities";
 import CRMTasks from "./pages/CRMTasks";
+import PublicQuotation from "./pages/PublicQuotation";
 
 function Router() {
   return (
@@ -92,6 +93,7 @@ function PublicRouter() {
   return (
     <Switch>
       <Route path="/login" component={Login} />
+      <Route path="/cotacao/:token" component={PublicQuotation} />
       <Route component={Login} />
     </Switch>
   );

@@ -658,3 +658,45 @@ export const pipelineStages = mysqlTable("pipeline_stages", {
 
 export type PipelineStage = typeof pipelineStages.$inferSelect;
 export type InsertPipelineStage = typeof pipelineStages.$inferInsert;
+
+/**
+ * Quotation Tokens (Tokens de Cotação)
+ * Tokens únicos gerados para fornecedores preencherem cotações
+ */
+export const quotationTokens = mysqlTable("quotation_tokens", {
+  id: int("id").autoincrement().primaryKey(),
+  token: varchar("token", { length: 64 }).notNull().unique(), // token único UUID
+  requisitionId: int("requisitionId").notNull(), // requisição relacionada
+  supplierId: int("supplierId").notNull(), // fornecedor destinatário
+  emailSent: boolean("emailSent").default(false).notNull(),
+  emailSentAt: timestamp("emailSentAt"),
+  accessed: boolean("accessed").default(false).notNull(),
+  accessedAt: timestamp("accessedAt"),
+  submitted: boolean("submitted").default(false).notNull(),
+  submittedAt: timestamp("submittedAt"),
+  expiresAt: timestamp("expiresAt").notNull(), // data de expiração do token
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type QuotationToken = typeof quotationTokens.$inferSelect;
+export type InsertQuotationToken = typeof quotationTokens.$inferInsert;
+
+/**
+ * Requisition Suppliers (Fornecedores Selecionados para Cotação)
+ * Relacionamento entre requisições e fornecedores convidados para cotar
+ */
+export const requisitionSuppliers = mysqlTable("requisition_suppliers", {
+  id: int("id").autoincrement().primaryKey(),
+  requisitionId: int("requisitionId").notNull(),
+  supplierId: int("supplierId").notNull(),
+  invited: boolean("invited").default(true).notNull(),
+  invitedAt: timestamp("invitedAt").defaultNow().notNull(),
+  responded: boolean("responded").default(false).notNull(),
+  respondedAt: timestamp("respondedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  createdBy: int("createdBy").notNull(),
+});
+
+export type RequisitionSupplier = typeof requisitionSuppliers.$inferSelect;
+export type InsertRequisitionSupplier = typeof requisitionSuppliers.$inferInsert;
