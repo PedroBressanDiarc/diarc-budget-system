@@ -302,3 +302,8 @@
 - [x] Remover path do item "Gestão" para torná-lo apenas dropdown
 - [x] Adicionar rota /permissoes no App.tsx
 - [x] Importar componente PermissionsManagement no App.tsx
+
+### Correções Erro customRoles
+- [x] Verificar se customRoles existe no routers.ts
+- [x] Recriar código customRoles no routers.ts se necessário
+- [x] Corrigir warning React key no DashboardLayout

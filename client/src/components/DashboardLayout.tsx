@@ -23,7 +23,7 @@ import {
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
 import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search, MessageCircle, DollarSign, UserPlus, Shield } from "lucide-react";
-import { CSSProperties, useEffect, useRef, useState, useMemo } from "react";
+import { CSSProperties, useEffect, useRef, useState, useMemo, Fragment } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
@@ -315,7 +315,7 @@ function DashboardLayoutContent({
                 const isSubmenuOpen = openSubmenus[item.path] || false;
                 
                 return (
-                  <div key={item.path}>
+                  <Fragment key={item.path}>
                     <SidebarMenuItem>
                       <div className="flex items-center w-full">
                         <SidebarMenuButton
@@ -359,7 +359,7 @@ function DashboardLayoutContent({
                         </SidebarMenuItem>
                       );
                     })}
-                  </div>
+                  </Fragment>
                 );
               })}
               {(user?.role === 'diretor' || user?.role === 'manutencao') && (
