@@ -700,3 +700,40 @@ export const requisitionSuppliers = mysqlTable("requisition_suppliers", {
 
 export type RequisitionSupplier = typeof requisitionSuppliers.$inferSelect;
 export type InsertRequisitionSupplier = typeof requisitionSuppliers.$inferInsert;
+
+/**
+ * Custom Roles (Níveis de Permissão Customizados)
+ * Permite criar níveis de permissão personalizados além dos padrões do sistema
+ */
+export const customRoles = mysqlTable("custom_roles", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 50 }).notNull().unique(), // nome único (ex: "gerente_obra")
+  displayName: varchar("display_name", { length: 100 }).notNull(), // nome para exibição
+  description: text("description"), // descrição do nível
+  color: varchar("color", { length: 20 }).default("blue").notNull(), // cor para UI
+  isSystem: boolean("is_system").default(false).notNull(), // true para níveis do sistema (diretor, comprador, etc)
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  createdBy: int("created_by").notNull(),
+});
+
+export type CustomRole = typeof customRoles.$inferSelect;
+export type InsertCustomRole = typeof customRoles.$inferInsert;
+
+/**
+ * Role Permissions (Permissões por Nível)
+ * Define permissões específicas para cada módulo/submódulo por nível
+ */
+export const rolePermissions = mysqlTable("role_permissions", {
+  id: int("id").autoincrement().primaryKey(),
+  roleId: int("role_id").notNull(), // referência ao custom_role
+  module: varchar("module", { length: 50 }).notNull(), // ex: "compras", "manutencoes"
+  submodule: varchar("submodule", { length: 50 }), // ex: "manutencao", "administrativo" (null para módulo principal)
+  permission: varchar("permission", { length: 20 }).notNull(), // "total", "readonly", "none"
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type RolePermission = typeof rolePermissions.$inferSelect;
+export type InsertRolePermission = typeof rolePermissions.$inferInsert;

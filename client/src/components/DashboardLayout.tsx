@@ -23,7 +23,7 @@ import {
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
 import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search, MessageCircle, DollarSign, UserPlus, Shield } from "lucide-react";
-import { CSSProperties, useEffect, useRef, useState, useMemo } from "react";
+import { CSSProperties, useEffect, useRef, useState, useMemo, Fragment } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
@@ -88,7 +88,6 @@ const menuItems = [
   {
     icon: UserCog,
     label: "Gestão",
-    path: "/usuarios",
     submenu: [
       { label: "Usuários", path: "/usuarios" },
       { label: "Permissões", path: "/permissoes", adminOnly: true },
@@ -316,14 +315,14 @@ function DashboardLayoutContent({
                 const isSubmenuOpen = openSubmenus[item.path] || false;
                 
                 return (
-                  <div key={item.path}>
+                  <Fragment key={item.path || item.label}>
                     <SidebarMenuItem>
                       <div className="flex items-center w-full">
                         <SidebarMenuButton
                           isActive={isActive}
-                          onClick={() => setLocation(item.path)}
+                          onClick={() => item.path && setLocation(item.path)}
                           tooltip={item.label}
-                          className={`h-10 transition-all font-normal relative flex-1`}
+                          className={`h-10 transition-all font-normal relative flex-1 ${!item.path ? 'cursor-default' : ''}`}
                         >
                           <item.icon
                             className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
@@ -360,7 +359,7 @@ function DashboardLayoutContent({
                         </SidebarMenuItem>
                       );
                     })}
-                  </div>
+                  </Fragment>
                 );
               })}
               {(user?.role === 'diretor' || user?.role === 'manutencao') && (

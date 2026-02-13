@@ -1200,8 +1200,9 @@ export default function RequisitionDetail() {
                 </DialogContent>
               </Dialog>
             </div>
-          </CardHeader>
-          <CardContent>
+          </div>
+        </CardHeader>
+        <CardContent>
             {quotes && quotes.length > 0 ? (
               <div className="space-y-4">
                 {quotes.map((quote: any) => (

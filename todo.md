@@ -297,3 +297,17 @@
 - [x] Criar item pai "Gestão" na sidebar
 - [x] Mover "Usuários" para dentro de "Gestão"
 - [x] Restaurar "Permissões" dentro de "Gestão"
+
+### Correções Módulo Gestão
+- [x] Remover path do item "Gestão" para torná-lo apenas dropdown
+- [x] Adicionar rota /permissoes no App.tsx
+- [x] Importar componente PermissionsManagement no App.tsx
+
+### Correções Erro customRoles
+- [x] Verificar se customRoles existe no routers.ts
+- [x] Recriar código customRoles no routers.ts se necessário
+- [x] Corrigir warning React key no DashboardLayout
+
+### Correções Erro onClick Gestão
+- [x] Corrigir onClick para não navegar quando item não tem path (módulo Gestão)
+- [x] Encontrar e corrigir warning React key restante
