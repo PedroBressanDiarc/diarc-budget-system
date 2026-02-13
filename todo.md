@@ -13,8 +13,9 @@
 - [ ] Adicionar ação "Editar Nome" do usuário
 - [ ] Adicionar ação "Editar Email" do usuário
 - [ ] Adicionar ação "Desativar/Ativar" usuário
-- [ ] Criar backend para update de nome e email
-- [ ] Criar backend para toggle de isActive
+- [x] Criar backend para update de nome e email (endpoint `update` já existe)
+- [x] Criar backend para toggle de isActive (endpoint `toggleActive` criado)
+- [x] Corrigir enum de roles no backend (buyer→comprador, director→diretor, storekeeper→almoxarife)
 - [ ] Criar sistema de edição de níveis de permissão customizados
 - [ ] Criar interface com lista de módulos e submódulos
 - [ ] Adicionar seletor de permissão por módulo (Total, Somente Leitura, Nenhum)

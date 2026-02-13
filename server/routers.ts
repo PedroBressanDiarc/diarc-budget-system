@@ -93,7 +93,7 @@ export const appRouter = router({
         email: z.string().email(),
         password: z.string().min(6),
         name: z.string().min(1),
-        role: z.enum(["buyer", "director", "storekeeper", "manutencao", "financeiro"]),
+        role: z.enum(["diretor", "comprador", "almoxarife", "manutencao", "financeiro"]),
         username: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
@@ -114,7 +114,7 @@ export const appRouter = router({
         id: z.number(),
         email: z.string().email().optional(),
         name: z.string().min(1).optional(),
-        role: z.enum(["buyer", "director", "storekeeper", "manutencao", "financeiro"]).optional(),
+        role: z.enum(["diretor", "comprador", "almoxarife", "manutencao", "financeiro"]).optional(),
         isActive: z.number().optional(),
       }))
       .mutation(async ({ input }) => {
@@ -131,6 +131,18 @@ export const appRouter = router({
         const passwordHash = await hashPassword(input.newPassword);
         await db.updateUserPassword(input.userId, passwordHash);
         return { success: true };
+      }),
+    toggleActive: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        
+        const [user] = await database.select().from(users).where(eq(users.id, input.id));
+        if (!user) throw new Error("User not found");
+        
+        await database.update(users).set({ isActive: user.isActive ? 0 : 1 }).where(eq(users.id, input.id));
+        return { success: true, isActive: !user.isActive };
       }),
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
