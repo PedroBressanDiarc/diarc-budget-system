@@ -292,3 +292,8 @@
 - [x] Encontrar e remover páginas CRM (client/src/pages/crm/*)
 - [x] Remover rotas CRM do App.tsx
 - [x] Remover links CRM do DashboardLayout
+
+### Reorganizar Sidebar - Módulo Gestão
+- [x] Criar item pai "Gestão" na sidebar
+- [x] Mover "Usuários" para dentro de "Gestão"
+- [x] Restaurar "Permissões" dentro de "Gestão"
