@@ -287,3 +287,8 @@
 ### Correção Erros CRM
 - [x] Remover código CRM não utilizado (leads, opportunities, crmTasks) do routers.ts
 - [x] Verificar se há rotas /crm/* que precisam ser removidas
+
+### Remover Frontend CRM
+- [x] Encontrar e remover páginas CRM (client/src/pages/crm/*)
+- [x] Remover rotas CRM do App.tsx
+- [x] Remover links CRM do DashboardLayout

@@ -60,17 +60,7 @@ const menuItems = [
     ]
   },
   { icon: FileText, label: "Orçamentos", path: "/orcamentos" },
-  { 
-    icon: UserPlus, 
-    label: "CRM", 
-    path: "/crm",
-    submenu: [
-      { label: "Dashboard", path: "/crm" },
-      { label: "Leads", path: "/crm/leads" },
-      { label: "Oportunidades", path: "/crm/oportunidades" },
-      { label: "Tarefas", path: "/crm/tarefas" },
-    ]
-  },
+
   { icon: Wrench, label: "Manutenções", path: "/manutencoes" },
   { icon: MessageCircle, label: "Chat", path: "/chat" },
   { 
