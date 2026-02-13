@@ -697,27 +697,40 @@ export const appRouter = router({
       .input(z.object({
         title: z.string().min(1),
         description: z.string().optional(),
+        clientName: z.string().min(1),
+        clientCnpj: z.string().optional(),
+        clientEmail: z.string().email().optional(),
+        clientPhone: z.string().optional(),
+        clientAddress: z.string().optional(),
+        validUntil: z.string().optional(),
+        observations: z.string().optional(),
         templateId: z.number().optional(),
         items: z.array(z.object({
           itemName: z.string().min(1),
           quantity: z.number().positive(),
           unit: z.string().optional(),
+          unitPrice: z.number().positive(),
           brand: z.string().optional(),
           notes: z.string().optional(),
-          maxPrice: z.number().optional(), // Valor máximo permitido (apenas admins)
         })),
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
-      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
 
-        const budgetNumber = `BUD-${Date.now()}`;
+        const budgetNumber = `ORC-${Date.now()}`;
 
         const result = await database.insert(budgets).values({
           budgetNumber,
           title: input.title,
           description: input.description,
+          clientName: input.clientName,
+          clientCnpj: input.clientCnpj,
+          clientEmail: input.clientEmail,
+          clientPhone: input.clientPhone,
+          clientAddress: input.clientAddress,
+          validUntil: input.validUntil,
+          observations: input.observations,
           templateId: input.templateId,
           createdBy: ctx.user.id,
         });
@@ -725,17 +738,102 @@ export const appRouter = router({
         const budgetId = Number(result[0].insertId);
 
         for (const item of input.items) {
+          const totalPrice = item.quantity * item.unitPrice;
           await database.insert(budgetItems).values({
             budgetId,
             itemName: item.itemName,
             quantity: item.quantity.toString(),
             unit: item.unit,
+            unitPrice: item.unitPrice.toString(),
+            totalPrice: totalPrice.toString(),
             brand: item.brand,
             notes: item.notes,
           });
         }
 
         return { success: true, id: budgetId, budgetNumber };
+      }),
+
+    generatePdf: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const budget = await db.getBudgetById(input.id);
+        const items = await db.getBudgetItems(input.id);
+        
+        if (!budget) throw new Error("Orçamento não encontrado");
+        
+        // Calcular total
+        const total = items.reduce((sum: number, item: any) => {
+          return sum + parseFloat(item.totalPrice || "0");
+        }, 0);
+        
+        // Gerar PDF usando manus-md-to-pdf
+        const fs = require('fs');
+        const path = require('path');
+        const { execSync } = require('child_process');
+        
+        const mdContent = `
+# PROPOSTA COMERCIAL
+
+**Número:** ${budget.budgetNumber}  
+**Data:** ${new Date(budget.createdAt).toLocaleDateString('pt-BR')}  
+${budget.validUntil ? `**Validade:** ${budget.validUntil}` : ''}
+
+---
+
+## DADOS DO CLIENTE
+
+**Nome:** ${budget.clientName}  
+${budget.clientCnpj ? `**CNPJ:** ${budget.clientCnpj}` : ''}  
+${budget.clientEmail ? `**E-mail:** ${budget.clientEmail}` : ''}  
+${budget.clientPhone ? `**Telefone:** ${budget.clientPhone}` : ''}  
+${budget.clientAddress ? `**Endereço:** ${budget.clientAddress}` : ''}
+
+---
+
+## ${budget.title}
+
+${budget.description || ''}
+
+---
+
+## ITENS DO ORÇAMENTO
+
+| Item | Qtd | Unidade | Valor Unit. | Total |
+|------|-----|---------|-------------|-------|
+${items.map((item: any) => 
+  `| ${item.itemName} | ${item.quantity} | ${item.unit || '-'} | R$ ${parseFloat(item.unitPrice || "0").toFixed(2)} | R$ ${parseFloat(item.totalPrice || "0").toFixed(2)} |`
+).join('\n')}
+
+---
+
+### VALOR TOTAL: R$ ${total.toFixed(2).replace('.', ',')}
+
+${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : ''}
+
+---
+
+*Proposta gerada em ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}*
+        `;
+        
+        const tempMdPath = `/tmp/budget-${budget.id}.md`;
+        const pdfPath = `/tmp/budget-${budget.id}.pdf`;
+        
+        fs.writeFileSync(tempMdPath, mdContent);
+        execSync(`manus-md-to-pdf ${tempMdPath} ${pdfPath}`);
+        
+        const pdfBuffer = fs.readFileSync(pdfPath);
+        const pdfBase64 = pdfBuffer.toString('base64');
+        
+        // Limpar arquivos temporários
+        fs.unlinkSync(tempMdPath);
+        fs.unlinkSync(pdfPath);
+        
+        return { 
+          success: true, 
+          pdf: pdfBase64,
+          filename: `Orcamento-${budget.budgetNumber}.pdf`
+        };
       }),
 
     templates: router({
