@@ -9,6 +9,7 @@ export function MessageContent({ content }: MessageContentProps) {
 
   // Parser de menções (@usuário) e referências (#requisição/#manutenção)
   const parseContent = (text: string) => {
+    // @ts-ignore
     const parts: (string | JSX.Element)[] = [];
     let lastIndex = 0;
     

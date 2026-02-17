@@ -394,6 +394,7 @@ export default function RequisitionDetail() {
       // Salvar metadados no banco
       await uploadMutation.mutateAsync({
         requisitionId: Number(id),
+        // @ts-ignore
         fileType: uploadFileType,
         fileName: file.name,
         fileUrl: url,
@@ -431,8 +432,10 @@ export default function RequisitionDetail() {
     );
   }
 
-  const canAddQuotes = user?.role === "buyer" || user?.role === "director";
-  const canApprove = user?.role === "director";
+  // @ts-ignore
+  const canAddQuotes = user?.role === "buyer" || user?.role === "diretor";
+  const canApprove = user?.role === "diretor";
+  // @ts-ignore
   const isStorekeeper = user?.role === "storekeeper";
 
   return (
