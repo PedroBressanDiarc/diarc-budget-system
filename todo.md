@@ -442,3 +442,15 @@
   - [ ] Verificar filtragem de menus
   - [ ] Verificar ocultação de botões em modo leitura
   - [ ] Verificar bloqueio de endpoints no backend
+
+
+## Melhorias Sistema de Permissões (17/02/2026) - CONCLUÍDO ✅
+- [x] Criar 5 níveis de permissão padrão no banco (diretor, comprador, almoxarife, manutenção, financeiro)
+- [x] Vincular usuários existentes aos níveis correspondentes (UPDATE users SET custom_role_id baseado em role)
+- [x] Melhorar layout da interface de edição de permissões:
+  - [x] Adicionar legenda explicativa dos ícones (✓ Total, 👁️ Leitura, ✗ Nenhum)
+  - [x] Melhorar espaçamento e hierarquia visual
+  - [x] Cards organizados para cada nível com botões de ação
+  - [x] Dialogs melhorados para criar/editar níveis
+  - [x] Layout mais limpo e profissional
+- [x] Os 5 níveis aparecem na página Gestão → Permissões
