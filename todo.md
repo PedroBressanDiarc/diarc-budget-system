@@ -478,3 +478,13 @@
   - [x] Remover colunas de ações individuais (Visualizar, Criar, Editar, Deletar)
   - [x] Atualizar schema do banco para novo modelo (DROP + CREATE role_permissions)
   - [x] Atualizar endpoint updatePermissions para novo modelo (sem action, com write)
+
+
+## Aplicação de Permissões no Frontend (17/02/2026) - CONCLUÍDO ✅
+- [x] Criar hook usePermissions() que consulta permissões do usuário logado
+- [x] Atualizar DashboardLayout para filtrar menus baseado em permissões
+- [x] Adicionar mapeamento de paths para chaves de módulo/submódulo
+- [x] Implementar filtragem de menus principais e submenus
+- [x] Manter compatibilidade com sistema antigo (customRoleId NULL = acesso total)
+- [ ] Testar que permissões configuradas são aplicadas após F5 (aguardando teste do usuário)
+- [ ] Ocultar botões de criar/editar em módulos com permissão "readonly" (próxima fase)

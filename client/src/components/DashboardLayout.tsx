@@ -29,6 +29,7 @@ import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 import { GlobalSearch } from "./GlobalSearch";
+import { usePermissions } from "@/hooks/usePermissions";
 
 
 
@@ -202,11 +203,51 @@ function DashboardLayoutContent({
   const sidebarRef = useRef<HTMLDivElement>(null);
   const activeMenuItem = menuItems.find(item => item.path === location);
   
-  // Filtrar itens do menu baseado em roles fixos
+  // Hook de permissões
+  const { canView, isLoading: permissionsLoading } = usePermissions();
+  
+  // Mapeamento de paths para chaves de módulo/submódulo
+  const getModuleKeys = (path: string): { module: string; submodule?: string } | null => {
+    if (path === "/") return { module: "dashboard" };
+    if (path === "/chat") return { module: "chat" };
+    if (path.startsWith("/compras/manutencao")) return { module: "compras", submodule: "manutencao" };
+    if (path.startsWith("/compras/administracao")) return { module: "compras", submodule: "administrativo" };
+    if (path.startsWith("/compras/fabrica")) return { module: "compras", submodule: "fabrica" };
+    if (path.startsWith("/compras/obras")) return { module: "compras", submodule: "obras" };
+    if (path.startsWith("/compras")) return { module: "compras" };
+    if (path === "/autorizacoes") return { module: "autorizacoes" };
+    if (path === "/estoque/pecas-finalizadas") return { module: "estoque", submodule: "pecas_finalizadas" };
+    if (path === "/estoque/interno") return { module: "estoque", submodule: "estoque_interno" };
+    if (path.startsWith("/estoque")) return { module: "estoque" };
+    if (path === "/orcamentos") return { module: "orcamentos" };
+    if (path === "/manutencoes") return { module: "manutencoes" };
+    if (path.startsWith("/financeiro/recebimentos")) return { module: "financeiro", submodule: "recebimentos" };
+    if (path.startsWith("/financeiro/pagamentos")) return { module: "financeiro", submodule: "pagamentos" };
+    if (path.startsWith("/financeiro")) return { module: "financeiro" };
+    if (path.startsWith("/relatorios/economias")) return { module: "relatorios", submodule: "economias" };
+    if (path.startsWith("/relatorios/obras")) return { module: "relatorios", submodule: "obras" };
+    if (path === "/alertas-orcamento") return { module: "relatorios", submodule: "alertas_orcamento" };
+    if (path.startsWith("/relatorios")) return { module: "relatorios" };
+    if (path === "/configuracoes") return { module: "configuracoes" };
+    if (path === "/usuarios") return { module: "gestao", submodule: "usuarios" };
+    if (path === "/permissoes") return { module: "gestao", submodule: "permissoes" };
+    if (path.startsWith("/gestao")) return { module: "gestao" };
+    return null;
+  };
+  
+  // Filtrar itens do menu baseado em permissões
   const filteredMenuItems = useMemo(() => {
+    if (permissionsLoading) return menuItems; // Mostrar tudo enquanto carrega
+    
     return menuItems.filter(item => {
       // Verificar adminOnly (apenas diretor)
       if (item.adminOnly && user?.role !== 'diretor') {
+        return false;
+      }
+      
+      // Verificar permissão do item principal
+      const moduleKeys = getModuleKeys(item.path || "");
+      if (moduleKeys && !canView(moduleKeys.module, moduleKeys.submodule)) {
         return false;
       }
       
@@ -216,6 +257,12 @@ function DashboardLayoutContent({
           if (subitem.adminOnly && user?.role !== 'diretor') {
             return false;
           }
+          
+          const subKeys = getModuleKeys(subitem.path);
+          if (subKeys && !canView(subKeys.module, subKeys.submodule)) {
+            return false;
+          }
+          
           return true;
         });
         
@@ -227,7 +274,7 @@ function DashboardLayoutContent({
       
       return true;
     });
-  }, [user?.role]);
+  }, [user?.role, canView, permissionsLoading]);
   
   // Filtrar itens da base de dados (todos visíveis por padrão)
   const filteredDatabaseItems = useMemo(() => {
