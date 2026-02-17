@@ -11,7 +11,7 @@ export function usePermissions() {
 
   /**
    * Verifica se usuário tem permissão para acessar um módulo
-   * @param moduleKey Chave do módulo (ex: "compras", "manutencoes", "financeiro")
+   * @param moduleKey Chave do módulo (ex: "compras", "compras:manutencao", "estoque:estoque_interno")
    * @param requiredLevel Nível mínimo necessário ("total" ou "readonly")
    * @returns true se tem permissão, false caso contrário
    */
@@ -32,8 +32,19 @@ export function usePermissions() {
       return true;
     }
 
-    // Buscar permissão do módulo
-    const permission = data.permissions.find((p: any) => p.module === moduleKey);
+    // Separar módulo e submódulo (formato: "modulo" ou "modulo:submodulo")
+    const [module, submodule] = moduleKey.split(":");
+
+    // Buscar permissão do módulo/submódulo
+    const permission = data.permissions.find((p: any) => {
+      if (submodule) {
+        // Buscar por módulo E submódulo
+        return p.module === module && p.submodule === submodule;
+      } else {
+        // Buscar apenas por módulo (submodule deve ser null ou vazio)
+        return p.module === module && (!p.submodule || p.submodule === "");
+      }
+    });
 
     if (!permission) {
       return false; // Sem permissão configurada = sem acesso

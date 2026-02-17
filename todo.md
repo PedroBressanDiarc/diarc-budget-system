@@ -361,3 +361,12 @@
 - [x] Removido fallback incorreto que buscava custom_role por nome (linha 2594-2599)
 - [x] Endpoint agora retorna customRole: null quando customRoleId é NULL
 - [ ] Testar que diretor pedro@diarc.com.br tem acesso completo restaurado (aguardando teste do usuário)
+
+### BUG: Mapeamento de permissões entre banco e frontend incorreto
+- [x] Almoxarife deveria ver: Dashboard, Compras, Manutenção (leitura), Administrativo (leitura), Fábrica (leitura), Obras (leitura), Estoque, Estoque Interno, Chat
+- [x] Problema: Só via Chat
+- [x] Investigar chaves de módulo salvas no banco (role_permissions.module)
+- [x] Verificar mapeamento MODULE_KEYS no DashboardLayout
+- [x] Corrigir MODULE_KEYS: formato "compras_manutencao" → "compras:manutencao" (igual ao banco)
+- [x] Atualizar usePermissions para dividir moduleKey em módulo e submódulo
+- [ ] Testar que almoxarife vê todos os módulos configurados (aguardando teste do usuário)
