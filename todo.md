@@ -23,7 +23,15 @@
 - [x] Criar página de gerenciamento de níveis de permissão
 - [x] Criar interface com checklist de módulos e submódulos
 - [x] Adicionar seletor de permissão por módulo (Total, Somente Leitura, Nenhum)
-- [ ] Implementar lógica de aplicação de permissões customizadas no sistema
+- [x] Implementar lógica de aplicação de permissões customizadas no sistema
+  - [x] Criar middleware que verifica role_permissions antes de permitir acesso
+  - [x] Criar procedures customizados (manutencoesWriteProcedure, financeiroWriteProcedure, etc.)
+  - [x] Adicionar campo custom_role_id na tabela users
+  - [x] Aplicar permissões customizadas em endpoints de manutenções (create, update, updateStatus)
+  - [x] Adicionar campo customRoleId no endpoint users.update
+  - [ ] Aplicar permissões customizadas em mais endpoints (compras, financeiro, banco de dados)
+  - [ ] Adicionar seletor de nível customizado na página de Usuários
+  - [ ] Ocultar menus no frontend baseado em permissões do usuário
 
 ### Investigar Role do Usuário Anelize
 - [x] Problema identificado: Bug visual no frontend

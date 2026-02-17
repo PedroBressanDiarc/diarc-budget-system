@@ -11,6 +11,7 @@ export const users = mysqlTable("users", {
   passwordHash: varchar("passwordHash", { length: 255 }).notNull(),
   name: text("name").notNull(),
   role: mysqlEnum("role", ["diretor", "comprador", "almoxarife", "manutencao", "financeiro"]).default("comprador").notNull(),
+  customRoleId: int("custom_role_id"), // vincula usuário a um nível de permissão customizado
   isActive: int("isActive").default(1).notNull(),
   openId: varchar("openId", { length: 64 }),
   loginMethod: varchar("loginMethod", { length: 64 }).default("local"),

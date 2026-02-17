@@ -2,7 +2,32 @@ import { z } from "zod";
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, protectedProcedure, adminProcedure, buyerProcedure, storekeeperProcedure, maintenanceProcedure, financeProcedure, equipmentProcedure, router } from "./_core/trpc";
+import { 
+  publicProcedure, 
+  protectedProcedure, 
+  adminProcedure, 
+  buyerProcedure, 
+  storekeeperProcedure, 
+  maintenanceProcedure, 
+  financeProcedure, 
+  equipmentProcedure, 
+  router,
+  // Procedures com permissões customizadas
+  manutencoesReadProcedure,
+  manutencoesWriteProcedure,
+  financeiroReadProcedure,
+  financeiroWriteProcedure,
+  bancoFornecedoresReadProcedure,
+  bancoFornecedoresWriteProcedure,
+  bancoEquipamentosReadProcedure,
+  bancoEquipamentosWriteProcedure,
+  bancoLocaisReadProcedure,
+  bancoLocaisWriteProcedure,
+  bancoItensReadProcedure,
+  bancoItensWriteProcedure,
+  bancoProjetosReadProcedure,
+  bancoProjetosWriteProcedure
+} from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { getDb } from "./db";
 import * as db from "./db";
@@ -141,6 +166,7 @@ export const appRouter = router({
         email: z.string().email().optional(),
         name: z.string().min(1).optional(),
         role: z.enum(["comprador", "diretor", "almoxarife", "manutencao", "financeiro"]).optional(),
+        customRoleId: z.number().nullable().optional(), // permite atribuir nível de permissão customizado
         isActive: z.number().optional(),
       }))
       .mutation(async ({ input }) => {
@@ -1148,7 +1174,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
           return await db.getMaintenanceScheduleById(input.id);
         }),
 
-      create: maintenanceProcedure
+      create: manutencoesWriteProcedure
         .input(z.object({
           equipmentId: z.number(),
           maintenanceType: z.enum(['preventive', 'corrective']),
@@ -1171,7 +1197,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
           return { success: true, id: Number(result[0].insertId) };
         }),
 
-      update: maintenanceProcedure
+      update: manutencoesWriteProcedure
         .input(z.object({
           id: z.number(),
           equipmentId: z.number().optional(),
@@ -1191,7 +1217,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
           return { success: true };
         }),
 
-      updateStatus: maintenanceProcedure
+      updateStatus: manutencoesWriteProcedure
         .input(z.object({
           id: z.number(),
           status: z.enum(['scheduled', 'quotation', 'analysis', 'awaiting_authorization', 'authorized', 'in_progress', 'completed', 'sent_to_purchase']),
