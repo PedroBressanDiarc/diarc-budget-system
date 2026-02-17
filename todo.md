@@ -324,3 +324,9 @@
 ### Correção Schema budgets
 - [x] Renomear colunas de camelCase para snake_case na tabela budgets
 - [ ] Verificar e corrigir outras tabelas com mesmo problema
+
+### Correção Erro tRPC Retornando HTML
+- [x] Investigar logs do servidor para identificar erro real
+- [x] Verificar se helmet está bloqueando requisições tRPC
+- [x] Verificar se rate limiter está interferindo
+- [x] Corrigir configuração que causa retorno de HTML em vez de JSON
