@@ -238,11 +238,11 @@ function DashboardLayoutContent({
   // Filtrar itens do menu baseado em permissões
   const filteredMenuItems = useMemo(() => {
     // Aguardar user e user.role carregarem completamente para evitar erro
-    if (!user || !user.role || permissionsLoading) return menuItems; // Mostrar tudo enquanto carrega
+    if (!user || typeof user !== 'object' || !user.role || permissionsLoading) return menuItems; // Mostrar tudo enquanto carrega
     
     return menuItems.filter(item => {
       // Verificar adminOnly (apenas diretor)
-      if (item.adminOnly && user?.role !== 'diretor') {
+      if (item.adminOnly && user.role !== 'diretor') {
         return false;
       }
       
@@ -255,7 +255,7 @@ function DashboardLayoutContent({
       // Se tem submenu, filtrar subitens
       if (item.submenu) {
         const filteredSubmenu = item.submenu.filter(subitem => {
-          if (subitem.adminOnly && user?.role !== 'diretor') {
+          if (subitem.adminOnly && user.role !== 'diretor') {
             return false;
           }
           
@@ -384,7 +384,7 @@ function DashboardLayoutContent({
                           {item.path === '/autorizacoes' && <PendingAuthBadge />}
                           {item.path === '/chat' && <UnreadMentionsBadge />}
                         </SidebarMenuButton>
-                        {hasSubmenu && (user?.role === 'diretor' || !item.adminOnly) && (
+                        {hasSubmenu && user && (user.role === 'diretor' || !item.adminOnly) && (
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -416,7 +416,7 @@ function DashboardLayoutContent({
                   </Fragment>
                 );
               })}
-              {(user?.role === 'diretor' || user?.role === 'manutencao') && (
+              {user && (user.role === 'diretor' || user.role === 'manutencao') && (
                 <>
                   <SidebarMenuItem>
                     <SidebarMenuButton
