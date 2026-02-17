@@ -19,9 +19,15 @@ export function usePermissions() {
     moduleKey: string,
     requiredLevel: PermissionLevel = "readonly"
   ): boolean => {
-    if (isLoading || !data) return false;
+    if (isLoading) return false;
+    if (!data) return false;
 
-    // Se não tem permissões customizadas, libera tudo (compatibilidade com sistema antigo)
+    // Se não tem customRole (customRoleId é NULL), libera TUDO (compatibilidade com sistema antigo)
+    if (!data.customRole) {
+      return true;
+    }
+
+    // Se não tem permissões configuradas, libera tudo também
     if (!data.permissions || data.permissions.length === 0) {
       return true;
     }
