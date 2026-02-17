@@ -9,7 +9,10 @@ export interface Permission {
 }
 
 export function usePermissions() {
-  const { data, isLoading } = trpc.permissionRoles.getUserPermissions.useQuery();
+  const { data, isLoading } = trpc.permissionRoles.getUserPermissions.useQuery(undefined, {
+    refetchOnMount: "always",
+    refetchOnWindowFocus: false,
+  });
 
   /**
    * Verifica se o usuário tem permissão para acessar um módulo/submódulo

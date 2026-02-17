@@ -488,3 +488,9 @@
 - [x] Manter compatibilidade com sistema antigo (customRoleId NULL = acesso total)
 - [ ] Testar que permissões configuradas são aplicadas após F5 (aguardando teste do usuário)
 - [ ] Ocultar botões de criar/editar em módulos com permissão "readonly" (próxima fase)
+
+
+## Melhoria: Forçar Refetch de Permissões ao F5 (17/02/2026) - CONCLUÍDO ✅
+- [x] Adicionar refetchOnMount: "always" na query getUserPermissions
+- [x] Adicionar refetchOnWindowFocus: false para evitar refetch desnecessário
+- [ ] Testar que F5 atualiza permissões sem necessidade de logout/login (aguardando teste do usuário)
