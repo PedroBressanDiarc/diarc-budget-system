@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Plus, Pencil, Trash2, Check, Eye, X, Info } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Loader2, Plus, Pencil, Trash2, Check, Eye, X, Info, Settings } from "lucide-react";
 import { toast } from "sonner";
 
 // Definição de módulos e submódulos do sistema
@@ -134,6 +135,7 @@ function CyclicCheckbox({
 export default function PermissionsManagement() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isPermissionsDialogOpen, setIsPermissionsDialogOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState<any>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -141,11 +143,13 @@ export default function PermissionsManagement() {
     description: "",
     color: "blue",
   });
+  const [permissions, setPermissions] = useState<PermissionState[]>([]);
 
   const { data: roles, isLoading, refetch } = trpc.permissionRoles.list.useQuery();
   const createMutation = trpc.permissionRoles.create.useMutation();
   const updateMutation = trpc.permissionRoles.update.useMutation();
   const deleteMutation = trpc.permissionRoles.delete.useMutation();
+  const updatePermissionsMutation = trpc.permissionRoles.updatePermissions.useMutation();
 
   const handleCreate = async () => {
     try {
@@ -195,6 +199,73 @@ export default function PermissionsManagement() {
       color: role.color,
     });
     setIsEditDialogOpen(true);
+  };
+
+  const openPermissionsDialog = (role: any) => {
+    setSelectedRole(role);
+    
+    // Inicializar permissões com base nas permissões existentes do role
+    const initialPermissions: PermissionState[] = [];
+    
+    MODULES.forEach(module => {
+      if (module.submodules.length === 0) {
+        // Módulo sem submódulos
+        ACTIONS.forEach(action => {
+          const existing = role.permissions?.find(
+            (p: any) => p.module === module.key && p.submodule === null && p.action === action.key
+          );
+          initialPermissions.push({
+            module: module.key,
+            submodule: null,
+            action: action.key,
+            permissionLevel: existing?.permissionLevel || "none",
+          });
+        });
+      } else {
+        // Módulo com submódulos
+        module.submodules.forEach(submodule => {
+          ACTIONS.forEach(action => {
+            const existing = role.permissions?.find(
+              (p: any) => p.module === module.key && p.submodule === submodule.key && p.action === action.key
+            );
+            initialPermissions.push({
+              module: module.key,
+              submodule: submodule.key,
+              action: action.key,
+              permissionLevel: existing?.permissionLevel || "none",
+            });
+          });
+        });
+      }
+    });
+    
+    setPermissions(initialPermissions);
+    setIsPermissionsDialogOpen(true);
+  };
+
+  const updatePermission = (module: string, submodule: string | null, action: string, level: PermissionLevel) => {
+    setPermissions(prev => 
+      prev.map(p => 
+        p.module === module && p.submodule === submodule && p.action === action
+          ? { ...p, permissionLevel: level }
+          : p
+      )
+    );
+  };
+
+  const handleSavePermissions = async () => {
+    if (!selectedRole) return;
+    try {
+      await updatePermissionsMutation.mutateAsync({
+        roleId: selectedRole.id,
+        permissions,
+      });
+      toast.success("Permissões atualizadas com sucesso!");
+      setIsPermissionsDialogOpen(false);
+      refetch();
+    } catch (error: any) {
+      toast.error(error.message || "Erro ao atualizar permissões");
+    }
   };
 
   if (isLoading) {
@@ -273,11 +344,9 @@ export default function PermissionsManagement() {
               <Button
                 variant="outline"
                 className="w-full"
-                onClick={() => {
-                  // TODO: Abrir dialog de edição de permissões detalhadas
-                  toast.info("Funcionalidade de edição de permissões em desenvolvimento");
-                }}
+                onClick={() => openPermissionsDialog(role)}
               >
+                <Settings className="h-4 w-4 mr-2" />
                 Configurar Permissões
               </Button>
             </CardContent>
@@ -418,6 +487,101 @@ export default function PermissionsManagement() {
             <Button onClick={handleUpdate} disabled={updateMutation.isPending}>
               {updateMutation.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
               Salvar Alterações
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog de Configuração de Permissões */}
+      <Dialog open={isPermissionsDialogOpen} onOpenChange={setIsPermissionsDialogOpen}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Configurar Permissões: {selectedRole?.displayName}</DialogTitle>
+            <DialogDescription>
+              Defina o nível de acesso para cada módulo e ação do sistema
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-6">
+            {MODULES.map(module => (
+              <div key={module.key} className="border rounded-lg p-4">
+                <h3 className="font-semibold text-lg mb-4">{module.label}</h3>
+                
+                {module.submodules.length === 0 ? (
+                  // Módulo sem submódulos
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-[200px]">Ação</TableHead>
+                        <TableHead className="text-center">Permissão</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {ACTIONS.map(action => {
+                        const permission = permissions.find(
+                          p => p.module === module.key && p.submodule === null && p.action === action.key
+                        );
+                        return (
+                          <TableRow key={action.key}>
+                            <TableCell className="font-medium">{action.label}</TableCell>
+                            <TableCell className="flex justify-center">
+                              <CyclicCheckbox
+                                value={permission?.permissionLevel || "none"}
+                                onChange={(level) => updatePermission(module.key, null, action.key, level)}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                ) : (
+                  // Módulo com submódulos
+                  <div className="space-y-4">
+                    {module.submodules.map(submodule => (
+                      <div key={submodule.key} className="ml-4 border-l-2 border-gray-200 pl-4">
+                        <h4 className="font-medium text-sm mb-2 text-muted-foreground">{submodule.label}</h4>
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="w-[200px]">Ação</TableHead>
+                              <TableHead className="text-center">Permissão</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {ACTIONS.map(action => {
+                              const permission = permissions.find(
+                                p => p.module === module.key && p.submodule === submodule.key && p.action === action.key
+                              );
+                              return (
+                                <TableRow key={action.key}>
+                                  <TableCell className="font-medium">{action.label}</TableCell>
+                                  <TableCell className="flex justify-center">
+                                    <CyclicCheckbox
+                                      value={permission?.permissionLevel || "none"}
+                                      onChange={(level) => updatePermission(module.key, submodule.key, action.key, level)}
+                                    />
+                                  </TableCell>
+                                </TableRow>
+                              );
+                            })}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsPermissionsDialogOpen(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={handleSavePermissions} disabled={updatePermissionsMutation.isPending}>
+              {updatePermissionsMutation.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+              Salvar Permissões
             </Button>
           </DialogFooter>
         </DialogContent>

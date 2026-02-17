@@ -454,3 +454,12 @@
   - [x] Dialogs melhorados para criar/editar níveis
   - [x] Layout mais limpo e profissional
 - [x] Os 5 níveis aparecem na página Gestão → Permissões
+
+
+## Implementação Dialog de Configuração de Permissões (17/02/2026) - CONCLUÍDO ✅
+- [x] Criar dialog que abre ao clicar "Configurar Permissões"
+- [x] Implementar tabela hierárquica com módulos e submódulos
+- [x] Adicionar checkboxes cíclicos para cada ação (visualizar, criar, editar, deletar)
+- [x] Endpoint updatePermissions já implementado e funcional no backend
+- [x] Dialog carrega permissões existentes do nível selecionado
+- [x] Botão "Salvar Permissões" persiste alterações no banco
