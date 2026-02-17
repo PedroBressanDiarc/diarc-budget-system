@@ -2861,8 +2861,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         permissions: z.array(z.object({
           module: z.string(),
           submodule: z.string().nullable(),
-          action: z.string(),
-          permissionLevel: z.enum(["total", "readonly", "none"]),
+          permissionLevel: z.enum(["none", "readonly", "write", "total"]),
         })),
       }))
       .mutation(async ({ input }: any) => {
@@ -2879,7 +2878,6 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
             roleId: input.roleId,
             module: p.module,
             submodule: p.submodule,
-            action: p.action,
             permissionLevel: p.permissionLevel,
           }));
         

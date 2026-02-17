@@ -729,8 +729,7 @@ export const rolePermissions = mysqlTable("role_permissions", {
   roleId: int("role_id").notNull(), // referência ao custom_role
   module: varchar("module", { length: 50 }).notNull(), // ex: "compras", "manutencoes"
   submodule: varchar("submodule", { length: 50 }), // ex: "manutencao", "administrativo" (null para módulo principal)
-  action: varchar("action", { length: 20 }).notNull(), // "view", "create", "edit", "delete"
-  permissionLevel: mysqlEnum("permission_level", ["total", "readonly", "none"]).notNull(), // nível de permissão
+  permissionLevel: mysqlEnum("permission_level", ["none", "readonly", "write", "total"]).notNull(), // none=oculto, readonly=visualizar, write=criar/editar, total=completo
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });

@@ -463,3 +463,18 @@
 - [x] Endpoint updatePermissions já implementado e funcional no backend
 - [x] Dialog carrega permissões existentes do nível selecionado
 - [x] Botão "Salvar Permissões" persiste alterações no banco
+
+
+## BUG CRÍTICO + Refatoração UX de Permissões (17/02/2026) - CONCLUÍDO ✅
+- [x] Corrigir bug de roleId inválido (30001) ao salvar permissões
+- [x] Refazer UX de atribuição de permissões:
+  - [x] Listar apenas módulos principais inicialmente
+  - [x] Expandir submódulos apenas se módulo principal tiver permissão concedida (botão chevron)
+  - [x] 4 estados de permissão por módulo (não mais por ação):
+    - ❌ Cinza = Oculto (sem acesso)
+    - 👁️ Azul = Somente Visualizar
+    - ✏️ Amarelo = Criar/Editar (sem excluir)
+    - ✅ Verde = Total (tudo)
+  - [x] Remover colunas de ações individuais (Visualizar, Criar, Editar, Deletar)
+  - [x] Atualizar schema do banco para novo modelo (DROP + CREATE role_permissions)
+  - [x] Atualizar endpoint updatePermissions para novo modelo (sem action, com write)
