@@ -370,3 +370,25 @@
 - [x] Corrigir MODULE_KEYS: formato "compras_manutencao" → "compras:manutencao" (igual ao banco)
 - [x] Atualizar usePermissions para dividir moduleKey em módulo e submódulo
 - [ ] Testar que almoxarife vê todos os módulos configurados (aguardando teste do usuário)
+
+### BUG CRÍTICO: Alterações de permissões não são salvas
+- [ ] Quando altera permissões em Gestão → Permissões, mudanças não são efetivadas
+- [ ] Investigar endpoint updatePermissions no backend
+- [ ] Verificar se mutation está sendo chamada corretamente no frontend
+- [ ] Verificar logs de erro no console do navegador e servidor
+- [ ] Corrigir lógica de salvamento
+
+## RESET COMPLETO DO SISTEMA DE PERMISSÕES - CONCLUÍDO ✅
+- [x] Limpar custom_role_id de todos os usuários
+- [x] Deletar dados de role_permissions
+- [x] Deletar dados de custom_roles
+- [x] Remover middleware de permissões customizadas (permissionMiddleware.ts)
+- [x] Remover procedures customizados (manutencoesWriteProcedure, etc.)
+- [x] Remover hook usePermissions
+- [x] Remover router customRoles do backend
+- [x] Restaurar lógica de filtragem de menus baseada em roles fixos no DashboardLayout
+- [x] Remover página PermissionsManagement.tsx
+- [x] Remover rota /permissoes do App.tsx
+- [x] Remover item de menu Permissões do DashboardLayout
+- [x] Corrigir imports de procedures no routers.ts
+- [x] Servidor backend iniciado com sucesso

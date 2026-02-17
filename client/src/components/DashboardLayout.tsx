@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { usePermissions } from "@/hooks/usePermissions";
+
 import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search, MessageCircle, DollarSign, UserPlus, Shield } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState, useMemo, Fragment } from "react";
 import { useLocation, Redirect } from "wouter";
@@ -30,39 +30,7 @@ import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 import { GlobalSearch } from "./GlobalSearch";
 
-// Mapeamento de paths para chaves de módulos de permissão
-// Formato: "modulo" ou "modulo:submodulo" (igual ao banco de dados)
-const MODULE_KEYS: Record<string, string> = {
-  "/": "dashboard",
-  "/compras": "compras",
-  "/compras/manutencao": "compras:manutencao",
-  "/compras/administracao": "compras:administrativo",
-  "/compras/fabrica": "compras:fabrica",
-  "/compras/obras": "compras:obras",
-  "/autorizacoes": "autorizacoes",
-  "/estoque/pecas-finalizadas": "estoque:pecas_finalizadas",
-  "/estoque/interno": "estoque:estoque_interno",
-  "/orcamentos": "orcamentos",
-  "/manutencoes": "manutencoes",
-  "/manutencoes/dashboard": "manutencoes",
-  "/chat": "chat",
-  "/financeiro": "financeiro",
-  "/financeiro/recebimentos": "financeiro:recebimentos",
-  "/financeiro/pagamentos": "financeiro:pagamentos",
-  "/relatorios": "relatorios",
-  "/relatorios/economias": "relatorios:economias",
-  "/relatorios/obras": "relatorios:obras",
-  "/alertas-orcamento": "relatorios:alertas_orcamento",
-  "/manutencoes/relatorios": "relatorios:manutencoes",
-  "/configuracoes": "configuracoes",
-  "/usuarios": "usuarios",
-  "/permissoes": "permissoes",
-  "/fornecedores": "banco_dados:fornecedores",
-  "/equipment": "banco_dados:equipamentos",
-  "/itens": "banco_dados:itens",
-  "/obras": "banco_dados:obras_bd",
-  "/locais": "banco_dados:locais",
-};
+
 
 const menuItems = [
   { 
@@ -124,7 +92,7 @@ const menuItems = [
     label: "Gestão",
     submenu: [
       { label: "Usuários", path: "/usuarios" },
-      { label: "Permissões", path: "/permissoes", adminOnly: true },
+
     ]
   },
 ];
@@ -233,29 +201,18 @@ function DashboardLayoutContent({
   const [searchOpen, setSearchOpen] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const activeMenuItem = menuItems.find(item => item.path === location);
-  const { hasPermission, isLoading: permissionsLoading } = usePermissions();
   
-  // Filtrar itens do menu baseado em permissões customizadas
+  // Filtrar itens do menu baseado em roles fixos
   const filteredMenuItems = useMemo(() => {
-    if (permissionsLoading) return [];
-    
     return menuItems.filter(item => {
-      // Verificar permissão do item principal
-      if (item.path) {
-        const moduleKey = MODULE_KEYS[item.path];
-        if (moduleKey && !hasPermission(moduleKey)) {
-          return false;
-        }
+      // Verificar adminOnly (apenas diretor)
+      if (item.adminOnly && user?.role !== 'diretor') {
+        return false;
       }
       
       // Se tem submenu, filtrar subitens
       if (item.submenu) {
         const filteredSubmenu = item.submenu.filter(subitem => {
-          const moduleKey = MODULE_KEYS[subitem.path];
-          if (moduleKey && !hasPermission(moduleKey)) {
-            return false;
-          }
-          // Verificar adminOnly (apenas diretor)
           if (subitem.adminOnly && user?.role !== 'diretor') {
             return false;
           }
@@ -268,27 +225,14 @@ function DashboardLayoutContent({
         }
       }
       
-      // Verificar adminOnly (apenas diretor)
-      if (item.adminOnly && user?.role !== 'diretor') {
-        return false;
-      }
-      
       return true;
     });
-  }, [user?.role, hasPermission, permissionsLoading]);
+  }, [user?.role]);
   
-  // Filtrar itens da base de dados baseado em permissões customizadas
+  // Filtrar itens da base de dados (todos visíveis por padrão)
   const filteredDatabaseItems = useMemo(() => {
-    if (permissionsLoading) return [];
-    
-    return databaseMenuItems.filter(item => {
-      const moduleKey = MODULE_KEYS[item.path];
-      if (moduleKey && !hasPermission(moduleKey)) {
-        return false;
-      }
-      return true;
-    });
-  }, [user?.role, hasPermission, permissionsLoading]);
+    return databaseMenuItems;
+  }, []);
   const isMobile = useIsMobile();
 
   // Atalho de teclado para busca global (Ctrl+K ou Cmd+K)
