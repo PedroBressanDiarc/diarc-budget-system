@@ -39,6 +39,9 @@ import {
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
 import { sendQuotationInviteEmail } from "./services/emailService";
+import { validatePassword, isCommonPassword } from "./utils/passwordValidator";
+import { publicQuotationRateLimit, submitQuotationRateLimit } from "./middleware/trpcRateLimiter";
+import { isValidMoneyValue, limitStringLength, isSafeString } from "./utils/inputValidator";
 
 export const appRouter = router({
   system: systemRouter,
@@ -94,12 +97,29 @@ export const appRouter = router({
     create: adminProcedure
       .input(z.object({
         email: z.string().email(),
-        password: z.string().min(6),
+        password: z.string().min(8).max(128),
         name: z.string().min(1),
         role: z.enum(["buyer", "director", "storekeeper", "manutencao", "financeiro"]),
         username: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
+        // Validar força da senha
+        const passwordValidation = validatePassword(input.password);
+        if (!passwordValidation.isValid) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: passwordValidation.errors.join(', ')
+          });
+        }
+        
+        // Verificar se é senha comum
+        if (isCommonPassword(input.password)) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Senha muito comum. Por favor, escolha uma senha mais segura.'
+          });
+        }
+        
         const passwordHash = await hashPassword(input.password);
         const userId = await db.createUser({
           email: input.email,
@@ -2660,6 +2680,9 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
     getByToken: publicProcedure
       .input(z.object({ token: z.string() }))
       .query(async ({ input }) => {
+        // Rate limiting
+        publicQuotationRateLimit(input.token);
+        
         const database = await getDb();
         
         // Buscar token
@@ -2715,19 +2738,22 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
     // API PÚblica - Submeter cotação
     submitQuotation: publicProcedure
       .input(z.object({
-        token: z.string(),
+        token: z.string().min(1).max(100),
         items: z.array(z.object({
-          requisitionItemId: z.number(),
-          unitPrice: z.string(),
-          totalPrice: z.string(),
-          deliveryTime: z.string().optional(),
-          notes: z.string().optional(),
-        })),
-        observations: z.string().optional(),
-        paymentTerms: z.string().optional(),
-        deliveryTime: z.string().optional(),
+          requisitionItemId: z.number().positive(),
+          unitPrice: z.string().max(50),
+          totalPrice: z.string().max(50),
+          deliveryTime: z.string().max(100).optional(),
+          notes: z.string().max(500).optional(),
+        })).min(1).max(100),
+        observations: z.string().max(2000).optional(),
+        paymentTerms: z.string().max(500).optional(),
+        deliveryTime: z.string().max(200).optional(),
       }))
       .mutation(async ({ input }) => {
+        // Rate limiting
+        submitQuotationRateLimit(input.token);
+        
         const database = await getDb();
         
         // Buscar token
@@ -2747,6 +2773,22 @@ ${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : 
         // Verificar se já foi submetido
         if (tokenData.submitted) {
           throw new Error("Cotação já foi submetida");
+        }
+        
+        // Validar valores monetários
+        for (const item of input.items) {
+          if (!isValidMoneyValue(item.unitPrice)) {
+            throw new TRPCError({
+              code: 'BAD_REQUEST',
+              message: 'Preço unitário inválido'
+            });
+          }
+          if (!isValidMoneyValue(item.totalPrice)) {
+            throw new TRPCError({
+              code: 'BAD_REQUEST',
+              message: 'Preço total inválido'
+            });
+          }
         }
         
         // Criar ou atualizar cotação
