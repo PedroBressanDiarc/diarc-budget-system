@@ -275,7 +275,7 @@ function DashboardLayoutContent({
       
       return true;
     });
-  }, [user?.role, canView, permissionsLoading]);
+  }, [user, canView, permissionsLoading]);
   
   // Filtrar itens da base de dados (todos visíveis por padrão)
   const filteredDatabaseItems = useMemo(() => {
