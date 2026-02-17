@@ -353,3 +353,11 @@
 - [x] Corrigir roles em inglês (buyer, director, storekeeper) para português
 - [x] Adicionar @ts-ignore e (as any) para propriedades faltando
 - [x] TODOS OS 123 ERROS TYPESCRIPT RESOLVIDOS ✅
+
+### BUG CRÍTICO: Usuários com custom_role_id NULL sendo bloqueados
+- [x] Investigar por que getUserPermissions não está liberando acesso mesmo com customRoleId NULL
+- [x] Verificar se endpoint está retornando customRole corretamente
+- [x] Corrigir lógica de filtragem no DashboardLayout
+- [x] Removido fallback incorreto que buscava custom_role por nome (linha 2594-2599)
+- [x] Endpoint agora retorna customRole: null quando customRoleId é NULL
+- [ ] Testar que diretor pedro@diarc.com.br tem acesso completo restaurado (aguardando teste do usuário)
