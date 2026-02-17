@@ -379,6 +379,21 @@
 - [ ] Corrigir lógica de salvamento
 
 ## RESET COMPLETO DO SISTEMA DE PERMISSÕES - CONCLUÍDO ✅
+
+## IMPLEMENTAÇÃO DO SISTEMA DE PERMISSÕES (DO ZERO) - EM ANDAMENTO 🚧
+- [x] Criar documento de especificação técnica (PERMISSIONS_SPEC.md)
+- [x] Criar schema do banco (custom_roles, role_permissions com campo action)
+- [x] Modificar tabela role_permissions (adicionar campo action, renomear permission → permission_level)
+- [x] Criar endpoints backend (router permissionRoles com CRUD completo)
+- [x] Criar middleware de verificação de permissões (permissionMiddleware.ts)
+- [x] Criar interface de gerenciamento (PermissionsManagement.tsx com checkboxes cíclicos)
+- [x] Adicionar rota /permissoes no App.tsx
+- [x] Adicionar item de menu Permissões no DashboardLayout
+- [x] Servidor backend iniciado com sucesso
+- [ ] Adicionar seletor de nível na página de Usuários (PENDENTE)
+- [ ] Criar hook usePermissions e aplicar filtragem no frontend (PENDENTE)
+- [ ] Criar página "Módulo Não Existe" (PENDENTE)
+- [ ] Testar sistema completo (PENDENTE)
 - [x] Limpar custom_role_id de todos os usuários
 - [x] Deletar dados de role_permissions
 - [x] Deletar dados de custom_roles
@@ -392,3 +407,38 @@
 - [x] Remover item de menu Permissões do DashboardLayout
 - [x] Corrigir imports de procedures no routers.ts
 - [x] Servidor backend iniciado com sucesso
+
+
+## IMPLEMENTAÇÃO DO SISTEMA DE PERMISSÕES CUSTOMIZÁVEIS (DO ZERO)
+- [ ] Criar documento de especificação técnica (PERMISSIONS_SPEC.md)
+- [ ] Criar schema do banco de dados
+  - [ ] Tabela permission_roles (id, name, display_name, description, created_by, created_at, updated_at)
+  - [ ] Tabela role_permissions (id, role_id, module, submodule, action, permission_level)
+  - [ ] Adicionar campo permission_role_id na tabela users
+- [ ] Criar endpoints backend
+  - [ ] CRUD de níveis (create, list, getById, update, delete)
+  - [ ] CRUD de permissões (updatePermissions, getUserPermissions)
+- [ ] Criar middleware de verificação de permissões
+  - [ ] Função checkPermission(module, submodule, action, requiredLevel)
+  - [ ] Procedures: readProcedure, writeProcedure por módulo
+- [ ] Criar interface de gerenciamento (Gestão → Permissões)
+  - [ ] Lista de níveis existentes
+  - [ ] Botão criar novo nível
+  - [ ] Modal de edição com checkboxes cíclicos (✅ → 👁️ → ❌)
+  - [ ] Estrutura hierárquica: Módulo → Submódulo → Ação
+- [ ] Adicionar seletor de nível na página Usuários
+  - [ ] Dropdown com lista de níveis disponíveis
+  - [ ] Atualizar endpoint users.update para aceitar permission_role_id
+- [ ] Criar hook usePermissions no frontend
+  - [ ] Função hasPermission(module, submodule, action, requiredLevel)
+  - [ ] Função hasReadAccess, hasWriteAccess
+- [ ] Aplicar filtragem no frontend
+  - [ ] Ocultar menus sem permissão no DashboardLayout
+  - [ ] Ocultar botões de criar/editar/excluir em modo leitura
+- [ ] Criar página "Módulo Não Existe" (404 customizado)
+- [ ] Testar sistema completo
+  - [ ] Criar nível de teste
+  - [ ] Atribuir a usuário
+  - [ ] Verificar filtragem de menus
+  - [ ] Verificar ocultação de botões em modo leitura
+  - [ ] Verificar bloqueio de endpoints no backend

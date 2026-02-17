@@ -721,14 +721,16 @@ export type InsertCustomRole = typeof customRoles.$inferInsert;
 
 /**
  * Role Permissions (Permissões por Nível)
- * Define permissões específicas para cada módulo/submódulo por nível
+ * Define permissões específicas para cada módulo/submódulo/ação por nível
+ * Granularidade: Módulo → Submódulo → Ação (view, create, edit, delete)
  */
 export const rolePermissions = mysqlTable("role_permissions", {
   id: int("id").autoincrement().primaryKey(),
   roleId: int("role_id").notNull(), // referência ao custom_role
   module: varchar("module", { length: 50 }).notNull(), // ex: "compras", "manutencoes"
   submodule: varchar("submodule", { length: 50 }), // ex: "manutencao", "administrativo" (null para módulo principal)
-  permission: varchar("permission", { length: 20 }).notNull(), // "total", "readonly", "none"
+  action: varchar("action", { length: 20 }).notNull(), // "view", "create", "edit", "delete"
+  permissionLevel: mysqlEnum("permission_level", ["total", "readonly", "none"]).notNull(), // nível de permissão
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });

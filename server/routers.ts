@@ -2736,6 +2736,187 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         return { success: true, quoteId };
       }),
   }),
+
+  // Router de Permissões (Sistema de Níveis Customizáveis)
+  permissionRoles: router({
+    // Listar todos os níveis
+    list: protectedProcedure.query(async () => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+      const roles = await database.select().from(customRoles).where(eq(customRoles.isActive, true));
+      return roles;
+    }),
+
+    // Obter nível por ID com permissões
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        const [role] = await database.select().from(customRoles).where(eq(customRoles.id, input.id));
+        if (!role) throw new Error("Nível não encontrado");
+        const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, input.id));
+        return { ...role, permissions };
+      }),
+
+    // Criar novo nível (apenas diretor)
+    create: adminProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        displayName: z.string().min(1),
+        description: z.string().optional(),
+        color: z.string().default("blue"),
+        permissions: z.array(z.object({
+          module: z.string(),
+          submodule: z.string().nullable(),
+          action: z.string(),
+          permissionLevel: z.enum(["total", "readonly", "none"]),
+        })).optional(),
+      }))
+      .mutation(async ({ input, ctx }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        
+        // Verificar se nome já existe
+        const existing = await database.select().from(customRoles).where(eq(customRoles.name, input.name));
+        if (existing.length > 0) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Já existe um nível com esse nome" });
+        }
+        
+        const [newRole] = await database.insert(customRoles).values({
+          name: input.name,
+          displayName: input.displayName,
+          description: input.description,
+          color: input.color,
+          isSystem: false,
+          createdBy: ctx.user.id,
+        });
+        
+        // Inserir permissões se fornecidas
+        if (input.permissions && input.permissions.length > 0 && newRole.insertId) {
+          const permissionsToInsert = input.permissions
+            .filter((p: any) => p.permissionLevel !== "none")
+            .map((p: any) => ({
+              roleId: newRole.insertId,
+              module: p.module,
+              submodule: p.submodule,
+              action: p.action,
+              permissionLevel: p.permissionLevel,
+            }));
+          if (permissionsToInsert.length > 0) {
+            await database.insert(rolePermissions).values(permissionsToInsert);
+          }
+        }
+        
+        return { success: true, id: newRole.insertId };
+      }),
+
+    // Atualizar nível (apenas diretor)
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        displayName: z.string().optional(),
+        description: z.string().optional(),
+        color: z.string().optional(),
+      }))
+      .mutation(async ({ input }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        const updateData: any = {};
+        if (input.displayName) updateData.displayName = input.displayName;
+        if (input.description !== undefined) updateData.description = input.description;
+        if (input.color) updateData.color = input.color;
+        await database.update(customRoles).set(updateData).where(eq(customRoles.id, input.id));
+        return { success: true };
+      }),
+
+    // Deletar nível (apenas diretor, não pode deletar se houver usuários vinculados)
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        
+        // Verificar se há usuários vinculados
+        const usersWithRole = await database.select().from(users).where(eq(users.customRoleId, input.id));
+        if (usersWithRole.length > 0) {
+          throw new TRPCError({ 
+            code: "BAD_REQUEST", 
+            message: `Não é possível deletar este nível pois há ${usersWithRole.length} usuário(s) vinculado(s)` 
+          });
+        }
+        
+        // Deletar permissões associadas
+        await database.delete(rolePermissions).where(eq(rolePermissions.roleId, input.id));
+        
+        // Marcar como inativo (soft delete)
+        await database.update(customRoles).set({ isActive: false }).where(eq(customRoles.id, input.id));
+        return { success: true };
+      }),
+
+    // Atualizar permissões de um nível (apenas diretor)
+    updatePermissions: adminProcedure
+      .input(z.object({
+        roleId: z.number(),
+        permissions: z.array(z.object({
+          module: z.string(),
+          submodule: z.string().nullable(),
+          action: z.string(),
+          permissionLevel: z.enum(["total", "readonly", "none"]),
+        })),
+      }))
+      .mutation(async ({ input }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        
+        // Deletar permissões antigas
+        await database.delete(rolePermissions).where(eq(rolePermissions.roleId, input.roleId));
+        
+        // Inserir novas permissões (exceto "none")
+        const permissionsToInsert = input.permissions
+          .filter((p: any) => p.permissionLevel !== "none")
+          .map((p: any) => ({
+            roleId: input.roleId,
+            module: p.module,
+            submodule: p.submodule,
+            action: p.action,
+            permissionLevel: p.permissionLevel,
+          }));
+        
+        if (permissionsToInsert.length > 0) {
+          await database.insert(rolePermissions).values(permissionsToInsert);
+        }
+        
+        return { success: true };
+      }),
+
+    // Obter permissões do usuário logado
+    getUserPermissions: protectedProcedure.query(async ({ ctx }: any) => {
+      const database = await getDb();
+      if (!database) throw new Error("Database not available");
+      
+      // Diretor tem acesso total a tudo
+      if (ctx.user.role === 'diretor') {
+        return { 
+          role: ctx.user.role, 
+          customRole: null, 
+          permissions: [], 
+          isDirector: true 
+        };
+      }
+      
+      // Se usuário tem customRoleId, buscar permissões customizadas
+      if (ctx.user.customRoleId) {
+        const [role] = await database.select().from(customRoles).where(eq(customRoles.id, ctx.user.customRoleId));
+        if (!role) return { role: ctx.user.role, customRole: null, permissions: [], isDirector: false };
+        const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, role.id));
+        return { role: ctx.user.role, customRole: role, permissions, isDirector: false };
+      }
+      
+      // Se customRoleId é NULL, retornar sem permissões (acesso universal a dashboard, chat, configurações)
+      return { role: ctx.user.role, customRole: null, permissions: [], isDirector: false };
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

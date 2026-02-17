@@ -1,0 +1,9 @@
+{
+  "query": "-- Adicionar campo action na tabela role_permissions\nALTER TABLE role_permissions ADD COLUMN action VARCHAR(20) NOT NULL DEFAULT 'view' AFTER submodule;\n\n-- Renomear campo permission para permission_level e converter para ENUM\nALTER TABLE role_permissions \n  CHANGE COLUMN permission permission_level ENUM('total', 'readonly', 'none') NOT NULL;\n\n-- Adicionar índice único para evitar duplicatas (role_id + module + submodule + action)\nALTER TABLE role_permissions \n  ADD UNIQUE KEY unique_permission (role_id, module, submodule, action);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute -- Adicionar campo action na tabela role_permissions\nALTER TABLE role_permissions ADD COLUMN action VARCHAR(20) NOT NULL DEFAULT 'view' AFTER submodule;\n\n-- Renomear campo permission para permission_level e converter para ENUM\nALTER TABLE role_permissions \n  CHANGE COLUMN permission permission_level ENUM('total', 'readonly', 'none') NOT NULL;\n\n-- Adicionar índice único para evitar duplicatas (role_id + module + submodule + action)\nALTER TABLE role_permissions \n  ADD UNIQUE KEY unique_permission (role_id, module, submodule, action);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1741
+}

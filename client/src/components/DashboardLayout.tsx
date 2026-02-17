@@ -86,13 +86,13 @@ const menuItems = [
       { label: "Relatórios Manutenções", path: "/manutencoes/relatorios", adminOnly: true },
     ]
   },
-  { icon: SettingsIcon, label: "Configurações", path: "/configuracoes" },
+  { icon: SettingsIcon, label: "Configura\u00e7\u00f5es", path: "/configuracoes" },
   {
     icon: UserCog,
-    label: "Gestão",
+    label: "Gest\u00e3o",
     submenu: [
-      { label: "Usuários", path: "/usuarios" },
-
+      { label: "Usu\u00e1rios", path: "/usuarios" },
+      { label: "Permiss\u00f5es", path: "/permissoes" },
     ]
   },
 ];
