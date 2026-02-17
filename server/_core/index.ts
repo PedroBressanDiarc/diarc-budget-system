@@ -10,6 +10,8 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { storagePut } from "../storage";
+import { apiLimiter, uploadLimiter } from "../middleware/rateLimiter";
+import helmet from "helmet";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -33,17 +35,39 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+  // Security headers middleware
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // unsafe-eval necessário para Vite dev
+        imgSrc: ["'self'", "data:", "https:"],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'", "data:"],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'self'"],
+        frameSrc: ["'none'"],
+      },
+    },
+    crossOriginEmbedderPolicy: false, // Desabilitar para compatibilidade
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  }));
+  
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // Cookie parser middleware
   app.use(cookieParser());
+  
+  // Rate limiting middleware (aplicado globalmente)
+  app.use("/api/", apiLimiter);
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
   
   // File upload endpoint
   const upload = multer({ storage: multer.memoryStorage() });
-  app.post("/api/upload", upload.single("file"), async (req, res) => {
+  app.post("/api/upload", uploadLimiter, upload.single("file"), async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ error: "No file uploaded" });

@@ -113,14 +113,14 @@ export function GlobalSearch({ open, onOpenChange }: GlobalSearchProps) {
     ...(budgets || [])
       .filter(b => 
         b.title.toLowerCase().includes(query.toLowerCase()) ||
-        (b.clientName && b.clientName.toLowerCase().includes(query.toLowerCase()))
+        ((b as any).clientName && (b as any).clientName.toLowerCase().includes(query.toLowerCase()))
       )
       .slice(0, 5)
       .map(b => ({
         id: b.id,
         type: 'budget' as const,
         title: b.title,
-        subtitle: b.clientName || 'Orçamento',
+        subtitle: (b as any).clientName || 'Orçamento',
         path: `/orcamentos/${b.id}`,
         icon: FileText,
       })),
@@ -129,14 +129,14 @@ export function GlobalSearch({ open, onOpenChange }: GlobalSearchProps) {
     ...(projects || [])
       .filter(p => 
         p.name.toLowerCase().includes(query.toLowerCase()) ||
-        (p.code && p.code.toLowerCase().includes(query.toLowerCase()))
+        ((p as any).code && (p as any).code.toLowerCase().includes(query.toLowerCase()))
       )
       .slice(0, 5)
       .map(p => ({
         id: p.id,
         type: 'project' as const,
         title: p.name,
-        subtitle: p.code || 'Obra',
+        subtitle: (p as any).code || 'Obra',
         path: `/obras`,
         icon: Building2,
       })),
