@@ -250,7 +250,6 @@ export default function Budgets() {
                 <div>
                   <Label htmlFor="clientPhone">Telefone</Label>
                   <PhoneInput
-                    // @ts-ignore
                     id="clientPhone"
                     value={clientFormData.phone}
                     onChange={(value) => setClientFormData({ ...clientFormData, phone: value })}

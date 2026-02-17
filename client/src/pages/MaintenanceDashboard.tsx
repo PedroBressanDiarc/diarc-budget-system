@@ -24,7 +24,6 @@ export default function MaintenanceDashboard() {
     const scheduledDate = new Date(s.scheduledDate);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    // @ts-ignore
     return scheduledDate < today && s.status === 'pending';
   }) || [];
 
@@ -37,7 +36,6 @@ export default function MaintenanceDashboard() {
   }) || [];
 
   // Custo total de manutenções este mês
-  // @ts-ignore
   const totalCostThisMonth = completedThisMonth.reduce((sum, r) => sum + (r.cost || 0), 0);
 
   // Equipamentos com mais manutenções

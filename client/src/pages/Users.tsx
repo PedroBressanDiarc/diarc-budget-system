@@ -91,14 +91,11 @@ export default function Users() {
     },
   });
 
-  // @ts-ignore
   const toggleActiveMutation = trpc.users.toggleActive.useMutation({
-    // @ts-ignore
     onSuccess: (data) => {
       toast.success(data.isActive ? "Usuário ativado!" : "Usuário desativado!");
       refetch();
     },
-    // @ts-ignore
     onError: (error) => {
       toast.error("Erro ao alterar status: " + error.message);
     },
