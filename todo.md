@@ -36,6 +36,7 @@
     - [x] Criar hook usePermissions() no frontend
     - [x] Atualizar DashboardLayout para filtrar menus baseado em permissões
     - [x] Adicionar mapeamento MODULE_KEYS para vincular paths a chaves de permissão
+    - [x] Corrigir erro "Cannot read properties of undefined (reading 'role')" ao dar F5
     - [ ] Atribuir custom_role_id aos usuários existentes para ativar permissões customizadas
 
 ### Investigar Role do Usuário Anelize
@@ -494,3 +495,9 @@
 - [x] Adicionar refetchOnMount: "always" na query getUserPermissions
 - [x] Adicionar refetchOnWindowFocus: false para evitar refetch desnecessário
 - [ ] Testar que F5 atualiza permissões sem necessidade de logout/login (aguardando teste do usuário)
+
+
+## BUG CRÍTICO: TypeError ao dar F5 (17/02/2026)
+- [ ] Erro: Cannot read properties of undefined (reading 'role')
+- [ ] Causa: DashboardLayout acessa user?.role antes de usePermissions carregar dados
+- [ ] Solução: Adicionar verificação de loading e retornar skeleton/loading state
