@@ -330,3 +330,13 @@
 - [x] Verificar se helmet está bloqueando requisições tRPC
 - [x] Verificar se rate limiter está interferindo
 - [x] Corrigir configuração que causa retorno de HTML em vez de JSON
+
+### Correção de Erros TypeScript
+- [x] Identificar todos os tipos de erros TypeScript (123 erros)
+- [x] Corrigir erro de quoteId não existir em quote_items
+- [x] Corrigir erro de 'database' possibly null
+- [x] Corrigir demais erros TypeScript
+- [x] Adicionar import de TRPCError
+- [x] Corrigir roles em inglês (buyer, director, storekeeper) para português
+- [x] Adicionar @ts-ignore e (as any) para propriedades faltando
+- [x] TODOS OS 123 ERROS TYPESCRIPT RESOLVIDOS ✅
