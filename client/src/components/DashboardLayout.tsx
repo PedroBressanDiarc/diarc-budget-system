@@ -311,7 +311,6 @@ function DashboardLayoutContent({
               {filteredMenuItems.map((item) => {
                 const isActive = location === item.path;
                 const hasSubmenu = item.submenu && item.submenu.length > 0;
-                // @ts-ignore
                 const isSubmenuOpen = openSubmenus[item.path] || false;
                 
                 return (
@@ -331,12 +330,10 @@ function DashboardLayoutContent({
                           {item.path === '/autorizacoes' && <PendingAuthBadge />}
                           {item.path === '/chat' && <UnreadMentionsBadge />}
                         </SidebarMenuButton>
-                        // @ts-ignore
                         {hasSubmenu && (user?.role === 'diretor' || !item.adminOnly) && (
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              // @ts-ignore
                               setOpenSubmenus(prev => ({ ...prev, [item.path]: !prev[item.path] }));
                             }}
                             className="h-10 w-8 flex items-center justify-center hover:bg-accent rounded-r-lg transition-colors shrink-0"
