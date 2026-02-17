@@ -311,7 +311,8 @@ function DashboardLayoutContent({
               {filteredMenuItems.map((item) => {
                 const isActive = location === item.path;
                 const hasSubmenu = item.submenu && item.submenu.length > 0;
-                const isSubmenuOpen = openSubmenus[item.path] || false;
+                const menuKey = item.path || item.label;
+                const isSubmenuOpen = openSubmenus[menuKey] || false;
                 
                 return (
                   <Fragment key={item.path || item.label}>
@@ -334,7 +335,8 @@ function DashboardLayoutContent({
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              setOpenSubmenus(prev => ({ ...prev, [item.path]: !prev[item.path] }));
+                              const menuKey = item.path || item.label;
+                              setOpenSubmenus(prev => ({ ...prev, [menuKey]: !prev[menuKey] }));
                             }}
                             className="h-10 w-8 flex items-center justify-center hover:bg-accent rounded-r-lg transition-colors shrink-0"
                           >
