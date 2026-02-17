@@ -31,7 +31,12 @@
   - [x] Adicionar campo customRoleId no endpoint users.update
   - [ ] Aplicar permissões customizadas em mais endpoints (compras, financeiro, banco de dados)
   - [ ] Adicionar seletor de nível customizado na página de Usuários
-  - [ ] Ocultar menus no frontend baseado em permissões do usuário
+  - [x] Ocultar menus no frontend baseado em permissões do usuário
+    - [x] Criar endpoint getUserPermissions que retorna permissões do usuário logado
+    - [x] Criar hook usePermissions() no frontend
+    - [x] Atualizar DashboardLayout para filtrar menus baseado em permissões
+    - [x] Adicionar mapeamento MODULE_KEYS para vincular paths a chaves de permissão
+    - [ ] Atribuir custom_role_id aos usuários existentes para ativar permissões customizadas
 
 ### Investigar Role do Usuário Anelize
 - [x] Problema identificado: Bug visual no frontend

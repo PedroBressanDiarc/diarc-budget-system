@@ -22,12 +22,46 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
+import { usePermissions } from "@/hooks/usePermissions";
 import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search, MessageCircle, DollarSign, UserPlus, Shield } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState, useMemo, Fragment } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 import { GlobalSearch } from "./GlobalSearch";
+
+// Mapeamento de paths para chaves de módulos de permissão
+const MODULE_KEYS: Record<string, string> = {
+  "/": "dashboard",
+  "/compras": "compras",
+  "/compras/manutencao": "compras_manutencao",
+  "/compras/administracao": "compras_administrativo",
+  "/compras/fabrica": "compras_fabrica",
+  "/compras/obras": "compras_obras",
+  "/autorizacoes": "autorizacoes",
+  "/estoque/pecas-finalizadas": "estoque_pecas",
+  "/estoque/interno": "estoque_interno",
+  "/orcamentos": "orcamentos",
+  "/manutencoes": "manutencoes",
+  "/manutencoes/dashboard": "manutencoes",
+  "/chat": "chat",
+  "/financeiro": "financeiro",
+  "/financeiro/recebimentos": "financeiro_recebimentos",
+  "/financeiro/pagamentos": "financeiro_pagamentos",
+  "/relatorios": "relatorios",
+  "/relatorios/economias": "relatorios_economias",
+  "/relatorios/obras": "relatorios_obras",
+  "/alertas-orcamento": "relatorios_alertas",
+  "/manutencoes/relatorios": "relatorios_manutencoes",
+  "/configuracoes": "configuracoes",
+  "/usuarios": "gestao_usuarios",
+  "/permissoes": "gestao_permissoes",
+  "/fornecedores": "banco_fornecedores",
+  "/equipment": "banco_equipamentos",
+  "/itens": "banco_itens",
+  "/obras": "banco_projetos",
+  "/locais": "banco_locais",
+};
 
 const menuItems = [
   { 
@@ -198,36 +232,62 @@ function DashboardLayoutContent({
   const [searchOpen, setSearchOpen] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const activeMenuItem = menuItems.find(item => item.path === location);
+  const { hasPermission, isLoading: permissionsLoading } = usePermissions();
   
-  // Filtrar itens do menu baseado no role do usuário
+  // Filtrar itens do menu baseado em permissões customizadas
   const filteredMenuItems = useMemo(() => {
-    console.log('Filtering menu for role:', user?.role);
-    if (user?.role === 'manutencao') {
-      // Role manutenção: Dashboard, Manutenções e Relatórios de Manutenções
-      const filtered = menuItems.filter(item => 
-        item.path === '/manutencoes/dashboard' ||
-        item.path === '/manutencoes' ||
-        item.path === '/manutencoes/relatorios'
-      );
-      console.log('Filtered items for manutencao:', filtered);
-      return filtered;
-    }
-    // Outros roles: todos os itens (exceto adminOnly se não for diretor)
-    return menuItems.filter(item => !item.adminOnly || user?.role === 'diretor');
-  }, [user?.role]);
+    if (permissionsLoading) return [];
+    
+    return menuItems.filter(item => {
+      // Verificar permissão do item principal
+      if (item.path) {
+        const moduleKey = MODULE_KEYS[item.path];
+        if (moduleKey && !hasPermission(moduleKey)) {
+          return false;
+        }
+      }
+      
+      // Se tem submenu, filtrar subitens
+      if (item.submenu) {
+        const filteredSubmenu = item.submenu.filter(subitem => {
+          const moduleKey = MODULE_KEYS[subitem.path];
+          if (moduleKey && !hasPermission(moduleKey)) {
+            return false;
+          }
+          // Verificar adminOnly (apenas diretor)
+          if (subitem.adminOnly && user?.role !== 'diretor') {
+            return false;
+          }
+          return true;
+        });
+        
+        // Se não tem subitens visíveis, ocultar item pai
+        if (filteredSubmenu.length === 0) {
+          return false;
+        }
+      }
+      
+      // Verificar adminOnly (apenas diretor)
+      if (item.adminOnly && user?.role !== 'diretor') {
+        return false;
+      }
+      
+      return true;
+    });
+  }, [user?.role, hasPermission, permissionsLoading]);
   
-  // Filtrar itens da base de dados baseado no role
+  // Filtrar itens da base de dados baseado em permissões customizadas
   const filteredDatabaseItems = useMemo(() => {
-    console.log('Filtering database for role:', user?.role);
-    if (user?.role === 'manutencao') {
-      // Role manutenção: apenas Equipamentos
-      const filtered = databaseMenuItems.filter(item => item.path === '/equipment');
-      console.log('Filtered database items for manutencao:', filtered);
-      return filtered;
-    }
-    // Outros roles: todos os itens
-    return databaseMenuItems;
-  }, [user?.role]);
+    if (permissionsLoading) return [];
+    
+    return databaseMenuItems.filter(item => {
+      const moduleKey = MODULE_KEYS[item.path];
+      if (moduleKey && !hasPermission(moduleKey)) {
+        return false;
+      }
+      return true;
+    });
+  }, [user?.role, hasPermission, permissionsLoading]);
   const isMobile = useIsMobile();
 
   // Atalho de teclado para busca global (Ctrl+K ou Cmd+K)

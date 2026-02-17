@@ -2578,15 +2578,25 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         return { success: true };
       }),
 
-    // Obter permissões de um usuário (baseado no role dele)
+    // Obter permissões de um usuário (baseado no customRoleId ou role)
     getUserPermissions: protectedProcedure.query(async ({ ctx }: any) => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");
+      
+      // Se usuário tem customRoleId, buscar permissões customizadas
+      if (ctx.user.customRoleId) {
+        const [role] = await database.select().from(customRoles).where(eq(customRoles.id, ctx.user.customRoleId));
+        if (!role) return { role: ctx.user.role, customRole: null, permissions: [] };
+        const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, role.id));
+        return { role: ctx.user.role, customRole: role, permissions };
+      }
+      
+      // Fallback: buscar por nome do role fixo (compatibilidade com sistema antigo)
       const userRole = ctx.user.role;
       const [role] = await database.select().from(customRoles).where(eq(customRoles.name, userRole));
-      if (!role) return { role: userRole, permissions: [] };
+      if (!role) return { role: userRole, customRole: null, permissions: [] };
       const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, role.id));
-      return { role: userRole, permissions };
+      return { role: userRole, customRole: role, permissions };
     }),
   }),
 
