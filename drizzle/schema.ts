@@ -206,17 +206,14 @@ export type InsertClient = typeof clients.$inferInsert;
  */
 export const budgets = mysqlTable("budgets", {
   id: int("id").autoincrement().primaryKey(),
-  budgetNumber: varchar("budgetNumber", { length: 50 }).notNull().unique(),
+  budgetNumber: varchar("budget_number", { length: 50 }).notNull().unique(),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
-  clientId: int("clientId").notNull(),
-  validUntil: varchar("validUntil", { length: 10 }),
-  observations: text("observations"),
-  templateId: int("templateId"),
+  templateId: int("template_id"),
   status: mysqlEnum("status", ["draft", "sent", "approved", "rejected"]).default("draft").notNull(),
-  createdBy: int("createdBy").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  createdBy: int("created_by").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 export type Budget = typeof budgets.$inferSelect;

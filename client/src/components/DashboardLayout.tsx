@@ -52,8 +52,7 @@ const menuItems = [
   { icon: CheckCircle, label: "Autorizações", path: "/autorizacoes", adminOnly: true },
   { 
     icon: Warehouse, 
-    label: "Estoque", 
-    path: "/estoque",
+    label: "Estoque",
     submenu: [
       { label: "Peças Finalizadas", path: "/estoque/pecas-finalizadas" },
       { label: "Estoque Interno", path: "/estoque/interno" },
