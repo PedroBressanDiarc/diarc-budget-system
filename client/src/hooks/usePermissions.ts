@@ -33,7 +33,7 @@ export function usePermissions() {
     if (data.user.role === "diretor") return "total";
 
     // Módulos universais (todos têm acesso)
-    const universalModules = ["dashboard", "chat", "configuracoes"];
+    const universalModules = ["chat", "configuracoes"];
     if (universalModules.includes(moduleKey) && !submoduleKey) {
       return "total";
     }

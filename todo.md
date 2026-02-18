@@ -543,3 +543,8 @@
 - [x] Identificar causa: guard retornava menuItems completo durante carregamento
 - [x] Corrigir para retornar array vazio enquanto permissões carregam
 - [ ] Publicar e validar que Dashboard é ocultado sem permissão
+
+### Debug: Dashboard continua aparecendo após correções
+- [x] Identificar causa raiz: Dashboard estava na lista de módulos universais
+- [x] Remover Dashboard da lista universalModules no usePermissions
+- [ ] Publicar e validar que Dashboard é ocultado sem permissão
