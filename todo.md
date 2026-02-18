@@ -519,3 +519,9 @@
 - [ ] Testar consulta getUserPermissions para usuário com permissões configuradas
 - [ ] Corrigir inconsistências no mapeamento de chaves de módulos
 - [ ] Validar que menus são filtrados corretamente após correção
+
+### Bug Crítico: getUserPermissions não retorna campo user
+- [x] Identificar via logs que data.user é undefined
+- [x] Corrigir endpoint getUserPermissions para incluir ctx.user no retorno
+- [x] Remover logs de debug após correção
+- [ ] Publicar e testar que permissões são aplicadas corretamente

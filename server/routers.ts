@@ -2905,6 +2905,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
       // Diretor tem acesso total a tudo
       if (ctx.user.role === 'diretor') {
         return { 
+          user: ctx.user,
           role: ctx.user.role, 
           customRole: null, 
           permissions: [], 
@@ -2915,13 +2916,13 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
       // Se usuário tem customRoleId, buscar permissões customizadas
       if (ctx.user.customRoleId) {
         const [role] = await database.select().from(customRoles).where(eq(customRoles.id, ctx.user.customRoleId));
-        if (!role) return { role: ctx.user.role, customRole: null, permissions: [], isDirector: false };
+        if (!role) return { user: ctx.user, role: ctx.user.role, customRole: null, permissions: [], isDirector: false };
         const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, role.id));
-        return { role: ctx.user.role, customRole: role, permissions, isDirector: false };
+        return { user: ctx.user, role: ctx.user.role, customRole: role, permissions, isDirector: false };
       }
       
       // Se customRoleId é NULL, retornar sem permissões (acesso universal a dashboard, chat, configurações)
-      return { role: ctx.user.role, customRole: null, permissions: [], isDirector: false };
+      return { user: ctx.user, role: ctx.user.role, customRole: null, permissions: [], isDirector: false };
     }),
   }),
 });
