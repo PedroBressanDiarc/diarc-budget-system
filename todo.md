@@ -532,3 +532,9 @@
 - [x] Corrigir lógica de filtragem: usar map + filter sem mutação
 - [x] Ajustar para mostrar item pai com permissão mesmo sem subitens visíveis
 - [ ] Publicar e validar que todos os módulos aparecem corretamente
+
+### Bug: F5 não atualiza permissões após alteração no Gestão
+- [x] Verificar se permissões foram salvas corretamente no banco (OK)
+- [x] Adicionar invalidação de cache getUserPermissions após salvar
+- [x] Atualizar mensagem de sucesso informando sobre F5
+- [ ] Publicar e testar que F5 atualiza permissões corretamente

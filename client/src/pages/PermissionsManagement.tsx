@@ -102,6 +102,7 @@ export default function PermissionsManagement() {
   const [permissions, setPermissions] = useState<PermissionState[]>([]);
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
 
+  const utils = trpc.useUtils();
   const { data: roles, refetch } = trpc.permissionRoles.list.useQuery();
   const createMutation = trpc.permissionRoles.create.useMutation();
   const updateMutation = trpc.permissionRoles.update.useMutation();
@@ -221,7 +222,9 @@ export default function PermissionsManagement() {
         roleId: selectedRole.id,
         permissions: permissions.filter(p => p.permissionLevel !== "none"), // Não salvar "none"
       });
-      toast.success("Permissões atualizadas com sucesso!");
+      // Invalidar cache de permissões para forçar reload
+      await utils.permissionRoles.getUserPermissions.invalidate();
+      toast.success("Permissões atualizadas! Usuários devem recarregar a página (F5) para ver as mudanças.");
       setConfigDialogOpen(false);
       refetch();
     } catch (error: any) {
