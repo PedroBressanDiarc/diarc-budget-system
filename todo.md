@@ -525,3 +525,9 @@
 - [x] Corrigir endpoint getUserPermissions para incluir ctx.user no retorno
 - [x] Remover logs de debug após correção
 - [ ] Publicar e testar que permissões são aplicadas corretamente
+
+### Bug: Filtragem de menus parcialmente incorreta
+- [x] Verificar permissões salvas no banco para almoxarife
+- [x] Identificar causa: lógica verificava item pai antes de filtrar submenu
+- [x] Corrigir lógica de filtragem: usar map + filter sem mutação
+- [ ] Publicar e validar que todos os módulos aparecem corretamente

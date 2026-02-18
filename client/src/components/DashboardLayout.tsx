@@ -240,16 +240,10 @@ function DashboardLayoutContent({
     // Aguardar user e user.role carregarem completamente para evitar erro
     if (!user || typeof user !== 'object' || !user.role || permissionsLoading) return menuItems; // Mostrar tudo enquanto carrega
     
-    return menuItems.filter(item => {
+    return menuItems.map(item => {
       // Verificar adminOnly (apenas diretor)
       if (item.adminOnly && user.role !== 'diretor') {
-        return false;
-      }
-      
-      // Verificar permissão do item principal
-      const moduleKeys = getModuleKeys(item.path || "");
-      if (moduleKeys && !canView(moduleKeys.module, moduleKeys.submodule)) {
-        return false;
+        return null;
       }
       
       // Se tem submenu, filtrar subitens
@@ -269,12 +263,21 @@ function DashboardLayoutContent({
         
         // Se não tem subitens visíveis, ocultar item pai
         if (filteredSubmenu.length === 0) {
-          return false;
+          return null;
+        }
+        
+        // Retornar item com submenu filtrado (sem mutação)
+        return { ...item, submenu: filteredSubmenu };
+      } else {
+        // Se não tem submenu, verificar permissão do item principal
+        const moduleKeys = getModuleKeys(item.path || "");
+        if (moduleKeys && !canView(moduleKeys.module, moduleKeys.submodule)) {
+          return null;
         }
       }
       
-      return true;
-    });
+      return item;
+    }).filter(item => item !== null);
   }, [user, canView, permissionsLoading]);
   
   // Filtrar itens da base de dados (todos visíveis por padrão)
