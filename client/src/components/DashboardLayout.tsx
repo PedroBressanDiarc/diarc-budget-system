@@ -261,8 +261,18 @@ function DashboardLayoutContent({
           return true;
         });
         
-        // Se não tem subitens visíveis, ocultar item pai
+        // Se não tem subitens visíveis, verificar se item pai tem permissão própria
         if (filteredSubmenu.length === 0) {
+          // Se item pai tem path, verificar permissão
+          if (item.path) {
+            const moduleKeys = getModuleKeys(item.path);
+            if (moduleKeys && !canView(moduleKeys.module, moduleKeys.submodule)) {
+              return null;
+            }
+            // Tem permissão, mostrar sem submenu
+            return { ...item, submenu: undefined };
+          }
+          // Não tem path nem subitens, ocultar
           return null;
         }
         

@@ -530,4 +530,5 @@
 - [x] Verificar permissões salvas no banco para almoxarife
 - [x] Identificar causa: lógica verificava item pai antes de filtrar submenu
 - [x] Corrigir lógica de filtragem: usar map + filter sem mutação
+- [x] Ajustar para mostrar item pai com permissão mesmo sem subitens visíveis
 - [ ] Publicar e validar que todos os módulos aparecem corretamente
