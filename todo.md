@@ -665,3 +665,26 @@
   - [ ] Criar checkpoint com descrição completa
   - [ ] Publicar em diarc.cloud
   - [ ] Testar em produção com usuários reais
+
+
+---
+
+## 🔥 REMOÇÃO COMPLETA DO SISTEMA DE PERMISSÕES
+
+### Decisão Final
+- Sistema de permissões (customizado e fixo) está bugado e complexo demais
+- Decisão: REMOVER COMPLETAMENTE todo código de permissões
+- Todos os usuários terão acesso livre a todos os módulos
+- Apenas itens marcados como adminOnly serão restritos ao Diretor
+
+### Tarefas de Remoção
+
+- [x] Deletar arquivo client/src/hooks/usePermissions.ts
+- [x] Remover importações de usePermissions em todos os arquivos
+- [x] Remover componente PermissionButton (substituir por Button normal)
+- [x] Remover lógica de filtragem de menus no DashboardLayout
+- [ ] Remover página /permissoes do menu Gestão (opcional)
+- [ ] Remover endpoints permissionRoles.* do backend (opcional)
+- [x] Manter apenas verificação de adminOnly (user.role === 'diretor')
+- [x] Todos os usuários agora veem todos os menus e botões
+- [ ] Criar checkpoint final

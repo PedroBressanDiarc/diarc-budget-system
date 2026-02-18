@@ -12,7 +12,7 @@ import { Plus, Pencil, Trash2, Package, AlertTriangle, Upload } from "lucide-rea
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PermissionButton } from "@/components/PermissionButton";
+
 
 export default function InternalStock() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -258,10 +258,10 @@ export default function InternalStock() {
         </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
             <DialogTrigger asChild>
-              <PermissionButton module="estoque" submodule="estoque_interno" action="write">
+              <Button>
                 <Plus className="mr-2 h-4 w-4" />
                 Novo Item
-              </PermissionButton>
+              </Button>
             </DialogTrigger>
             <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
             <form onSubmit={handleCreate}>
