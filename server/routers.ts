@@ -2897,6 +2897,22 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         return { success: true };
       }),
 
+    // Obter permissões por nome do role (para useRolePermissions)
+    getUserPermissionsByRole: protectedProcedure
+      .input(z.object({ roleName: z.string() }))
+      .query(async ({ input }: any) => {
+        const database = await getDb();
+        if (!database) throw new Error("Database not available");
+        
+        // Buscar custom_role correspondente ao roleName
+        const [role] = await database.select().from(customRoles).where(eq(customRoles.name, input.roleName));
+        if (!role) return []; // Se não encontrou, retornar vazio (acesso total)
+        
+        // Buscar permissões do role
+        const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, role.id));
+        return permissions;
+      }),
+
     // Obter permissões do usuário logado
     getUserPermissions: protectedProcedure.query(async ({ ctx }: any) => {
       const database = await getDb();

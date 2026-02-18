@@ -688,3 +688,26 @@
 - [x] Manter apenas verificação de adminOnly (user.role === 'diretor')
 - [x] Todos os usuários agora veem todos os menus e botões
 - [ ] Criar checkpoint final
+
+
+---
+
+## 🎨 SISTEMA SIMPLES DE CONFIGURAÇÃO DE ACESSOS
+
+### Objetivo
+- Criar interface visual onde o usuário edita quais roles veem quais módulos
+- Sistema grava configurações no banco de dados
+- DashboardLayout lê configurações e filtra menus dinamicamente
+- Reutilizar página /permissoes existente (assets visuais já estão legais)
+
+### Tarefas
+
+- [x] Analisar página /permissoes existente
+- [x] Criar 5 custom_roles fixos no banco (diretor, comprador, almoxarife, manutencao, financeiro)
+- [x] Criar endpoint getUserPermissionsByRole no backend
+- [x] Redesenhar interface /permissoes com matriz visual (módulos x roles)
+- [x] Implementar salvamento de configurações
+- [x] Criar hook useRolePermissions
+- [x] Atualizar DashboardLayout para ler permissões do banco
+- [ ] Testar com diferentes roles
+- [ ] Criar checkpoint

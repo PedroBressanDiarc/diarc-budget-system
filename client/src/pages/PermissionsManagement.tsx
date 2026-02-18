@@ -1,13 +1,10 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { Plus, Settings, Trash2, X, Check, Eye, Pencil, ChevronDown, ChevronRight } from "lucide-react";
+import { X, Check, Eye, Pencil, ChevronDown, ChevronRight, Save } from "lucide-react";
 
 type PermissionLevel = "none" | "readonly" | "write" | "total";
 
@@ -94,106 +91,48 @@ const PERMISSION_ICONS = {
 const PERMISSION_CYCLE: PermissionLevel[] = ["none", "readonly", "write", "total"];
 
 export default function PermissionsManagement() {
-  const [createDialogOpen, setCreateDialogOpen] = useState(false);
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [configDialogOpen, setConfigDialogOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState<any>(null);
-  const [newRole, setNewRole] = useState({ name: "", displayName: "", description: "", color: "#3b82f6" });
   const [permissions, setPermissions] = useState<PermissionState[]>([]);
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
 
-  const utils = trpc.useUtils();
   const { data: roles, refetch } = trpc.permissionRoles.list.useQuery();
-  const createMutation = trpc.permissionRoles.create.useMutation();
-  const updateMutation = trpc.permissionRoles.update.useMutation();
-  const deleteMutation = trpc.permissionRoles.delete.useMutation();
   const updatePermissionsMutation = trpc.permissionRoles.updatePermissions.useMutation();
+  const utils = trpc.useUtils();
 
-  const handleCreate = async () => {
-    try {
-      await createMutation.mutateAsync(newRole);
-      toast.success("Nível criado com sucesso!");
-      setCreateDialogOpen(false);
-      setNewRole({ name: "", displayName: "", description: "", color: "#3b82f6" });
-      refetch();
-    } catch (error: any) {
-      toast.error(error.message || "Erro ao criar nível");
-    }
-  };
-
-  const handleUpdate = async () => {
-    if (!selectedRole) return;
-    try {
-      await updateMutation.mutateAsync({
-        id: selectedRole.id,
-        displayName: selectedRole.displayName,
-        description: selectedRole.description,
-        color: selectedRole.color,
-      });
-      toast.success("Nível atualizado com sucesso!");
-      setEditDialogOpen(false);
-      refetch();
-    } catch (error: any) {
-      toast.error(error.message || "Erro ao atualizar nível");
-    }
-  };
-
-  const handleDelete = async (id: number) => {
-    if (!confirm("Tem certeza que deseja deletar este nível? Usuários vinculados perderão suas permissões.")) return;
-    try {
-      await deleteMutation.mutateAsync({ id });
-      toast.success("Nível deletado com sucesso!");
-      refetch();
-    } catch (error: any) {
-      toast.error(error.message || "Erro ao deletar nível");
-    }
-  };
-
-  const handleConfigurePermissions = async (role: any) => {
+  const handleConfigureRole = async (role: any) => {
     setSelectedRole(role);
     
-    // Inicializar permissões: carregar do banco ou criar padrão
-    const initialPermissions: PermissionState[] = [];
+    // Buscar permissões existentes do role
+    const existingPerms = await utils.permissionRoles.getUserPermissions.fetch({ roleId: role.id });
+    setPermissions(existingPerms);
     
-    MODULES.forEach(module => {
-      // Módulo principal
-      const modulePermission = role.permissions?.find((p: any) => p.module === module.key && !p.submodule);
-      initialPermissions.push({
-        module: module.key,
-        submodule: null,
-        permissionLevel: modulePermission?.permissionLevel || "none",
-      });
-      
-      // Submódulos
-      module.submodules.forEach(sub => {
-        const subPermission = role.permissions?.find((p: any) => p.module === module.key && p.submodule === sub.key);
-        initialPermissions.push({
-          module: module.key,
-          submodule: sub.key,
-          permissionLevel: subPermission?.permissionLevel || "none",
-        });
-      });
-    });
+    // Expandir módulos que têm permissões
+    const modulesWithPerms = new Set(existingPerms.map((p: any) => p.module));
+    setExpandedModules(modulesWithPerms);
     
-    setPermissions(initialPermissions);
     setConfigDialogOpen(true);
   };
 
-  const getPermission = (module: string, submodule: string | null): PermissionLevel => {
-    const perm = permissions.find(p => p.module === module && p.submodule === submodule);
+  const getPermissionLevel = (module: string, submodule: string | null): PermissionLevel => {
+    const perm = permissions.find(
+      (p) => p.module === module && p.submodule === submodule
+    );
     return perm?.permissionLevel || "none";
   };
 
   const cyclePermission = (module: string, submodule: string | null) => {
-    const current = getPermission(module, submodule);
+    const current = getPermissionLevel(module, submodule);
     const currentIndex = PERMISSION_CYCLE.indexOf(current);
     const next = PERMISSION_CYCLE[(currentIndex + 1) % PERMISSION_CYCLE.length];
-    
-    setPermissions(prev => {
-      const existing = prev.find(p => p.module === module && p.submodule === submodule);
+
+    setPermissions((prev) => {
+      const existing = prev.find(
+        (p) => p.module === module && p.submodule === submodule
+      );
       if (existing) {
-        return prev.map(p => 
-          p.module === module && p.submodule === submodule 
+        return prev.map((p) =>
+          p.module === module && p.submodule === submodule
             ? { ...p, permissionLevel: next }
             : p
         );
@@ -204,7 +143,7 @@ export default function PermissionsManagement() {
   };
 
   const toggleModuleExpansion = (moduleKey: string) => {
-    setExpandedModules(prev => {
+    setExpandedModules((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(moduleKey)) {
         newSet.delete(moduleKey);
@@ -219,12 +158,10 @@ export default function PermissionsManagement() {
     if (!selectedRole) return;
     const payload = {
       roleId: selectedRole.id,
-      permissions: permissions.filter(p => p.permissionLevel !== "none"), // Não salvar "none"
+      permissions: permissions.filter((p) => p.permissionLevel !== "none"), // Não salvar "none"
     };
-    console.log('[handleSavePermissions] Enviando payload:', payload);
     try {
       await updatePermissionsMutation.mutateAsync(payload);
-      // Invalidar cache de permissões para forçar reload
       await utils.permissionRoles.getUserPermissions.invalidate();
       toast.success("Permissões atualizadas! Usuários devem recarregar a página (F5) para ver as mudanças.");
       setConfigDialogOpen(false);
@@ -238,15 +175,11 @@ export default function PermissionsManagement() {
     <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold">Gerenciamento de Permissões</h1>
+          <h1 className="text-3xl font-bold">Configuração de Acessos</h1>
           <p className="text-muted-foreground mt-2">
-            Configure níveis de acesso e permissões para cada cargo do sistema
+            Configure quais módulos cada tipo de usuário pode acessar
           </p>
         </div>
-        <Button onClick={() => setCreateDialogOpen(true)}>
-          <Plus className="mr-2 h-4 w-4" />
-          Criar Novo Nível
-        </Button>
       </div>
 
       {/* Legenda */}
@@ -268,15 +201,15 @@ export default function PermissionsManagement() {
         </CardContent>
       </Card>
 
-      {/* Lista de Níveis */}
+      {/* Lista de Roles Fixos */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {roles?.map((role) => (
           <Card key={role.id} className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div 
-                    className="w-4 h-4 rounded-full" 
+                  <div
+                    className="w-4 h-4 rounded-full"
                     style={{ backgroundColor: role.color }}
                   />
                   <div>
@@ -284,214 +217,99 @@ export default function PermissionsManagement() {
                     <CardDescription className="text-xs">{role.name}</CardDescription>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => {
-                      setSelectedRole(role);
-                      setEditDialogOpen(true);
-                    }}
-                  >
-                    <Settings className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDelete(role.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                {role.description || "Sem descrição"}
-              </p>
-              <Button 
-                className="w-full" 
-                variant="outline"
-                onClick={() => handleConfigurePermissions(role)}
+              <p className="text-sm text-muted-foreground mb-4">{role.description}</p>
+              <Button
+                className="w-full"
+                onClick={() => handleConfigureRole(role)}
               >
-                Configurar Permissões
+                Configurar Acessos
               </Button>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Dialog: Criar Nível */}
-      <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Criar Novo Nível</DialogTitle>
-            <DialogDescription>
-              Defina as informações básicas do novo nível de permissão
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="name">Nome (identificador único)</Label>
-              <Input
-                id="name"
-                value={newRole.name}
-                onChange={(e) => setNewRole({ ...newRole, name: e.target.value })}
-                placeholder="ex: supervisor"
-              />
-            </div>
-            <div>
-              <Label htmlFor="displayName">Nome de Exibição</Label>
-              <Input
-                id="displayName"
-                value={newRole.displayName}
-                onChange={(e) => setNewRole({ ...newRole, displayName: e.target.value })}
-                placeholder="ex: Supervisor"
-              />
-            </div>
-            <div>
-              <Label htmlFor="description">Descrição</Label>
-              <Textarea
-                id="description"
-                value={newRole.description}
-                onChange={(e) => setNewRole({ ...newRole, description: e.target.value })}
-                placeholder="Descreva as responsabilidades deste nível"
-              />
-            </div>
-            <div>
-              <Label htmlFor="color">Cor</Label>
-              <Input
-                id="color"
-                type="color"
-                value={newRole.color}
-                onChange={(e) => setNewRole({ ...newRole, color: e.target.value })}
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
-              Cancelar
-            </Button>
-            <Button onClick={handleCreate}>Criar</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Dialog: Editar Nível */}
-      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Editar Nível</DialogTitle>
-            <DialogDescription>
-              Atualize as informações do nível de permissão
-            </DialogDescription>
-          </DialogHeader>
-          {selectedRole && (
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="edit-displayName">Nome de Exibição</Label>
-                <Input
-                  id="edit-displayName"
-                  value={selectedRole.displayName}
-                  onChange={(e) => setSelectedRole({ ...selectedRole, displayName: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label htmlFor="edit-description">Descrição</Label>
-                <Textarea
-                  id="edit-description"
-                  value={selectedRole.description || ""}
-                  onChange={(e) => setSelectedRole({ ...selectedRole, description: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label htmlFor="edit-color">Cor</Label>
-                <Input
-                  id="edit-color"
-                  type="color"
-                  value={selectedRole.color}
-                  onChange={(e) => setSelectedRole({ ...selectedRole, color: e.target.value })}
-                />
-              </div>
-            </div>
-          )}
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setEditDialogOpen(false)}>
-              Cancelar
-            </Button>
-            <Button onClick={handleUpdate}>Salvar</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Dialog: Configurar Permissões */}
+      {/* Dialog de Configuração */}
       <Dialog open={configDialogOpen} onOpenChange={setConfigDialogOpen}>
-        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Configurar Permissões - {selectedRole?.displayName}</DialogTitle>
+            <DialogTitle>
+              Configurar Acessos: {selectedRole?.displayName}
+            </DialogTitle>
             <DialogDescription>
-              Clique nos ícones para alternar entre os estados de permissão
+              Clique nos ícones para alternar entre os níveis de permissão
             </DialogDescription>
           </DialogHeader>
-          
-          <div className="space-y-2">
-            {MODULES.map(module => {
-              const modulePermission = getPermission(module.key, null);
-              const moduleConfig = PERMISSION_ICONS[modulePermission];
-              const ModuleIcon = moduleConfig.icon;
-              const hasSubmodules = module.submodules.length > 0;
+
+          <div className="space-y-2 py-4">
+            {MODULES.map((module) => {
+              const moduleLevel = getPermissionLevel(module.key, null);
               const isExpanded = expandedModules.has(module.key);
-              const shouldShowSubmodules = hasSubmodules && modulePermission !== "none" && isExpanded;
+              const hasSubmodules = module.submodules.length > 0;
 
               return (
                 <div key={module.key} className="border rounded-lg p-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
                       {hasSubmodules && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6"
+                        <button
                           onClick={() => toggleModuleExpansion(module.key)}
-                          disabled={modulePermission === "none"}
+                          className="p-1 hover:bg-gray-100 rounded"
                         >
                           {isExpanded ? (
                             <ChevronDown className="h-4 w-4" />
                           ) : (
                             <ChevronRight className="h-4 w-4" />
                           )}
-                        </Button>
+                        </button>
                       )}
                       <span className="font-medium">{module.label}</span>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className={`${moduleConfig.bg} hover:${moduleConfig.bg}`}
+
+                    <button
                       onClick={() => cyclePermission(module.key, null)}
+                      className={`${PERMISSION_ICONS[moduleLevel].bg} p-2 rounded hover:opacity-80 transition-opacity`}
                     >
-                      <ModuleIcon className={`h-5 w-5 ${moduleConfig.color}`} />
-                    </Button>
+                      {(() => {
+                        const Icon = PERMISSION_ICONS[moduleLevel].icon;
+                        return (
+                          <Icon
+                            className={`h-4 w-4 ${PERMISSION_ICONS[moduleLevel].color}`}
+                          />
+                        );
+                      })()}
+                    </button>
                   </div>
 
-                  {shouldShowSubmodules && (
-                    <div className="mt-3 ml-8 space-y-2">
-                      {module.submodules.map(sub => {
-                        const subPermission = getPermission(module.key, sub.key);
-                        const subConfig = PERMISSION_ICONS[subPermission];
-                        const SubIcon = subConfig.icon;
-
+                  {/* Submódulos */}
+                  {hasSubmodules && isExpanded && (
+                    <div className="ml-8 mt-2 space-y-2">
+                      {module.submodules.map((submodule) => {
+                        const subLevel = getPermissionLevel(module.key, submodule.key);
                         return (
-                          <div key={sub.key} className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded">
-                            <span className="text-sm">{sub.label}</span>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className={`${subConfig.bg} hover:${subConfig.bg}`}
-                              onClick={() => cyclePermission(module.key, sub.key)}
+                          <div
+                            key={submodule.key}
+                            className="flex items-center justify-between py-2 border-t"
+                          >
+                            <span className="text-sm">{submodule.label}</span>
+                            <button
+                              onClick={() =>
+                                cyclePermission(module.key, submodule.key)
+                              }
+                              className={`${PERMISSION_ICONS[subLevel].bg} p-2 rounded hover:opacity-80 transition-opacity`}
                             >
-                              <SubIcon className={`h-4 w-4 ${subConfig.color}`} />
-                            </Button>
+                              {(() => {
+                                const Icon = PERMISSION_ICONS[subLevel].icon;
+                                return (
+                                  <Icon
+                                    className={`h-4 w-4 ${PERMISSION_ICONS[subLevel].color}`}
+                                  />
+                                );
+                              })()}
+                            </button>
                           </div>
                         );
                       })}
@@ -506,8 +324,12 @@ export default function PermissionsManagement() {
             <Button variant="outline" onClick={() => setConfigDialogOpen(false)}>
               Cancelar
             </Button>
-            <Button onClick={handleSavePermissions}>
-              Salvar Permissões
+            <Button
+              onClick={handleSavePermissions}
+              disabled={updatePermissionsMutation.isPending}
+            >
+              <Save className="mr-2 h-4 w-4" />
+              {updatePermissionsMutation.isPending ? "Salvando..." : "Salvar Configurações"}
             </Button>
           </DialogFooter>
         </DialogContent>
