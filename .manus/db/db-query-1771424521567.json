@@ -1,0 +1,91 @@
+{
+  "query": "SELECT * FROM role_permissions WHERE role_id = 30004 ORDER BY module, submodule;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT * FROM role_permissions WHERE role_id = 30004 ORDER BY module, submodule;",
+  "rows": [
+    {
+      "id": "30235",
+      "role_id": "30004",
+      "module": "banco_dados",
+      "submodule": "NULL",
+      "permission_level": "total",
+      "created_at": "2026-02-18 14:17:04",
+      "updated_at": "2026-02-18 14:17:04"
+    },
+    {
+      "id": "30237",
+      "role_id": "30004",
+      "module": "banco_dados",
+      "submodule": "equipamentos",
+      "permission_level": "total",
+      "created_at": "2026-02-18 14:17:04",
+      "updated_at": "2026-02-18 14:17:04"
+    },
+    {
+      "id": "30236",
+      "role_id": "30004",
+      "module": "banco_dados",
+      "submodule": "fornecedores",
+      "permission_level": "total",
+      "created_at": "2026-02-18 14:17:04",
+      "updated_at": "2026-02-18 14:17:04"
+    },
+    {
+      "id": "30238",
+      "role_id": "30004",
+      "module": "banco_dados",
+      "submodule": "locais",
+      "permission_level": "total",
+      "created_at": "2026-02-18 14:17:04",
+      "updated_at": "2026-02-18 14:17:04"
+    },
+    {
+      "id": "30233",
+      "role_id": "30004",
+      "module": "chat",
+      "submodule": "NULL",
+      "permission_level": "total",
+      "created_at": "2026-02-18 14:17:04",
+      "updated_at": "2026-02-18 14:17:04"
+    },
+    {
+      "id": "30230",
+      "role_id": "30004",
+      "module": "compras",
+      "submodule": "NULL",
+      "permission_level": "readonly",
+      "created_at": "2026-02-18 14:17:04",
+      "updated_at": "2026-02-18 14:17:04"
+    },
+    {
+      "id": "30231",
+      "role_id": "30004",
+      "module": "compras",
+      "submodule": "manutencao",
+      "permission_level": "readonly",
+      "created_at": "2026-02-18 14:17:04",
+      "updated_at": "2026-02-18 14:17:04"
+    },
+    {
+      "id": "30234",
+      "role_id": "30004",
+      "module": "configuracoes",
+      "submodule": "NULL",
+      "permission_level": "total",
+      "created_at": "2026-02-18 14:17:04",
+      "updated_at": "2026-02-18 14:17:04"
+    },
+    {
+      "id": "30232",
+      "role_id": "30004",
+      "module": "manutencoes",
+      "submodule": "NULL",
+      "permission_level": "total",
+      "created_at": "2026-02-18 14:17:04",
+      "updated_at": "2026-02-18 14:17:04"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\trole_id\tmodule\tsubmodule\tpermission_level\tcreated_at\tupdated_at\n30235\t30004\tbanco_dados\tNULL\ttotal\t2026-02-18 14:17:04\t2026-02-18 14:17:04\n30237\t30004\tbanco_dados\tequipamentos\ttotal\t2026-02-18 14:17:04\t2026-02-18 14:17:04\n30236\t30004\tbanco_dados\tfornecedores\ttotal\t2026-02-18 14:17:04\t2026-02-18 14:17:04\n30238\t30004\tbanco_dados\tlocais\ttotal\t2026-02-18 14:17:04\t2026-02-18 14:17:04\n30233\t30004\tchat\tNULL\ttotal\t2026-02-18 14:17:04\t2026-02-18 14:17:04\n30230\t30004\tcompras\tNULL\treadonly\t2026-02-18 14:17:04\t2026-02-18 14:17:04\n30231\t30004\tcompras\tmanutencao\treadonly\t2026-02-18 14:17:04\t2026-02-18 14:17:04\n30234\t30004\tconfiguracoes\tNULL\ttotal\t2026-02-18 14:17:04\t2026-02-18 14:17:04\n30232\t30004\tmanutencoes\tNULL\ttotal\t2026-02-18 14:17:04\t2026-02-18 14:17:04\n",
+  "stderr": "",
+  "execution_time_ms": 371
+}

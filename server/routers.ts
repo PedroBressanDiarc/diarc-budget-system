@@ -2902,6 +2902,9 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
       const database = await getDb();
       if (!database) throw new Error("Database not available");
       
+      console.log('[getUserPermissions] ctx.user:', ctx.user);
+      console.log('[getUserPermissions] customRoleId:', ctx.user.customRoleId);
+      
       // Diretor tem acesso total a tudo
       if (ctx.user.role === 'diretor') {
         return { 
@@ -2915,9 +2918,12 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
       
       // Se usuário tem customRoleId, buscar permissões customizadas
       if (ctx.user.customRoleId) {
+        console.log('[getUserPermissions] Buscando role para customRoleId:', ctx.user.customRoleId);
         const [role] = await database.select().from(customRoles).where(eq(customRoles.id, ctx.user.customRoleId));
+        console.log('[getUserPermissions] Role encontrado:', role);
         if (!role) return { user: ctx.user, role: ctx.user.role, customRole: null, permissions: [], isDirector: false };
         const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, role.id));
+        console.log('[getUserPermissions] Permissões encontradas:', permissions.length);
         return { user: ctx.user, role: ctx.user.role, customRole: role, permissions, isDirector: false };
       }
       

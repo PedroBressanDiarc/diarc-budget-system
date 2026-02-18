@@ -1,0 +1,18 @@
+{
+  "query": "SELECT \n  u.id as user_id,\n  u.name,\n  u.email,\n  u.role,\n  u.custom_role_id,\n  cr.name as custom_role_name\nFROM users u\nLEFT JOIN custom_roles cr ON u.custom_role_id = cr.id\nWHERE u.role = 'manutencao' OR u.email LIKE '%manutencao%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT \n  u.id as user_id,\n  u.name,\n  u.email,\n  u.role,\n  u.custom_role_id,\n  cr.name as custom_role_name\nFROM users u\nLEFT JOIN custom_roles cr ON u.custom_role_id = cr.id\nWHERE u.role = 'manutencao' OR u.email LIKE '%manutencao%';",
+  "rows": [
+    {
+      "user_id": "90001",
+      "name": "Carlos Eduardo Correa",
+      "email": "manutencao@diarc.com.br",
+      "role": "manutencao",
+      "custom_role_id": "30004",
+      "custom_role_name": "manutencao"
+    }
+  ],
+  "messages": [],
+  "stdout": "user_id\tname\temail\trole\tcustom_role_id\tcustom_role_name\n90001\tCarlos Eduardo Correa\tmanutencao@diarc.com.br\tmanutencao\t30004\tmanutencao\n",
+  "stderr": "",
+  "execution_time_ms": 362
+}
