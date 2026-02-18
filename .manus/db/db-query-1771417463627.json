@@ -1,0 +1,70 @@
+{
+  "query": "SELECT cr.name as role_name, rp.module, rp.submodule, rp.permission_level\nFROM role_permissions rp\nJOIN custom_roles cr ON rp.role_id = cr.id\nWHERE cr.name = 'manutenção'\nORDER BY rp.module, rp.submodule;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT cr.name as role_name, rp.module, rp.submodule, rp.permission_level\nFROM role_permissions rp\nJOIN custom_roles cr ON rp.role_id = cr.id\nWHERE cr.name = 'manutenção'\nORDER BY rp.module, rp.submodule;",
+  "rows": [
+    {
+      "role_name": "manutencao",
+      "module": "banco_dados",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "role_name": "manutencao",
+      "module": "banco_dados",
+      "submodule": "equipamentos",
+      "permission_level": "total"
+    },
+    {
+      "role_name": "manutencao",
+      "module": "banco_dados",
+      "submodule": "fornecedores",
+      "permission_level": "total"
+    },
+    {
+      "role_name": "manutencao",
+      "module": "banco_dados",
+      "submodule": "locais",
+      "permission_level": "total"
+    },
+    {
+      "role_name": "manutencao",
+      "module": "chat",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "role_name": "manutencao",
+      "module": "compras",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "role_name": "manutencao",
+      "module": "compras",
+      "submodule": "manutencao",
+      "permission_level": "readonly"
+    },
+    {
+      "role_name": "manutencao",
+      "module": "configuracoes",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "role_name": "manutencao",
+      "module": "dashboard",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "role_name": "manutencao",
+      "module": "manutencoes",
+      "submodule": "NULL",
+      "permission_level": "total"
+    }
+  ],
+  "messages": [],
+  "stdout": "role_name\tmodule\tsubmodule\tpermission_level\nmanutencao\tbanco_dados\tNULL\ttotal\nmanutencao\tbanco_dados\tequipamentos\ttotal\nmanutencao\tbanco_dados\tfornecedores\ttotal\nmanutencao\tbanco_dados\tlocais\ttotal\nmanutencao\tchat\tNULL\ttotal\nmanutencao\tcompras\tNULL\ttotal\nmanutencao\tcompras\tmanutencao\treadonly\nmanutencao\tconfiguracoes\tNULL\ttotal\nmanutencao\tdashboard\tNULL\ttotal\nmanutencao\tmanutencoes\tNULL\ttotal\n",
+  "stderr": "",
+  "execution_time_ms": 357
+}

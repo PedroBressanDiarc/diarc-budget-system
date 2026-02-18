@@ -506,3 +506,10 @@
 - [x] Identificar causa raiz: usePermissions.ts linha 30 acessava data.user.role sem verificação
 - [x] Adicionar guard para verificar data.user e data.user.role antes de acessar
 - [ ] Publicar correção e testar em produção (diarc.cloud)
+
+### Bug Crítico: Permissões não são salvas na interface de Gestão
+- [x] Investigar endpoint updatePermissions no backend
+- [x] Verificar se frontend está enviando dados corretamente
+- [x] Identificar causa raiz: endpoint list não retornava permissões
+- [x] Corrigir endpoint list para incluir permissões de cada role
+- [ ] Testar salvamento e validar que permissões são persistidas

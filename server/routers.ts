@@ -2739,12 +2739,21 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
 
   // Router de Permissões (Sistema de Níveis Customizáveis)
   permissionRoles: router({
-    // Listar todos os níveis
+    // Listar todos os níveis com suas permissões
     list: protectedProcedure.query(async () => {
       const database = await getDb();
       if (!database) throw new Error("Database not available");
       const roles = await database.select().from(customRoles).where(eq(customRoles.isActive, true));
-      return roles;
+      
+      // Carregar permissões para cada role
+      const rolesWithPermissions = await Promise.all(
+        roles.map(async (role) => {
+          const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, role.id));
+          return { ...role, permissions };
+        })
+      );
+      
+      return rolesWithPermissions;
     }),
 
     // Obter nível por ID com permissões
