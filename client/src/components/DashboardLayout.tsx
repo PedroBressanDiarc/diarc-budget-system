@@ -237,11 +237,14 @@ function DashboardLayoutContent({
   
   // Filtrar itens do menu baseado em permissões
   const filteredMenuItems = useMemo(() => {
+    console.log('[filteredMenuItems] user:', user, 'permissionsLoading:', permissionsLoading);
     // Aguardar user e user.role carregarem completamente para evitar erro
     if (!user || typeof user !== 'object' || !user.role || permissionsLoading) {
+      console.log('[filteredMenuItems] Retornando array vazio (loading)');
       return []; // Ocultar tudo enquanto carrega
     }
     
+    console.log('[filteredMenuItems] Iniciando filtragem');
     return menuItems.map(item => {
       // Verificar adminOnly (apenas diretor)
       if (item.adminOnly && user.role !== 'diretor') {

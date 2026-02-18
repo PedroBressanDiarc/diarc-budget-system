@@ -561,3 +561,15 @@
 - [x] Aplicar em InternalStock: botão "Novo Item"
 - [ ] Aplicar em outras páginas principais conforme necessário
 - [ ] Testar com usuário readonly em cada módulo
+
+### Bug Crítico: Módulo Manutenções não aparece para usuário manutenção
+- [ ] Verificar se permissão foi salva corretamente após publicação
+- [ ] Verificar se cache foi invalidado corretamente
+- [ ] Adicionar logs de debug para rastrear problema
+- [ ] Corrigir e validar que módulo aparece
+
+### Bug Crítico: Botões aparecem mesmo com permissão readonly
+- [ ] Verificar se PermissionButton está recebendo permissões corretas
+- [ ] Testar canWrite() com permissão readonly manualmente
+- [ ] Adicionar logs de debug no PermissionButton
+- [ ] Corrigir lógica e validar que botões são ocultados

@@ -40,10 +40,13 @@ export function PermissionButton({
   children,
   ...buttonProps
 }: PermissionButtonProps) {
-  const { canWrite, canDelete, isLoading } = usePermissions();
+  const { canWrite, canDelete, isLoading, hasPermission: getPermissionLevel } = usePermissions();
+  
+  console.log('[PermissionButton] Checking:', { module, submodule, action, isLoading });
   
   // Aguardar carregamento de permissões
   if (isLoading) {
+    console.log('[PermissionButton] Still loading, hiding button');
     return null;
   }
   
@@ -52,11 +55,16 @@ export function PermissionButton({
     ? canWrite(module, submodule)
     : canDelete(module, submodule);
   
+  const permissionLevel = getPermissionLevel(module, submodule);
+  console.log('[PermissionButton] Permission level:', permissionLevel, 'hasPermission:', hasPermission);
+  
   // Se não tem permissão, ocultar botão
   if (!hasPermission) {
+    console.log('[PermissionButton] No permission, hiding button');
     return null;
   }
   
+  console.log('[PermissionButton] Has permission, showing button');
   // Renderizar botão normalmente
   return <Button {...buttonProps}>{children}</Button>;
 }

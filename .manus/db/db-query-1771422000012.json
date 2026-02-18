@@ -1,0 +1,55 @@
+{
+  "query": "SELECT rp.module, rp.submodule, rp.permission_level\nFROM role_permissions rp\nJOIN custom_roles cr ON rp.role_id = cr.id\nWHERE cr.name = 'manutenção'\nORDER BY rp.module, rp.submodule;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT rp.module, rp.submodule, rp.permission_level\nFROM role_permissions rp\nJOIN custom_roles cr ON rp.role_id = cr.id\nWHERE cr.name = 'manutenção'\nORDER BY rp.module, rp.submodule;",
+  "rows": [
+    {
+      "module": "banco_dados",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "module": "banco_dados",
+      "submodule": "equipamentos",
+      "permission_level": "total"
+    },
+    {
+      "module": "banco_dados",
+      "submodule": "fornecedores",
+      "permission_level": "total"
+    },
+    {
+      "module": "banco_dados",
+      "submodule": "locais",
+      "permission_level": "total"
+    },
+    {
+      "module": "chat",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "module": "compras",
+      "submodule": "NULL",
+      "permission_level": "readonly"
+    },
+    {
+      "module": "compras",
+      "submodule": "manutencao",
+      "permission_level": "readonly"
+    },
+    {
+      "module": "configuracoes",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "module": "manutencoes",
+      "submodule": "NULL",
+      "permission_level": "total"
+    }
+  ],
+  "messages": [],
+  "stdout": "module\tsubmodule\tpermission_level\nbanco_dados\tNULL\ttotal\nbanco_dados\tequipamentos\ttotal\nbanco_dados\tfornecedores\ttotal\nbanco_dados\tlocais\ttotal\nchat\tNULL\ttotal\ncompras\tNULL\treadonly\ncompras\tmanutencao\treadonly\nconfiguracoes\tNULL\ttotal\nmanutencoes\tNULL\ttotal\n",
+  "stderr": "",
+  "execution_time_ms": 358
+}
