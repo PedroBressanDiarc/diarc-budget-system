@@ -513,3 +513,9 @@
 - [x] Identificar causa raiz: endpoint list não retornava permissões
 - [x] Corrigir endpoint list para incluir permissões de cada role
 - [ ] Testar salvamento e validar que permissões são persistidas
+
+### Bug: Permissões salvas mas não aplicadas no frontend
+- [ ] Verificar mapeamento de módulos entre PermissionsManagement e DashboardLayout
+- [ ] Testar consulta getUserPermissions para usuário com permissões configuradas
+- [ ] Corrigir inconsistências no mapeamento de chaves de módulos
+- [ ] Validar que menus são filtrados corretamente após correção

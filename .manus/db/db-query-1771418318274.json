@@ -1,0 +1,9 @@
+{
+  "query": "-- Atualizar usuários manualmente com IDs corretos\nUPDATE users SET custom_role_id = (SELECT id FROM custom_roles WHERE name = 'almoxarife' LIMIT 1) WHERE role = 'almoxarife';\nUPDATE users SET custom_role_id = (SELECT id FROM custom_roles WHERE name = 'manutenção' LIMIT 1) WHERE role = 'manutencao';\nUPDATE users SET custom_role_id = (SELECT id FROM custom_roles WHERE name = 'comprador' LIMIT 1) WHERE role = 'comprador';\nUPDATE users SET custom_role_id = (SELECT id FROM custom_roles WHERE name = 'financeiro' LIMIT 1) WHERE role = 'financeiro';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute -- Atualizar usuários manualmente com IDs corretos\nUPDATE users SET custom_role_id = (SELECT id FROM custom_roles WHERE name = 'almoxarife' LIMIT 1) WHERE role = 'almoxarife';\nUPDATE users SET custom_role_id = (SELECT id FROM custom_roles WHERE name = 'manutenção' LIMIT 1) WHERE role = 'manutencao';\nUPDATE users SET custom_role_id = (SELECT id FROM custom_roles WHERE name = 'comprador' LIMIT 1) WHERE role = 'comprador';\nUPDATE users SET custom_role_id = (SELECT id FROM custom_roles WHERE name = 'financeiro' LIMIT 1) WHERE role = 'financeiro';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 525
+}

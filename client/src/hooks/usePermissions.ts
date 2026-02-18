@@ -14,6 +14,14 @@ export function usePermissions() {
     refetchOnWindowFocus: false,
   });
 
+  // Debug: log permissões carregadas
+  if (data) {
+    console.log("[usePermissions] Data loaded:", data);
+    console.log("[usePermissions] User:", data.user);
+    console.log("[usePermissions] CustomRole:", data.customRole);
+    console.log("[usePermissions] Permissions:", data.permissions);
+  }
+
   /**
    * Verifica se o usuário tem permissão para acessar um módulo/submódulo
    * @param moduleKey - Chave do módulo (ex: "compras", "estoque")

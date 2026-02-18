@@ -1,0 +1,20 @@
+{
+  "query": "SELECT id, name, display_name FROM custom_roles WHERE name IN ('almoxarife', 'manutenção');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT id, name, display_name FROM custom_roles WHERE name IN ('almoxarife', 'manutenção');",
+  "rows": [
+    {
+      "id": "30003",
+      "name": "almoxarife",
+      "display_name": "Almoxarife"
+    },
+    {
+      "id": "30004",
+      "name": "manutencao",
+      "display_name": "Manutenção"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tdisplay_name\n30003\talmoxarife\tAlmoxarife\n30004\tmanutencao\tManutenção\n",
+  "stderr": "",
+  "execution_time_ms": 355
+}
