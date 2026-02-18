@@ -501,3 +501,8 @@
 - [ ] Erro: Cannot read properties of undefined (reading 'role')
 - [ ] Causa: DashboardLayout acessa user?.role antes de usePermissions carregar dados
 - [ ] Solução: Adicionar verificação de loading e retornar skeleton/loading state
+
+### Bug Crítico: Erro "Cannot read properties of undefined (reading 'role')" em Produção
+- [x] Identificar causa raiz: usePermissions.ts linha 30 acessava data.user.role sem verificação
+- [x] Adicionar guard para verificar data.user e data.user.role antes de acessar
+- [ ] Publicar correção e testar em produção (diarc.cloud)

@@ -23,6 +23,9 @@ export function usePermissions() {
   const hasPermission = (moduleKey: string, submoduleKey?: string | null): PermissionLevel | null => {
     if (isLoading || !data) return null;
 
+    // Verificar se user e user.role existem antes de acessar
+    if (!data.user || !data.user.role) return null;
+
     // Se não tem customRole, libera tudo (compatibilidade com sistema antigo)
     if (!data.customRole) return "total";
 
