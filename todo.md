@@ -584,3 +584,84 @@
 - [ ] Verificar payload enviado pelo frontend (console Network)
 - [ ] Corrigir lógica de salvamento
 - [ ] Validar que permissões são persistidas corretamente
+
+
+---
+
+## 🔥 IMPLEMENTAÇÃO URGENTE: Sistema de Permissões Fixas
+
+### Contexto
+- Sistema de permissões customizadas via banco de dados estava complexo e com bugs
+- Decisão: Simplificar para regras fixas no código baseadas em user.role
+- Planilha Excel revisada pelo usuário define matriz completa de permissões
+
+### Principais Mudanças da Planilha Revisada
+
+**Menu (O que aparece na sidebar):**
+- Almoxarife: REMOVE acesso a Compras, Estoque, Chat, Configurações, Banco de Dados (antes tinha visualizar/total)
+- Comprador: REMOVE acesso a Estoque, Orçamentos, Chat, Relatórios, Configurações, Gestão (antes tinha visualizar/total)
+- Manutenção: MANTÉM apenas Manutenções e Banco de Dados
+- Financeiro: MANTÉM apenas Financeiro
+
+**Botões dentro de Compras:**
+- Almoxarife: GANHA botões "Nova Requisição" e "Editar" (antes só visualizava)
+- Comprador: MANTÉM todos os botões
+
+**Botões dentro de Estoque:**
+- Almoxarife: PERDE TODOS os acessos (antes tinha total)
+- Comprador: GANHA acesso total (antes só visualizava)
+
+**Botões dentro de Banco de Dados:**
+- Manutenção: GANHA acesso a Fornecedores (antes não tinha)
+
+### Tarefas de Implementação
+
+- [x] **FASE 1: Criar novo hook usePermissions simplificado**
+  - [x] Remover lógica de busca de permissões do banco
+  - [x] Implementar regras fixas baseadas em user.role (switch/case)
+  - [x] Manter funções canView(), canWrite(), canDelete()
+  - [x] Implementar mapeamento completo conforme planilha Excel
+
+- [x] **FASE 2: Atualizar DashboardLayout para regras fixas**
+  - [x] Remover lógica de filtragem baseada em permissões customizadas
+  - [x] Implementar switch/case por user.role para filtrar menuItems
+  - [x] Aplicar regras da Aba 1 da planilha (Menu Sidebar)
+  - [x] Remover logs de debug temporários
+
+- [x] **FASE 3: Atualizar PermissionButton para regras fixas**
+  - [x] Remover dependência de permissões customizadas
+  - [x] Implementar verificação direta baseada em user.role + módulo + ação
+  - [x] Aplicar regras das Abas 2-7 da planilha (Botões por módulo)
+
+- [ ] **FASE 4: Aplicar PermissionButton em TODAS as páginas**
+  - [ ] Compras (/compras): Nova Requisição, Editar, Excluir, Adicionar Cotação, Adicionar Ordem
+  - [ ] Estoque Interno (/estoque/interno): Novo Item, Editar, Excluir, Ajustar Quantidade
+  - [ ] Peças Finalizadas (/estoque/pecas-finalizadas): Novo Item, Editar, Excluir
+  - [ ] Manutenções (/manutencoes): Nova Manutenção, Editar, Avançar Status, Adicionar Anexo
+  - [ ] Financeiro - Recebimentos: Novo Recebimento, Editar, Excluir
+  - [ ] Financeiro - Pagamentos: Novo Pagamento, Editar, Excluir
+  - [ ] Fornecedores: Novo Fornecedor, Editar, Excluir
+  - [ ] Equipamentos: Novo Equipamento, Editar, Excluir
+  - [ ] Locais: Novo Local, Editar, Excluir
+  - [ ] Itens: Novo Item, Editar, Excluir
+  - [ ] Obras: Nova Obra, Editar, Excluir
+  - [ ] Usuários: Novo Usuário, Editar, Excluir, Alterar Nível
+
+- [ ] **FASE 5: Remover/Desativar sistema de permissões customizadas**
+  - [ ] Remover página /permissoes do menu Gestão
+  - [ ] Remover endpoint permissionRoles.* do backend
+  - [ ] Comentar (não deletar) tabelas custom_roles e role_permissions
+  - [ ] Adicionar comentário no código explicando decisão de simplificação
+
+- [ ] **FASE 6: Testar com todos os 5 níveis de usuário**
+  - [ ] Diretor: verificar acesso total a tudo
+  - [ ] Comprador: verificar acesso conforme planilha
+  - [ ] Almoxarife: verificar acesso conforme planilha
+  - [ ] Manutenção: verificar acesso conforme planilha
+  - [ ] Financeiro: verificar acesso conforme planilha
+
+- [ ] **FASE 7: Criar checkpoint e publicar**
+  - [ ] Marcar todas as tarefas acima como [x]
+  - [ ] Criar checkpoint com descrição completa
+  - [ ] Publicar em diarc.cloud
+  - [ ] Testar em produção com usuários reais
