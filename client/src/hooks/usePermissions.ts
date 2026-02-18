@@ -25,6 +25,8 @@ export function usePermissions() {
 
     // Verificar se user e user.role existem antes de acessar
     if (!data.user || !data.user.role) return null;
+    
+    console.log('[hasPermission] data.permissions:', data.permissions);
 
     // Se não tem customRole, libera tudo (compatibilidade com sistema antigo)
     if (!data.customRole) return "total";
@@ -51,6 +53,7 @@ export function usePermissions() {
    */
   const canView = (moduleKey: string, submoduleKey?: string | null): boolean => {
     const level = hasPermission(moduleKey, submoduleKey);
+    console.log('[canView]', moduleKey, submoduleKey, '→ level:', level, 'can view:', level !== null && level !== "none");
     return level !== null && level !== "none";
   };
 
