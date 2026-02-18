@@ -538,3 +538,8 @@
 - [x] Adicionar invalidação de cache getUserPermissions após salvar
 - [x] Atualizar mensagem de sucesso informando sobre F5
 - [ ] Publicar e testar que F5 atualiza permissões corretamente
+
+### Bug: Dashboard aparece mesmo sem permissão configurada
+- [x] Identificar causa: guard retornava menuItems completo durante carregamento
+- [x] Corrigir para retornar array vazio enquanto permissões carregam
+- [ ] Publicar e validar que Dashboard é ocultado sem permissão
