@@ -217,11 +217,13 @@ export default function PermissionsManagement() {
 
   const handleSavePermissions = async () => {
     if (!selectedRole) return;
+    const payload = {
+      roleId: selectedRole.id,
+      permissions: permissions.filter(p => p.permissionLevel !== "none"), // Não salvar "none"
+    };
+    console.log('[handleSavePermissions] Enviando payload:', payload);
     try {
-      await updatePermissionsMutation.mutateAsync({
-        roleId: selectedRole.id,
-        permissions: permissions.filter(p => p.permissionLevel !== "none"), // Não salvar "none"
-      });
+      await updatePermissionsMutation.mutateAsync(payload);
       // Invalidar cache de permissões para forçar reload
       await utils.permissionRoles.getUserPermissions.invalidate();
       toast.success("Permissões atualizadas! Usuários devem recarregar a página (F5) para ver as mudanças.");

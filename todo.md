@@ -578,3 +578,9 @@
 - [ ] Verificar se canView existe no hook usePermissions
 - [ ] Corrigir DashboardLayout para usar hasPermission ao invés de canView
 - [ ] Testar que menus aparecem corretamente após correção
+
+### Bug CRÍTICO: Permissões configuradas na interface não são salvas no banco
+- [ ] Investigar endpoint updatePermissions para identificar por que não persiste
+- [ ] Verificar payload enviado pelo frontend (console Network)
+- [ ] Corrigir lógica de salvamento
+- [ ] Validar que permissões são persistidas corretamente
