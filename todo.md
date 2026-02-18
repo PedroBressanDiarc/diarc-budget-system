@@ -573,3 +573,8 @@
 - [ ] Testar canWrite() com permissão readonly manualmente
 - [ ] Adicionar logs de debug no PermissionButton
 - [ ] Corrigir lógica e validar que botões são ocultados
+
+### Bug CRÍTICO: filteredMenuItems trava ao chamar canView inexistente
+- [ ] Verificar se canView existe no hook usePermissions
+- [ ] Corrigir DashboardLayout para usar hasPermission ao invés de canView
+- [ ] Testar que menus aparecem corretamente após correção

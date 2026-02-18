@@ -246,14 +246,18 @@ function DashboardLayoutContent({
     
     console.log('[filteredMenuItems] Iniciando filtragem');
     return menuItems.map(item => {
+      console.log('[filteredMenuItems] Processando item:', item.label, 'path:', item.path);
       // Verificar adminOnly (apenas diretor)
       if (item.adminOnly && user.role !== 'diretor') {
+        console.log('[filteredMenuItems] Item adminOnly, ocultando');
         return null;
       }
       
       // Se tem submenu, filtrar subitens
       if (item.submenu) {
+        console.log('[filteredMenuItems] Item tem submenu, filtrando', item.submenu.length, 'subitens');
         const filteredSubmenu = item.submenu.filter(subitem => {
+          console.log('[filteredMenuItems] Processando subitem:', subitem.label, 'path:', subitem.path);
           if (subitem.adminOnly && user.role !== 'diretor') {
             return false;
           }
