@@ -548,3 +548,16 @@
 - [x] Identificar causa raiz: Dashboard estava na lista de módulos universais
 - [x] Remover Dashboard da lista universalModules no usePermissions
 - [ ] Publicar e validar que Dashboard é ocultado sem permissão
+
+### Bug: Usuário manutenção não vê módulo de manutenções
+- [x] Verificar permissões do usuário manutenção no banco (permissão existe)
+- [x] Verificar mapeamento do path /manutencoes no getModuleKeys (correto)
+- [x] Garantir permissão de manutencoes no banco (INSERT IGNORE executado)
+- [ ] Testar após publicar e dar F5 com usuário manutenção
+
+### Feature: Ocultar botões de criação para usuários readonly
+- [x] Criar componente PermissionButton reutilizável
+- [x] Aplicar em Requisitions: botões "Nova Requisição" e "Excluir Selecionadas"
+- [x] Aplicar em InternalStock: botão "Novo Item"
+- [ ] Aplicar em outras páginas principais conforme necessário
+- [ ] Testar com usuário readonly em cada módulo

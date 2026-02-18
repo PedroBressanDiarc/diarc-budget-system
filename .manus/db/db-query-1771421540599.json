@@ -1,0 +1,100 @@
+{
+  "query": "SELECT \n  u.id as user_id,\n  u.name as user_name,\n  u.role as user_role,\n  u.custom_role_id,\n  cr.name as custom_role_name,\n  rp.module,\n  rp.submodule,\n  rp.permission_level\nFROM users u\nLEFT JOIN custom_roles cr ON u.custom_role_id = cr.id\nLEFT JOIN role_permissions rp ON rp.role_id = cr.id\nWHERE u.role = 'manutencao'\nORDER BY rp.module, rp.submodule;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT \n  u.id as user_id,\n  u.name as user_name,\n  u.role as user_role,\n  u.custom_role_id,\n  cr.name as custom_role_name,\n  rp.module,\n  rp.submodule,\n  rp.permission_level\nFROM users u\nLEFT JOIN custom_roles cr ON u.custom_role_id = cr.id\nLEFT JOIN role_permissions rp ON rp.role_id = cr.id\nWHERE u.role = 'manutencao'\nORDER BY rp.module, rp.submodule;",
+  "rows": [
+    {
+      "user_id": "90001",
+      "user_name": "Carlos Eduardo Correa",
+      "user_role": "manutencao",
+      "custom_role_id": "30004",
+      "custom_role_name": "manutencao",
+      "module": "banco_dados",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "user_id": "90001",
+      "user_name": "Carlos Eduardo Correa",
+      "user_role": "manutencao",
+      "custom_role_id": "30004",
+      "custom_role_name": "manutencao",
+      "module": "banco_dados",
+      "submodule": "equipamentos",
+      "permission_level": "total"
+    },
+    {
+      "user_id": "90001",
+      "user_name": "Carlos Eduardo Correa",
+      "user_role": "manutencao",
+      "custom_role_id": "30004",
+      "custom_role_name": "manutencao",
+      "module": "banco_dados",
+      "submodule": "fornecedores",
+      "permission_level": "total"
+    },
+    {
+      "user_id": "90001",
+      "user_name": "Carlos Eduardo Correa",
+      "user_role": "manutencao",
+      "custom_role_id": "30004",
+      "custom_role_name": "manutencao",
+      "module": "banco_dados",
+      "submodule": "locais",
+      "permission_level": "total"
+    },
+    {
+      "user_id": "90001",
+      "user_name": "Carlos Eduardo Correa",
+      "user_role": "manutencao",
+      "custom_role_id": "30004",
+      "custom_role_name": "manutencao",
+      "module": "chat",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "user_id": "90001",
+      "user_name": "Carlos Eduardo Correa",
+      "user_role": "manutencao",
+      "custom_role_id": "30004",
+      "custom_role_name": "manutencao",
+      "module": "compras",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "user_id": "90001",
+      "user_name": "Carlos Eduardo Correa",
+      "user_role": "manutencao",
+      "custom_role_id": "30004",
+      "custom_role_name": "manutencao",
+      "module": "compras",
+      "submodule": "manutencao",
+      "permission_level": "readonly"
+    },
+    {
+      "user_id": "90001",
+      "user_name": "Carlos Eduardo Correa",
+      "user_role": "manutencao",
+      "custom_role_id": "30004",
+      "custom_role_name": "manutencao",
+      "module": "configuracoes",
+      "submodule": "NULL",
+      "permission_level": "total"
+    },
+    {
+      "user_id": "90001",
+      "user_name": "Carlos Eduardo Correa",
+      "user_role": "manutencao",
+      "custom_role_id": "30004",
+      "custom_role_name": "manutencao",
+      "module": "manutencoes",
+      "submodule": "NULL",
+      "permission_level": "total"
+    }
+  ],
+  "messages": [],
+  "stdout": "user_id\tuser_name\tuser_role\tcustom_role_id\tcustom_role_name\tmodule\tsubmodule\tpermission_level\n90001\tCarlos Eduardo Correa\tmanutencao\t30004\tmanutencao\tbanco_dados\tNULL\ttotal\n90001\tCarlos Eduardo Correa\tmanutencao\t30004\tmanutencao\tbanco_dados\tequipamentos\ttotal\n90001\tCarlos Eduardo Correa\tmanutencao\t30004\tmanutencao\tbanco_dados\tfornecedores\ttotal\n90001\tCarlos Eduardo Correa\tmanutencao\t30004\tmanutencao\tbanco_dados\tlocais\ttotal\n90001\tCarlos Eduardo Correa\tmanutencao\t30004\tmanutencao\tchat\tNULL\ttotal\n90001\tCarlos Eduardo Correa\tmanutencao\t30004\tmanutencao\tcompras\tNULL\ttotal\n90001\tCarlos Eduardo Correa\tmanutencao\t30004\tmanutencao\tcompras\tmanutencao\treadonly\n90001\tCarlos Eduardo Correa\tmanutencao\t30004\tmanutencao\tconfiguracoes\tNULL\ttotal\n90001\tCarlos Eduardo Correa\tmanutencao\t30004\tmanutencao\tmanutencoes\tNULL\ttotal\n",
+  "stderr": "",
+  "execution_time_ms": 360
+}

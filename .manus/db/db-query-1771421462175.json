@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO role_permissions (role_id, module, submodule, permission_level)\nSELECT cr.id, 'manutencoes', NULL, 'total'\nFROM custom_roles cr\nWHERE cr.name = 'manutenção'\nAND NOT EXISTS (\n  SELECT 1 FROM role_permissions rp \n  WHERE rp.role_id = cr.id AND rp.module = 'manutencoes' AND rp.submodule IS NULL\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute INSERT INTO role_permissions (role_id, module, submodule, permission_level)\nSELECT cr.id, 'manutencoes', NULL, 'total'\nFROM custom_roles cr\nWHERE cr.name = 'manutenção'\nAND NOT EXISTS (\n  SELECT 1 FROM role_permissions rp \n  WHERE rp.role_id = cr.id AND rp.module = 'manutencoes' AND rp.submodule IS NULL\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 366
+}

@@ -14,6 +14,7 @@ import { Plus, Eye, Trash2, Edit, CheckSquare, Square } from "lucide-react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { CurrencyInput } from "@/components/ui/currency-input";
+import { PermissionButton } from "@/components/PermissionButton";
 
 const statusLabels: Record<string, string> = {
   solicitacao: "Solicitação",
@@ -142,7 +143,9 @@ export default function Requisitions() {
               <Badge variant="secondary" className="px-3 py-2">
                 {selectedIds.length} selecionada(s)
               </Badge>
-              <Button
+              <PermissionButton
+                module="compras"
+                action="delete"
                 variant="destructive"
                 size="sm"
                 onClick={handleBulkDelete}
@@ -150,16 +153,16 @@ export default function Requisitions() {
               >
                 <Trash2 className="mr-2 h-4 w-4" />
                 Excluir Selecionadas
-              </Button>
+              </PermissionButton>
             </>
           )}
           <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
             <DialogTrigger asChild>
-              <Button>
+              <PermissionButton module="compras" action="write">
                 <Plus className="mr-2 h-4 w-4" />
                 Nova Requisição
-            </Button>
-          </DialogTrigger>
+              </PermissionButton>
+            </DialogTrigger>
           <DialogContent className="!max-w-none !w-[90vw] !h-[90vh] overflow-y-auto p-0">
             <form onSubmit={handleCreate} className="p-6 h-full flex flex-col">
               <DialogHeader>
