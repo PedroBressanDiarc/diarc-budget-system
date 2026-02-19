@@ -16,10 +16,7 @@ export function useRolePermissions() {
   // Função para verificar se pode visualizar um módulo/submódulo
   const canView = useMemo(() => {
     return (module: string, submodule?: string | null): boolean => {
-      // Se permissions é null, é Diretor (acesso total)
-      if (permissions === null) return true;
-      // Se ainda está carregando (undefined), negar acesso
-      if (!permissions) return false;
+      if (!permissions) return false; // Se não carregou ainda, negar acesso
       
       const perm = permissions.find(
         (p: any) => p.module === module && p.submodule === submodule
@@ -36,7 +33,6 @@ export function useRolePermissions() {
   // Função para verificar se pode escrever (criar/editar)
   const canWrite = useMemo(() => {
     return (module: string, submodule?: string | null): boolean => {
-      if (permissions === null) return true; // Diretor
       if (!permissions) return false;
       
       const perm = permissions.find(
@@ -52,7 +48,6 @@ export function useRolePermissions() {
   // Função para verificar se pode deletar
   const canDelete = useMemo(() => {
     return (module: string, submodule?: string | null): boolean => {
-      if (permissions === null) return true; // Diretor
       if (!permissions) return false;
       
       const perm = permissions.find(
@@ -68,7 +63,6 @@ export function useRolePermissions() {
   // Função para obter o nível de permissão
   const getPermissionLevel = useMemo(() => {
     return (module: string, submodule?: string | null): PermissionLevel => {
-      if (permissions === null) return "total"; // Diretor
       if (!permissions) return "none";
       
       const perm = permissions.find(

@@ -2906,7 +2906,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         
         // Buscar custom_role correspondente ao roleName
         const [role] = await database.select().from(customRoles).where(eq(customRoles.name, input.roleName));
-        if (!role) return null; // Se não encontrou role, retornar null (diretor tem acesso total)
+        if (!role) return []; // Se não encontrou, retornar vazio (acesso total)
         
         // Buscar permissões do role
         const permissions = await database.select().from(rolePermissions).where(eq(rolePermissions.roleId, role.id));
