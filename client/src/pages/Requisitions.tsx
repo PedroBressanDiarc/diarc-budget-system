@@ -15,7 +15,6 @@ import { useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { CurrencyInput } from "@/components/ui/currency-input";
 
-
 const statusLabels: Record<string, string> = {
   solicitacao: "Solicitação",
   cotacao_em_progresso: "Cotação em Progresso",
@@ -159,8 +158,8 @@ export default function Requisitions() {
               <Button>
                 <Plus className="mr-2 h-4 w-4" />
                 Nova Requisição
-              </Button>
-            </DialogTrigger>
+            </Button>
+          </DialogTrigger>
           <DialogContent className="!max-w-none !w-[90vw] !h-[90vh] overflow-y-auto p-0">
             <form onSubmit={handleCreate} className="p-6 h-full flex flex-col">
               <DialogHeader>

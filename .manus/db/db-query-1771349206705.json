@@ -1,9 +1,0 @@
-{
-  "query": "UPDATE users u\nJOIN custom_roles cr ON u.role = cr.name\nSET u.custom_role_id = cr.id\nWHERE u.custom_role_id IS NULL;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute UPDATE users u\nJOIN custom_roles cr ON u.role = cr.name\nSET u.custom_role_id = cr.id\nWHERE u.custom_role_id IS NULL;",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 375
-}

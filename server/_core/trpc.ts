@@ -109,5 +109,3 @@ export const equipmentProcedure = t.procedure.use(
     return next({ ctx: { ...ctx, user: ctx.user } });
   }),
 );
-
-

@@ -1,8 +1,0 @@
-{
-  "query": "-- Limpar dados antigos\nDELETE FROM role_permissions;\n\n-- Remover coluna action\nALTER TABLE role_permissions DROP COLUMN action;\n\n-- Atualizar enum permission_level\nALTER TABLE role_permissions MODIFY COLUMN permission_level ENUM('none', 'readonly', 'write', 'total') NOT NULL;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute -- Limpar dados antigos\nDELETE FROM role_permissions;\n\n-- Remover coluna action\nALTER TABLE role_permissions DROP COLUMN action;\n\n-- Atualizar enum permission_level\nALTER TABLE role_permissions MODIFY COLUMN permission_level ENUM('none', 'readonly', 'write', 'total') NOT NULL;",
-  "returncode": 1,
-  "logs": [
-    "ERROR 8200 (HY000) at line 5: can't drop column action with composite index covered or Primary Key covered now"
-  ]
-}

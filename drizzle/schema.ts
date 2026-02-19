@@ -11,7 +11,6 @@ export const users = mysqlTable("users", {
   passwordHash: varchar("passwordHash", { length: 255 }).notNull(),
   name: text("name").notNull(),
   role: mysqlEnum("role", ["diretor", "comprador", "almoxarife", "manutencao", "financeiro"]).default("comprador").notNull(),
-  customRoleId: int("custom_role_id"), // vincula usuário a um nível de permissão customizado
   isActive: int("isActive").default(1).notNull(),
   openId: varchar("openId", { length: 64 }),
   loginMethod: varchar("loginMethod", { length: 64 }).default("local"),
@@ -721,15 +720,14 @@ export type InsertCustomRole = typeof customRoles.$inferInsert;
 
 /**
  * Role Permissions (Permissões por Nível)
- * Define permissões específicas para cada módulo/submódulo/ação por nível
- * Granularidade: Módulo → Submódulo → Ação (view, create, edit, delete)
+ * Define permissões específicas para cada módulo/submódulo por nível
  */
 export const rolePermissions = mysqlTable("role_permissions", {
   id: int("id").autoincrement().primaryKey(),
   roleId: int("role_id").notNull(), // referência ao custom_role
   module: varchar("module", { length: 50 }).notNull(), // ex: "compras", "manutencoes"
   submodule: varchar("submodule", { length: 50 }), // ex: "manutencao", "administrativo" (null para módulo principal)
-  permissionLevel: mysqlEnum("permission_level", ["none", "readonly", "write", "total"]).notNull(), // none=oculto, readonly=visualizar, write=criar/editar, total=completo
+  permission: varchar("permission", { length: 20 }).notNull(), // "total", "readonly", "none"
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });

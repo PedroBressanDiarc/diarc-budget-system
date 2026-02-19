@@ -1,9 +1,0 @@
-{
-  "query": "SELECT cr.name as role_name, rp.module, rp.submodule, rp.permission_level\nFROM role_permissions rp\nJOIN custom_roles cr ON rp.role_id = cr.id\nWHERE cr.name = 'almoxarife'\nORDER BY rp.module, rp.submodule;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT cr.name as role_name, rp.module, rp.submodule, rp.permission_level\nFROM role_permissions rp\nJOIN custom_roles cr ON rp.role_id = cr.id\nWHERE cr.name = 'almoxarife'\nORDER BY rp.module, rp.submodule;",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 362
-}

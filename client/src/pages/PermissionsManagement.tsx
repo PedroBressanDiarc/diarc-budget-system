@@ -1,513 +1,532 @@
-import { useState } from "react";
-import { trpc } from "@/lib/trpc";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { Plus, Settings, Trash2, X, Check, Eye, Pencil, ChevronDown, ChevronRight } from "lucide-react";
+import { Plus, Trash2, Shield } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-type PermissionLevel = "none" | "readonly" | "write" | "total";
-
-interface PermissionState {
-  module: string;
-  submodule: string | null;
-  permissionLevel: PermissionLevel;
-}
-
-// Definição de módulos e submódulos do sistema
-const MODULES = [
-  { key: "dashboard", label: "Dashboard", submodules: [] },
-  { 
-    key: "compras", 
-    label: "Compras", 
+// Estrutura COMPLETA de módulos e submódulos da sidebar
+const SYSTEM_MODULES = [
+  { module: "dashboard", label: "Dashboard", submodules: [] },
+  {
+    module: "compras",
+    label: "Compras",
     submodules: [
-      { key: "manutencao", label: "Manutenção" },
-      { key: "administrativo", label: "Administrativo" },
-      { key: "fabrica", label: "Fábrica" },
-      { key: "obras", label: "Obras" },
-    ]
+      { submodule: "manutencao", label: "Manutenção" },
+      { submodule: "administrativo", label: "Administrativo" },
+      { submodule: "fabrica", label: "Fábrica" },
+      { submodule: "obras", label: "Obras" },
+    ],
   },
-  { key: "autorizacoes", label: "Autorizações", submodules: [] },
-  { 
-    key: "estoque", 
-    label: "Estoque", 
+  { module: "autorizacoes", label: "Autorizações", submodules: [] },
+  {
+    module: "estoque",
+    label: "Estoque",
     submodules: [
-      { key: "pecas_finalizadas", label: "Peças Finalizadas" },
-      { key: "estoque_interno", label: "Estoque Interno" },
-    ]
+      { submodule: "pecas_finalizadas", label: "Peças Finalizadas" },
+      { submodule: "estoque_interno", label: "Estoque Interno" },
+    ],
   },
-  { key: "orcamentos", label: "Orçamentos", submodules: [] },
-  { key: "manutencoes", label: "Manutenções", submodules: [] },
-  { key: "chat", label: "Chat", submodules: [] },
-  { 
-    key: "financeiro", 
-    label: "Financeiro", 
+  { module: "orcamentos", label: "Orçamentos", submodules: [] },
+  { module: "manutencoes", label: "Manutenções", submodules: [] },
+  { module: "chat", label: "Chat", submodules: [] },
+  {
+    module: "financeiro",
+    label: "Financeiro",
     submodules: [
-      { key: "recebimentos", label: "Recebimentos" },
-      { key: "pagamentos", label: "Pagamentos" },
-    ]
+      { submodule: "recebimentos", label: "Recebimentos" },
+      { submodule: "pagamentos", label: "Pagamentos" },
+    ],
   },
-  { 
-    key: "relatorios", 
-    label: "Relatórios", 
+  {
+    module: "relatorios",
+    label: "Relatórios",
     submodules: [
-      { key: "economias", label: "Economias" },
-      { key: "obras", label: "Obras" },
-      { key: "alertas_orcamento", label: "Alertas Orçamento" },
-      { key: "manutencoes", label: "Manutenções" },
-    ]
+      { submodule: "visao_geral", label: "Visão Geral" },
+      { submodule: "economias", label: "Dashboard de Economias" },
+      { submodule: "obras", label: "Relatório por Obras" },
+      { submodule: "alertas_orcamento", label: "Alertas de Orçamento" },
+      { submodule: "manutencoes", label: "Relatórios Manutenções" },
+    ],
   },
-  { key: "configuracoes", label: "Configurações", submodules: [] },
-  { 
-    key: "gestao", 
-    label: "Gestão", 
+  { module: "configuracoes", label: "Configurações", submodules: [] },
+  { module: "usuarios", label: "Usuários", submodules: [] },
+  { module: "permissoes", label: "Permissões", submodules: [] },
+  {
+    module: "banco_dados",
+    label: "Banco de Dados",
     submodules: [
-      { key: "usuarios", label: "Usuários" },
-      { key: "permissoes", label: "Permissões" },
-    ]
-  },
-  { 
-    key: "banco_dados", 
-    label: "Banco de Dados", 
-    submodules: [
-      { key: "fornecedores", label: "Fornecedores" },
-      { key: "equipamentos", label: "Equipamentos" },
-      { key: "itens", label: "Itens" },
-      { key: "obras_bd", label: "Obras" },
-      { key: "locais", label: "Locais" },
-    ]
+      { submodule: "fornecedores", label: "Fornecedores" },
+      { submodule: "equipamentos", label: "Equipamentos" },
+      { submodule: "itens", label: "Itens" },
+      { submodule: "obras_bd", label: "Obras" },
+      { submodule: "locais", label: "Locais" },
+    ],
   },
 ];
 
-// Ícones e cores para cada estado
-const PERMISSION_ICONS = {
-  none: { icon: X, color: "text-gray-400", bg: "bg-gray-100", label: "Oculto" },
-  readonly: { icon: Eye, color: "text-blue-500", bg: "bg-blue-100", label: "Visualizar" },
-  write: { icon: Pencil, color: "text-yellow-500", bg: "bg-yellow-100", label: "Criar/Editar" },
-  total: { icon: Check, color: "text-green-500", bg: "bg-green-100", label: "Total" },
-};
-
-// Ciclo de estados ao clicar
-const PERMISSION_CYCLE: PermissionLevel[] = ["none", "readonly", "write", "total"];
-
 export default function PermissionsManagement() {
-  const [createDialogOpen, setCreateDialogOpen] = useState(false);
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [configDialogOpen, setConfigDialogOpen] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<any>(null);
-  const [newRole, setNewRole] = useState({ name: "", displayName: "", description: "", color: "#3b82f6" });
-  const [permissions, setPermissions] = useState<PermissionState[]>([]);
-  const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [selectedRoleId, setSelectedRoleId] = useState<number | null>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    displayName: "",
+    description: "",
+    color: "blue",
+  });
 
-  const utils = trpc.useUtils();
-  const { data: roles, refetch } = trpc.permissionRoles.list.useQuery();
-  const createMutation = trpc.permissionRoles.create.useMutation();
-  const updateMutation = trpc.permissionRoles.update.useMutation();
-  const deleteMutation = trpc.permissionRoles.delete.useMutation();
-  const updatePermissionsMutation = trpc.permissionRoles.updatePermissions.useMutation();
+  // Estado para permissões (módulo/submódulo -> permissão)
+  const [permissions, setPermissions] = useState<Record<string, "total" | "readonly" | "none">>({});
 
-  const handleCreate = async () => {
-    try {
-      await createMutation.mutateAsync(newRole);
-      toast.success("Nível criado com sucesso!");
-      setCreateDialogOpen(false);
-      setNewRole({ name: "", displayName: "", description: "", color: "#3b82f6" });
+  const { data: roles, refetch } = trpc.customRoles.list.useQuery();
+  const { data: roleDetails, refetch: refetchDetails } = trpc.customRoles.getById.useQuery(
+    { id: selectedRoleId! },
+    { enabled: !!selectedRoleId && isEditOpen }
+  );
+
+  const createMutation = trpc.customRoles.create.useMutation({
+    onSuccess: () => {
+      toast.success("Nível de permissão criado!");
+      setIsCreateOpen(false);
+      setFormData({ name: "", displayName: "", description: "", color: "blue" });
+      setPermissions({});
       refetch();
-    } catch (error: any) {
-      toast.error(error.message || "Erro ao criar nível");
-    }
-  };
+    },
+    onError: (error) => {
+      toast.error("Erro ao criar nível: " + error.message);
+    },
+  });
 
-  const handleUpdate = async () => {
-    if (!selectedRole) return;
-    try {
-      await updateMutation.mutateAsync({
-        id: selectedRole.id,
-        displayName: selectedRole.displayName,
-        description: selectedRole.description,
-        color: selectedRole.color,
-      });
-      toast.success("Nível atualizado com sucesso!");
-      setEditDialogOpen(false);
+  const updateMutation = trpc.customRoles.update.useMutation({
+    onSuccess: () => {
+      toast.success("Nível atualizado!");
       refetch();
-    } catch (error: any) {
-      toast.error(error.message || "Erro ao atualizar nível");
-    }
-  };
+    },
+    onError: (error) => {
+      toast.error("Erro ao atualizar: " + error.message);
+    },
+  });
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("Tem certeza que deseja deletar este nível? Usuários vinculados perderão suas permissões.")) return;
-    try {
-      await deleteMutation.mutateAsync({ id });
-      toast.success("Nível deletado com sucesso!");
+  const updatePermissionsMutation = trpc.customRoles.updatePermissions.useMutation({
+    onSuccess: () => {
+      toast.success("Permissões atualizadas!");
+      setIsEditOpen(false);
+      setSelectedRoleId(null);
+      setPermissions({});
       refetch();
-    } catch (error: any) {
-      toast.error(error.message || "Erro ao deletar nível");
-    }
-  };
+    },
+    onError: (error) => {
+      toast.error("Erro ao atualizar permissões: " + error.message);
+    },
+  });
 
-  const handleConfigurePermissions = async (role: any) => {
-    setSelectedRole(role);
-    
-    // Inicializar permissões: carregar do banco ou criar padrão
-    const initialPermissions: PermissionState[] = [];
-    
-    MODULES.forEach(module => {
-      // Módulo principal
-      const modulePermission = role.permissions?.find((p: any) => p.module === module.key && !p.submodule);
-      initialPermissions.push({
-        module: module.key,
-        submodule: null,
-        permissionLevel: modulePermission?.permissionLevel || "none",
-      });
+  const deleteMutation = trpc.customRoles.delete.useMutation({
+    onSuccess: () => {
+      toast.success("Nível deletado!");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error("Erro ao deletar: " + error.message);
+    },
+  });
+
+  // CORREÇÃO: useEffect em vez de useState para carregar permissões
+  useEffect(() => {
+    if (roleDetails && isEditOpen) {
+      const permsMap: Record<string, "total" | "readonly" | "none"> = {};
       
-      // Submódulos
-      module.submodules.forEach(sub => {
-        const subPermission = role.permissions?.find((p: any) => p.module === module.key && p.submodule === sub.key);
-        initialPermissions.push({
-          module: module.key,
-          submodule: sub.key,
-          permissionLevel: subPermission?.permissionLevel || "none",
-        });
+      // Inicializar todos com "none"
+      SYSTEM_MODULES.forEach((mod) => {
+        if (mod.submodules.length === 0) {
+          permsMap[mod.module] = "none";
+        } else {
+          mod.submodules.forEach((sub) => {
+            permsMap[`${mod.module}:${sub.submodule}`] = "none";
+          });
+        }
       });
-    });
+
+      // Aplicar permissões existentes
+      roleDetails.permissions.forEach((perm: any) => {
+        const key = perm.submodule ? `${perm.module}:${perm.submodule}` : perm.module;
+        permsMap[key] = perm.permission;
+      });
+
+      setPermissions(permsMap);
+    }
+  }, [roleDetails, isEditOpen]);
+
+  const handleCreate = (e: React.FormEvent) => {
+    e.preventDefault();
     
-    setPermissions(initialPermissions);
-    setConfigDialogOpen(true);
+    // Converter permissões para array
+    const permissionsArray = Object.entries(permissions).map(([key, value]) => {
+      const [module, submodule] = key.split(":");
+      return {
+        module,
+        submodule: submodule || null,
+        permission: value,
+      };
+    });
+
+    createMutation.mutate({
+      ...formData,
+      permissions: permissionsArray,
+    } as any);
   };
 
-  const getPermission = (module: string, submodule: string | null): PermissionLevel => {
-    const perm = permissions.find(p => p.module === module && p.submodule === submodule);
-    return perm?.permissionLevel || "none";
-  };
+  const handleEdit = () => {
+    if (!selectedRoleId) return;
 
-  const cyclePermission = (module: string, submodule: string | null) => {
-    const current = getPermission(module, submodule);
-    const currentIndex = PERMISSION_CYCLE.indexOf(current);
-    const next = PERMISSION_CYCLE[(currentIndex + 1) % PERMISSION_CYCLE.length];
-    
-    setPermissions(prev => {
-      const existing = prev.find(p => p.module === module && p.submodule === submodule);
-      if (existing) {
-        return prev.map(p => 
-          p.module === module && p.submodule === submodule 
-            ? { ...p, permissionLevel: next }
-            : p
-        );
-      } else {
-        return [...prev, { module, submodule, permissionLevel: next }];
-      }
+    // Converter permissões para array
+    const permissionsArray = Object.entries(permissions).map(([key, value]) => {
+      const [module, submodule] = key.split(":");
+      return {
+        module,
+        submodule: submodule || null,
+        permission: value,
+      };
+    });
+
+    // Atualizar informações básicas
+    updateMutation.mutate({
+      id: selectedRoleId,
+      displayName: formData.displayName,
+      description: formData.description,
+      color: formData.color,
+    });
+
+    // Atualizar permissões
+    updatePermissionsMutation.mutate({
+      roleId: selectedRoleId,
+      permissions: permissionsArray,
     });
   };
 
-  const toggleModuleExpansion = (moduleKey: string) => {
-    setExpandedModules(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(moduleKey)) {
-        newSet.delete(moduleKey);
-      } else {
-        newSet.add(moduleKey);
-      }
-      return newSet;
-    });
-  };
+  const openEditDialog = (roleId: number) => {
+    setSelectedRoleId(roleId);
+    setIsEditOpen(true);
 
-  const handleSavePermissions = async () => {
-    if (!selectedRole) return;
-    const payload = {
-      roleId: selectedRole.id,
-      permissions: permissions.filter(p => p.permissionLevel !== "none"), // Não salvar "none"
-    };
-    console.log('[handleSavePermissions] Enviando payload:', payload);
-    try {
-      await updatePermissionsMutation.mutateAsync(payload);
-      // Invalidar cache de permissões para forçar reload
-      await utils.permissionRoles.getUserPermissions.invalidate();
-      toast.success("Permissões atualizadas! Usuários devem recarregar a página (F5) para ver as mudanças.");
-      setConfigDialogOpen(false);
-      refetch();
-    } catch (error: any) {
-      toast.error(error.message || "Erro ao atualizar permissões");
+    // Carregar dados do role
+    const role = roles?.find((r) => r.id === roleId);
+    if (role) {
+      setFormData({
+        name: role.name,
+        displayName: role.displayName,
+        description: role.description || "",
+        color: role.color,
+      });
     }
   };
 
-  return (
-    <div className="container mx-auto py-8">
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold">Gerenciamento de Permissões</h1>
-          <p className="text-muted-foreground mt-2">
-            Configure níveis de acesso e permissões para cada cargo do sistema
-          </p>
-        </div>
-        <Button onClick={() => setCreateDialogOpen(true)}>
-          <Plus className="mr-2 h-4 w-4" />
-          Criar Novo Nível
-        </Button>
-      </div>
+  const getPermissionKey = (module: string, submodule?: string) => {
+    return submodule ? `${module}:${submodule}` : module;
+  };
 
-      {/* Legenda */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Legenda de Permissões</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {Object.entries(PERMISSION_ICONS).map(([key, { icon: Icon, color, bg, label }]) => (
-              <div key={key} className="flex items-center gap-2">
-                <div className={`${bg} p-2 rounded`}>
-                  <Icon className={`h-4 w-4 ${color}`} />
-                </div>
-                <span className="text-sm font-medium">{label}</span>
+  const setPermission = (module: string, submodule: string | undefined, value: "total" | "readonly" | "none") => {
+    const key = getPermissionKey(module, submodule);
+    setPermissions({ ...permissions, [key]: value });
+  };
+
+  const getPermission = (module: string, submodule?: string): "total" | "readonly" | "none" => {
+    const key = getPermissionKey(module, submodule);
+    return permissions[key] || "none";
+  };
+
+  const getColorClass = (color: string) => {
+    const colors: Record<string, string> = {
+      blue: "bg-blue-500 hover:bg-blue-600",
+      green: "bg-green-500 hover:bg-green-600",
+      orange: "bg-orange-500 hover:bg-orange-600",
+      purple: "bg-purple-500 hover:bg-purple-600",
+      yellow: "bg-yellow-500 hover:bg-yellow-600 text-gray-900",
+      red: "bg-red-500 hover:bg-red-600",
+      gray: "bg-gray-500 hover:bg-gray-600",
+    };
+    return colors[color] || colors.blue;
+  };
+
+  // Renderizar módulo e seus submódulos (se houver e se módulo pai não for "none")
+  const renderModulePermissions = (mod: typeof SYSTEM_MODULES[0]) => {
+    const modulePermission = getPermission(mod.module);
+    const hasSubmodules = mod.submodules.length > 0;
+    const showSubmodules = hasSubmodules && modulePermission !== "none";
+
+    return (
+      <div key={mod.module} className="space-y-2">
+        {/* Módulo Principal */}
+        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+          <span className="font-medium">{mod.label}</span>
+          <Select
+            value={getPermission(mod.module)}
+            onValueChange={(value: any) => setPermission(mod.module, undefined, value)}
+          >
+            <SelectTrigger className="w-40">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">Nenhum</SelectItem>
+              <SelectItem value="readonly">Somente Leitura</SelectItem>
+              <SelectItem value="total">Total</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Submódulos (aparecem apenas se módulo pai não for "none") */}
+        {showSubmodules && (
+          <div className="ml-6 space-y-2">
+            {mod.submodules.map((sub) => (
+              <div key={sub.submodule} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg border-l-2 border-primary/30">
+                <span className="text-sm">{sub.label}</span>
+                <Select
+                  value={getPermission(mod.module, sub.submodule)}
+                  onValueChange={(value: any) => setPermission(mod.module, sub.submodule, value)}
+                >
+                  <SelectTrigger className="w-40">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">Nenhum</SelectItem>
+                    <SelectItem value="readonly">Somente Leitura</SelectItem>
+                    <SelectItem value="total">Total</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             ))}
           </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="p-6 space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold">Níveis de Permissão</h1>
+          <p className="text-muted-foreground">Gerencie níveis de acesso e permissões do sistema</p>
+        </div>
+        <Button onClick={() => setIsCreateOpen(true)}>
+          <Plus className="h-4 w-4 mr-2" />
+          Criar Nível
+        </Button>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Níveis Cadastrados</CardTitle>
+          <CardDescription>Todos os níveis de permissão do sistema</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Nome</TableHead>
+                <TableHead>Descrição</TableHead>
+                <TableHead>Tipo</TableHead>
+                <TableHead className="text-right">Ações</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {roles?.map((role) => (
+                <TableRow key={role.id}>
+                  <TableCell>
+                    <Badge className={getColorClass(role.color)}>{role.displayName}</Badge>
+                  </TableCell>
+                  <TableCell>{role.description || "-"}</TableCell>
+                  <TableCell>
+                    {role.isSystem ? (
+                      <Badge variant="outline">Sistema</Badge>
+                    ) : (
+                      <Badge variant="secondary">Customizado</Badge>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-right space-x-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      title="Editar Permissões"
+                      onClick={() => openEditDialog(role.id)}
+                    >
+                      <Shield className="h-4 w-4" />
+                    </Button>
+                    {!role.isSystem && (
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        title="Deletar Nível"
+                        onClick={() => {
+                          if (confirm(`Tem certeza que deseja deletar o nível "${role.displayName}"?`)) {
+                            deleteMutation.mutate({ id: role.id });
+                          }
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
 
-      {/* Lista de Níveis */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {roles?.map((role) => (
-          <Card key={role.id} className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div 
-                    className="w-4 h-4 rounded-full" 
-                    style={{ backgroundColor: role.color }}
-                  />
-                  <div>
-                    <CardTitle>{role.displayName}</CardTitle>
-                    <CardDescription className="text-xs">{role.name}</CardDescription>
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => {
-                      setSelectedRole(role);
-                      setEditDialogOpen(true);
-                    }}
-                  >
-                    <Settings className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDelete(role.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                {role.description || "Sem descrição"}
-              </p>
-              <Button 
-                className="w-full" 
-                variant="outline"
-                onClick={() => handleConfigurePermissions(role)}
-              >
-                Configurar Permissões
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Dialog: Criar Nível */}
-      <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-        <DialogContent>
+      {/* Dialog Criar Nível com TABS */}
+      <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-hidden flex flex-col">
           <DialogHeader>
-            <DialogTitle>Criar Novo Nível</DialogTitle>
-            <DialogDescription>
-              Defina as informações básicas do novo nível de permissão
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="name">Nome (identificador único)</Label>
-              <Input
-                id="name"
-                value={newRole.name}
-                onChange={(e) => setNewRole({ ...newRole, name: e.target.value })}
-                placeholder="ex: supervisor"
-              />
-            </div>
-            <div>
-              <Label htmlFor="displayName">Nome de Exibição</Label>
-              <Input
-                id="displayName"
-                value={newRole.displayName}
-                onChange={(e) => setNewRole({ ...newRole, displayName: e.target.value })}
-                placeholder="ex: Supervisor"
-              />
-            </div>
-            <div>
-              <Label htmlFor="description">Descrição</Label>
-              <Textarea
-                id="description"
-                value={newRole.description}
-                onChange={(e) => setNewRole({ ...newRole, description: e.target.value })}
-                placeholder="Descreva as responsabilidades deste nível"
-              />
-            </div>
-            <div>
-              <Label htmlFor="color">Cor</Label>
-              <Input
-                id="color"
-                type="color"
-                value={newRole.color}
-                onChange={(e) => setNewRole({ ...newRole, color: e.target.value })}
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
-              Cancelar
-            </Button>
-            <Button onClick={handleCreate}>Criar</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Dialog: Editar Nível */}
-      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Editar Nível</DialogTitle>
-            <DialogDescription>
-              Atualize as informações do nível de permissão
-            </DialogDescription>
-          </DialogHeader>
-          {selectedRole && (
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="edit-displayName">Nome de Exibição</Label>
-                <Input
-                  id="edit-displayName"
-                  value={selectedRole.displayName}
-                  onChange={(e) => setSelectedRole({ ...selectedRole, displayName: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label htmlFor="edit-description">Descrição</Label>
-                <Textarea
-                  id="edit-description"
-                  value={selectedRole.description || ""}
-                  onChange={(e) => setSelectedRole({ ...selectedRole, description: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label htmlFor="edit-color">Cor</Label>
-                <Input
-                  id="edit-color"
-                  type="color"
-                  value={selectedRole.color}
-                  onChange={(e) => setSelectedRole({ ...selectedRole, color: e.target.value })}
-                />
-              </div>
-            </div>
-          )}
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setEditDialogOpen(false)}>
-              Cancelar
-            </Button>
-            <Button onClick={handleUpdate}>Salvar</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Dialog: Configurar Permissões */}
-      <Dialog open={configDialogOpen} onOpenChange={setConfigDialogOpen}>
-        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Configurar Permissões - {selectedRole?.displayName}</DialogTitle>
-            <DialogDescription>
-              Clique nos ícones para alternar entre os estados de permissão
-            </DialogDescription>
+            <DialogTitle>Criar Novo Nível de Permissão</DialogTitle>
+            <DialogDescription>Defina nome, cor e permissões do novo nível</DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-2">
-            {MODULES.map(module => {
-              const modulePermission = getPermission(module.key, null);
-              const moduleConfig = PERMISSION_ICONS[modulePermission];
-              const ModuleIcon = moduleConfig.icon;
-              const hasSubmodules = module.submodules.length > 0;
-              const isExpanded = expandedModules.has(module.key);
-              const shouldShowSubmodules = hasSubmodules && modulePermission !== "none" && isExpanded;
-
-              return (
-                <div key={module.key} className="border rounded-lg p-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      {hasSubmodules && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6"
-                          onClick={() => toggleModuleExpansion(module.key)}
-                          disabled={modulePermission === "none"}
-                        >
-                          {isExpanded ? (
-                            <ChevronDown className="h-4 w-4" />
-                          ) : (
-                            <ChevronRight className="h-4 w-4" />
-                          )}
-                        </Button>
-                      )}
-                      <span className="font-medium">{module.label}</span>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className={`${moduleConfig.bg} hover:${moduleConfig.bg}`}
-                      onClick={() => cyclePermission(module.key, null)}
-                    >
-                      <ModuleIcon className={`h-5 w-5 ${moduleConfig.color}`} />
-                    </Button>
-                  </div>
-
-                  {shouldShowSubmodules && (
-                    <div className="mt-3 ml-8 space-y-2">
-                      {module.submodules.map(sub => {
-                        const subPermission = getPermission(module.key, sub.key);
-                        const subConfig = PERMISSION_ICONS[subPermission];
-                        const SubIcon = subConfig.icon;
-
-                        return (
-                          <div key={sub.key} className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded">
-                            <span className="text-sm">{sub.label}</span>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className={`${subConfig.bg} hover:${subConfig.bg}`}
-                              onClick={() => cyclePermission(module.key, sub.key)}
-                            >
-                              <SubIcon className={`h-4 w-4 ${subConfig.color}`} />
-                            </Button>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
+          <Tabs defaultValue="info" className="flex-1 overflow-hidden flex flex-col">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="info">Informações Básicas</TabsTrigger>
+              <TabsTrigger value="permissions">Permissões</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="info" className="space-y-4 mt-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Nome Interno *</Label>
+                  <Input
+                    id="name"
+                    required
+                    placeholder="ex: gerente_obra"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  />
+                  <p className="text-xs text-muted-foreground">Usado internamente no sistema (sem espaços)</p>
                 </div>
-              );
-            })}
-          </div>
+                <div className="space-y-2">
+                  <Label htmlFor="displayName">Nome de Exibição *</Label>
+                  <Input
+                    id="displayName"
+                    required
+                    placeholder="ex: Gerente de Obra"
+                    value={formData.displayName}
+                    onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
+                  />
+                  <p className="text-xs text-muted-foreground">Nome mostrado na interface</p>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="description">Descrição</Label>
+                <Input
+                  id="description"
+                  placeholder="Descrição do nível de permissão"
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="color">Cor do Badge</Label>
+                <Select value={formData.color} onValueChange={(value) => setFormData({ ...formData, color: value })}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="blue">Azul</SelectItem>
+                    <SelectItem value="green">Verde</SelectItem>
+                    <SelectItem value="orange">Laranja</SelectItem>
+                    <SelectItem value="purple">Roxo</SelectItem>
+                    <SelectItem value="yellow">Amarelo</SelectItem>
+                    <SelectItem value="red">Vermelho</SelectItem>
+                    <SelectItem value="gray">Cinza</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="permissions" className="flex-1 overflow-y-auto mt-4 space-y-3">
+              <div className="text-sm text-muted-foreground mb-4">
+                Defina as permissões para cada módulo. Submódulos aparecem automaticamente quando o módulo pai tem permissão.
+              </div>
+              {SYSTEM_MODULES.map((mod) => renderModulePermissions(mod))}
+            </TabsContent>
+          </Tabs>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setConfigDialogOpen(false)}>
-              Cancelar
+          <DialogFooter className="mt-4">
+            <Button onClick={handleCreate} disabled={createMutation.isPending}>
+              {createMutation.isPending ? "Criando..." : "Criar Nível"}
             </Button>
-            <Button onClick={handleSavePermissions}>
-              Salvar Permissões
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog Editar Permissões com TABS */}
+      <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle>Editar Nível: {formData.displayName}</DialogTitle>
+            <DialogDescription>Altere informações e permissões do nível</DialogDescription>
+          </DialogHeader>
+          
+          <Tabs defaultValue="info" className="flex-1 overflow-hidden flex flex-col">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="info">Informações Básicas</TabsTrigger>
+              <TabsTrigger value="permissions">Permissões</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="info" className="space-y-4 mt-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="editDisplayName">Nome de Exibição *</Label>
+                  <Input
+                    id="editDisplayName"
+                    required
+                    value={formData.displayName}
+                    onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="editColor">Cor do Badge</Label>
+                  <Select value={formData.color} onValueChange={(value) => setFormData({ ...formData, color: value })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="blue">Azul</SelectItem>
+                      <SelectItem value="green">Verde</SelectItem>
+                      <SelectItem value="orange">Laranja</SelectItem>
+                      <SelectItem value="purple">Roxo</SelectItem>
+                      <SelectItem value="yellow">Amarelo</SelectItem>
+                      <SelectItem value="red">Vermelho</SelectItem>
+                      <SelectItem value="gray">Cinza</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="editDescription">Descrição</Label>
+                <Input
+                  id="editDescription"
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="permissions" className="flex-1 overflow-y-auto mt-4 space-y-3">
+              <div className="text-sm text-muted-foreground mb-4">
+                Defina as permissões para cada módulo. Submódulos aparecem automaticamente quando o módulo pai tem permissão.
+              </div>
+              {SYSTEM_MODULES.map((mod) => renderModulePermissions(mod))}
+            </TabsContent>
+          </Tabs>
+
+          <DialogFooter className="mt-4">
+            <Button onClick={handleEdit} disabled={updateMutation.isPending || updatePermissionsMutation.isPending}>
+              {updateMutation.isPending || updatePermissionsMutation.isPending ? "Salvando..." : "Salvar Alterações"}
             </Button>
           </DialogFooter>
         </DialogContent>

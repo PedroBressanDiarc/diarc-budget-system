@@ -22,16 +22,12 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-
 import { LayoutDashboard, LogOut, PanelLeft, Users, Package, ShoppingCart, FileText, Wrench, BarChart3, Settings as SettingsIcon, UserCog, CheckCircle, Database, ChevronDown, Warehouse, Gauge, FileBarChart, Search, MessageCircle, DollarSign, UserPlus, Shield } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState, useMemo, Fragment } from "react";
 import { useLocation, Redirect } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 import { GlobalSearch } from "./GlobalSearch";
-
-
-
 
 const menuItems = [
   { 
@@ -87,13 +83,13 @@ const menuItems = [
       { label: "Relatórios Manutenções", path: "/manutencoes/relatorios", adminOnly: true },
     ]
   },
-  { icon: SettingsIcon, label: "Configura\u00e7\u00f5es", path: "/configuracoes" },
+  { icon: SettingsIcon, label: "Configurações", path: "/configuracoes" },
   {
     icon: UserCog,
-    label: "Gest\u00e3o",
+    label: "Gestão",
     submenu: [
-      { label: "Usu\u00e1rios", path: "/usuarios" },
-      { label: "Permiss\u00f5es", path: "/permissoes" },
+      { label: "Usuários", path: "/usuarios" },
+      { label: "Permissões", path: "/permissoes", adminOnly: true },
     ]
   },
 ];
@@ -203,42 +199,35 @@ function DashboardLayoutContent({
   const sidebarRef = useRef<HTMLDivElement>(null);
   const activeMenuItem = menuItems.find(item => item.path === location);
   
-  // Filtrar itens do menu baseado apenas em adminOnly
+  // Filtrar itens do menu baseado no role do usuário
   const filteredMenuItems = useMemo(() => {
-    if (!user) return [];
-    
-    return menuItems.map(item => {
-      // Verificar adminOnly (apenas diretor)
-      if (item.adminOnly && user.role !== 'diretor') {
-        return null;
-      }
-      
-      // Se tem submenu, filtrar subitens adminOnly
-      if (item.submenu) {
-        const filteredSubmenu = item.submenu.filter(subitem => {
-          if (subitem.adminOnly && user.role !== 'diretor') {
-            return false;
-          }
-          return true;
-        });
-        
-        // Se não tem subitens visíveis, ocultar item pai
-        if (filteredSubmenu.length === 0 && !item.path) {
-          return null;
-        }
-        
-        // Retornar item com submenu filtrado
-        return { ...item, submenu: filteredSubmenu.length > 0 ? filteredSubmenu : undefined };
-      }
-      
-      return item;
-    }).filter(item => item !== null);
-  }, [user]);
+    console.log('Filtering menu for role:', user?.role);
+    if (user?.role === 'manutencao') {
+      // Role manutenção: Dashboard, Manutenções e Relatórios de Manutenções
+      const filtered = menuItems.filter(item => 
+        item.path === '/manutencoes/dashboard' ||
+        item.path === '/manutencoes' ||
+        item.path === '/manutencoes/relatorios'
+      );
+      console.log('Filtered items for manutencao:', filtered);
+      return filtered;
+    }
+    // Outros roles: todos os itens (exceto adminOnly se não for diretor)
+    return menuItems.filter(item => !item.adminOnly || user?.role === 'diretor');
+  }, [user?.role]);
   
-  // Filtrar itens da base de dados (todos visíveis por padrão)
+  // Filtrar itens da base de dados baseado no role
   const filteredDatabaseItems = useMemo(() => {
+    console.log('Filtering database for role:', user?.role);
+    if (user?.role === 'manutencao') {
+      // Role manutenção: apenas Equipamentos
+      const filtered = databaseMenuItems.filter(item => item.path === '/equipment');
+      console.log('Filtered database items for manutencao:', filtered);
+      return filtered;
+    }
+    // Outros roles: todos os itens
     return databaseMenuItems;
-  }, []);
+  }, [user?.role]);
   const isMobile = useIsMobile();
 
   // Atalho de teclado para busca global (Ctrl+K ou Cmd+K)
@@ -322,8 +311,8 @@ function DashboardLayoutContent({
               {filteredMenuItems.map((item) => {
                 const isActive = location === item.path;
                 const hasSubmenu = item.submenu && item.submenu.length > 0;
-                const menuKey = item.path || item.label;
-                const isSubmenuOpen = openSubmenus[menuKey] || false;
+                // @ts-ignore
+                const isSubmenuOpen = openSubmenus[item.path] || false;
                 
                 return (
                   <Fragment key={item.path || item.label}>
@@ -342,12 +331,13 @@ function DashboardLayoutContent({
                           {item.path === '/autorizacoes' && <PendingAuthBadge />}
                           {item.path === '/chat' && <UnreadMentionsBadge />}
                         </SidebarMenuButton>
-                        {hasSubmenu && user && (user.role === 'diretor' || !item.adminOnly) && (
+                        // @ts-ignore
+                        {hasSubmenu && (user?.role === 'diretor' || !item.adminOnly) && (
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              const menuKey = item.path || item.label;
-                              setOpenSubmenus(prev => ({ ...prev, [menuKey]: !prev[menuKey] }));
+                              // @ts-ignore
+                              setOpenSubmenus(prev => ({ ...prev, [item.path]: !prev[item.path] }));
                             }}
                             className="h-10 w-8 flex items-center justify-center hover:bg-accent rounded-r-lg transition-colors shrink-0"
                           >
@@ -374,7 +364,7 @@ function DashboardLayoutContent({
                   </Fragment>
                 );
               })}
-              {user && (user.role === 'diretor' || user.role === 'manutencao') && (
+              {(user?.role === 'diretor' || user?.role === 'manutencao') && (
                 <>
                   <SidebarMenuItem>
                     <SidebarMenuButton
