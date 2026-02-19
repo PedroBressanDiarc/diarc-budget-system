@@ -1,8 +1,0 @@
-{
-  "query": "-- Criar roles fixos para cada tipo de usuário do sistema\nINSERT INTO custom_roles (name, displayName, description, color, isSystemRole) VALUES\n('diretor', 'Diretor', 'Acesso total ao sistema', '#10b981', 1),\n('comprador', 'Comprador', 'Responsável por compras e cotações', '#3b82f6', 1),\n('almoxarife', 'Almoxarife', 'Gerencia estoque e requisições', '#f59e0b', 1),\n('manutencao', 'Manutenção', 'Gerencia manutenções e equipamentos', '#8b5cf6', 1),\n('financeiro', 'Financeiro', 'Gerencia pagamentos e recebimentos', '#ef4444', 1)\nON DUPLICATE KEY UPDATE displayName=VALUES(displayName), description=VALUES(description), color=VALUES(color);",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute -- Criar roles fixos para cada tipo de usuário do sistema\nINSERT INTO custom_roles (name, displayName, description, color, isSystemRole) VALUES\n('diretor', 'Diretor', 'Acesso total ao sistema', '#10b981', 1),\n('comprador', 'Comprador', 'Responsável por compras e cotações', '#3b82f6', 1),\n('almoxarife', 'Almoxarife', 'Gerencia estoque e requisições', '#f59e0b', 1),\n('manutencao', 'Manutenção', 'Gerencia manutenções e equipamentos', '#8b5cf6', 1),\n('financeiro', 'Financeiro', 'Gerencia pagamentos e recebimentos', '#ef4444', 1)\nON DUPLICATE KEY UPDATE displayName=VALUES(displayName), description=VALUES(description), color=VALUES(color);",
-  "returncode": 1,
-  "logs": [
-    "ERROR 1054 (42S22) at line 2: Unknown column 'displayName' in 'field list'"
-  ]
-}
