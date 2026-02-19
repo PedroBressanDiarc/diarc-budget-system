@@ -1,0 +1,8 @@
+{
+  "query": "SELECT cr.name as role_name, rp.module, rp.submodule, rp.permissionLevel \nFROM custom_roles cr \nLEFT JOIN role_permissions rp ON cr.id = rp.roleId \nWHERE cr.name = 'manutencao'\nORDER BY rp.module, rp.submodule;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2FYRcYGi4pb6onw.cb424ff095fe --database Rjwg2XpN7AjHEkC6dWznWM --execute SELECT cr.name as role_name, rp.module, rp.submodule, rp.permissionLevel \nFROM custom_roles cr \nLEFT JOIN role_permissions rp ON cr.id = rp.roleId \nWHERE cr.name = 'manutencao'\nORDER BY rp.module, rp.submodule;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'rp.roleid' in 'on clause'"
+  ]
+}
