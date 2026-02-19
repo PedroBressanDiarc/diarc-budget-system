@@ -16,14 +16,14 @@ export function useRolePermissions() {
   // Função para verificar se pode visualizar um módulo/submódulo
   const canView = useMemo(() => {
     return (module: string, submodule?: string | null): boolean => {
-      if (!permissions) return true; // Se não carregou ainda, mostrar tudo
+      if (!permissions) return false; // Se não carregou ainda, negar acesso
       
       const perm = permissions.find(
         (p: any) => p.module === module && p.submodule === submodule
       );
       
-      // Se não tem permissão definida, mostrar por padrão
-      if (!perm) return true;
+      // Se não tem permissão definida, NEGAR acesso por padrão
+      if (!perm) return false;
       
       // Se tem permissão, verificar se não é "none"
       return perm.permissionLevel !== "none";
@@ -33,13 +33,13 @@ export function useRolePermissions() {
   // Função para verificar se pode escrever (criar/editar)
   const canWrite = useMemo(() => {
     return (module: string, submodule?: string | null): boolean => {
-      if (!permissions) return true;
+      if (!permissions) return false;
       
       const perm = permissions.find(
         (p: any) => p.module === module && p.submodule === submodule
       );
       
-      if (!perm) return true;
+      if (!perm) return false;
       
       return perm.permissionLevel === "write" || perm.permissionLevel === "total";
     };
@@ -48,13 +48,13 @@ export function useRolePermissions() {
   // Função para verificar se pode deletar
   const canDelete = useMemo(() => {
     return (module: string, submodule?: string | null): boolean => {
-      if (!permissions) return true;
+      if (!permissions) return false;
       
       const perm = permissions.find(
         (p: any) => p.module === module && p.submodule === submodule
       );
       
-      if (!perm) return true;
+      if (!perm) return false;
       
       return perm.permissionLevel === "total";
     };
@@ -63,13 +63,13 @@ export function useRolePermissions() {
   // Função para obter o nível de permissão
   const getPermissionLevel = useMemo(() => {
     return (module: string, submodule?: string | null): PermissionLevel => {
-      if (!permissions) return "total";
+      if (!permissions) return "none";
       
       const perm = permissions.find(
         (p: any) => p.module === module && p.submodule === submodule
       );
       
-      return perm?.permissionLevel || "total";
+      return perm?.permissionLevel || "none";
     };
   }, [permissions]);
 

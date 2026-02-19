@@ -711,3 +711,38 @@
 - [x] Atualizar DashboardLayout para ler permissões do banco
 - [ ] Testar com diferentes roles
 - [ ] Criar checkpoint
+
+
+---
+
+## 🔴 CORREÇÃO URGENTE: Permissões não funcionando
+
+### Problema Reportado
+- Sistema de permissões implementado não está funcionando
+- Usuário pediu para revisar código antigo (diarc.cloud) que funcionava
+- Precisa simplificar e corrigir
+
+### Tarefas
+
+- [ ] Investigar logs e testar sistema atual de permissões
+- [ ] Identificar o que não está funcionando (menus não filtram? botões aparecem errados?)
+- [ ] Buscar código do site antigo diarc.cloud para referência
+- [ ] Comparar lógica antiga (funcional) com nova (bugada)
+- [ ] Corrigir implementação baseado no código antigo
+- [ ] Testar com diferentes roles
+- [ ] Criar checkpoint
+
+
+---
+
+## 🔴 BUG CRÍTICO: Todos os usuários veem todos os menus
+
+### Problema
+- Lógica invertida: se não há permissão no banco → mostra tudo
+- Deveria ser: se não há permissão no banco → OCULTAR
+
+### Correção Necessária
+- [x] Inverter lógica no useRolePermissions: canView retorna FALSE se não encontrar permissão
+- [x] Atualizar DashboardLayout (já usa canView, não precisa mudar)
+- [ ] Testar que usuários sem permissões configuradas NÃO veem menus
+- [ ] Criar checkpoint
