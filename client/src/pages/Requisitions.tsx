@@ -289,7 +289,7 @@ export default function Requisitions() {
                                 rows={2}
                               />
                             </div>
-                            {user?.role === "diretor" && (
+                            {user?.role === "director" && (
                               <div className="space-y-2 col-span-2">
                                 <Label className="flex items-center gap-2">
                                   Valor Máximo (R$)
@@ -298,9 +298,7 @@ export default function Requisitions() {
                                   </span>
                                 </Label>
                                 <CurrencyInput
-                                  // @ts-ignore
                                   value={item.maxPrice || ""}
-                                  // @ts-ignore
                                   onChange={(value) => updateItem(index, "maxPrice", value)}
                                   placeholder="Ex: 1.500,00"
                                 />

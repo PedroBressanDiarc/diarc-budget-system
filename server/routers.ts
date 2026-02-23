@@ -3,7 +3,6 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, adminProcedure, buyerProcedure, storekeeperProcedure, maintenanceProcedure, financeProcedure, equipmentProcedure, router } from "./_core/trpc";
-import { TRPCError } from "@trpc/server";
 import { getDb } from "./db";
 import * as db from "./db";
 import { authenticateUser, hashPassword } from "./auth";
@@ -42,9 +41,6 @@ import {
 } from "../drizzle/schema";
 import { eq, sql, desc } from "drizzle-orm";
 import { sendQuotationInviteEmail } from "./services/emailService";
-import { validatePassword, isCommonPassword } from "./utils/passwordValidator";
-import { publicQuotationRateLimit, submitQuotationRateLimit } from "./middleware/trpcRateLimiter";
-import { isValidMoneyValue, limitStringLength, isSafeString } from "./utils/inputValidator";
 
 export const appRouter = router({
   system: systemRouter,
@@ -100,29 +96,12 @@ export const appRouter = router({
     create: adminProcedure
       .input(z.object({
         email: z.string().email(),
-        password: z.string().min(8).max(128),
+        password: z.string().min(6),
         name: z.string().min(1),
-        role: z.enum(["comprador", "diretor", "almoxarife", "manutencao", "financeiro"]),
+        role: z.enum(["buyer", "director", "storekeeper", "manutencao", "financeiro"]),
         username: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
-        // Validar força da senha
-        const passwordValidation = validatePassword(input.password);
-        if (!passwordValidation.isValid) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: passwordValidation.errors.join(', ')
-          });
-        }
-        
-        // Verificar se é senha comum
-        if (isCommonPassword(input.password)) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: 'Senha muito comum. Por favor, escolha uma senha mais segura.'
-          });
-        }
-        
         const passwordHash = await hashPassword(input.password);
         const userId = await db.createUser({
           email: input.email,
@@ -140,7 +119,7 @@ export const appRouter = router({
         id: z.number(),
         email: z.string().email().optional(),
         name: z.string().min(1).optional(),
-        role: z.enum(["comprador", "diretor", "almoxarife", "manutencao", "financeiro"]).optional(),
+        role: z.enum(["buyer", "director", "storekeeper", "manutencao", "financeiro"]).optional(),
         isActive: z.number().optional(),
       }))
       .mutation(async ({ input }) => {
@@ -876,7 +855,6 @@ export const appRouter = router({
 
         const budgetNumber = `ORC-${Date.now()}`;
 
-        // @ts-ignore
         const result = await database.insert(budgets).values({
           budgetNumber,
           title: input.title,
@@ -919,7 +897,6 @@ export const appRouter = router({
         if (!budget) throw new Error("Orçamento não encontrado");
         
         // Buscar dados do cliente
-        // @ts-ignore
         const clientResult = await database.select().from(clients).where(eq(clients.id, budget.clientId)).limit(1);
         const client = clientResult[0];
         
@@ -939,8 +916,7 @@ export const appRouter = router({
 
 **Número:** ${budget.budgetNumber}  
 **Data:** ${new Date(budget.createdAt).toLocaleDateString('pt-BR')}  
-// @ts-ignore
-${(budget as any).validUntil ? `**Validade:** ${(budget as any).validUntil}` : ''}
+${budget.validUntil ? `**Validade:** ${budget.validUntil}` : ''}
 
 ---
 
@@ -972,8 +948,7 @@ ${items.map((item: any) =>
 
 ### VALOR TOTAL: R$ ${total.toFixed(2).replace('.', ',')}
 
-// @ts-ignore
-${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any).observations}` : ''}
+${budget.observations ? `\n---\n\n## OBSERVAÇÕES\n\n${budget.observations}` : ''}
 
 ---
 
@@ -2577,8 +2552,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         const { requisitionId, supplierIds } = input;
         
         // Verificar se a requisição existe
-        // @ts-ignore
-        const requisition = await database!.query.purchaseRequisitions.findFirst({
+        const requisition = await database.query.purchaseRequisitions.findFirst({
           where: eq(purchaseRequisitions.id, requisitionId),
           with: {
             items: true,
@@ -2590,8 +2564,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         }
         
         // Buscar fornecedores
-        // @ts-ignore
-        const suppliersData = await database!.query.suppliers.findMany({
+        const suppliersData = await database.query.suppliers.findMany({
           where: sql`${suppliers.id} IN (${sql.join(supplierIds.map(id => sql`${id}`), sql`, `)})`
         });
         
@@ -2603,14 +2576,13 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         
         for (const supplier of suppliersData) {
           // Verificar se já existe convite
-          // @ts-ignore
-          const existing = await database!.query.requisitionSuppliers.findFirst({
+          const existing = await database.query.requisitionSuppliers.findFirst({
             where: sql`${requisitionSuppliers.requisitionId} = ${requisitionId} AND ${requisitionSuppliers.supplierId} = ${supplier.id}`
           });
           
           if (!existing) {
             // Criar registro de fornecedor convidado
-            await database!.insert(requisitionSuppliers).values({
+            await database.insert(requisitionSuppliers).values({
               requisitionId,
               supplierId: supplier.id,
               createdBy: ctx.user!.id,
@@ -2623,7 +2595,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
           expiresAt.setDate(expiresAt.getDate() + 7); // Expira em 7 dias
           
           // Criar token de cotação
-          await database!.insert(quotationTokens).values({
+          await database.insert(quotationTokens).values({
             token,
             requisitionId,
             supplierId: supplier.id,
@@ -2646,7 +2618,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
           
           // Atualizar status de email enviado (apenas se enviou com sucesso)
           if (emailSent) {
-            await database!.update(quotationTokens)
+            await database.update(quotationTokens)
               .set({ emailSent: true, emailSentAt: new Date() })
               .where(eq(quotationTokens.token, token));
           }
@@ -2669,7 +2641,6 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
       .query(async ({ input }) => {
         const database = await getDb();
         
-        // @ts-ignore
         const invited = await database
           .select({
             id: requisitionSuppliers.id,
@@ -2691,14 +2662,10 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
     getByToken: publicProcedure
       .input(z.object({ token: z.string() }))
       .query(async ({ input }) => {
-        // Rate limiting
-        publicQuotationRateLimit(input.token);
-        
         const database = await getDb();
         
         // Buscar token
-        // @ts-ignore
-        const tokenData = await database!.query.quotationTokens.findFirst({
+        const tokenData = await database.query.quotationTokens.findFirst({
           where: eq(quotationTokens.token, input.token),
         });
         
@@ -2713,14 +2680,13 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         
         // Marcar como acessado
         if (!tokenData.accessed) {
-          await database!.update(quotationTokens)
+          await database.update(quotationTokens)
             .set({ accessed: true, accessedAt: new Date() })
             .where(eq(quotationTokens.token, input.token));
         }
         
         // Buscar requisição com itens
-        // @ts-ignore
-        const requisition = await database!.query.purchaseRequisitions.findFirst({
+        const requisition = await database.query.purchaseRequisitions.findFirst({
           where: eq(purchaseRequisitions.id, tokenData.requisitionId),
           with: {
             items: true,
@@ -2728,14 +2694,12 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         });
         
         // Buscar fornecedor
-        // @ts-ignore
-        const supplier = await database!.query.suppliers.findFirst({
+        const supplier = await database.query.suppliers.findFirst({
           where: eq(suppliers.id, tokenData.supplierId),
         });
         
         // Verificar se já existe cotação submetida
-        // @ts-ignore
-        const existingQuote = await database!.query.quotes.findFirst({
+        const existingQuote = await database.query.quotes.findFirst({
           where: sql`${quotes.requisitionId} = ${tokenData.requisitionId} AND ${quotes.supplierId} = ${tokenData.supplierId}`,
           with: {
             items: true,
@@ -2753,27 +2717,23 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
     // API PÚblica - Submeter cotação
     submitQuotation: publicProcedure
       .input(z.object({
-        token: z.string().min(1).max(100),
+        token: z.string(),
         items: z.array(z.object({
-          requisitionItemId: z.number().positive(),
-          unitPrice: z.string().max(50),
-          totalPrice: z.string().max(50),
-          deliveryTime: z.string().max(100).optional(),
-          notes: z.string().max(500).optional(),
-        })).min(1).max(100),
-        observations: z.string().max(2000).optional(),
-        paymentTerms: z.string().max(500).optional(),
-        deliveryTime: z.string().max(200).optional(),
+          requisitionItemId: z.number(),
+          unitPrice: z.string(),
+          totalPrice: z.string(),
+          deliveryTime: z.string().optional(),
+          notes: z.string().optional(),
+        })),
+        observations: z.string().optional(),
+        paymentTerms: z.string().optional(),
+        deliveryTime: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
-        // Rate limiting
-        submitQuotationRateLimit(input.token);
-        
         const database = await getDb();
         
         // Buscar token
-        // @ts-ignore
-        const tokenData = await database!.query.quotationTokens.findFirst({
+        const tokenData = await database.query.quotationTokens.findFirst({
           where: eq(quotationTokens.token, input.token),
         });
         
@@ -2791,25 +2751,8 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
           throw new Error("Cotação já foi submetida");
         }
         
-        // Validar valores monetários
-        for (const item of input.items) {
-          if (!isValidMoneyValue(item.unitPrice)) {
-            throw new TRPCError({
-              code: 'BAD_REQUEST',
-              message: 'Preço unitário inválido'
-            });
-          }
-          if (!isValidMoneyValue(item.totalPrice)) {
-            throw new TRPCError({
-              code: 'BAD_REQUEST',
-              message: 'Preço total inválido'
-            });
-          }
-        }
-        
         // Criar ou atualizar cotação
-        // @ts-ignore
-        const existingQuote = await database!.query.quotes.findFirst({
+        const existingQuote = await database.query.quotes.findFirst({
           where: sql`${quotes.requisitionId} = ${tokenData.requisitionId} AND ${quotes.supplierId} = ${tokenData.supplierId}`,
         });
         
@@ -2817,11 +2760,10 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         
         if (existingQuote) {
           // Atualizar cotação existente
-          await database!.update(quotes)
+          await database.update(quotes)
             .set({
               observations: input.observations,
               paymentTerms: input.paymentTerms,
-              // @ts-ignore
               deliveryTime: input.deliveryTime,
               updatedAt: new Date(),
             })
@@ -2830,12 +2772,11 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
           quoteId = existingQuote.id;
           
           // Deletar itens antigos
-          await database!.delete(quoteItems)
+          await database.delete(quoteItems)
             .where(eq(quoteItems.quoteId, quoteId));
         } else {
           // Criar nova cotação
-          // @ts-ignore
-          const [newQuote] = await database!.insert(quotes).values({
+          const [newQuote] = await database.insert(quotes).values({
             requisitionId: tokenData.requisitionId,
             supplierId: tokenData.supplierId,
             observations: input.observations,
@@ -2849,8 +2790,7 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         
         // Inserir itens da cotação
         for (const item of input.items) {
-          // @ts-ignore
-          await database!.insert(quoteItems).values({
+          await database.insert(quoteItems).values({
             quoteId,
             requisitionItemId: item.requisitionItemId,
             unitPrice: item.unitPrice,
@@ -2861,12 +2801,12 @@ ${(budget as any).observations ? `\n---\n\n## OBSERVAÇÕES\n\n${(budget as any)
         }
         
         // Marcar token como submetido
-        await database!.update(quotationTokens)
+        await database.update(quotationTokens)
           .set({ submitted: true, submittedAt: new Date() })
           .where(eq(quotationTokens.token, input.token));
         
         // Marcar fornecedor como respondido
-        await database!.update(requisitionSuppliers)
+        await database.update(requisitionSuppliers)
           .set({ responded: true, respondedAt: new Date() })
           .where(sql`${requisitionSuppliers.requisitionId} = ${tokenData.requisitionId} AND ${requisitionSuppliers.supplierId} = ${tokenData.supplierId}`);
         
