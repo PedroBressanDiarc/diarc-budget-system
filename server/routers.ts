@@ -410,8 +410,36 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
-      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
+
+        // Buscar requisição atual para verificar status
+        const requisition = await database.query.purchaseRequisitions.findFirst({
+          where: eq(purchaseRequisitions.id, input.id)
+        });
+
+        if (!requisition) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Requisição não encontrada'
+          });
+        }
+
+        // Validação de permissão
+        if (ctx.user.role === 'storekeeper') {
+          // Almoxarife só pode editar em status 'solicitacao'
+          if (requisition.status !== 'solicitacao') {
+            throw new TRPCError({
+              code: 'FORBIDDEN',
+              message: 'Almoxarife só pode editar requisições em status "Solicitação"'
+            });
+          }
+        } else if (ctx.user.role !== 'diretor') {
+          // Apenas diretor e almoxarife podem editar
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: 'Você não tem permissão para editar requisições'
+          });
+        }
 
         // Update requisition
         await database.update(purchaseRequisitions)
@@ -486,8 +514,36 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         const database = await getDb();
-      if (!database) throw new Error("Database not available");
         if (!database) throw new Error("Database not available");
+
+        // Buscar requisição atual para verificar status
+        const requisition = await database.query.purchaseRequisitions.findFirst({
+          where: eq(purchaseRequisitions.id, input.id)
+        });
+
+        if (!requisition) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Requisição não encontrada'
+          });
+        }
+
+        // Validação de permissão
+        if (ctx.user.role === 'storekeeper') {
+          // Almoxarife só pode excluir em status 'solicitacao'
+          if (requisition.status !== 'solicitacao') {
+            throw new TRPCError({
+              code: 'FORBIDDEN',
+              message: 'Almoxarife só pode excluir requisições em status "Solicitação"'
+            });
+          }
+        } else if (ctx.user.role !== 'diretor') {
+          // Apenas diretor e almoxarife podem excluir
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: 'Você não tem permissão para excluir requisições'
+          });
+        }
 
         // Delete items first (foreign key constraint)
         await database.delete(requisitionItems).where(eq(requisitionItems.requisitionId, input.id));
