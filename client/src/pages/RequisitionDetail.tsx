@@ -458,41 +458,87 @@ export default function RequisitionDetail() {
           <Badge variant={statusColors[requisition.status]}>
             {statusLabels[requisition.status]}
           </Badge>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              setEditFormData({
-                title: requisition.title,
-                description: requisition.description || "",
-              });
-              setEditItems(items.map(item => ({
-                id: item.id,
-                name: item.itemName,
-                quantity: item.quantity,
-                unit: item.unit || "un",
-                brand: item.brand || "",
-                notes: item.notes || "",
-              })));
-              setIsEditDialogOpen(true);
-            }}
-          >
-            <Edit className="h-4 w-4 mr-2" />
-            Editar
-          </Button>
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={() => {
-              if (confirm("Tem certeza que deseja excluir esta requisição?")) {
-                deleteRequisitionMutation.mutate({ id: requisition.id });
-              }
-            }}
-            disabled={deleteRequisitionMutation.isPending}
-          >
-            <Trash2 className="h-4 w-4 mr-2" />
-            Excluir
-          </Button>
+          {/* Botão Editar: Apenas almoxarife pode editar requisições em status 'solicitacao' */}
+          {user?.role === 'storekeeper' && requisition.status === 'solicitacao' && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setEditFormData({
+                  title: requisition.title,
+                  description: requisition.description || "",
+                });
+                setEditItems(items.map(item => ({
+                  id: item.id,
+                  name: item.itemName,
+                  quantity: item.quantity,
+                  unit: item.unit || "un",
+                  brand: item.brand || "",
+                  notes: item.notes || "",
+                })));
+                setIsEditDialogOpen(true);
+              }}
+            >
+              <Edit className="h-4 w-4 mr-2" />
+              Editar
+            </Button>
+          )}
+          {/* Botão Excluir: Apenas almoxarife pode excluir requisições em status 'solicitacao' */}
+          {user?.role === 'storekeeper' && requisition.status === 'solicitacao' && (
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => {
+                if (confirm("Tem certeza que deseja excluir esta requisição?")) {
+                  deleteRequisitionMutation.mutate({ id: requisition.id });
+                }
+              }}
+              disabled={deleteRequisitionMutation.isPending}
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Excluir
+            </Button>
+          )}
+          {/* Diretor pode editar e excluir em qualquer status */}
+          {user?.role === 'diretor' && (
+            <>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setEditFormData({
+                    title: requisition.title,
+                    description: requisition.description || "",
+                  });
+                  setEditItems(items.map(item => ({
+                    id: item.id,
+                    name: item.itemName,
+                    quantity: item.quantity,
+                    unit: item.unit || "un",
+                    brand: item.brand || "",
+                    notes: item.notes || "",
+                  })));
+                  setIsEditDialogOpen(true);
+                }}
+              >
+                <Edit className="h-4 w-4 mr-2" />
+                Editar
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => {
+                  if (confirm("Tem certeza que deseja excluir esta requisição?")) {
+                    deleteRequisitionMutation.mutate({ id: requisition.id });
+                  }
+                }}
+                disabled={deleteRequisitionMutation.isPending}
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Excluir
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
